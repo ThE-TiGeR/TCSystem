@@ -1,0 +1,275 @@
+//*******************************************************************************
+//
+// *******   ***   ***               *
+//    *     *     *                  *
+//    *    *      *                *****
+//    *    *       ***  *   *   **   *    **    ***
+//    *    *          *  * *   *     *   ****  * * *
+//    *     *         *   *      *   * * *     * * *
+//    *      ***   ***    *     **   **   **   *   *
+//                        *
+//*******************************************************************************
+// see http://sourceforge.net/projects/tcsystem/ for details.
+// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+//*******************************************************************************
+//
+// TCSystem is the legal property of its developers.
+// Please refer to the COPYRIGHT file distributed with this source distribution.
+// 
+// This library is free software; you can redistribute it and/or             
+// modify it under the terms of the GNU Lesser General Public                
+// License as published by the Free Software Foundation; either              
+// version 2.1 of the License, or (at your option) any later version.        
+//                                                                           
+// This library is distributed in the hope that it will be useful,           
+// but WITHOUT ANY WARRANTY; without even the implied warranty of            
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU         
+// Lesser General Public License for more details.                           
+//                                                                           
+// You should have received a copy of the GNU Lesser General Public          
+// License along with this library; if not, write to the Free Software       
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
+//*******************************************************************************
+//  $Id: TCMTConditionPthread.h 929 2009-05-04 21:21:11Z the_____tiger $
+//*******************************************************************************
+#ifdef HAVE_UNIT_TESTS
+
+#include "TCMTThreadTest.h"
+
+#include "TCMTEvent.h"
+#include "TCMTFactory.h"
+#include "TCMTThread.h"
+#include "TCUtil.h"
+
+#include <jf/unittest/test_case.h>
+#include <jf/unittest/failure.h>
+
+#include "TCNewEnable.h"
+
+namespace TC
+{
+    namespace MT
+    {
+        namespace Tests
+        {
+
+            class ThreadTest : public jf::unittest::TestCase, 
+                public ThreadObject
+            {
+            public:
+                ThreadTest()
+                    :jf::unittest::TestCase("TC::MT::Tests::ThreadTest"),
+                    m_exeption(0)
+                {
+                }
+
+                ~ThreadTest()
+                {
+                    Util::SafeRelease(m_exeption);
+                }
+
+                virtual void run()
+                {
+                    m_thread_start_event = Factory::CreateEvent();
+                    m_thread_started_event = Factory::CreateEvent();
+                    m_thread_handle = Factory::CreateThread("TC::MT::Tests::ThreadTest");
+
+                    JFUNIT_ASSERT(m_thread_handle);
+                    JFUNIT_ASSERT(m_thread_handle->Start(ThreadObjectPtr(this, NoDelete())));
+
+//                     uint32 thread_id = m_thread_handle->GetID();
+//                     JFUNIT_ASSERT(m_thread_handle == GetThreadHandle(thread_id));
+
+                    JFUNIT_ASSERT(m_thread_start_event->Set());
+                    JFUNIT_ASSERT(m_thread_started_event->Wait());
+
+                    JFUNIT_ASSERT(m_thread_handle->Join());
+
+                    m_thread_handle = ThreadPtr();
+                    m_thread_start_event = EventPtr();
+                    m_thread_started_event = EventPtr();
+
+                    if (m_exeption)
+                    {
+                        throw(*m_exeption);
+                    }
+             }
+
+            private:
+                bool Run()
+                {
+                    try
+                    {
+                        m_thread_start_event->Wait();
+                        m_thread_started_event->Set();
+
+                        JFUNIT_ASSERT(m_thread_handle == Factory::GetCurrentThread());
+                    }
+
+                    catch (const jf::unittest::Failure& ex)
+                    {
+                        m_exeption = new jf::unittest::Failure(ex);
+                    }
+
+                    return true;
+                }
+
+                ThreadPtr m_thread_handle;
+                EventPtr m_thread_start_event;
+                EventPtr m_thread_started_event;
+                jf::unittest::Failure* m_exeption;
+          };
+
+
+            class ThreadMessageTest : public jf::unittest::TestCase
+            {
+            public:
+                ThreadMessageTest()
+                    :jf::unittest::TestCase("TC::MT::Tests::ThreadMessageTest"),
+                    m_exeption(0)
+                {
+                }
+
+                ~ThreadMessageTest()
+                {
+                    delete m_exeption;
+                }
+
+
+                enum MessageIds
+                {
+                    TEST_MESSAGE_ID1 = Message::MSG_ID_USER_START,
+                    TEST_MESSAGE_ID2,
+                    TEST_MESSAGE_ID3,
+                    TEST_MESSAGE_ID4
+                };
+
+                virtual void run()
+                {
+                    /*
+                    ThreadPtr h = Factory::CreateThread("TC::MT::Tests::ThreadMessageTest");
+                    JFUNIT_ASSERT(h);
+                    JFUNIT_ASSERT(h->Start(ThreadObjectPtr(this, NoDelete())));
+
+                    Message::Post(h, TEST_MESSAGE_ID1, 0);
+                    Message::Post(h, TEST_MESSAGE_ID2, (void*)0x1);
+                    Message::Post(h, TEST_MESSAGE_ID3, (void*)0x1);
+
+                    System::Sleep(1000);
+
+                    Message::Post(h, TEST_MESSAGE_ID1, 0);
+                    System::Sleep(1000);
+                    Message::Post(h, TEST_MESSAGE_ID3, (void*)0x1);
+                    System::Sleep(1000);
+
+                    Message::Post(h, TEST_MESSAGE_ID1, 0);
+                    Message::Post(h, TEST_MESSAGE_ID2, 0);
+                    Message::Post(h, TEST_MESSAGE_ID3, 0);
+                    Message::Post(h, TEST_MESSAGE_ID4, 0);
+
+                    h->Join();
+                    ReleaseThreadHandle(h);
+
+                    if (m_exeption)
+                    {
+                        throw(*m_exeption);
+                    }
+                    JFUNIT_ASSERT(false);
+                    */
+                }
+
+            private:
+                bool Run()
+                {
+//                     try
+//                     {
+//                         void* msg = 0x0;
+//                         uint32 msg_id = 0;
+//                         const uint32 all_ids[] = {TEST_MESSAGE_ID1, TEST_MESSAGE_ID2, TEST_MESSAGE_ID3, TEST_MESSAGE_ID4};
+//                         uint32 num_all_ids = Util::ArraySize(all_ids);
+// 
+//                         {
+//                             JFUNIT_ASSERT(Message::Get(TEST_MESSAGE_ID1, &msg) == Message::MSG_RECEIVED);
+//                             JFUNIT_ASSERT(msg == 0x0);
+// 
+//                             JFUNIT_ASSERT(Message::Get(TEST_MESSAGE_ID2, &msg) == Message::MSG_RECEIVED);
+//                             JFUNIT_ASSERT(msg == (void*)0x1);
+// 
+//                             JFUNIT_ASSERT(Message::Get(num_all_ids, all_ids, msg_id, &msg)
+//                                 == Message::MSG_RECEIVED);
+//                             JFUNIT_ASSERT(msg == (void*)0x1);
+//                             JFUNIT_ASSERT(msg_id == TEST_MESSAGE_ID3);
+//                         }
+// 
+//                         {
+//                             JFUNIT_ASSERT(Message::Get(TEST_MESSAGE_ID1, &msg, Time::FromMilliSeconds(200)) == Message::MSG_RECEIVE_FAILED);
+//                             JFUNIT_ASSERT(Message::Get(num_all_ids, all_ids, msg_id, &msg, Time::FromMilliSeconds(200))
+//                                 == Message::MSG_RECEIVE_FAILED);
+// 
+//                             JFUNIT_ASSERT(Message::Get(TEST_MESSAGE_ID1, &msg, Time::FromMilliSeconds(2000)) == Message::MSG_RECEIVED);
+//                             JFUNIT_ASSERT(Message::Get(num_all_ids, all_ids, msg_id, &msg, Time::FromMilliSeconds(2000))
+//                                 == Message::MSG_RECEIVED);
+//                             JFUNIT_ASSERT(msg == (void*)0x1);
+//                             JFUNIT_ASSERT(msg_id == TEST_MESSAGE_ID3);
+//                         }
+// 
+//                         {
+//                             JFUNIT_ASSERT(Message::TryGet(TEST_MESSAGE_ID1, &msg, true) == Message::MSG_RECEIVE_FAILED);
+//                             JFUNIT_ASSERT(Message::TryGet(num_all_ids, all_ids, msg_id, &msg, true)
+//                                 == Message::MSG_RECEIVE_FAILED);
+//                             System::Sleep(2000);
+// 
+//                             JFUNIT_ASSERT(Message::TryGet(TEST_MESSAGE_ID1, &msg, true) == Message::MSG_RECEIVED);
+//                             JFUNIT_ASSERT(Message::TryGet(TEST_MESSAGE_ID2, &msg, false) == Message::MSG_RECEIVED);
+//                             JFUNIT_ASSERT(Message::TryGet(TEST_MESSAGE_ID2, &msg, false) == Message::MSG_RECEIVED);
+//                             JFUNIT_ASSERT(Message::TryGet(TEST_MESSAGE_ID2, &msg, false) == Message::MSG_RECEIVED);
+//                             JFUNIT_ASSERT(Message::TryGet(TEST_MESSAGE_ID2, &msg, false) == Message::MSG_RECEIVED);
+// 
+//                             JFUNIT_ASSERT(Message::TryGet(num_all_ids, all_ids, msg_id, &msg, true)
+//                                 == Message::MSG_RECEIVED);
+//                             JFUNIT_ASSERT(msg_id == TEST_MESSAGE_ID2);
+//                             JFUNIT_ASSERT(Message::TryGet(num_all_ids, all_ids, msg_id, &msg, false)
+//                                 == Message::MSG_RECEIVED);
+//                             JFUNIT_ASSERT(msg_id == TEST_MESSAGE_ID3);
+//                             JFUNIT_ASSERT(Message::TryGet(num_all_ids, all_ids, msg_id, &msg, false)
+//                                 == Message::MSG_RECEIVED);
+//                             JFUNIT_ASSERT(msg_id == TEST_MESSAGE_ID3);
+//                             JFUNIT_ASSERT(Message::TryGet(num_all_ids, all_ids, msg_id, &msg, false)
+//                                 == Message::MSG_RECEIVED);
+//                             JFUNIT_ASSERT(msg_id == TEST_MESSAGE_ID3);
+//                             JFUNIT_ASSERT(Message::TryGet(num_all_ids, all_ids, msg_id, &msg, false)
+//                                 == Message::MSG_RECEIVED);
+//                             JFUNIT_ASSERT(msg_id == TEST_MESSAGE_ID3);
+//                             JFUNIT_ASSERT(Message::TryGet(num_all_ids, all_ids, msg_id, &msg, true)
+//                                 == Message::MSG_RECEIVED);
+//                             JFUNIT_ASSERT(msg_id == TEST_MESSAGE_ID3);
+//                             JFUNIT_ASSERT(Message::TryGet(num_all_ids, all_ids, msg_id, &msg, true)
+//                                 == Message::MSG_RECEIVED);
+//                             JFUNIT_ASSERT(msg_id == TEST_MESSAGE_ID4);
+//                         }
+//                     }
+// 
+//                     catch (const jf::unittest::Failure& ex)
+//                     {
+//                         m_exeption = new jf::unittest::Failure(ex);
+//                     }
+// 
+//                     return 0;
+                   return false;
+                }
+
+                jf::unittest::Failure* m_exeption;
+            };
+
+            ThreadSuite::ThreadSuite()
+                : jf::unittest::TestSuite("TC::MT::Tests::ThreadSuite")
+            {
+                add_test(new ThreadTest);
+                add_test(new ThreadMessageTest);
+            }
+
+        }
+    }
+}
+
+#endif

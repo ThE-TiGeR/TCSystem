@@ -1,0 +1,39 @@
+
+/**
+ * @defgroup TC_BASE Base Classes and Functions
+ */
+/**
+ * @defgroup TC_BASE_IMPL Implementation Details
+ */
+/**
+ * @defgroup TC_BASE_IO IO Classes and Functions
+ */
+/**
+ * @defgroup TC_BASE_DEBUG Debug Support Classes
+ */
+/**
+ * @defgroup TC_NET Networking
+ */
+/**
+ * @defgroup TC_MT Multithreading
+ */
+/**
+ * @defgroup TC_MATH Mathematic
+ */
+
+/**
+ * @addtogroup TC_BASE
+ * @{
+ */
+	/**
+	 * @addtogroup TC_BASE_IMPL
+	 */
+	/**
+	 * @addtogroup TC_BASE_IO
+	 */
+	/**
+	 * @addtogroup TC_BASE_DEBUG
+	 */
+/**
+ * @}
+ */

@@ -1,0 +1,81 @@
+//*******************************************************************************
+//
+// *******   ***   ***               *
+//    *     *     *                  *
+//    *    *      *                *****
+//    *    *       ***  *   *   **   *    **    ***
+//    *    *          *  * *   *     *   ****  * * *
+//    *     *         *   *      *   * * *     * * *
+//    *      ***   ***    *     **   **   **   *   *
+//                        *
+//*******************************************************************************
+// see http://sourceforge.net/projects/tcsystem/ for details.
+// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+//*******************************************************************************
+//
+// TCSystem is the legal property of its developers.
+// Please refer to the COPYRIGHT file distributed with this source distribution.
+// 
+// This library is free software; you can redistribute it and/or             
+// modify it under the terms of the GNU Lesser General Public                
+// License as published by the Free Software Foundation; either              
+// version 2.1 of the License, or (at your option) any later version.        
+//                                                                           
+// This library is distributed in the hope that it will be useful,           
+// but WITHOUT ANY WARRANTY; without even the implied warranty of            
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU         
+// Lesser General Public License for more details.                           
+//                                                                           
+// You should have received a copy of the GNU Lesser General Public          
+// License along with this library; if not, write to the Free Software       
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
+//*******************************************************************************
+//  $Id: TCGuiApplication.h 957 2010-01-28 23:17:00Z the_____tiger $
+//*******************************************************************************
+
+#ifndef _TC_GUI_APPLICATION_H_
+#define _TC_GUI_APPLICATION_H_
+
+#include "TCApplication.h"
+#include "TCGuiBase.h"
+#include "TCHashTable.h"
+
+namespace TC
+{
+   namespace Gui
+   {
+
+      /**
+      * @addtogroup TC_GUI
+      * @{
+      */
+
+      /**
+      * @brief Gui Application base class
+      * Provides funcions for getting icons, cursurs and texts because of ids
+      */
+      class TCGUI_API Application: public TC::Application
+      {
+      public:   
+         Application();
+         virtual ~Application();
+         virtual bool Init(uint32 narg, char **argv,
+            const std::string &name, const std::string &version,
+            const std::string &company);
+
+         virtual bool Run();
+         virtual void Exit(sint32 exitCode);
+      protected:
+         virtual FX::FXMainWindow* CreateMainWindow() = 0;
+      private:
+         FX::FXApp* m_fx_app;
+         FX::FXMainWindow* m_main_window;
+      };
+
+      /**
+      * @}
+      */
+   }
+}
+
+#endif // _TC_GUI_APPLICATION_H_

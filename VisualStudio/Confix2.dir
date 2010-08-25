@@ -1,0 +1,10 @@
+# -*- python -*-
+
+ADD_EXTRA_DIST('TCSystem.sln') 
+ADD_EXTRA_DIST('TCBasic.vcproj') 
+ADD_EXTRA_DIST('TCDefault.vcproj') 
+ADD_EXTRA_DIST('TCGui.vcproj')
+ADD_EXTRA_DIST('TCMath.vcproj')
+ADD_EXTRA_DIST('TCNet.vcproj')
+ADD_EXTRA_DIST('TCThread.vcproj')
+ADD_EXTRA_DIST('TestBasic.vcproj')

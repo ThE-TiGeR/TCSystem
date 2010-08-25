@@ -1,0 +1,90 @@
+# -*- python -*-
+
+# pull in OS definitions
+REQUIRE_SYMBOL('TCSYSTEM_OS', URGENCY_ERROR)
+
+# seems like we cannot do much of anything without threads
+REQUIRE_SYMBOL('TCSYSTEM_PTHREAD', URGENCY_ERROR)
+
+
+# Basic
+# -----
+
+RELOCATE_HEADER(filename='TCApplication.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCAssert.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCCodec.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCException.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCOutput.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCDebugNew.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCDefines.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCDelete.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCFactory.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCFile.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCFileName.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCHashTable.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCHeap.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCInterlocked.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCMLSHandler.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCMemoryMappedFile.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCNew.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCNewDisable.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCNewEnable.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCNonCopyable.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCRng.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCScopedPtr.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCScopedArray.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCSharedPtr.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCSharedPtrImpl.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCStream.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCStreamAble.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCString.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCSystem.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCTime.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCTypes.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCUtil.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCValue.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCWeakPtr.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCWFileName.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCWString.h', directory=['src', 'Basic'])
+
+
+# Net
+# ---
+
+RELOCATE_HEADER(filename='TCNetApi.h', directory=['src', 'Net'])
+RELOCATE_HEADER(filename='TCNetAddress.h', directory=['src', 'Net'])
+RELOCATE_HEADER(filename='TCNetBroadCastSocket.h', directory=['src', 'Net'])
+RELOCATE_HEADER(filename='TCNetReadWriteSocket.h', directory=['src', 'Net'])
+RELOCATE_HEADER(filename='TCNetFactory.h', directory=['src', 'Net'])
+RELOCATE_HEADER(filename='TCNetSSLFactory.h', directory=['src', 'Net'])
+RELOCATE_HEADER(filename='TCNetSocket.h', directory=['src', 'Net'])
+RELOCATE_HEADER(filename='TCNetSocketServer.h', directory=['src', 'Net'])
+RELOCATE_HEADER(filename='TCNetTypes.h', directory=['src', 'Net'])
+
+# Thread
+# ------
+
+RELOCATE_HEADER(filename='TCMTApi.h', directory=['src', 'Thread'])
+RELOCATE_HEADER(filename='TCMTCondition.h', directory=['src', 'Thread'])
+RELOCATE_HEADER(filename='TCMTEvent.h', directory=['src', 'Thread'])
+RELOCATE_HEADER(filename='TCMTFactory.h', directory=['src', 'Thread'])
+RELOCATE_HEADER(filename='TCMTLock.h', directory=['src', 'Thread'])
+RELOCATE_HEADER(filename='TCMTLockable.h', directory=['src', 'Thread'])
+RELOCATE_HEADER(filename='TCMTMessage.h', directory=['src', 'Thread'])
+RELOCATE_HEADER(filename='TCMTMessageDispatcher.h', directory=['src', 'Thread'])
+RELOCATE_HEADER(filename='TCMTMutex.h', directory=['src', 'Thread'])
+RELOCATE_HEADER(filename='TCMTSemaphore.h', directory=['src', 'Thread'])
+RELOCATE_HEADER(filename='TCMTThread.h', directory=['src', 'Thread'])
+RELOCATE_HEADER(filename='TCMTThreadObject.h', directory=['src', 'Thread'])
+
+
+RELOCATE_HEADER(filename='TCMathApi.h', directory=['src', 'Math'])
+RELOCATE_HEADER(filename='TCMathChecksum.h', directory=['src', 'Math'])
+RELOCATE_HEADER(filename='TCMathCoord2D.h', directory=['src', 'Math'])
+RELOCATE_HEADER(filename='TCMathCoord3D.h', directory=['src', 'Math'])
+RELOCATE_HEADER(filename='TCMathCoord4D.h', directory=['src', 'Math'])
+RELOCATE_HEADER(filename='TCMathCoordUtil.h', directory=['src', 'Math'])
+RELOCATE_HEADER(filename='TCMathBox.h', directory=['src', 'Math'])
+RELOCATE_HEADER(filename='TCMathFactory.h', directory=['src', 'Math'])
+RELOCATE_HEADER(filename='TCMathUtil.h', directory=['src', 'Math'])
+

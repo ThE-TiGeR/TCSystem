@@ -1,0 +1,111 @@
+//*******************************************************************************
+//
+// *******   ***   ***               *
+//    *     *     *                  *
+//    *    *      *                *****
+//    *    *       ***  *   *   **   *    **    ***
+//    *    *          *  * *   *     *   ****  * * *
+//    *     *         *   *      *   * * *     * * *
+//    *      ***   ***    *     **   **   **   *   *
+//                        *
+//*******************************************************************************
+// see http://sourceforge.net/projects/tcsystem/ for details.
+// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+//*******************************************************************************
+//
+// TCSystem is the legal property of its developers.
+// Please refer to the COPYRIGHT file distributed with this source distribution.
+// 
+// This library is free software; you can redistribute it and/or             
+// modify it under the terms of the GNU Lesser General Public                
+// License as published by the Free Software Foundation; either              
+// version 2.1 of the License, or (at your option) any later version.        
+//                                                                           
+// This library is distributed in the hope that it will be useful,           
+// but WITHOUT ANY WARRANTY; without even the implied warranty of            
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU         
+// Lesser General Public License for more details.                           
+//                                                                           
+// You should have received a copy of the GNU Lesser General Public          
+// License along with this library; if not, write to the Free Software       
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
+//*******************************************************************************
+//  $Id: TCMTConditionWin32.h 957 2010-01-28 23:17:00Z the_____tiger $
+//*******************************************************************************
+
+#ifndef _TC_MT_CONDITION_PTHREAD_H_
+#define _TC_MT_CONDITION_PTHREAD_H_
+
+#include "TCMTCondition.h"
+#include "TCMTMutexWin32.h"
+
+namespace TC
+{
+namespace MT
+{
+namespace Impl
+{
+   /**
+    * @addtogroup TC_MT_IMP
+    * @{
+    */
+
+  /**
+   * Condition variable
+   *
+   * Condition variables are tricky to implement using NT synchronization
+   * primitives, since none of them have the atomic "release mutex and wait to be
+   * signaled" which is central to the idea of a condition variable.  To get
+   * around this the solution is to record which threads are waiting and
+   * explicitly wake up those threads.
+   *
+   * Here we implement a condition variable using a list of waiting threads
+   * (protected by a critical section), and a per-thread semaphore (which
+   * actually only needs to be a binary semaphore).
+   *
+   * To wait on the cv, a thread puts itself on the list of waiting threads for
+   * that cv, then releases the mutex and waits on its own personal semaphore.  A
+   * signaling thread simply takes a thread from the head of the list and kicks
+   * that thread's semaphore.  Broadcast is simply implemented by kicking the
+   * semaphore of each waiting thread.
+   *
+   * The only other tricky part comes when a thread gets a timeout from a timed
+   * wait on its semaphore.  Between returning with a timeout from the wait and
+   * entering the critical section, a signaling thread could get in, kick the
+   * waiting thread's semaphore and remove it from the list.  If this happens,
+   * the waiting thread's semaphore is now out of step so it needs resetting, and
+   * the thread should indicate that it was signaled rather than that it timed
+   * out.
+   *
+   */
+  class TC_DLL_LOCAL ConditionWin32: public Condition
+   {
+   public:
+      ConditionWin32();
+      ConditionWin32(MutexPtr mutex);
+      virtual ~ConditionWin32();
+
+      MutexPtr GetMutex();
+
+      bool Wait();
+      bool TryWait(const Time& timeout);
+      bool Signal();
+      bool Broadcast();
+  
+   private:
+      void Init();
+
+      class ConditionData;
+      ConditionData* m_handle;
+      SharedPtr<MutexWin32> m_mutex;
+   };
+
+   /**
+    * @}
+    */
+
+} // namespace Impl
+} // namespace MT
+} // namespace TC
+
+#endif // _TC_MT_CONDITION_PTHREAD_H_

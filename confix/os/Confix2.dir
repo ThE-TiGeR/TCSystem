@@ -1,0 +1,43 @@
+# -*- python -*-
+
+PROVIDE_SYMBOL('TCSYSTEM_OS')
+
+acm4 = """
+
+AC_DEFUN([TCSYSTEM_OS_DEFINITION],
+[
+
+AC_REQUIRE([AC_CANONICAL_TARGET])
+AC_MSG_CHECKING([for TCSystem OS definition])
+case ${target} in
+   *-*-linux*)
+       TCSYSTEM_OS_CFLAGS="-DTCOS_LINUX -DTCOS_POSIX -DUNICODE"
+       TCSYSTEM_OS_LINK_FLAGS="-lrt"
+       ;;
+   *-*-cygwin*)
+       TCSYSTEM_OS_CFLAGS="-DTCOS_CYGWIN -DTCOS_POSIX -DUNICODE"
+       TCSYSTEM_OS_LINK_FLAGS="-lrt"
+       ;;
+   *)
+       AC_MSG_ERROR([could not determine OS (too bad we need it at all)])
+       ;;
+esac
+AC_MSG_RESULT([${TCSYSTEM_OS_CFLAGS}])
+AC_MSG_RESULT([${TCSYSTEM_OS_LINK_FLAGS}])
+AC_SUBST(TCSYSTEM_OS_CFLAGS)
+AC_SUBST(TCSYSTEM_OS_LINK_FLAGS)
+
+])
+
+"""
+
+ACINCLUDE_M4(
+    lines=[acm4])
+CONFIGURE_AC(
+    lines=['TCSYSTEM_OS_DEFINITION'],
+    order=AC_LIBRARIES)
+
+EXTERNAL_LIBRARY(
+    cflags=['@TCSYSTEM_OS_CFLAGS@'],
+    cxxflags=['@TCSYSTEM_OS_CFLAGS@'],
+    libs=['@TCSYSTEM_OS_LINK_FLAGS@'])

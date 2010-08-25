@@ -1,0 +1,6 @@
+# -*- python -*-
+
+LIBNAME('TCOpenGL')
+
+IGNORE_FILE('TCOpenGLGridRenderer.cpp')
+IGNORE_FILE('TCOpenGLPointRenderer.cpp')

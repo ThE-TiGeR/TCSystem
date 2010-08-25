@@ -1,0 +1,3 @@
+# -*- python -*-
+
+LIBNAME('TCAudio')

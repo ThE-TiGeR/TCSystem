@@ -1,0 +1,5 @@
+# -*- python -*-
+
+PROVIDE_H('mpg123.h')
+
+PKG_CONFIG_LIBRARY(packagename='libmpg123')
