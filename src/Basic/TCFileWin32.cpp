@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCFileWin32.cpp 959 2010-03-16 20:53:52Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 #if TCOS_WINDOWS
 #include "TCFile.h"

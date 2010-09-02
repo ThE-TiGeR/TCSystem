@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCString.h 920 2009-03-25 13:16:41Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 #ifndef _TC_MEMORY_MAPPED_FILE_WIN32_H_
 #define _TC_MEMORY_MAPPED_FILE_WIN32_H_

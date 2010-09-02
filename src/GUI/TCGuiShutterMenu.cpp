@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCGuiShutterMenu.cpp 976 2010-04-28 05:36:44Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 
 #include "TCGuiShutterMenu.h"

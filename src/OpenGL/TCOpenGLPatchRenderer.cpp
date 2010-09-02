@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCOpenGLPatchRenderer.cpp 995 2010-05-31 21:16:23Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 
 #include "TCOpenGLPatchRenderer.h"

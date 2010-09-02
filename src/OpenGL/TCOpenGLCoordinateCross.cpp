@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCOpenGLCoordinateCross.cpp 984 2010-05-12 08:33:52Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 
 #include "TCOpenGLCoordinateCross.h"

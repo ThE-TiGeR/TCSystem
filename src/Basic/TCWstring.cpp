@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCWstring.cpp 983 2010-05-11 20:33:38Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 
 #include "TCWString.h"
