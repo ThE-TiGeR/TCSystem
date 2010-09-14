@@ -161,7 +161,8 @@ namespace TC
       uchar* GetBytes() { return reinterpret_cast<uchar*>(&m_val); }
       /** @return number of bytes of value */
       uint32 GetNumBytes() const { return (uint32)sizeof(T); }
-      
+      /** assign the value because of bytes */
+      void SetBytes(const uchar* bytes) {m_val = *reinterpret_cast<const T*>(bytes);}
       /** assignment operator for setting values */
       ByteOrderedValue<T, IS_LITTLE_ENDIAN>& operator=(const T &a)
       {
