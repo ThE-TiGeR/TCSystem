@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCValue.h 957 2010-01-28 23:17:00Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 
 #ifndef _TCVALUE_H_
@@ -161,7 +161,8 @@ namespace TC
       uchar* GetBytes() { return reinterpret_cast<uchar*>(&m_val); }
       /** @return number of bytes of value */
       uint32 GetNumBytes() const { return (uint32)sizeof(T); }
-      
+      /** assign the value because of bytes */
+      void SetBytes(const uchar* bytes) {m_val = *reinterpret_cast<const T*>(bytes);}
       /** assignment operator for setting values */
       ByteOrderedValue<T, IS_LITTLE_ENDIAN>& operator=(const T &a)
       {
