@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCMTFactory.h 957 2010-01-28 23:17:00Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 
 #ifndef _TC_MT_FACTORY_H_
@@ -82,6 +82,19 @@ namespace MT
       TCMT_API ThreadPtr CreateThread(const std::string& thread_name,
                                       uint32 stack_size=0,
                                       Thread::ThreadPriority priority=Thread::PRIORITY_NORMAL);
+
+      /**
+       * @brief Create a command execution thread object
+       *
+       * Creates a thread which accepts only messages of type TC::MT::CommandMessage 
+       * and calls then the method Execute of the message
+       * @param thread_name Name of the thread
+       * @param stack_size Stack size of the thread 0 = system default stack size
+       * @param priority Priority of the thread @see ThreadPriority
+       */
+      TCMT_API ThreadPtr CreateCommandExecutionThread(const std::string& thread_name,
+                                                      uint32 stack_size=0,
+                                                      Thread::ThreadPriority priority=Thread::PRIORITY_NORMAL);
 
       /**
        * @brief Create a message dispatcher object

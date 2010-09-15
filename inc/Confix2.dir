@@ -66,6 +66,7 @@ RELOCATE_HEADER(filename='TCNetTypes.h', directory=['src', 'Net'])
 
 RELOCATE_HEADER(filename='TCMTApi.h', directory=['src', 'Thread'])
 RELOCATE_HEADER(filename='TCMTCondition.h', directory=['src', 'Thread'])
+RELOCATE_HEADER(filename='TCMTCommandMessage.h', directory=['src', 'Thread'])
 RELOCATE_HEADER(filename='TCMTEvent.h', directory=['src', 'Thread'])
 RELOCATE_HEADER(filename='TCMTFactory.h', directory=['src', 'Thread'])
 RELOCATE_HEADER(filename='TCMTLock.h', directory=['src', 'Thread'])

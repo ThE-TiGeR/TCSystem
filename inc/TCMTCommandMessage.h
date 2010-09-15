@@ -32,47 +32,28 @@
 //*******************************************************************************
 //  $Id$
 //*******************************************************************************
-#ifndef _TC_STL_TYPES_H_
-#define _TC_STL_TYPES_H_
+#ifndef _TC_MT_COMMAND_MESSAGE_H_
+#define _TC_MT_COMMAND_MESSAGE_H_
 
-#include "TCTypes.h"
-
-#include <vector>
+#include "TCMTMessage.h"
 
 namespace TC
 {
-   /**
-    * @addtogroup TC_BASE
-    * @{
-    */
+    namespace MT
+    {
+        class CommandMessage: public Message
+        {
+        public:
+            typedef SharedPtr<CommandMessage> Ptr;
+            CommandMessage()
+                :Message(Message::MSG_ID_USER_START)
+            {
+            }
 
-   /**
-    * @file
-    * @brief This file provides the definition of global data types like for stl containers
-    *
-    * @author Thomas Goessler
-    */
+            virtual void Execute() = 0;
+        };
+    }
+}
 
-   /** @brief typedef for a byte vector */
-   typedef std::vector<uint8> ByteVector;
-   /** @brief typedef for a uint16 vector */
-   typedef std::vector<uint16> Uint16Vector;
-   /** @brief typedef for a uint32 vector */
-   typedef std::vector<uint32> Uint32Vector;
-   /** @brief typedef for a uint64 vector */
-   typedef std::vector<uint64> Uint64Vector;
+#endif // _TC_MT_COMMAND_MESSAGE_H_
 
-   /** @brief typedef for a uint64 vector */
-   typedef std::vector<std::string> StringVector;
-
-   /**
-   * @}
-   */
-
-} // namespac TC
-
-/**
- * @}
- */
-
-#endif // _TCBASE_TYPES_H_

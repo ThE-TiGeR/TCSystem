@@ -32,47 +32,47 @@
 //*******************************************************************************
 //  $Id$
 //*******************************************************************************
-#ifndef _TC_STL_TYPES_H_
-#define _TC_STL_TYPES_H_
+#ifndef _TC_MT_COMMAND_EXECUTION_THREAD_H_
+#define _TC_MT_COMMAND_EXECUTION_THREAD_H_
 
-#include "TCTypes.h"
-
-#include <vector>
+#include "TCMTCommandMessage.h"
+#include "TCMTThreadObject.h"
 
 namespace TC
 {
-   /**
-    * @addtogroup TC_BASE
-    * @{
-    */
+    namespace MT
+    {
+        class CommandExecutionThreadObject: public ThreadObject
+        {
+        public:
+            virtual bool Run()
+            {
+                MT::ThreadPtr thread = MT::Factory::GetCurrentThread();
+                bool running(true);
+                while (running)
+                {
+                    MT::MessagePtr message;
+                    switch (thread->WaitThreadMessage(message))
+                    {
+                    case MT::Message::MSG_RECEIVED:
+                        {
+                            CommandMessage::Ptr c_message(CommandMessage::Ptr::StaticCast(message));
+                            c_message->Execute();
+                        }
+                        break;
 
-   /**
-    * @file
-    * @brief This file provides the definition of global data types like for stl containers
-    *
-    * @author Thomas Goessler
-    */
+                    case MT::Message::MSG_RECEIVE_FAILED:
+                    case MT::Message::MSG_RECEIVE_TIMEOUT:
+                    case MT::Message::MSG_QUIT_RECEIVED:
+                        running = false;
+                        break;
+                    }
 
-   /** @brief typedef for a byte vector */
-   typedef std::vector<uint8> ByteVector;
-   /** @brief typedef for a uint16 vector */
-   typedef std::vector<uint16> Uint16Vector;
-   /** @brief typedef for a uint32 vector */
-   typedef std::vector<uint32> Uint32Vector;
-   /** @brief typedef for a uint64 vector */
-   typedef std::vector<uint64> Uint64Vector;
+                }
+                return true;
+            }
+        };
+    }
+}
 
-   /** @brief typedef for a uint64 vector */
-   typedef std::vector<std::string> StringVector;
-
-   /**
-   * @}
-   */
-
-} // namespac TC
-
-/**
- * @}
- */
-
-#endif // _TCBASE_TYPES_H_
+#endif //_TC_MT_COMMAND_EXECUTION_THREAD_H_

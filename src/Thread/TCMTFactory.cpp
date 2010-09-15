@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCMTFactory.cpp 957 2010-01-28 23:17:00Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 
 #include "TCMTFactory.h"
@@ -52,6 +52,7 @@
 #endif
 
 #include "TCMTMessageDispatcherImp.h"
+#include "TCMTCommandExecutionThread.h"
 
 #include "TCNewEnable.h"
 
@@ -69,6 +70,19 @@ namespace TC
 #else
          return Impl::ThreadPthread::Create(thread_name, stack_size, priority);
 #endif
+      }
+
+      ThreadPtr Factory::CreateCommandExecutionThread(const std::string& thread_name,
+         uint32 stack_size/* =0 */, 
+         Thread::ThreadPriority priority/* =Thread::PRIORITY_NORMAL */)
+      {
+         ThreadPtr thread = Factory::CreateThread(thread_name, stack_size, priority);
+         if (!thread->Start(ThreadObjectPtr(new CommandExecutionThreadObject)))
+         {
+            return ThreadPtr();
+         }
+
+         return thread;
       }
 
       MessageDispatcherPtr Factory::CreateMessageDispatcher()
