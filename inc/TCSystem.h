@@ -30,13 +30,13 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCSystem.h 1000 2010-07-14 23:27:05Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 
 #ifndef _TC_SYSTEM_H_
 #define _TC_SYSTEM_H_
 
-#include "TCTypes.h"
+#include "TCSharedPtr.h"
 
 #include <string>
 #include <vector>
@@ -44,20 +44,20 @@
 namespace TC
 {
    /**
-    * @addtogroup TC_BASE
-    * @{
-    */
+   * @addtogroup TC_BASE
+   * @{
+   */
 
    /**
-    * @file 
-    * This header file provides the definition of the namespace TC::System. 
-    * 
-    * @author Thomas Goessler 
-    */
+   * @file 
+   * This header file provides the definition of the namespace TC::System. 
+   * 
+   * @author Thomas Goessler 
+   */
 
    /**
-    * @brief Namespace for getting operating system depending information
-    */
+   * @brief Namespace for getting operating system depending information
+   */
    namespace System
    {
       /** @return The operating system name */
@@ -79,13 +79,13 @@ namespace TC
 
       /** @return CPU time needed since starttime */
       TCBASE_API uint64 GetCpuTime(uint64 starttime=0);
-      
+
       /**
-       * Suspends the process for specified time if supported by the system
-       * otherwise it just waits specified time by checking the wall time
-       *
-       * @param milli_seconds Number of milli seconds to wait
-       */
+      * Suspends the process for specified time if supported by the system
+      * otherwise it just waits specified time by checking the wall time
+      *
+      * @param milli_seconds Number of milli seconds to wait
+      */
       TCBASE_API void Sleep(uint64 milli_seconds);
 
       /** @return The date information stored in a string */
@@ -99,11 +99,11 @@ namespace TC
 
       struct NetworkDeviceInfo
       {
-          std::string ip_address;
-          std::string mac_address;
+         std::string ip_address;
+         std::string mac_address;
       };
       /** Get info of all network devices
-       * @return true sucess */
+      * @return true sucess */
       TCBASE_API bool GetNetworkDeviceInfos(std::vector<NetworkDeviceInfo>& infos);
 
       /** @return The last happend error code */
@@ -112,11 +112,31 @@ namespace TC
       TCBASE_API std::string  GetLastErrorMessage();
       /** @return The string of happend error code */
       TCBASE_API std::string  GetErrorMessage(sint32 error_code);
+
+      /**
+      * @brief Interface needed by the console stop handler
+      */
+      class ConsoleStopHandler
+      {
+      public:
+         /** @brief Methode gets called when ctrl-c is pressed or the console is closed */
+         virtual void OnConsoleStop() = 0;
+
+         virtual ~ConsoleStopHandler() {}
+      };
+      typedef SharedPtr<ConsoleStopHandler> ConsoleStopHandlerPtr;
+
+      /**
+      * @brief Set the new stop handler
+      * @return the old stop handler
+      */
+      TCBASE_API ConsoleStopHandlerPtr SetConsoleStopHandler(ConsoleStopHandlerPtr handler);
+
    }
 
    /**
-    * @}
-    */
+   * @}
+   */
 }
 
 #endif // _TC_SYSTEM_H_

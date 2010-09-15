@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCSystem.cpp 1000 2010-07-14 23:27:05Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 
 #include "TCSystem.h"
@@ -582,4 +582,41 @@ namespace TC
 
       return true;
    }
+
+   static System::ConsoleStopHandlerPtr s_stop_handler;
+   static void ConsoleSignalHandler(int type)
+   {
+      ::signal(type, SIG_DFL);
+      if (s_stop_handler)
+      {
+         s_stop_handler->OnConsoleStop();
+      }
+   }
+
+   System::ConsoleStopHandlerPtr System::SetConsoleStopHandler(System::ConsoleStopHandlerPtr handler)
+   {
+      std::swap(s_stop_handler, handler);
+      if (s_stop_handler)
+      {
+         ::signal(SIGINT, ConsoleSignalHandler);
+         ::signal(SIGTERM, ConsoleSignalHandler);
+#ifdef TCOS_POSIX
+         ::signal(SIGQUIT, ConsoleSignalHandler);
+#elif defined TCOS_WINDOWS
+         ::signal(SIGBREAK, ConsoleSignalHandler);
+#endif
+      }
+      else
+      {
+         ::signal(SIGINT, SIG_DFL);
+         ::signal(SIGTERM, SIG_DFL);
+#ifdef TCOS_POSIX
+         ::signal(SIGQUIT, SIG_DFL);
+#elif defined TCOS_WINDOWS
+         ::signal(SIGBREAK, SIG_DFL);
+#endif
+      }
+      return handler;
+   }
+
 }
