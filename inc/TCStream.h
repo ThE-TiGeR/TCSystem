@@ -294,47 +294,32 @@ namespace TC
    // -----------------------------------------------------------------
    // read operators
    // -----------------------------------------------------------------
-   inline StreamPtr operator>>(StreamPtr stream, std::string& val) { stream->Read(val); return stream; }
-   inline StreamPtr operator>>(StreamPtr stream, std::wstring& val) { stream->Read(val); return stream; }
+   template <class T>
+   inline StreamPtr operator>>(StreamPtr stream, T& val) { stream->Read(val); return stream; }
 
-   inline StreamPtr operator>>(StreamPtr stream, uchar& val) { stream->Read(val); return stream; }
-   inline StreamPtr operator>>(StreamPtr stream, char& val)  { stream->Read(val); return stream; }
-   inline StreamPtr operator>>(StreamPtr stream, char* val)  { stream->Read(val); return stream; }
-
-   inline StreamPtr operator>>(StreamPtr stream, sint16& val) { stream->Read(val); return stream; }
-   inline StreamPtr operator>>(StreamPtr stream, sint32& val) { stream->Read(val); return stream; }
-   inline StreamPtr operator>>(StreamPtr stream, sint64& val) { stream->Read(val); return stream; }
-   inline StreamPtr operator>>(StreamPtr stream, uint16& val) { stream->Read(val); return stream; }
-   inline StreamPtr operator>>(StreamPtr stream, uint32& val) { stream->Read(val); return stream; }
-   inline StreamPtr operator>>(StreamPtr stream, uint64& val) { stream->Read(val); return stream; }
-
-   inline StreamPtr operator>>(StreamPtr stream, float& val)  { stream->Read(val); return stream; }
-   inline StreamPtr operator>>(StreamPtr stream, double& val) { stream->Read(val); return stream; }
+   template <class T>
+   inline StreamPtr operator>>(StreamPtr stream, std::vector<T>& values)
+   {
+       uint32 size;
+       stream > size;
+       values.resize(size);
+       for (std::vector<T>::iterator it=values.begin(); it!=values.end(); ++it)
+       {
+           stream >> *it;
+       }
+       return stream;
+   }
 
    // -----------------------------------------------------------------
    // write operators
    // -----------------------------------------------------------------
    inline StreamPtr operator<<(StreamPtr stream, StreamPtr (*_Pfn)(StreamPtr)) {return ((*_Pfn)(stream));}
 
-   inline StreamPtr operator<<(StreamPtr stream, const std::string& val) { stream->Write(val); return stream; }
-   inline StreamPtr operator<<(StreamPtr stream, const std::wstring& val) { stream->Write(val); return stream; }
-
-   inline StreamPtr operator<<(StreamPtr stream, uchar val)       { stream->Write(val); return stream; }
-   inline StreamPtr operator<<(StreamPtr stream, char val)        { stream->Write(val); return stream; }
-   inline StreamPtr operator<<(StreamPtr stream, const char* val) { stream->Write(val); return stream; }
-
-   inline StreamPtr operator<<(StreamPtr stream, sint16 val)      { stream->Write(val); return stream; }
-   inline StreamPtr operator<<(StreamPtr stream, sint32 val)      { stream->Write(val); return stream; }
-   inline StreamPtr operator<<(StreamPtr stream, sint64 val)      { stream->Write(val); return stream; }
-   inline StreamPtr operator<<(StreamPtr stream, uint16 val)      { stream->Write(val); return stream; }
-   inline StreamPtr operator<<(StreamPtr stream, uint32 val)      { stream->Write(val); return stream; }
-   inline StreamPtr operator<<(StreamPtr stream, uint64 val)      { stream->Write(val); return stream; }
-
-   inline StreamPtr operator<<(StreamPtr stream, float val)       { stream->Write(val); return stream; }
-   inline StreamPtr operator<<(StreamPtr stream, double val)      { stream->Write(val); return stream; }
+   template <class T>
+   inline StreamPtr operator<<(StreamPtr stream, const T& val) { stream->Write(val); return stream; }
 
    template <class T>
-   StreamPtr operator<<(StreamPtr stream, const std::vector<T>& values)
+   inline StreamPtr operator<<(StreamPtr stream, const std::vector<T>& values)
    {
        stream << static_cast<uint32>(values.size());
        for (std::vector<T>::const_iterator it=values.begin(); it!=values.end(); ++it)
