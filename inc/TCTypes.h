@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCTypes.h 991 2010-05-18 11:24:39Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 #ifndef _TCBASE_TYPES_H_
 #define _TCBASE_TYPES_H_
@@ -95,6 +95,17 @@ namespace TC
 
    /** @brief typedef for 8bit unsigned char */
    typedef unsigned char uchar;
+
+   typedef size_t size_type;
+#ifdef _MSC_VER
+# ifdef TCOS_64
+   typedef sint64 ssize_type;
+# else
+   typedef sint32 ssize_type;
+# endif
+#else
+   typedef ssize_t ssize_type;
+#endif
 
 } // namespac TC
 

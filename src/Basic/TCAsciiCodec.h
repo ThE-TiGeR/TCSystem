@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCAsciiCodec.h 957 2010-01-28 23:17:00Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 #ifndef _TCASCII_CODEC_H_
 #define _TCASCII_CODEC_H_
@@ -62,35 +62,35 @@ namespace Impl
       AsciiCodec();
       virtual ~AsciiCodec();
 
-      virtual uint32 Decode(Stream& stream, sint16 &val);
-      virtual uint32 Decode(Stream& stream, uint16 &val);
-      virtual uint32 Decode(Stream& stream, sint32 &val);
-      virtual uint32 Decode(Stream& stream, uint32 &val);
-      virtual uint32 Decode(Stream& stream, sint64 &val);
-      virtual uint32 Decode(Stream& stream, uint64 &val);
-      virtual uint32 Decode(Stream& stream, float &val);
-      virtual uint32 Decode(Stream& stream, double &val);
-      virtual uint32 Decode(Stream& stream, std::string& val);
-      virtual uint32 Decode(Stream& stream, std::wstring& val);
-      virtual uint32 Decode(Stream& stream, char *val);
-      virtual uint32 Decode(Stream& stream, char &val);
-      virtual uint32 Decode(Stream& stream, uchar &val) ;
+      virtual uint64 Decode(Stream& stream, sint16 &val);
+      virtual uint64 Decode(Stream& stream, uint16 &val);
+      virtual uint64 Decode(Stream& stream, sint32 &val);
+      virtual uint64 Decode(Stream& stream, uint32 &val);
+      virtual uint64 Decode(Stream& stream, sint64 &val);
+      virtual uint64 Decode(Stream& stream, uint64 &val);
+      virtual uint64 Decode(Stream& stream, float &val);
+      virtual uint64 Decode(Stream& stream, double &val);
+      virtual uint64 Decode(Stream& stream, std::string& val);
+      virtual uint64 Decode(Stream& stream, std::wstring& val);
+      virtual uint64 Decode(Stream& stream, char *val);
+      virtual uint64 Decode(Stream& stream, char &val);
+      virtual uint64 Decode(Stream& stream, uchar &val) ;
 
-      virtual uint32 Encode(sint16 val, Stream& stream);
-      virtual uint32 Encode(uint16 val, Stream& stream);
-      virtual uint32 Encode(sint32 val, Stream& stream);
-      virtual uint32 Encode(uint32 val, Stream& stream);
-      virtual uint32 Encode(sint64 val, Stream& stream);
-      virtual uint32 Encode(uint64 val, Stream& stream);
-      virtual uint32 Encode(float val, Stream& stream);
-      virtual uint32 Encode(double val, Stream& stream);
-      virtual uint32 Encode(const std::string& val, Stream& stream);
-      virtual uint32 Encode(const std::wstring& val, Stream& stream);
-      virtual uint32 Encode(const char *val, Stream& stream);
-      virtual uint32 Encode(char val, Stream& stream);
-      virtual uint32 Encode(uchar val, Stream& stream);
-      virtual uint32 EncodeEndOfLine(Stream& stream);
-      virtual uint32 EncodeSpace(Stream& stream);
+      virtual uint64 Encode(sint16 val, Stream& stream);
+      virtual uint64 Encode(uint16 val, Stream& stream);
+      virtual uint64 Encode(sint32 val, Stream& stream);
+      virtual uint64 Encode(uint32 val, Stream& stream);
+      virtual uint64 Encode(sint64 val, Stream& stream);
+      virtual uint64 Encode(uint64 val, Stream& stream);
+      virtual uint64 Encode(float val, Stream& stream);
+      virtual uint64 Encode(double val, Stream& stream);
+      virtual uint64 Encode(const std::string& val, Stream& stream);
+      virtual uint64 Encode(const std::wstring& val, Stream& stream);
+      virtual uint64 Encode(const char *val, Stream& stream);
+      virtual uint64 Encode(char val, Stream& stream);
+      virtual uint64 Encode(uchar val, Stream& stream);
+      virtual uint64 EncodeEndOfLine(Stream& stream);
+      virtual uint64 EncodeSpace(Stream& stream);
    };
 
    /**

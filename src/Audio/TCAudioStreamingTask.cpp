@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCAudioStreamingTask.cpp 957 2010-01-28 23:17:00Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 
 #include "TCAudioStreamingTask.h"
@@ -242,7 +242,7 @@ namespace TC
          const SoundFormat& format(streaming_source->m_sound_data->GetFormat());
 
          // Read more audio data (if there is any)
-         uint32 bytes_in_buffer = 
+         uint64 bytes_in_buffer = 
             streaming_source->m_sound_data->GetData(m_streaming_buffer_size, m_streaming_buffer);
          // end if sound data
          if (bytes_in_buffer == 0)
@@ -259,7 +259,7 @@ namespace TC
          }
 
          ::alBufferData(buffer_to_queue, Util::SoundFormat2BufferFormat(format),
-            m_streaming_buffer, bytes_in_buffer, format.samples_per_second);
+            m_streaming_buffer, ALsizei(bytes_in_buffer), format.samples_per_second);
          OpenALHandler::GetInstance()->CheckErrorAndThrowException("alBufferData");
 
          ::alSourceQueueBuffers(streaming_source->m_source, 1, &buffer_to_queue);

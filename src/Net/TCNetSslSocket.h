@@ -73,11 +73,9 @@ namespace TC
             virtual bool Close();
             virtual SocketId GetSocket();
 
-            virtual uint32 ReadBytes(void* buffer, uint32 size);
-            virtual uint32 ReadBytes(void* buffer, uint32 size, const Time& timeout);
-            virtual uint32 ReadBytesFrom(void* buffer, uint32 size, Address& ip);
-            virtual uint32 WriteBytes(const void* buffer, uint32 size);
-            virtual uint32 WriteBytesTo(const void* buffer, uint32 size, const Address& ip, PortNumber port);
+            virtual uint64 ReadBytes(void* buffer, uint64 size);
+            virtual uint64 ReadBytes(void* buffer, uint64 size, const Time& timeout);
+            virtual uint64 WriteBytes(const void* buffer, uint64 size);
 
             virtual ~SslSocket();
          private:

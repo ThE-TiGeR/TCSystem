@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCMTThread.h 957 2010-01-28 23:17:00Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 
 #ifndef _TC_MT_THREAD_H_
@@ -123,11 +123,27 @@ namespace MT
       /**
        * @brief Send a message to specified thread.
        * The message can be received with WaitThreadMessage
-       * The receiver thread has to delete the message
        * @param message The message to send to the thread
        * @return true if send successful
        */
       virtual bool SendThreadMessage(MessagePtr message) = 0;
+      /**
+       * @brief Send a sync message to specified thread.
+       * The message can be received with WaitThreadMessage
+       * The received message has to be sent back with SendReplyThreadMessage
+       * only then this method will return
+       *
+       * @param message The message to send to the thread
+       * @return true if send successful
+       */
+      virtual Message::ReturnValue SendSyncThreadMessage(MessagePtr message) = 0;
+      /**
+       * @brief Send the answer message to a sync message.
+       *
+       * @param message The message to send to the thread
+       * @return true if send successful
+       */
+      virtual bool SendReplyThreadMessage(MessagePtr message) = 0;
 
       /**
        * @brief Wait for a message received in this thread

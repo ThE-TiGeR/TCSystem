@@ -36,6 +36,7 @@
 #include "TCStringStream.h"
 
 #include <cstring>
+#include <limits>
 
 #include "TCNewEnable.h"
 
@@ -56,45 +57,56 @@ namespace TC
       {
       }
 
-      uint32 StringStream::ReadBytes(uint32 nBytes, void *bytes)
+      uint64 StringStream::ReadBytes(uint64 nBytes, void *bytes)
       {
-         std::memcpy(bytes, &m_string[ m_string_position], nBytes);
+         if (nBytes > std::numeric_limits<std::string::size_type>::max())
+         {
+             return 0;
+         }
 
-         m_string_position += nBytes;
+         std::memcpy(bytes, &m_string[m_string_position], std::string::size_type(nBytes));
+
+         m_string_position += std::string::size_type(nBytes);
 
          return nBytes;
       }
 
-      uint32 StringStream::WriteBytes(uint32 nBytes, const void *bytes)
+      uint64 StringStream::WriteBytes(uint64 nBytes, const void *bytes)
       {
-         m_string.replace(m_string_position, nBytes, static_cast<const char*>(bytes), nBytes);
+         if (nBytes > std::numeric_limits<std::string::size_type>::max())
+         {
+             return 0;
+         }
 
-         m_string_position += nBytes;
+         m_string.replace(m_string_position, std::string::size_type(nBytes), 
+              std::string::const_pointer(bytes), std::string::size_type(nBytes));
+
+         m_string_position += std::string::size_type(nBytes);
 
          return nBytes;
       }
 
-      bool StringStream::SetPosition(sint32 pos, StreamPosition pos_mode)
+      bool StringStream::SetPosition(sint64 pos, StreamPosition pos_mode)
       {
          switch(pos_mode)
          {
          case POSITION_SET:
-            m_string_position = pos;
+            m_string_position = std::string::size_type(pos);
             break;
 
          case POSITION_CURRENT:
-            m_string_position += pos;
+            m_string_position += ssize_type(pos);
             break;
 
          case POSITION_END:
-            m_string_position = m_string.size() + pos;
+            m_string_position = m_string.size() + ssize_type(pos);
             break;
          }
 
          return true;
       }
 
-      uint32 StringStream::GetPosition() const
+      uint64 StringStream::GetPosition() const
       {
          return m_string_position;
       }

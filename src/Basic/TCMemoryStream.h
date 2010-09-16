@@ -35,6 +35,7 @@
 #ifndef _TCMEMORY_STREAM_H_
 #define _TCMEMORY_STREAM_H_
 
+#include "TCStlTypes.h"
 #include "TCStreamBase.h"
 
 #include <vector>
@@ -68,31 +69,31 @@ namespace Impl
       /**
        * Construct an TCMemoryStream object
        */
-      MemoryStream(CodecPtr codec, std::vector< uchar >& memory);
+      MemoryStream(CodecPtr codec, ByteVector& memory);
       /** destruct an TCMemoryStream object */
       virtual ~MemoryStream();
 
-      virtual bool SetPosition(sint32, StreamPosition pos);
-      virtual uint32 GetPosition() const;
+      virtual bool SetPosition(sint64, StreamPosition pos);
+      virtual uint64 GetPosition() const;
 
       /**
        * methode for reading the bytes from the stream
        * @param nBytes number of bytes to read
        * @param bytes where to store the data which should be read
        */
-      virtual uint32 ReadBytes(uint32 nBytes, void *bytes);
+      virtual uint64 ReadBytes(uint64 nBytes, void *bytes);
       /**
        * methode for writing the bytes to the stream
        * @param nBytes number of bytes to written
        * @param bytes where the bytes are stored which should be written
        */
-      virtual uint32 WriteBytes(uint32 nBytes, const void *bytes);
+      virtual uint64 WriteBytes(uint64 nBytes, const void *bytes);
 
    private:
       /** An list arry holding the data */
-      std::vector< uchar >& m_memory;
+      ByteVector& m_memory;
       /** current position where to read or write into the memory */
-      std::vector< uchar >::size_type m_memory_position;
+      ByteVector::size_type m_memory_position;
    };
 
    /**

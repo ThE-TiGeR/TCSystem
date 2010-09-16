@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCBinaryCodec.cpp 957 2010-01-28 23:17:00Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 
 #include "TCBinaryCodec.h"
@@ -59,7 +59,7 @@ namespace TC
          {
          }
 
-         uint32 Decode(Stream& stream, sint16 &val)
+         uint64 Decode(Stream& stream, sint16 &val)
          {
             VALUE_CONV< sint16 > bval;
             if (stream.ReadBytes(bval.GetNumBytes(), bval.GetBytes()) != bval.GetNumBytes())
@@ -70,7 +70,7 @@ namespace TC
             return bval.GetNumBytes();
          }
 
-         uint32 Decode(Stream& stream, uint16 &val)
+         uint64 Decode(Stream& stream, uint16 &val)
          {
             VALUE_CONV< uint16 > bval;
             if (stream.ReadBytes(bval.GetNumBytes(), bval.GetBytes()) != bval.GetNumBytes())
@@ -81,7 +81,7 @@ namespace TC
             return bval.GetNumBytes();
          }
 
-         uint32 Decode(Stream& stream, sint32 &val)
+         uint64 Decode(Stream& stream, sint32 &val)
          {
             VALUE_CONV< sint32 > bval;
             if (stream.ReadBytes(bval.GetNumBytes(), bval.GetBytes()) != bval.GetNumBytes())
@@ -92,7 +92,7 @@ namespace TC
             return bval.GetNumBytes();
          }
 
-         uint32 Decode(Stream& stream, uint32 &val)
+         uint64 Decode(Stream& stream, uint32 &val)
          {
             VALUE_CONV< uint32 > bval;
             if (stream.ReadBytes(bval.GetNumBytes(), bval.GetBytes()) != bval.GetNumBytes())
@@ -103,7 +103,7 @@ namespace TC
             return bval.GetNumBytes();
          }
 
-         uint32 Decode(Stream& stream, sint64 &val)
+         uint64 Decode(Stream& stream, sint64 &val)
          {
             VALUE_CONV< sint64 > bval;
             if (stream.ReadBytes(bval.GetNumBytes(), bval.GetBytes()) != bval.GetNumBytes())
@@ -114,7 +114,7 @@ namespace TC
             return bval.GetNumBytes();
          }
 
-         uint32 Decode(Stream& stream, uint64 &val)
+         uint64 Decode(Stream& stream, uint64 &val)
          {
             VALUE_CONV< uint64 > bval;
             if (stream.ReadBytes(bval.GetNumBytes(), bval.GetBytes()) != bval.GetNumBytes())
@@ -125,7 +125,7 @@ namespace TC
             return bval.GetNumBytes();
          }
 
-         uint32 Decode(Stream& stream, float &val)
+         uint64 Decode(Stream& stream, float &val)
          {
             VALUE_CONV< float > bval;
             if (stream.ReadBytes(bval.GetNumBytes(), bval.GetBytes()) != bval.GetNumBytes())
@@ -136,7 +136,7 @@ namespace TC
             return bval.GetNumBytes();
          }
 
-         uint32 Decode(Stream& stream, double &val)
+         uint64 Decode(Stream& stream, double &val)
          {
             VALUE_CONV< double > bval;
             if (stream.ReadBytes(bval.GetNumBytes(), bval.GetBytes()) != bval.GetNumBytes())
@@ -147,13 +147,13 @@ namespace TC
             return bval.GetNumBytes();
          }
 
-         uint32 Decode(Stream& stream, std::string& val)
+         uint64 Decode(Stream& stream, std::string& val)
          {
             // for char we have to read the len first
             uint32 nBytes;
-            uint32 len = Decode(stream, nBytes);
+            uint64 len = Decode(stream, nBytes);
 
-            char* data = new char[nBytes+1];
+            char* data = new char[std::size_t(nBytes)+1];
             if (stream.ReadBytes(nBytes, data) != nBytes)
             {
                delete []data;
@@ -166,20 +166,20 @@ namespace TC
             return len + nBytes;
          }
 
-         uint32 Decode(Stream& stream, std::wstring& val)
+         uint64 Decode(Stream& stream, std::wstring& val)
          {
             std::string tmp;
-            uint32 len = Decode(stream, tmp);
+            uint64 len = Decode(stream, tmp);
             val = WString::ToString(tmp);
 
             return len;
          }
 
-         uint32 Decode(Stream& stream, char *val)
+         uint64 Decode(Stream& stream, char *val)
          {
             // for char we have to read the len first
             uint32 nBytes;
-            uint32 len = Decode(stream, nBytes);
+            uint64 len = Decode(stream, nBytes);
 
             if (stream.ReadBytes(nBytes, val) != nBytes)
             {
@@ -189,103 +189,103 @@ namespace TC
             return len + nBytes;
          }
 
-         uint32 Decode(Stream& stream, char &val)
+         uint64 Decode(Stream& stream, char &val)
          {
             return stream.ReadBytes(1, &val);
          }
 
-         uint32 Decode(Stream& stream, uchar &val)
+         uint64 Decode(Stream& stream, uchar &val)
          {
             return stream.ReadBytes(1, &val);
          }
 
 
-         uint32 Encode(sint16 val, Stream& stream)
+         uint64 Encode(sint16 val, Stream& stream)
          {
             VALUE_CONV< sint16 > bval(val);
             return stream.WriteBytes(bval.GetNumBytes(), bval.GetBytes());
          }
 
-         uint32 Encode(uint16 val, Stream& stream)
+         uint64 Encode(uint16 val, Stream& stream)
          {
             VALUE_CONV< uint16 > bval(val);
             return stream.WriteBytes(bval.GetNumBytes(), bval.GetBytes());
          }
 
-         uint32 Encode(sint32 val, Stream& stream)
+         uint64 Encode(sint32 val, Stream& stream)
          {
             VALUE_CONV< sint32 > bval(val);
             return stream.WriteBytes(bval.GetNumBytes(), bval.GetBytes());
          }
 
-         uint32 Encode(uint32 val, Stream& stream)
+         uint64 Encode(uint32 val, Stream& stream)
          {
             VALUE_CONV< uint32 > bval(val);
             return stream.WriteBytes(bval.GetNumBytes(), bval.GetBytes());
          }
 
-         uint32 Encode(sint64 val, Stream& stream)
+         uint64 Encode(sint64 val, Stream& stream)
          {
             VALUE_CONV< sint64 > bval(val);
             return stream.WriteBytes(bval.GetNumBytes(), bval.GetBytes());
          }
 
-         uint32 Encode(uint64 val, Stream& stream)
+         uint64 Encode(uint64 val, Stream& stream)
          {
             VALUE_CONV< uint64 > bval(val);
             return stream.WriteBytes(bval.GetNumBytes(), bval.GetBytes());
          }
 
-         uint32 Encode(float val, Stream& stream)
+         uint64 Encode(float val, Stream& stream)
          {
             VALUE_CONV< float > bval(val);
             return stream.WriteBytes(bval.GetNumBytes(), bval.GetBytes());
          }
 
-         uint32 Encode(double val, Stream& stream)
+         uint64 Encode(double val, Stream& stream)
          {
             VALUE_CONV< double > bval(val);
             return stream.WriteBytes(bval.GetNumBytes(), bval.GetBytes());
          }
 
-         uint32 Encode(const std::string& val, Stream& stream)
+         uint64 Encode(const std::string& val, Stream& stream)
          {
-            uint32 nBytes = static_cast<uint32>(val.length());
-            uint32 len = Encode(nBytes, stream);
+            uint32 nBytes = val.length();
+            uint64 len = Encode(nBytes, stream);
 
             return stream.WriteBytes(nBytes, val.c_str()) + len;
          }
 
-         uint32 Encode(const std::wstring& val, Stream& stream)
+         uint64 Encode(const std::wstring& val, Stream& stream)
          {
             std::string tmp = WString::ToString(val);
             return Encode(tmp, stream);
          }
 
-         uint32 Encode(const char *val, Stream& stream)
+         uint64 Encode(const char *val, Stream& stream)
          {
-            uint32 nBytes = static_cast<uint32>(std::strlen(val));
-            uint32 len = Encode(nBytes, stream);
+            uint32 nBytes = std::strlen(val);
+            uint64 len = Encode(nBytes, stream);
 
             return stream.WriteBytes(nBytes, val) + len;
          }
 
-         uint32 Encode(char val, Stream& stream)
+         uint64 Encode(char val, Stream& stream)
          {
             return stream.WriteBytes(1, &val);
          }
 
-         uint32 Encode(uchar val, Stream& stream)
+         uint64 Encode(uchar val, Stream& stream)
          {
             return stream.WriteBytes(1, &val);
          }
 
-         uint32 EncodeEndOfLine(Stream& /*stream*/)
+         uint64 EncodeEndOfLine(Stream& /*stream*/)
          {
             return 0;
          }
 
-         uint32 EncodeSpace(Stream& /*stream*/)
+         uint64 EncodeSpace(Stream& /*stream*/)
          {
             return 0;
          }

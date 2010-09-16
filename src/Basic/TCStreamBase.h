@@ -87,36 +87,36 @@ namespace Impl
       }
       void EnableDisplayErrorMessages(bool displ);
 
-      virtual uint32 Read(sint16 &val) { return m_codec->Decode(*this, val); }
-      virtual uint32 Read(uint16 &val) { return m_codec->Decode(*this, val); }
-      virtual uint32 Read(sint32 &val) { return m_codec->Decode(*this, val); }
-      virtual uint32 Read(uint32 &val) { return m_codec->Decode(*this, val); }
-      virtual uint32 Read(sint64 &val) { return m_codec->Decode(*this, val); }
-      virtual uint32 Read(uint64 &val) { return m_codec->Decode(*this, val); }
-      virtual uint32 Read(float &val)  { return m_codec->Decode(*this, val); }
-      virtual uint32 Read(double &val) { return m_codec->Decode(*this, val); }
-      virtual uint32 Read(char *val)   { return m_codec->Decode(*this, val); }
-      virtual uint32 Read(std::string& val){ return m_codec->Decode(*this, val); }
-      virtual uint32 Read(std::wstring& val){ return m_codec->Decode(*this, val); }
-      virtual uint32 Read(char &val)   { return m_codec->Decode(*this, val); }
-      virtual uint32 Read(uchar &val)  { return m_codec->Decode(*this, val); }
+      virtual uint64 Read(sint16 &val) { return m_codec->Decode(*this, val); }
+      virtual uint64 Read(uint16 &val) { return m_codec->Decode(*this, val); }
+      virtual uint64 Read(sint32 &val) { return m_codec->Decode(*this, val); }
+      virtual uint64 Read(uint32 &val) { return m_codec->Decode(*this, val); }
+      virtual uint64 Read(sint64 &val) { return m_codec->Decode(*this, val); }
+      virtual uint64 Read(uint64 &val) { return m_codec->Decode(*this, val); }
+      virtual uint64 Read(float &val)  { return m_codec->Decode(*this, val); }
+      virtual uint64 Read(double &val) { return m_codec->Decode(*this, val); }
+      virtual uint64 Read(char *val)   { return m_codec->Decode(*this, val); }
+      virtual uint64 Read(std::string& val){ return m_codec->Decode(*this, val); }
+      virtual uint64 Read(std::wstring& val){ return m_codec->Decode(*this, val); }
+      virtual uint64 Read(char &val)   { return m_codec->Decode(*this, val); }
+      virtual uint64 Read(uchar &val)  { return m_codec->Decode(*this, val); }
 
-      virtual uint32 Write(sint16 val) { return m_codec->Encode(val, *this); }
-      virtual uint32 Write(uint16 val) { return m_codec->Encode(val, *this); }
-      virtual uint32 Write(sint32 val) { return m_codec->Encode(val, *this); }
-      virtual uint32 Write(uint32 val) { return m_codec->Encode(val, *this); }
-      virtual uint32 Write(sint64 val) { return m_codec->Encode(val, *this); }
-      virtual uint32 Write(uint64 val) { return m_codec->Encode(val, *this); }
-      virtual uint32 Write(float val) { return m_codec->Encode(val, *this); }
-      virtual uint32 Write(double val) { return m_codec->Encode(val, *this); }
-      virtual uint32 Write(const char *val) { return m_codec->Encode(val, *this); }
-      virtual uint32 Write(const std::string& val) { return m_codec->Encode(val, *this); }
-      virtual uint32 Write(const std::wstring& val) { return m_codec->Encode(val, *this); }
-      virtual uint32 Write(char val) { return m_codec->Encode(val, *this); }
-      virtual uint32 Write(uchar val) { return m_codec->Encode(val, *this); }
+      virtual uint64 Write(sint16 val) { return m_codec->Encode(val, *this); }
+      virtual uint64 Write(uint16 val) { return m_codec->Encode(val, *this); }
+      virtual uint64 Write(sint32 val) { return m_codec->Encode(val, *this); }
+      virtual uint64 Write(uint32 val) { return m_codec->Encode(val, *this); }
+      virtual uint64 Write(sint64 val) { return m_codec->Encode(val, *this); }
+      virtual uint64 Write(uint64 val) { return m_codec->Encode(val, *this); }
+      virtual uint64 Write(float val) { return m_codec->Encode(val, *this); }
+      virtual uint64 Write(double val) { return m_codec->Encode(val, *this); }
+      virtual uint64 Write(const char *val) { return m_codec->Encode(val, *this); }
+      virtual uint64 Write(const std::string& val) { return m_codec->Encode(val, *this); }
+      virtual uint64 Write(const std::wstring& val) { return m_codec->Encode(val, *this); }
+      virtual uint64 Write(char val) { return m_codec->Encode(val, *this); }
+      virtual uint64 Write(uchar val) { return m_codec->Encode(val, *this); }
 
-      virtual uint32 WriteEndOfLine() { return m_codec->EncodeEndOfLine(*this); }
-      virtual uint32 WriteSpace() { return m_codec->EncodeSpace(*this); }
+      virtual uint64 WriteEndOfLine() { return m_codec->EncodeEndOfLine(*this); }
+      virtual uint64 WriteSpace() { return m_codec->EncodeSpace(*this); }
 
       virtual void Flush() {}
       virtual void CloseStream();

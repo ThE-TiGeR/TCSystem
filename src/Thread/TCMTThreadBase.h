@@ -78,6 +78,8 @@ namespace TC
             ThreadPriority GetPriority() const;
 
             bool SendThreadMessage(MessagePtr message);
+            Message::ReturnValue SendSyncThreadMessage(MessagePtr message);
+            bool SendReplyThreadMessage(MessagePtr message);
             Message::ReturnValue WaitThreadMessage(MessagePtr &message);
             Message::ReturnValue WaitThreadMessage(MessagePtr &message, const Time& timeout);
 

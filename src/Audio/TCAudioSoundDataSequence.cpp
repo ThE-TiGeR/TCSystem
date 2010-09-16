@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCAudioSoundDataSequence.cpp 957 2010-01-28 23:17:00Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 
 #include "TCAudioSoundDataSequence.h"
@@ -49,15 +49,15 @@ namespace TC
       {
       }
 
-      uint32 SoundDataSequence::GetData(uint32 num_bytes, uint8* buffer)
+      uint64 SoundDataSequence::GetData(uint64 num_bytes, uint8* buffer)
       {
          Locker lock(this);
 
-         uint32 n_read = 0;
+         uint64 n_read = 0;
          while(num_bytes > 0 && 
                m_current_sound_data < m_sound_data.size())
          {
-            uint32 c_read = m_sound_data[m_current_sound_data]->GetData(num_bytes, buffer);
+            uint64 c_read = m_sound_data[m_current_sound_data]->GetData(num_bytes, buffer);
             if (c_read < num_bytes)
             {
                m_sound_data[m_current_sound_data]->SetToStart();

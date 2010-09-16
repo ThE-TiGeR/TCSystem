@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCAudioSoundDataWav.h 957 2010-01-28 23:17:00Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 #ifndef _TC_AUDIO_SOUND_DATA_WAV_H_
 #define _TC_AUDIO_SOUND_DATA_WAV_H_
@@ -51,7 +51,7 @@ namespace TC
          virtual ~SoundDataWav();
 
          virtual const SoundFormat& GetFormat() const;
-         virtual uint32 GetData(uint32 num_bytes, uint8* buffer);
+         virtual uint64 GetData(uint64 num_bytes, uint8* buffer);
          virtual void SetToStart();
 
       private:
@@ -62,7 +62,7 @@ namespace TC
       private:
          SoundFormat m_sound_format;
          StreamPtr m_stream;
-         uint32 m_start_of_sound_data;
+         uint64 m_start_of_sound_data;
 
          typedef MT::LockerPtr<const SoundDataWav*> Locker;
          friend class MT::LockerPtr<const SoundDataWav*>;

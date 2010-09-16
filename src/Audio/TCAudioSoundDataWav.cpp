@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCAudioSoundDataWav.cpp 987 2010-05-17 08:28:04Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 
 #include "TCAudioSoundDataWav.h"
@@ -63,11 +63,11 @@ namespace TC
          return m_sound_format;
       }
 
-      uint32 SoundDataWav::GetData(uint32 num_bytes, uint8* buffer)
+      uint64 SoundDataWav::GetData(uint64 num_bytes, uint8* buffer)
       {
          Locker lock(this);
 
-         uint32 n_read = m_stream->ReadBytes(num_bytes, buffer);
+         uint64 n_read = m_stream->ReadBytes(num_bytes, buffer);
          if (n_read < num_bytes && IsLooping())
          {
             m_stream->SetPosition(m_start_of_sound_data, Stream::POSITION_SET);

@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCAudioSoundData.h 957 2010-01-28 23:17:00Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 #ifndef _TC_AUDIO_SOUND_DATA_H_
 #define _TC_AUDIO_SOUND_DATA_H_
@@ -53,7 +53,7 @@ namespace TC
          }
 
          virtual const SoundFormat& GetFormat() const = 0;
-         virtual uint32 GetData(uint32 num_bytes, uint8* buffer) = 0;
+         virtual uint64 GetData(uint64 num_bytes, uint8* buffer) = 0;
          virtual void SetToStart() = 0;
 
          virtual bool IsLooping() const { return m_loop_data; }

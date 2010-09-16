@@ -116,7 +116,7 @@ void FileStream::SetStream(const std::string &fileName, StreamDirection directio
 }
 
 
-uint32 FileStream::ReadBytes(uint32 nBytes, void *bytes)
+uint64 FileStream::ReadBytes(uint64 nBytes, void *bytes)
 {
    // check for an error
    if (Error())
@@ -131,23 +131,30 @@ uint32 FileStream::ReadBytes(uint32 nBytes, void *bytes)
       return 0;
    }
 
-   std::size_t num = std::fread(bytes, 1, nBytes, m_stream_pointer);
-   if (num <= 0)
+   uint64 read_bytes = 0;
+   while(read_bytes < nBytes)
    {
-      if (std::feof(m_stream_pointer))
-      {
-         setStatus(error_end_file);
-      }
-      else
-      {
-         setStatus(error_read_file);
-      }
+       std::size_t num = std::fread(static_cast<uchar*>(bytes)+read_bytes, 1, 
+           std::size_t(nBytes-read_bytes), m_stream_pointer);
+       if (num <= 0)
+       {
+           if (std::feof(m_stream_pointer))
+           {
+               setStatus(error_end_file);
+           }
+           else
+           {
+               setStatus(error_read_file);
+           }
+           break;
+       }
+       read_bytes += num;
    }
 
-   return static_cast<uint32>(num);
+   return read_bytes;
 }
 
-uint32 FileStream::WriteBytes(uint32 nBytes, const void *bytes)
+uint64 FileStream::WriteBytes(uint64 nBytes, const void *bytes)
 {
    if (nBytes == 0)
    {
@@ -167,13 +174,20 @@ uint32 FileStream::WriteBytes(uint32 nBytes, const void *bytes)
       return 0;
    }
 
-   std::size_t num = std::fwrite(bytes, 1, nBytes, m_stream_pointer);
-   if (num <= 0)
+   uint64 wrote_bytes = 0;
+   while(wrote_bytes < nBytes)
    {
-      setStatus(error_write_file);
+       std::size_t num = std::fwrite(static_cast<const uchar*>(bytes)+wrote_bytes, 1, 
+           std::size_t(nBytes-wrote_bytes), m_stream_pointer);
+       if (num <= 0)
+       {
+           setStatus(error_write_file);
+           break;
+       }
+       wrote_bytes += num;
    }
 
-   return static_cast<uint32>(num);
+   return wrote_bytes;
 }
 
 void FileStream::Flush()
@@ -207,28 +221,28 @@ void FileStream::displayErrorMessage() const
    }
 }
 
-bool FileStream::SetPosition(sint32 pos, StreamPosition pos_mode)
+bool FileStream::SetPosition(sint64 pos, StreamPosition pos_mode)
 {
    ResetStatus();
 
    switch(pos_mode)
    {
    case POSITION_SET:
-      return std::fseek(m_stream_pointer, pos, SEEK_SET) == 0;
+      return std::fseek(m_stream_pointer, ssize_type(pos), SEEK_SET) == 0;
 
    case POSITION_CURRENT:
-      return std::fseek(m_stream_pointer, pos, SEEK_CUR) == 0;
+      return std::fseek(m_stream_pointer, ssize_type(pos), SEEK_CUR) == 0;
 
    case POSITION_END:
-      return std::fseek(m_stream_pointer, pos, SEEK_END) == 0;
+      return std::fseek(m_stream_pointer, ssize_type(pos), SEEK_END) == 0;
    }
 
    return false;
 }
 
-TC::uint32 FileStream::GetPosition() const
+uint64 FileStream::GetPosition() const
 {
-   return static_cast<TC::uint32>(std::ftell(m_stream_pointer));
+   return std::ftell(m_stream_pointer);
 }
 
 }

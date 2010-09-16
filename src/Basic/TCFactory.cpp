@@ -94,7 +94,7 @@ namespace TC
          return StreamPtr(new Impl::FileStream(stream, direction, codec));
       }
 
-      StreamPtr CreateMemoryStream(CodecPtr codec, std::vector< uchar >& memory)
+      StreamPtr CreateMemoryStream(CodecPtr codec, ByteVector& memory)
       {
          return StreamPtr(new Impl::MemoryStream(codec, memory));
       }

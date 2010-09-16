@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCNetSocket.h 957 2010-01-28 23:17:00Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 
 #ifndef _TCNET_BROADCAST_SOCKET_H
@@ -64,7 +64,7 @@ namespace TC
          * @param ip [out] in the same format as in_addr.S_un.S_addr
          * @return number of bytes received
          */
-         virtual uint32 ReadBytesFrom(void* buffer, uint32 size, Address& ip) = 0;
+         virtual uint64 ReadBytesFrom(void* buffer, uint64 size, Address& ip) = 0;
 
          virtual ~BroadcastReadSocket() {}
       };
@@ -81,7 +81,7 @@ namespace TC
          * @param ip [in] recipient ip address in the same format as in_addr.S_un.S_addr
          * @param port [in] recipient port number
          */
-         virtual uint32 WriteBytesTo(const void* buffer, uint32 size, const Address& ip, PortNumber port) = 0;
+         virtual uint64 WriteBytesTo(const void* buffer, uint64 size, const Address& ip, PortNumber port) = 0;
 
          virtual ~BroadcastWriteSocket() {}
       };

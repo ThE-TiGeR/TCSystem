@@ -32,10 +32,12 @@
 //*******************************************************************************
 //  $Id$
 //*******************************************************************************
+#define _SCL_SECURE_NO_WARNINGS
 
 #include "TCMemoryStream.h"
 
 #include <cstring>
+#include <limits>
 
 #include "TCNewEnable.h"
 
@@ -44,7 +46,7 @@ namespace TC
    namespace Impl
    {
 
-      MemoryStream::MemoryStream(CodecPtr codec, std::vector< uchar >& memory)
+      MemoryStream::MemoryStream(CodecPtr codec, ByteVector& memory)
          :StreamBase(codec),
          m_memory(memory),
          m_memory_position(0)
@@ -56,51 +58,87 @@ namespace TC
       {
       }
 
-      uint32 MemoryStream::ReadBytes(uint32 num_bytes, void* bytes)
+      uint64 MemoryStream::ReadBytes(uint64 num_bytes, void* bytes)
       {
+         if (num_bytes > std::numeric_limits<ByteVector::size_type>::max())
+         {
+             return 0;
+         }
+
          if (m_memory_position + num_bytes <= m_memory.size())
          {
-            std::memcpy(bytes, &m_memory[m_memory_position], num_bytes);
-            m_memory_position += num_bytes;
+            ByteVector::pointer copy_data = static_cast<ByteVector::pointer>(bytes);
+            std::copy(m_memory.begin()+m_memory_position, 
+                      m_memory.begin()+ByteVector::size_type(m_memory_position+num_bytes), copy_data);
+            m_memory_position += ByteVector::size_type(num_bytes);
+
             return num_bytes;
          }
 
          return 0;
       }
 
-      uint32 MemoryStream::WriteBytes(uint32 num_bytes, const void* bytes)
+      uint64 MemoryStream::WriteBytes(uint64 num_bytes, const void* bytes)
       {
-         const uchar* data_to_insert = static_cast<const uchar*>(bytes);
-         m_memory.resize(m_memory_position, 0);
-         m_memory.insert(m_memory.end(), data_to_insert, data_to_insert + num_bytes);
-         m_memory_position = m_memory.size();
+         if (num_bytes > std::numeric_limits<ByteVector::size_type>::max())
+         {
+             return 0;
+         }
+
+         ByteVector::const_pointer data_to_write = static_cast<ByteVector::const_pointer>(bytes);
+         if (m_memory.size() == m_memory_position)
+         {
+            m_memory.insert(m_memory.end(), data_to_write, data_to_write + num_bytes);
+         }
+         else if (m_memory.size() < m_memory_position+num_bytes)
+         {
+             m_memory.resize(ByteVector::size_type(m_memory_position+num_bytes));
+             std::copy(data_to_write, data_to_write+num_bytes, m_memory.begin()+m_memory_position);
+         }
+         else
+         {
+             std::copy(data_to_write, data_to_write+num_bytes, m_memory.begin()+m_memory_position);
+         }
+
+         m_memory_position += ByteVector::size_type(num_bytes);
 
          return num_bytes;
       }
 
-      bool MemoryStream::SetPosition(sint32 pos, StreamPosition pos_mode)
+      bool MemoryStream::SetPosition(sint64 pos, StreamPosition pos_mode)
       {
+         if (pos > std::numeric_limits<ByteVector::size_type>::max())
+         {
+             return false;
+         }
+
          switch(pos_mode)
          {
          case POSITION_SET:
-            m_memory_position = pos;
+            m_memory_position = ByteVector::size_type(pos);
             break;
 
          case POSITION_CURRENT:
-            m_memory_position += pos;
+            m_memory_position += ssize_type(pos);
             break;
 
          case POSITION_END:
-            m_memory_position = m_memory.size() + pos;
+            m_memory_position = m_memory.size() + ssize_type(pos);
             break;
+         }
+
+         // check if vector is big enought
+         if (m_memory.size() < m_memory_position)
+         {
+             m_memory.resize(m_memory_position, 0);
          }
 
          return true;
       }
 
-      uint32 MemoryStream::GetPosition() const
+      uint64 MemoryStream::GetPosition() const
       {
-         return uint32(m_memory_position);
+         return m_memory_position;
       }
    }
 }

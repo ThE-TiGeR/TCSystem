@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCAudioSoundDataWav.h 920 2009-03-25 13:16:41Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 #ifndef _TC_AUDIO_SOUND_DATA_MP3_H_
 #define _TC_AUDIO_SOUND_DATA_MP3_H_
@@ -53,7 +53,7 @@ namespace TC
          virtual ~SoundDataMp3();
 
          virtual const SoundFormat& GetFormat() const;
-         virtual uint32 GetData(uint32 num_bytes, uint8* buffer);
+         virtual uint64 GetData(uint64 num_bytes, uint8* buffer);
          virtual void SetToStart();
 
       private:

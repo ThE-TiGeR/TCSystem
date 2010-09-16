@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCAudioSoundDataMultitrack.cpp 957 2010-01-28 23:17:00Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 
 #include "TCAudioSoundDataMultitrack.h"
@@ -49,7 +49,7 @@ namespace TC
       {
       }
 
-      uint32 SoundDataMultitrack::GetData(uint32 /*num_bytes*/, uint8* /*buffer*/)
+      uint64 SoundDataMultitrack::GetData(uint64 /*num_bytes*/, uint8* /*buffer*/)
       {
          return 0;
       }

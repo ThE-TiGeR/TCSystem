@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCAudioSoundDataMultitrack.h 957 2010-01-28 23:17:00Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 #ifndef _TC_AUDIO_SOUND_DATA_MULTITRACK_H_
 #define _TC_AUDIO_SOUND_DATA_MULTITRACK_H_
@@ -49,7 +49,7 @@ namespace TC
          SoundDataMultitrack();
          virtual ~SoundDataMultitrack();
 
-         virtual uint32 GetData(uint32 num_bytes, uint8* buffer);
+         virtual uint64 GetData(uint64 num_bytes, uint8* buffer);
          virtual void SetToStart();
 
          virtual void SetLoopData(bool loop);

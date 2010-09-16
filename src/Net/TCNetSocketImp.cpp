@@ -76,14 +76,14 @@ namespace TC
             return m_socket;
          }
 
-         uint32 SocketImp::ReadBytes(void* buffer, uint32 size)
+         uint64 SocketImp::ReadBytes(void* buffer, uint64 size)
          {
             if ((!IsOpened()) || (size == 0))
             {
                return 0;
             }
 
-            int nbytes = ::recv(m_socket, (char*)buffer, size, 0);
+            int nbytes = ::recv(m_socket, (char*)buffer, int(size), 0);
             if(nbytes == 0 || nbytes == socket_error)
             {
                Util::PrintSocketError("Net::Impl::SocketImp::ReceiveBytes, recv failed", true);
@@ -94,7 +94,7 @@ namespace TC
             return nbytes;
          }
 
-         uint32 SocketImp::ReadBytes(void* buffer, uint32 size, const Time& timeout_in)
+         uint64 SocketImp::ReadBytes(void* buffer, uint64 size, const Time& timeout_in)
          {
             if ((!IsOpened()) || (size == 0) || !buffer)
             {
@@ -112,7 +112,7 @@ namespace TC
 
             Time timeout(timeout_in);
             Time start_time = Time::Now();
-            uint32 bytes_received = 0;
+            uint64 bytes_received = 0;
             do
             {
                timeval rx_timeout = 
@@ -133,7 +133,7 @@ namespace TC
                   return false;
                }
 
-               int rx_len = ReadBytes(buffer, size);
+               uint64 rx_len = ReadBytes(buffer, size);
                if(rx_len == 0)
                {
                   return false;
@@ -158,7 +158,7 @@ namespace TC
             return bytes_received;
          }
 
-         uint32 SocketImp::ReadBytesFrom(void* buffer, uint32 size, Address& ip)
+         uint64 SocketImp::ReadBytesFrom(void* buffer, uint64 size, Address& ip)
          {
             ip = 0;
             if ((!IsOpened()) || (size==0))
@@ -168,7 +168,8 @@ namespace TC
 
             sockaddr_in s_address;
             AddrLength sockaddr_size = sizeof(s_address);
-            int nbytes = ::recvfrom(m_socket, (char*)buffer, size, 0, reinterpret_cast<sockaddr*>(&s_address),  &sockaddr_size);
+            int nbytes = ::recvfrom(m_socket, (char*)buffer, int(size), 0, 
+                reinterpret_cast<sockaddr*>(&s_address),  &sockaddr_size);
             if(nbytes == 0 || nbytes == socket_error)
             {
                Util::PrintSocketError("Net::Impl::SocketImp::ReceiveBytesFrom, recvfrom failed", true);
@@ -181,7 +182,7 @@ namespace TC
             return nbytes;
          }
 
-         uint32 SocketImp::WriteBytes(const void* buffer_in, uint32 size)
+         uint64 SocketImp::WriteBytes(const void* buffer_in, uint64 size)
          {
             if (!IsOpened())
             {
@@ -189,10 +190,10 @@ namespace TC
             }
 
             const char* buffer = static_cast<const char*>(buffer_in);
-            uint32 nbytes_total = 0;
+            uint64 nbytes_total = 0;
             while (nbytes_total < size)
             {
-               sint32 nbytes = ::send(m_socket, buffer, size, 0);
+               int nbytes = ::send(m_socket, buffer, int(size-nbytes_total), 0);
                if(nbytes == 0 || nbytes == socket_error)
                {
                   Util::PrintSocketError(
@@ -201,7 +202,6 @@ namespace TC
                   return 0;
                }
 
-               size -= nbytes;
                nbytes_total += nbytes;
                buffer += nbytes;
             }
@@ -209,7 +209,7 @@ namespace TC
             return nbytes_total;
          }
 
-         uint32 SocketImp::WriteBytesTo(const void* buffer_in, uint32 size, const Address& ip, PortNumber port)
+         uint64 SocketImp::WriteBytesTo(const void* buffer_in, uint64 size, const Address& ip, PortNumber port)
          {
             if (!IsOpened())
             {
@@ -222,10 +222,11 @@ namespace TC
             address.sin_addr = ip;
 
             const char* buffer = static_cast<const char*>(buffer_in);
-            uint32 nbytes_total = 0;
+            uint64 nbytes_total = 0;
             while (nbytes_total < size)
             {
-               sint32 nbytes = ::sendto(m_socket, buffer, size, 0, reinterpret_cast<sockaddr*>(&address), sizeof(address));
+               sint32 nbytes = ::sendto(m_socket, buffer, int(size-nbytes_total), 
+                   0, reinterpret_cast<sockaddr*>(&address), sizeof(address));
                if(nbytes == 0 || nbytes == socket_error)
                {
                   Util::PrintSocketError("Net::Impl::SocketImp::SendBytesTo, sendto failed", true);
@@ -233,7 +234,6 @@ namespace TC
                   return 0;
                }
 
-               size -= nbytes;
                nbytes_total += nbytes;
                buffer += nbytes;
             }

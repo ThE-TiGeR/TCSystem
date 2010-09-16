@@ -318,6 +318,30 @@ namespace TC
             return true;
          }
 
+         Message::ReturnValue ThreadBase::SendSyncThreadMessage(MessagePtr message)
+         {
+            Message::ReturnValue ret = Message::MSG_RECEIVE_FAILED;
+            if (SendThreadMessage(message))
+            {
+                SharedPtr<ThreadBase> thread = SharedPtr<ThreadBase>::StaticCast(message->GetSenderThread());
+
+                MessagePtr ret_message;
+                ret = thread->m_message_queue.GetMessage(message->GetMessageId(),
+                    message->GetMessageId(), ret_message);
+                if (ret == Message::MSG_RECEIVED)
+                {
+                    ret = ret_message->GetReplyId() == message->GetReplyId() ? Message::MSG_RECEIVED : Message::MSG_RECEIVE_FAILED;
+                }
+            }
+
+            return ret;
+         }
+
+         bool ThreadBase::SendReplyThreadMessage(MessagePtr message)
+         {
+            return SendThreadMessage(message);
+         }
+
       } // namespace Impl
    } // namespace MT
 } // namespace TC

@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCAsciiCodec.cpp 957 2010-01-28 23:17:00Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 
 #include "TCAsciiCodec.h"
@@ -60,61 +60,61 @@ AsciiCodec::~AsciiCodec()
 {
 }
 
-uint32 AsciiCodec::Decode(Stream& /* stream */, sint16& /* val */)
+uint64 AsciiCodec::Decode(Stream& /* stream */, sint16& /* val */)
 {
    TC_ASSERT(!"TC::Impl::AsciiCodec::Decode not implemented");
    return 0;
 }
 
-uint32 AsciiCodec::Decode(Stream& /* stream */, uint16& /* val */)
+uint64 AsciiCodec::Decode(Stream& /* stream */, uint16& /* val */)
 {
    TC_ASSERT(!"TC::Impl::AsciiCodec::Decode not implemented");
    return 0;
 }
 
-uint32 AsciiCodec::Decode(Stream& /* stream */, sint32& /* val */)
+uint64 AsciiCodec::Decode(Stream& /* stream */, sint32& /* val */)
 {
    TC_ASSERT(!"TC::Impl::AsciiCodec::Decode not implemented");
    return 0;
 }
 
-uint32 AsciiCodec::Decode(Stream& /* stream */, uint32& /* val */)
+uint64 AsciiCodec::Decode(Stream& /* stream */, uint32& /* val */)
 {
    TC_ASSERT(!"TC::Impl::AsciiCodec::Decode not implemented");
    return 0;
 }
 
-uint32 AsciiCodec::Decode(Stream& /* stream */, sint64& /* val */)
+uint64 AsciiCodec::Decode(Stream& /* stream */, sint64& /* val */)
 {
    TC_ASSERT(!"TC::Impl::AsciiCodec::Decode not implemented");
    return 0;
 }
 
-uint32 AsciiCodec::Decode(Stream& /* stream */, uint64& /* val */)
+uint64 AsciiCodec::Decode(Stream& /* stream */, uint64& /* val */)
 {
    TC_ASSERT(!"TC::Impl::AsciiCodec::Decode not implemented");
    return 0;
 }
 
-uint32 AsciiCodec::Decode(Stream& /* stream */, float& /* val */)
+uint64 AsciiCodec::Decode(Stream& /* stream */, float& /* val */)
 {
    TC_ASSERT(!"TC::Impl::AsciiCodec::Decode not implemented");
    return 0;
 }
 
-uint32 AsciiCodec::Decode(Stream& /* stream */, double& /* val */)
+uint64 AsciiCodec::Decode(Stream& /* stream */, double& /* val */)
 {
    TC_ASSERT(!"TC::Impl::AsciiCodec::Decode not implemented");
    return 0;
 }
 
-uint32 AsciiCodec::Decode(Stream& /* stream */, char* /* val */)
+uint64 AsciiCodec::Decode(Stream& /* stream */, char* /* val */)
 {
    TC_ASSERT(!"TC::Impl::AsciiCodec::Decode not implemented");
    return 0;
 }
 
-uint32 AsciiCodec::Decode(Stream& stream, std::string& val)
+uint64 AsciiCodec::Decode(Stream& stream, std::string& val)
 {
    val.erase();
    char c;
@@ -127,122 +127,122 @@ uint32 AsciiCodec::Decode(Stream& stream, std::string& val)
 
       val += c;
    }
-   return static_cast<uint32>(val.length());
+   return val.length();
 }
 
-uint32 AsciiCodec::Decode(Stream& stream, std::wstring& val)
+uint64 AsciiCodec::Decode(Stream& stream, std::wstring& val)
 {
    std::string tmp;
-   uint32 len = Decode(stream, tmp);
+   uint64 len = Decode(stream, tmp);
    val = WString::ToString(tmp);
 
    return len;
 }
 
-uint32 AsciiCodec::Decode(Stream& stream, char &val)
+uint64 AsciiCodec::Decode(Stream& stream, char &val)
 {
    return stream.ReadBytes(1, &val);
 }
 
-uint32 AsciiCodec::Decode(Stream& stream, uchar &val)
+uint64 AsciiCodec::Decode(Stream& stream, uchar &val)
 {
    return stream.ReadBytes(1, &val);
 }
 
 
-uint32 AsciiCodec::Encode(sint16 val, Stream& stream)
+uint64 AsciiCodec::Encode(sint16 val, Stream& stream)
 {
    char buffer[16];
-   uint32 len = String::Snprintf(buffer, Util::ArraySize(buffer), "%hd", val);
+   uint64 len = String::Snprintf(buffer, Util::ArraySize(buffer), "%hd", val);
 
    return stream.WriteBytes(len, buffer);
 }
-uint32 AsciiCodec::Encode(uint16 val, Stream& stream)
+uint64 AsciiCodec::Encode(uint16 val, Stream& stream)
 {
    char buffer[16];
-   uint32 len = String::Snprintf(buffer, Util::ArraySize(buffer), "%hu", val);
+   uint64 len = String::Snprintf(buffer, Util::ArraySize(buffer), "%hu", val);
 
    return stream.WriteBytes(len, buffer);
 }
 
-uint32 AsciiCodec::Encode(sint32 val, Stream& stream)
+uint64 AsciiCodec::Encode(sint32 val, Stream& stream)
 {
    char buffer[32];
-   uint32 len = String::Snprintf(buffer, Util::ArraySize(buffer), "%d", val);
+   uint64 len = String::Snprintf(buffer, Util::ArraySize(buffer), "%d", val);
 
    return stream.WriteBytes(len, buffer);
 }
 
-uint32 AsciiCodec::Encode(uint32 val, Stream& stream)
+uint64 AsciiCodec::Encode(uint32 val, Stream& stream)
 {
    char buffer[32];
-   uint32 len = String::Snprintf(buffer, Util::ArraySize(buffer), "%u", val);
+   uint64 len = String::Snprintf(buffer, Util::ArraySize(buffer), "%u", val);
 
    return stream.WriteBytes(len, buffer);
 }
 
-uint32 AsciiCodec::Encode(sint64 val, Stream& stream)
+uint64 AsciiCodec::Encode(sint64 val, Stream& stream)
 {
    char buffer[64];
-   uint32 len = String::Snprintf(buffer, Util::ArraySize(buffer), "%" TC_SINT64_FORMAT, val);
+   uint64 len = String::Snprintf(buffer, Util::ArraySize(buffer), "%" TC_SINT64_FORMAT, val);
 
    return stream.WriteBytes(len, buffer);
 }
-uint32 AsciiCodec::Encode(uint64 val, Stream& stream)
+uint64 AsciiCodec::Encode(uint64 val, Stream& stream)
 {
    char buffer[64];
-   uint32 len = String::Snprintf(buffer, Util::ArraySize(buffer), "%" TC_UINT64_FORMAT, val);
+   uint64 len = String::Snprintf(buffer, Util::ArraySize(buffer), "%" TC_UINT64_FORMAT, val);
 
    return stream.WriteBytes(len, buffer);
 }
 
-uint32 AsciiCodec::Encode(float val, Stream& stream)
+uint64 AsciiCodec::Encode(float val, Stream& stream)
 {
    char buffer[32];
-   uint32 len = String::Snprintf(buffer, Util::ArraySize(buffer), "%g", val);
+   uint64 len = String::Snprintf(buffer, Util::ArraySize(buffer), "%g", val);
 
    return stream.WriteBytes(len, buffer);
 }
-uint32 AsciiCodec::Encode(double val, Stream& stream)
+uint64 AsciiCodec::Encode(double val, Stream& stream)
 {
    char buffer[64];
-   uint32 len = String::Snprintf(buffer, Util::ArraySize(buffer), "%lg", val);
+   uint64 len = String::Snprintf(buffer, Util::ArraySize(buffer), "%lg", val);
 
    return stream.WriteBytes(len, buffer);
 }
 
-uint32 AsciiCodec::Encode(const std::string& val, Stream& stream)
+uint64 AsciiCodec::Encode(const std::string& val, Stream& stream)
 {
-   return stream.WriteBytes(static_cast<uint32>(val.length()), val.c_str());
+   return stream.WriteBytes(val.length(), val.c_str());
 }
 
-uint32 AsciiCodec::Encode(const std::wstring& val, Stream& stream)
+uint64 AsciiCodec::Encode(const std::wstring& val, Stream& stream)
 {
    std::string tmp = WString::ToString(val);
    return Encode(tmp, stream);
 }
 
-uint32 AsciiCodec::Encode(const char *val, Stream& stream)
+uint64 AsciiCodec::Encode(const char *val, Stream& stream)
 {
-   return stream.WriteBytes(static_cast<uint32>(std::strlen(val)), val);
+   return stream.WriteBytes(std::strlen(val), val);
 }
 
-uint32 AsciiCodec::Encode(char val, Stream& stream)
-{
-   return stream.WriteBytes(1, &val);
-}
-
-uint32 AsciiCodec::Encode(uchar val, Stream& stream)
+uint64 AsciiCodec::Encode(char val, Stream& stream)
 {
    return stream.WriteBytes(1, &val);
 }
 
-uint32 AsciiCodec::EncodeEndOfLine(Stream& stream)
+uint64 AsciiCodec::Encode(uchar val, Stream& stream)
+{
+   return stream.WriteBytes(1, &val);
+}
+
+uint64 AsciiCodec::EncodeEndOfLine(Stream& stream)
 {
    return stream.WriteBytes(1, "\n");
 }
 
-uint32 AsciiCodec::EncodeSpace(Stream& stream)
+uint64 AsciiCodec::EncodeSpace(Stream& stream)
 {
    return stream.WriteBytes(1, " ");
 }

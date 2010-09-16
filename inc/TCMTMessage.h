@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCMTMessage.h 957 2010-01-28 23:17:00Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 
 #ifndef _TC_MT_MESSAGE_H_
@@ -69,7 +69,7 @@ namespace MT
       enum MsgIDs
       {
          MSG_ID_QUIT       = 0x00000001, ///< Message id for quitting a thread
-         MSG_ID_START      = 0x00000002, ///< Message id for quitting a thread
+         MSG_ID_START      = 0x00000002, ///< Start of message ids for internal use
          MSG_ID_USER_START = 0x0000ffff, ///< Message id at which user specified massage ids should start
          MSG_ID_UNKNOWN    = 0xffffffff  ///< Undefined message id, for getting all messages
       };
@@ -91,17 +91,22 @@ namespace MT
       };
 
       /** @brief Create empty message */
-      Message(uint32 message_id);
+      explicit Message(uint32 message_id);
+
       /** @brief Destruct message */
       virtual ~Message();
       /** @brief get the id of the message */
       inline uint32 GetMessageId() const {return m_message_id;}
+      /** @brief get the id of the message */
+      inline uint32 GetReplyId() const {return m_reply_id;}
       /** @brief get the sender thread of the message */
       inline ThreadPtr GetSenderThread() {return m_sender_thread;}
 
    private:
       /** global id of the message */
       uint32 m_message_id;
+      /** id which is used for reply if sync message */
+      uint32 m_reply_id;
       /** The sender thread */
       ThreadPtr m_sender_thread;
    };

@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCNetSocket.h 957 2010-01-28 23:17:00Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 
 #ifndef _TCNET_READ_WRITE_SOCKET_H
@@ -63,7 +63,7 @@ namespace TC
          * @param size [in]  size of \c buffer
          * @return number of bytes received
          */
-         virtual uint32 ReadBytes(void* buffer, uint32 size) = 0;
+         virtual uint64 ReadBytes(void* buffer, uint64 size) = 0;
 
          /**
          * @brief Reads data with length 'size' from socket with timeout
@@ -73,14 +73,14 @@ namespace TC
          * @return true  -> all data received in given time
          *         false -> by timeout or error or not all data received
          */
-         virtual uint32 ReadBytes(void* buffer, uint32 size, const Time& timeout) = 0;
+         virtual uint64 ReadBytes(void* buffer, uint64 size, const Time& timeout) = 0;
 
          /**
          * @brief  Writes bytes to the socket
          * @param buffer [out] data which should be sent
          * @param size [in] size of \c buffer
          */
-         virtual uint32 WriteBytes(const void* buffer, uint32 size) = 0;
+         virtual uint64 WriteBytes(const void* buffer, uint64 size) = 0;
 
          virtual ~ReadWriteSocket() {}
       };

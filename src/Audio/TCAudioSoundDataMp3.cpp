@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCAudioSoundDataWav.cpp 929 2009-05-04 21:21:11Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 
 #include "TCAudioSoundDataMp3.h"
@@ -127,12 +127,12 @@ namespace TC
          return m_sound_format;
       }
 
-      uint32 SoundDataMp3::GetData(uint32 num_bytes, uint8* buffer)
+      uint64 SoundDataMp3::GetData(uint64 num_bytes, uint8* buffer)
       {
          Locker lock(this);
 
          std::size_t n_read;
-         CheckError(::mpg123_read(m_mp3_handle, buffer, num_bytes, &n_read), "mpg123_read"); 
+         CheckError(::mpg123_read(m_mp3_handle, buffer, std::size_t(num_bytes), &n_read), "mpg123_read"); 
 
          if (n_read < num_bytes && IsLooping())
          {
@@ -141,7 +141,7 @@ namespace TC
             num_bytes -= n_read;
             buffer += n_read;
             std::size_t n;
-            CheckError(::mpg123_read(m_mp3_handle, buffer, num_bytes, &n), "mpg123_read"); 
+            CheckError(::mpg123_read(m_mp3_handle, buffer, std::size_t(num_bytes), &n), "mpg123_read"); 
 
             n_read += n;
          }
@@ -166,7 +166,7 @@ namespace TC
       {
          SoundDataMp3* mp3_data = (SoundDataMp3*)h;
          StreamPtr stream = mp3_data->m_stream;
-         return stream->ReadBytes(cnt, buf);
+         return ssize_t(stream->ReadBytes(cnt, buf));
       }
 
       off_t SoundDataMp3::Mp3Seek(void* h, off_t of, int origin)
@@ -188,7 +188,7 @@ namespace TC
          }
 
          stream->SetPosition(of, pos);
-         return stream->GetPosition();
+         return off_t(stream->GetPosition());
       }
    }
 }

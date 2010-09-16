@@ -43,10 +43,22 @@ namespace TC
 {
    namespace MT
    {
-      Message::Message( uint32 message_id ) :m_message_id(message_id),
-         m_sender_thread(Factory::GetCurrentThread())
+      static TC::Interlocked::Type s_unique_reply_id(0);
+      static uint32 GetReplyIdentifier()
       {
+          uint32 reply_id;
+          do
+          {
+             reply_id = static_cast<uint32>(TC::Interlocked::Increment(s_unique_reply_id));
+          } while (reply_id == 0);
+          return reply_id;
+      }
 
+      Message::Message( uint32 message_id )
+          :m_message_id(message_id)
+          ,m_reply_id(GetReplyIdentifier())
+          ,m_sender_thread(Factory::GetCurrentThread())
+      {
       }
 
       Message::~Message()

@@ -72,11 +72,11 @@ namespace Impl
       /** destruct an TC::StringStream object */
       virtual ~StringStream();
 
-      virtual bool SetPosition(sint32, StreamPosition pos);
-      virtual uint32 GetPosition() const;
+      virtual bool SetPosition(sint64, StreamPosition pos);
+      virtual uint64 GetPosition() const;
 
-      virtual uint32 ReadBytes(uint32 nBytes, void *bytes);
-      virtual uint32 WriteBytes(uint32 nBytes, const void *bytes);
+      virtual uint64 ReadBytes(uint64 nBytes, void *bytes);
+      virtual uint64 WriteBytes(uint64 nBytes, const void *bytes);
 
    private:
       /** An list arry holding the data */

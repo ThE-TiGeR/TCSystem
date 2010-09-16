@@ -30,15 +30,16 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCFactory.h 987 2010-05-17 08:28:04Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 #ifndef _TC_FACTORY_H_
 #define _TC_FACTORY_H_
 
 #include "TCCodec.h"
 #include "TCMemoryMappedFile.h"
-#include "TCStream.h"
 #include "TCRng.h"
+#include "TCStlTypes.h"
+#include "TCStream.h"
 
 #include <vector>
 #include <cstdio>
@@ -108,7 +109,7 @@ namespace TC
        * @param codec Shared pointer to a codec for encoding or decoding the data
        * @return Shared pointer to the stream
        */
-      TCBASE_API StreamPtr CreateMemoryStream(CodecPtr codec, std::vector< uchar >& memory);
+      TCBASE_API StreamPtr CreateMemoryStream(CodecPtr codec, ByteVector& memory);
 
       /**
       * @brief Create an string stream
