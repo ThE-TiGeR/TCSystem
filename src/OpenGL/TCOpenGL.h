@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCOpenGL.h 970 2010-04-15 09:31:04Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 
 #ifndef _TC_OPENGL_H_

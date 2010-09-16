@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCNetSslSocket.h 1004 2010-07-20 21:38:04Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 
 #ifndef _TCNET_SSL_SOCKET_H

@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCMD5.cpp 987 2010-05-17 08:28:04Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 
 #include "TCMD5.h"

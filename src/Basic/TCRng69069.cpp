@@ -29,7 +29,7 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //----------------------------------------------------------------------
-//  $Id: TCRng69069.cpp 919 2009-03-25 13:03:10Z the_____tiger $
+//  $Id$
 //----------------------------------------------------------------------
 
 #include "TCRng69069.h"

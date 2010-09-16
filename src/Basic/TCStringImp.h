@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCStringImp.h 985 2010-05-12 21:12:20Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 #ifndef _TC_STRING_IMPL_H_
 #define _TC_STRING_IMPL_H_

@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCOpenGLPointRenderer.h 765 2007-10-23 15:38:02Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 
 #ifndef _TC_OPENGL_POINT_RENDERER_H_

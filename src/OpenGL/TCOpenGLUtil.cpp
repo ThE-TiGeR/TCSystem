@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCOpenGLUtil.cpp 993 2010-05-20 20:44:20Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 
 #include "TCOpenGLUtil.h"

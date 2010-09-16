@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCGuiApplication.cpp 962 2010-03-29 22:22:38Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 
 #include "TCGuiApplication.h"
