@@ -38,6 +38,7 @@
 #include "TCTypes.h"
 
 #include <vector>
+#include <string>
 
 namespace TC
 {
@@ -61,6 +62,9 @@ namespace TC
    typedef std::vector<uint32> Uint32Vector;
    /** @brief typedef for a uint64 vector */
    typedef std::vector<uint64> Uint64Vector;
+
+   /** @brief typedef for a string vector */
+   typedef std::vector<std::string> StringVector;
 
    /**
    * @}
