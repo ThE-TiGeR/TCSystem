@@ -250,7 +250,7 @@ namespace TC
 
          uint64 Encode(const std::string& val, Stream& stream)
          {
-            uint32 nBytes = val.length();
+            uint32 nBytes = uint32(val.length());
             uint64 len = Encode(nBytes, stream);
 
             return stream.WriteBytes(nBytes, val.c_str()) + len;
@@ -264,7 +264,7 @@ namespace TC
 
          uint64 Encode(const char *val, Stream& stream)
          {
-            uint32 nBytes = std::strlen(val);
+            uint32 nBytes = uint32(std::strlen(val));
             uint64 len = Encode(nBytes, stream);
 
             return stream.WriteBytes(nBytes, val) + len;

@@ -165,7 +165,7 @@ namespace TC
             // Reacquire the <external_mutex>.
             ::WaitForSingleObject(m_mutex->m_handle, INFINITE);
 
-            return result==WAIT_TIMEOUT; 
+            return result!=WAIT_TIMEOUT; 
          }
 
          //Calling SetEvent on a manual-reset event sets the m_handle->events[BROADCAST] event to the signaled state. This releases all threads until the event is manually reset in the pthread_cond_wait function above. 

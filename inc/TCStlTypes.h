@@ -38,6 +38,7 @@
 #include "TCTypes.h"
 
 #include <vector>
+#include <set>
 #include <string>
 
 namespace TC
@@ -65,6 +66,8 @@ namespace TC
 
    /** @brief typedef for a string vector */
    typedef std::vector<std::string> StringVector;
+   /** @brief typedef for a string set (strings are sorted */
+   typedef std::set<std::string> StringSet;
 
    /**
    * @}

@@ -36,6 +36,8 @@
 
 #include "TCMemoryStream.h"
 
+#include "TCUtil.h"
+
 #include <cstring>
 #include <limits>
 
@@ -107,7 +109,7 @@ namespace TC
 
       bool MemoryStream::SetPosition(sint64 pos, StreamPosition pos_mode)
       {
-         if (pos > std::numeric_limits<ByteVector::size_type>::max())
+         if (uint64(Util::Abs(pos)) > std::numeric_limits<ByteVector::size_type>::max())
          {
              return false;
          }

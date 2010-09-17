@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCAudioSoundDataCompound.cpp 957 2010-01-28 23:17:00Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 
 #include "TCAudioSoundDataCompound.h"
@@ -68,7 +68,7 @@ namespace TC
       uint32 SoundDataCompound::GetNumSoundData() const
       {
          Locker lock(this);
-         return m_sound_data.size();
+         return uint32(m_sound_data.size());
       }
 
       SoundDataPtr SoundDataCompound::GetSoundData(uint32 idx)
