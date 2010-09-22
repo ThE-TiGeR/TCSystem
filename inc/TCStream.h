@@ -300,9 +300,9 @@ namespace TC
    template <class T>
    inline StreamPtr operator>>(StreamPtr stream, std::vector<T>& values)
    {
-       uint32 size;
-       stream > size;
-       values.resize(size);
+       uint64 size;
+       stream >> size;
+       values.resize(std::vector<T>::size_type(size));
        for (std::vector<T>::iterator it=values.begin(); it!=values.end(); ++it)
        {
            stream >> *it;
@@ -321,7 +321,7 @@ namespace TC
    template <class T>
    inline StreamPtr operator<<(StreamPtr stream, const std::vector<T>& values)
    {
-       stream << static_cast<uint32>(values.size());
+       stream << static_cast<uint64>(values.size());
        for (std::vector<T>::const_iterator it=values.begin(); it!=values.end(); ++it)
        {
            stream << *it;
