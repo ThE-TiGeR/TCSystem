@@ -96,7 +96,7 @@ namespace TC
    /** @brief typedef for 8bit unsigned char */
    typedef unsigned char uchar;
 
-   typedef size_t size_type;
+   typedef unsigned long size_type;
 #ifdef _MSC_VER
 # ifdef TCOS_64
    typedef sint64 ssize_type;
@@ -104,7 +104,7 @@ namespace TC
    typedef sint32 ssize_type;
 # endif
 #else
-   typedef ssize_t ssize_type;
+   typedef signed long ssize_type;
 #endif
 
 } // namespac TC
