@@ -35,12 +35,16 @@
 #ifndef _TC_STRING_IMPL_H_
 #define _TC_STRING_IMPL_H_
 
-#include "TCSharedPtr.h"
+#include "TCScopedArray.h"
 
 #include <string>
 #include <cstdarg>
 #include <cctype>
 #include <cstdio>
+
+#ifndef va_copy
+#define va_copy(a, b) (a=b)
+#endif
 
 namespace TC
 {
@@ -193,24 +197,28 @@ namespace TC
          return text;
       }
 
-      static STRING_CLASS VPrint(const value_type *fmt, va_list arguments)
+      static STRING_CLASS VPrint(const value_type *fmt, va_list arguments_in)
       {
+         STRING_CLASS return_string;
          uint32 size_of_buf = 64;
-         value_type* buf;
-         SharedPtr<value_type> buf_ptr;
          sint32 len;
-
          do 
          {
             size_of_buf *= 2;
-            buf          = new value_type[size_of_buf];
-            buf_ptr      = SharedPtr<value_type>(buf, CheckedArrayDelete());
-            len          = TRAITS::VsnPrintf(buf, size_of_buf-1, fmt, arguments);
+            ScopedArray<value_type> buf_ptr = ScopedArray<value_type>(new value_type[size_of_buf]);
+
+            va_list arguments;
+            va_copy(arguments, arguments_in);
+            len = TRAITS::VsnPrintf(buf_ptr, size_of_buf-1, fmt, arguments);
+            va_end(arguments);
+
+            if (len != -1)
+            {
+               return_string = buf_ptr;
+            }
          } while(len == -1);
 
-         buf[len] = 0;
-
-         return buf;
+         return return_string;
       }
 
       static void ReplaceString(STRING_CLASS& data,

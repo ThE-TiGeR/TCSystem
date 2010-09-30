@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCScopedArray.h 957 2010-01-28 23:17:00Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 #ifndef _TC_SCOPED_ARRAY_H_
 #define _TC_SCOPED_ARRAY_H_
@@ -88,6 +88,10 @@ namespace TC
       /** User define conversion for if like "if (!pointer)" */
       inline bool operator !() const { return m_array == 0; }
 
+      /** automatic conversion to pointer */
+      operator DATA_TYPE* () {return m_array;}
+      /** automatic conversion to const pointer */
+      operator const DATA_TYPE* () const {return m_array;}
    private:
       DATA_TYPE* m_array;
    };
