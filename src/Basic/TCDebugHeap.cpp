@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCDebugHeap.cpp 974 2010-04-24 19:38:17Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 
 #include "TCDebugHeap.h"
@@ -349,18 +349,15 @@ namespace TC
    {
       void* pointer = 0;
 
-      if (size > 0)
+      AllocList::Entry* p = static_cast<AllocList::Entry*>(m_heap.Alloc(size + sizeof(AllocList::Entry)));
+      if (p)
       {
-         AllocList::Entry* p = static_cast<AllocList::Entry*>(m_heap.Alloc(size + sizeof(AllocList::Entry)));
-         if (p)
+         p->Init(size, file_name, line);
          {
-            p->Init(size, file_name, line);
-            {
-               m_alloc_list->Insert(p, false);
-            }
-
-            pointer = p + 1;
+            m_alloc_list->Insert(p, false);
          }
+
+         pointer = p + 1;
       }
 
       return pointer;

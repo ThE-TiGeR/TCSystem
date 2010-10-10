@@ -62,28 +62,21 @@ namespace TC
 
    void* HeapCrtlib::Alloc(uint32 size)
    {
-      if (size != 0)
+      uint32 allocation_size = size + sizeof(Header);
+      Header* p = static_cast<Header*>(std::malloc(allocation_size));
+      if (p)
       {
-         uint32 allocation_size = size + sizeof(Header);
-         Header* p = static_cast<Header*>(std::malloc(allocation_size));
-         if (p)
-         {
 #ifdef DEBUG
-            std::memset(p, TC_HEAP_CRTLIB_INITIAL_VALUE, allocation_size);
+         std::memset(p, TC_HEAP_CRTLIB_INITIAL_VALUE, allocation_size);
 #endif
 
-            p->m_user_visible_pointer = p + 1;
-            p->m_allocation_size = allocation_size;
-            return p + 1;
-         }
-         else
-         {
-            throw std::bad_alloc();
-         }
+         p->m_user_visible_pointer = p + 1;
+         p->m_allocation_size = allocation_size;
+         return p + 1;
       }
       else
       {
-         return 0;
+         throw std::bad_alloc();
       }
    }
 
