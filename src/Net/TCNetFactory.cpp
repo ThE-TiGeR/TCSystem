@@ -87,7 +87,7 @@ namespace TC
             return ReadWriteSocketPtr (new Impl::SocketImp(s));
          }
 
-         static SharedPtr<Impl::SocketImp> CreateListenSocket(PortNumber port, uint32 connections, Protocol protocol)
+         static SharedPtr<Impl::SocketImp> CreateListenSocket(PortNumber port, uint32 connections, Protocol protocol, const Address& ip_addr)
          {
             SocketId s = Impl::Util::CreateSocket(protocol == TCP ? SOCK_STREAM : SOCK_DGRAM, Protocol2String(protocol));
             if (s == Impl::invalid_socket)
@@ -101,7 +101,7 @@ namespace TC
             std::memset(&sa, 0, sizeof(sa));
             sa.sin_family      = AF_INET;
             sa.sin_port        = htons(port);
-            sa.sin_addr.s_addr = INADDR_ANY;
+            sa.sin_addr        = ip_addr;
             if (::bind(s, (sockaddr *)&sa, sizeof(sockaddr_in)) == SOCKET_ERROR)
             {
                Impl::Util::PrintSocketError("TC::Net::Factory::CreateListenSocket, bind failed", true);
@@ -124,14 +124,14 @@ namespace TC
             return SharedPtr<Impl::SocketImp>(new Impl::SocketImp(s));
          }
 
-         SocketPtr CreateTcpListenSocket(PortNumber port, uint32 connections)
+         SocketPtr CreateTcpListenSocket(PortNumber port, uint32 connections, const Address& ip_addr)
          {
-            return ReadWriteSocketPtr(CreateListenSocket(port, connections, TCP));
+            return ReadWriteSocketPtr(CreateListenSocket(port, connections, TCP, ip_addr));
          }
 
-         BroadcastReadSocketPtr CreateUdpListenSocket(PortNumber port, uint32 connections)
+         BroadcastReadSocketPtr CreateUdpListenSocket(PortNumber port, uint32 connections, const Address& ip_addr)
          {
-            return CreateListenSocket(port, connections, UDP);
+            return CreateListenSocket(port, connections, UDP, ip_addr);
          }
 
          ReadWriteSocketPtr Accept(SocketPtr socket)

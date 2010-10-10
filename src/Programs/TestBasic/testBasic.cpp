@@ -123,7 +123,7 @@ private:
    bool Receive(TC::Net::ReadWriteSocketPtr socket, std::string& data_received)
    {
       char data[100];
-      TC::uint32 data_len = socket->ReadBytes(data, sizeof(data)-1);
+      TC::uint64 data_len = socket->ReadBytes(data, sizeof(data)-1);
       if (!socket->IsOpened())
       {
          m_data_received_event->Set();
@@ -267,7 +267,7 @@ public:
    {
       char buffer[200];
       TC::Net::Address address;
-      TC::uint32 len = m_socket->ReadBytesFrom(buffer, TC::Util::ArraySize(buffer)-1, address);
+      TC::uint64 len = m_socket->ReadBytesFrom(buffer, TC::Util::ArraySize(buffer)-1, address);
       if (len == 0)
       {
          return false;

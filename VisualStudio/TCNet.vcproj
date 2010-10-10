@@ -734,6 +734,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\inc\TCNetBroadCastSocket.h"
+				>
+			</File>
+			<File
 				RelativePath="..\inc\TCNetFactory.h"
 				>
 			</File>
