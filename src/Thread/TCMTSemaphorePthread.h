@@ -37,6 +37,7 @@
 #define _TC_MT_SEMAPHORE_PTHREAD_H_
 
 #include "TCMTSemaphore.h"
+#include "TCMTFactory.h"
 
 #include "TCMTOS.h"
 
@@ -44,38 +45,42 @@
 
 namespace TC
 {
-namespace MT
-{
-namespace Impl
-{
-
-   /**
-    * @addtogroup TC_MT_IMP
-    * @{
-    */
-
-   class TC_DLL_LOCAL SemaphorePthread: public Semaphore
+   namespace MT
    {
-   public:
-      SemaphorePthread(uint32 initial);
-      SemaphorePthread(const std::string& shared_name, uint32 initial);
-      ~SemaphorePthread();
+      namespace Impl
+      {
 
-      bool Wait();
-      bool Try();
-      bool TryWait(const Time& millisecs);
-      bool Post();
+         /**
+         * @addtogroup TC_MT_IMP
+         * @{
+         */
 
-   private:
-      sem_t m_semaphore;  
-   };
+         class TC_DLL_LOCAL SemaphorePthread: public Semaphore
+         {
+         public:
+            SemaphorePthread();
+            ~SemaphorePthread();
 
-   /**
-    * @}
-    */
+            bool Init(uint32 initial);
+            bool Init(const std::string& shared_name, uint32 initial, Factory::CreationMode mode);
 
-} // namespace Impl
-} // namespace MT
+            bool Wait();
+            bool Try();
+            bool TryWait(const Time& millisecs);
+            bool Post();
+
+         private:
+            sem_t* m_semaphore;
+            std::string m_name;
+            bool m_shared;
+         };
+
+         /**
+         * @}
+         */
+
+      } // namespace Impl
+   } // namespace MT
 } // namespace TC
 
 #endif // _TC_MT_SEMAPHORE_PTHREAD_H_

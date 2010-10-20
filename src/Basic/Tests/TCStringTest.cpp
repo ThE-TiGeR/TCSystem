@@ -100,8 +100,8 @@ namespace TC
          JFUNIT_ASSERT(String::ToSint32("-2147483647") == -2147483647);    // min value
          JFUNIT_ASSERT(String::ToSint32("2147483647") == 2147483647);      // max value
 
-         JFUNIT_ASSERT(fabs(String::ToFlt32("123456.789") - 123456.789f) < 0.1f);
-         JFUNIT_ASSERT(String::ToFlt64("123456.789") == 123456.789);
+         JFUNIT_ASSERT(fabs(String::ToFloat("123456.789") - 123456.789f) < 0.1f);
+         JFUNIT_ASSERT(String::ToDouble("123456.789") == 123456.789);
       }
 
       // -------------------------------------------------------------------

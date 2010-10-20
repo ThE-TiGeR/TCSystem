@@ -42,52 +42,80 @@
 
 namespace TC
 {
-namespace MT
-{
-namespace Impl
-{
-
-SemaphoreWin32::SemaphoreWin32(uint32 initial) 
-{
-   m_handle = ::CreateSemaphoreA(0, initial, 0xffffff, 0);
-}
-
-SemaphoreWin32::SemaphoreWin32(const std::string& shared_name, uint32 initial) 
-{
-   m_handle = ::CreateSemaphoreA(0, initial, 0xffffff, shared_name.c_str());
-}
-
-SemaphoreWin32::~SemaphoreWin32()
-{
-   if (m_handle)
+   namespace MT
    {
-      ::CloseHandle(m_handle);
-      m_handle = 0;
-   }
-}
+      namespace Impl
+      {
 
-bool SemaphoreWin32::Wait()
-{
-   return ::WaitForSingleObject(m_handle, INFINITE) == WAIT_OBJECT_0;
-}
+         SemaphoreWin32::SemaphoreWin32() 
+            :m_handle(0)
+         {
+         }
 
-bool SemaphoreWin32::Try()
-{
-   return ::WaitForSingleObject(m_handle, 0) == WAIT_OBJECT_0;
-}
+         bool SemaphoreWin32::Init(uint32 initial) 
+         {
+            m_handle = ::CreateSemaphoreA(0, initial, 0xffffff, 0);
+            if (m_handle == 0)
+            {
+               return false;
+            }
 
-bool SemaphoreWin32::TryWait(const Time& timeout)
-{
-   return ::WaitForSingleObject(m_handle, static_cast<DWORD>(timeout.ToMilliSeconds())) == WAIT_OBJECT_0;
-}
+            return true;
+         }
 
-bool SemaphoreWin32::Post()
-{
-   return ::ReleaseSemaphore(m_handle, 1, 0) == TRUE;
-}
+         bool SemaphoreWin32::Init(const std::string& shared_name, uint32 initial, Factory::CreationMode mode) 
+         {
+            m_handle = ::CreateSemaphoreA(0, initial, 0xffffff, shared_name.c_str());
+            DWORD error = ::GetLastError();
+            if (m_handle == 0)
+            {
+               return false;
+            }
 
-} // namespace Impl
-} // namespace MT
+            switch(mode)
+            {
+            case Factory::CRM_ALWAYS:
+               return true;
+            case Factory::CRM_WHEN_EXISTS:
+               return error == ERROR_ALREADY_EXISTS;
+            case Factory::CRM_WHEN_NOT_EXISTS:
+               return error != ERROR_ALREADY_EXISTS;
+            }
+
+            return false;
+         }
+
+         SemaphoreWin32::~SemaphoreWin32()
+         {
+            if (m_handle)
+            {
+               ::CloseHandle(m_handle);
+               m_handle = 0;
+            }
+         }
+
+         bool SemaphoreWin32::Wait()
+         {
+            return ::WaitForSingleObject(m_handle, INFINITE) == WAIT_OBJECT_0;
+         }
+
+         bool SemaphoreWin32::Try()
+         {
+            return ::WaitForSingleObject(m_handle, 0) == WAIT_OBJECT_0;
+         }
+
+         bool SemaphoreWin32::TryWait(const Time& timeout)
+         {
+            return ::WaitForSingleObject(m_handle, static_cast<DWORD>(timeout.ToMilliSeconds())) == WAIT_OBJECT_0;
+         }
+
+         bool SemaphoreWin32::Post()
+         {
+            return ::ReleaseSemaphore(m_handle, 1, 0) == TRUE;
+         }
+
+      } // namespace Impl
+   } // namespace MT
 } // namespace TC
 
 #endif // TCOS_WINDOWS

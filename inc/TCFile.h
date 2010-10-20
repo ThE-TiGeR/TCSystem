@@ -30,13 +30,14 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCFile.h 962 2010-03-29 22:22:38Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 
 #ifndef _TC_FILE_H_
 #define _TC_FILE_H_
 
 #include "TCSharedPtr.h"
+#include "TCStlTypes.h"
 
 #include <string>
 #include <vector>
@@ -119,8 +120,7 @@ namespace TC
       /// @brief  returns current directory
       TCBASE_API std::string GetDirectory();
       /// @brief  returns all files with specified extension
-      TCBASE_API std::vector<std::string> GetFileListOfDirectory(const std::string &search_dir,
-                                                            const std::string &search_ext="");
+      TCBASE_API StringVector GetFileListOfDirectory(const std::string &search_dir, const std::string &search_ext="");
       struct FileInfo
       {
          std::string name;
@@ -156,9 +156,13 @@ namespace TC
       /// @brief  move source file to destination file
       TCBASE_API bool Move(const std::string& source, const std::string& dest);
       /// @brief  create a directory
-      TCBASE_API bool CreateDirectory(const std::string &path);
+      TCBASE_API bool CreateDir(const std::string &path);
       /// @brief  create a directory also if one of the parent directories does not exist
-      TCBASE_API bool CreateDirectoryRecursive(const std::string& path);
+      TCBASE_API bool CreateDirRecursive(const std::string& path);
+      /// @brief  remove a directory
+      TCBASE_API bool RemoveDir(const std::string &path);
+      /// @brief  remove a directory also if not empty
+      TCBASE_API bool RemoveDirRecursive(const std::string &path);
 
    } // namespace File
 

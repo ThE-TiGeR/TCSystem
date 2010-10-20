@@ -146,7 +146,7 @@ namespace TC
       return (IsIntValue(val) || IsFltValue(val));
    }
 
-   double String::ToFlt64(const std::string& val)
+   double String::ToDouble(const std::string& val)
    {
       double v;
       if (std::sscanf(val.c_str(), "%lf", &v) != 1)
@@ -157,7 +157,7 @@ namespace TC
       return v;
    }
 
-   float String::ToFlt32(const std::string& val)
+   float String::ToFloat(const std::string& val)
    {
       float v;
       if (std::sscanf(val.c_str(), "%f", &v) != 1)

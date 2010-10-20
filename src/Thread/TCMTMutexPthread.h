@@ -61,8 +61,10 @@ namespace Impl
    class TC_DLL_LOCAL MutexPthread: public Mutex
    {
    public:
-      MutexPthread(bool locked);
+      MutexPthread();
       ~MutexPthread();
+
+      bool Init(bool locked);
 
       bool Lock();
       bool TryLock();
@@ -78,8 +80,10 @@ namespace Impl
    class TC_DLL_LOCAL MutexSharedPthread: public Mutex
    {
    public:
-      MutexSharedPthread(const std::string& shared_name, bool locked);
+      MutexSharedPthread();
       ~MutexSharedPthread();
+
+      bool Init(const std::string& shared_name, bool locked, Factory::CreationMode mode);
 
       bool Lock();
       bool TryLock();
@@ -87,6 +91,13 @@ namespace Impl
       bool UnLock();
 
    private:
+      bool TryAndGetIfOwner();
+      void SetOwnerShip();
+      bool UnGetIfOwner();
+
+   private:
+      uint32 m_nesting_level;
+      ::pthread_t m_owner_process;
       SemaphorePtr m_semaphore;
    };
 

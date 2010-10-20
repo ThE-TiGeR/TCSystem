@@ -145,7 +145,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="advapi32.lib Iphlpapi.lib"
+				AdditionalDependencies="iphlpapi.lib"
 				OutputFile="$(OutDir)$(ProjectName)D.dll"
 				Version="1.4.0"
 				LinkIncremental="2"
@@ -153,7 +153,7 @@
 				ProgramDatabaseFile="$(TargetDir)$(TargetName).pdb"
 				OptimizeReferences="1"
 				EnableCOMDATFolding="1"
-				TargetMachine="17"
+				TargetMachine="0"
 			/>
 			<Tool
 				Name="VCALinkTool"

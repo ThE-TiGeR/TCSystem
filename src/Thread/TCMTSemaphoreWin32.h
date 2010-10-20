@@ -37,6 +37,7 @@
 #define _TC_MT_SEMAPHORE_WIN32_H_
 
 #include "TCMTSemaphore.h"
+#include "TCMTFactory.h"
 
 #include <string>
 
@@ -55,15 +56,16 @@ namespace Impl
    class TC_DLL_LOCAL SemaphoreWin32: public Semaphore
    {
    public:
-      SemaphoreWin32(uint32 initial);
-      SemaphoreWin32(const std::string& shared_name, uint32 initial);
+      SemaphoreWin32();
       ~SemaphoreWin32();
+
+      bool Init(uint32 initial);
+      bool Init(const std::string& shared_name, uint32 initial, Factory::CreationMode mode);
 
       bool Wait();
       bool Try();
       bool TryWait(const Time& millisecs);
       bool Post();
-
    private:
       void* m_handle;  
    };

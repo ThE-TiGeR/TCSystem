@@ -37,6 +37,7 @@
 #define _TC_MT_MUTEX_WIN32_H_
 
 #include "TCMTMutex.h"
+#include "TCMTFactory.h"
 
 #include <string>
 
@@ -58,15 +59,16 @@ namespace Impl
    class TC_DLL_LOCAL MutexWin32: public Mutex
    {
    public:
-      MutexWin32(bool locked);
-      MutexWin32(const std::string& shared_name, bool locked);
+      MutexWin32();
       ~MutexWin32();
+
+      bool Init(bool locked);
+      bool Init(const std::string& shared_name, bool locked, Factory::CreationMode mode);
 
       bool Lock();
       bool TryLock();
       bool TryLock(const Time& millisecs);
       bool UnLock();
-
    private:
       void* m_handle;
 

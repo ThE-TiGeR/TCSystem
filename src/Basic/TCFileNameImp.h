@@ -56,6 +56,17 @@ namespace TC
          return name.substr(pos+1);
       }
 
+      static STRING_TYPE GetExtensionIfExtension(const STRING_TYPE& file_name, const STRING_TYPE& additional_ext)
+      {
+         if (GetExtension(file_name) != additional_ext)
+         {
+            return STRING_TYPE();
+         }
+
+         STRING_TYPE tmp_name = RemoveExtension((file_name));
+         return GetExtension(tmp_name);
+      }
+
       static STRING_TYPE GetName(const STRING_TYPE& file_name)
       {
          STRING_TYPE name = Simplify(file_name);

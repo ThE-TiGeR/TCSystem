@@ -217,7 +217,7 @@ namespace TC
       return ::rename(source.c_str(), dest.c_str()) == 0;
    }
 
-   bool File::CreateDirectory(const std::string& path)
+   bool File::CreateDir(const std::string& path)
    {
       if (path.empty()) 
       {
@@ -225,6 +225,13 @@ namespace TC
       }
 
       return ::mkdir(path.c_str(), 0777) == 0;
+   }
+
+   bool File::RemoveDir(const std::string& path)
+   {
+      if (path.empty()) return false;
+
+      return ::rmdir(path.c_str()) == 0
    }
 
    // Return time file was last modified
