@@ -39,6 +39,10 @@
 #include "TCMTOS.h"
 #include "TCTime.h"
 
+#include <fcntl.h>
+#include <sys/stat.h>
+
+
 #include "TCNewEnable.h"
 
 namespace TC
@@ -75,7 +79,6 @@ namespace TC
 
                m_semaphore = SEM_FAILED;
             }
-            Thread::GetStatistic().m_num_semaphore--;
          }
 
          bool SemaphorePthread::Init(uint32 initial)
@@ -97,15 +100,15 @@ namespace TC
             switch(mode)
             {
             case Factory::CRM_ALWAYS:
-               m_semaphore = ::sem_open(name, O_CREAT, S_IRWXU, initial_count);
-               m_name = name;
+               m_semaphore = ::sem_open(shared_name.c_str(), O_CREAT, S_IRWXU, initial);
+               m_name = shared_name;
                break;
             case Factory::CRM_WHEN_EXISTS:
-               m_semaphore = ::sem_open(name, O_CREAT|O_EXCL, S_IRWXU, initial_count);
+               m_semaphore = ::sem_open(shared_name.c_str(), O_CREAT|O_EXCL, S_IRWXU, initial);
                // if unable to open it allready exists so it is ok
                if (m_semaphore == SEM_FAILED)
                {
-                  m_semaphore = ::sem_open(name, O_CREAT, 0, initial_count);
+                  m_semaphore = ::sem_open(shared_name.c_str(), O_CREAT, 0, initial);
                }
                else
                {
@@ -114,8 +117,8 @@ namespace TC
                }
                break;
             case Factory::CRM_WHEN_NOT_EXISTS:
-               m_semaphore = ::sem_open(name, O_CREAT|O_EXCL, S_IRWXU, initial_count);
-               m_name = name;
+               m_semaphore = ::sem_open(shared_name.c_str(), O_CREAT|O_EXCL, S_IRWXU, initial);
+               m_name = shared_name;
                break;
             }
             m_shared = true;
@@ -138,7 +141,7 @@ namespace TC
             return true;
          }
 
-         bool SemaphorePthread::TryWait()
+         bool SemaphorePthread::Try()
          {
             return ::sem_trywait(m_semaphore) == 0;
          }

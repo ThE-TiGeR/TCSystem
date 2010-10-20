@@ -4,3 +4,4 @@ PROVIDE_H('fx.h')
 PROVIDE_H('fxkeys.h')
 
 PKG_CONFIG_LIBRARY(packagename='fox')
+CMAKE_PKG_CONFIG_LIBRARY(packagename='fox')

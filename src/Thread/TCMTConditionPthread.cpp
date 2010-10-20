@@ -38,6 +38,7 @@
 
 #include "TCMTOS.h"
 #include "TCTime.h"
+#include "TCMTMutexPthread.h"
 
 #include <errno.h>
 
@@ -51,8 +52,9 @@ namespace TC
       {
 
          ConditionPthread::ConditionPthread()
-            :m_mutex(new MutexPthread(false))
+            :m_mutex(new MutexPthread)
          {
+            m_mutex->Init(false);
             ::pthread_cond_init(&m_condition, 0);
          }
 

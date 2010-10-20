@@ -4,3 +4,4 @@ PROVIDE_H('AL/al.h')
 PROVIDE_H('AL/alc.h')
 
 PKG_CONFIG_LIBRARY(packagename='openal')
+CMAKE_PKG_CONFIG_LIBRARY(packagename='openal')

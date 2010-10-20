@@ -231,7 +231,7 @@ namespace TC
    {
       if (path.empty()) return false;
 
-      return ::rmdir(path.c_str()) == 0
+      return ::rmdir(path.c_str()) == 0;
    }
 
    // Return time file was last modified

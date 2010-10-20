@@ -38,6 +38,7 @@
 #include "TCUtil.h"
 
 #include <jf/unittest/test_case.h>
+#include <cstdio>
 #include <cstring>
 #include <cmath>
 
@@ -198,13 +199,13 @@ namespace TC
          // convert from float
          {
             char tmp_string[100];
-            ::snprintf(tmp_string, 100, "%f", 0.123456f);
+            std::snprintf(tmp_string, 100, "%f", 0.123456f);
             JFUNIT_ASSERT(String::ToString(0.123456f)    == tmp_string);
-            ::snprintf(tmp_string, 100, "%f", -0.123456f);
+            std::snprintf(tmp_string, 100, "%f", -0.123456f);
             JFUNIT_ASSERT(String::ToString(-0.123456f)   == tmp_string);
-            ::snprintf(tmp_string, 100, "%f", 123.456f);
+            std::snprintf(tmp_string, 100, "%f", 123.456f);
             JFUNIT_ASSERT(String::ToString(123.456f)     == tmp_string);
-            ::snprintf(tmp_string, 100, "%f", -123.456f);
+            std::snprintf(tmp_string, 100, "%f", -123.456f);
             JFUNIT_ASSERT(String::ToString(-123.456f)    == tmp_string);
          }
 
@@ -212,13 +213,13 @@ namespace TC
          // convert from double
          {
             char tmp_string[100];
-            ::snprintf(tmp_string, 100, "%lf", 0.123456);
+            std::snprintf(tmp_string, 100, "%lf", 0.123456);
             JFUNIT_ASSERT(String::ToString(0.123456)    == tmp_string);
-            ::snprintf(tmp_string, 100, "%lf", -0.123456);
+            std::snprintf(tmp_string, 100, "%lf", -0.123456);
             JFUNIT_ASSERT(String::ToString(-0.123456)   == tmp_string);
-            ::snprintf(tmp_string, 100, "%lf", 123.456);
+            std::snprintf(tmp_string, 100, "%lf", 123.456);
             JFUNIT_ASSERT(String::ToString(123.456)     == tmp_string);
-            ::snprintf(tmp_string, 100, "%lf", -123.456);
+            std::snprintf(tmp_string, 100, "%lf", -123.456);
             JFUNIT_ASSERT(String::ToString(-123.456)    == tmp_string);
          }
       }

@@ -192,7 +192,7 @@ namespace TC
                return true;
             }
 
-            if (m_semaphore->TryWait())
+            if (m_semaphore->Try())
             {
                SetOwnerShip();
                return true;
