@@ -45,7 +45,7 @@
 #include <accctrl.h>
 #include <aclapi.h>
 
-#undef CreateDirectory
+#undef CreateDir
 #undef GetUserName
 #undef CreateFile
 #undef GetClassName
@@ -204,11 +204,18 @@ namespace TC
          MOVEFILE_COPY_ALLOWED|MOVEFILE_REPLACE_EXISTING|MOVEFILE_WRITE_THROUGH) == TRUE;
    }
 
-   bool File::CreateDirectory(const std::string& path)
+   bool File::CreateDir(const std::string& path)
    {
       if (path.empty()) return false;
 
       return ::CreateDirectoryA(path.c_str(), 0) == TRUE;
+   }
+
+   bool File::RemoveDir(const std::string& path)
+   {
+      if (path.empty()) return false;
+
+      return :: RemoveDirectoryA(path.c_str()) == TRUE;
    }
 
    // Return time file was last modified

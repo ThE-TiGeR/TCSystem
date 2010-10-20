@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCNetFactory.h 1007 2010-07-21 05:52:41Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 
 #ifndef _TCNET_FACTORY_H_
@@ -87,7 +87,7 @@ namespace TC
          * @param port        Port on which to listen for incoming connections
          * @param connections Number of connections it will accept
          */
-         TCNET_API SocketPtr CreateTcpListenSocket(PortNumber port, uint32 connections);
+         TCNET_API SocketPtr CreateTcpListenSocket(PortNumber port, uint32 connections, const Address& ip_addr=Address::GetAnyAddress());
 
          /**
          * @brief Creates a socket which can accept new UPD connections
@@ -95,7 +95,7 @@ namespace TC
          * @param port        Port on which to listen for incoming connections
          * @param connections Number of connections it will accept
          */
-         TCNET_API BroadcastReadSocketPtr CreateUdpListenSocket(PortNumber port, uint32 connections);
+         TCNET_API BroadcastReadSocketPtr CreateUdpListenSocket(PortNumber port, uint32 connections, const Address& ip_addr=Address::GetAnyAddress());
 
          /**
          * @brief Creates a socket which can accept new UPD Broadcast messages

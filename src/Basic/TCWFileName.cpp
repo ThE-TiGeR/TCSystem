@@ -69,6 +69,11 @@ namespace TC
         return WFileNameImp::GetExtension(file_name);
     }
 
+    std::wstring WFileName::GetExtensionIfExtension(const std::wstring& file_name, const std::wstring& additional_ext)
+    {
+       return WFileNameImp::GetExtensionIfExtension(file_name, additional_ext);
+    }
+
     std::wstring WFileName::GetName(const std::wstring& file_name)
     {
         return WFileNameImp::GetName(file_name);

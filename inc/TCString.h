@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCString.h 957 2010-01-28 23:17:00Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 #ifndef _TCSTRING_H_
 #define _TCSTRING_H_
@@ -90,8 +90,8 @@ namespace TC
       TCBASE_API sint16 ToSint16(const std::string& text);
       TCBASE_API sint8  ToSint8(const std::string& text);
 
-      TCBASE_API double ToFlt64(const std::string& text);
-      TCBASE_API float ToFlt32(const std::string& text);
+      TCBASE_API double ToDouble(const std::string& text);
+      TCBASE_API float ToFloat(const std::string& text);
 
       TCBASE_API bool Split(const std::string& text, const std::string& split,
                  std::string& text1, std::string& text2);

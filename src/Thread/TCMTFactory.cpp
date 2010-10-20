@@ -102,19 +102,31 @@ namespace TC
       MutexPtr Factory::CreateMutex(bool locked /* = false */)
       {
 #ifdef TCOS_WINDOWS
-         return MutexPtr(new Impl::MutexWin32(locked));
+         SharedPtr<Impl::MutexWin32> mutex(new Impl::MutexWin32);
 #else
-         return MutexPtr(new Impl::MutexPthread(locked));
+         SharedPtr<Impl::MutexPthread> mutex(new Impl::MutexPthread);
 #endif
+         if (!mutex->Init(locked))
+         {
+            return MutexPtr();
+         }
+
+         return mutex;
       }
       MutexPtr Factory::CreateMutex(const std::string& shared_name,
-          bool locked/* =false */, CreationMode /* mode = CRM_ALWAYS */)
+          bool locked/* =false */, CreationMode mode /* = CRM_ALWAYS */)
       {
 #ifdef TCOS_WINDOWS
-         return MutexPtr(new Impl::MutexWin32(shared_name, locked));
+         SharedPtr<Impl::MutexWin32> mutex(new Impl::MutexWin32);
 #else
-         return MutexPtr(new Impl::MutexSharedPthread(shared_name, locked));
+         SharedPtr<Impl::MutexSharedPthread> mutex(new Impl::MutexSharedPthread);
 #endif
+         if (!mutex->Init(shared_name, locked, mode))
+         {
+            return MutexPtr();
+         }
+
+         return mutex;
       }
 
       EventPtr Factory::CreateEvent(bool manual_reset, bool initial_state)
@@ -129,20 +141,32 @@ namespace TC
       SemaphorePtr Factory::CreateSemaphore(uint32 initial_value /* = 1 */)
       {
 #ifdef TCOS_WINDOWS
-         return SemaphorePtr(new Impl::SemaphoreWin32(initial_value));
+         SharedPtr<Impl::SemaphoreWin32> semaphore(new Impl::SemaphoreWin32);
 #else
-         return SemaphorePtr(new Impl::SemaphorePthread(initial_value));
+         SharedPtr<Impl::SemaphorePthread> semaphore(new Impl::SemaphorePthread);
 #endif
+         if (!semaphore->Init(initial_value))
+         {
+            return SemaphorePtr();
+         }
+
+         return semaphore;
       }
 
       SemaphorePtr Factory::CreateSemaphore(const std::string& shared_name,
-          uint32 initial_value, CreationMode /* mode = CRM_ALWAYS */)
+          uint32 initial_value, CreationMode mode /* = CRM_ALWAYS */)
       {
 #ifdef TCOS_WINDOWS
-         return SemaphorePtr(new Impl::SemaphoreWin32(shared_name, initial_value));
+         SharedPtr<Impl::SemaphoreWin32> semaphore(new Impl::SemaphoreWin32);
 #else
-         return SemaphorePtr(new Impl::SemaphorePthread(shared_name, initial_value));
+         SharedPtr<Impl::SemaphorePthread> semaphore(new Impl::SemaphorePthread);
 #endif
+         if (!semaphore->Init(shared_name, initial_value, mode))
+         {
+            return SemaphorePtr();
+         }
+
+         return semaphore;
       }
 
       ConditionPtr Factory::CreateCondition()

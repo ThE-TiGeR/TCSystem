@@ -71,7 +71,7 @@ namespace TC
 
          ConditionWin32::ConditionWin32()
             :m_handle(0),
-            m_mutex(new MutexWin32(false))
+            m_mutex(new MutexWin32)
          {
             Init();
          }
@@ -85,6 +85,11 @@ namespace TC
 
          void ConditionWin32::Init()
          {
+            if (!m_mutex->Init(false))
+            {
+               return;
+            }
+
             m_handle = new ConditionData;
 
             // Initialize the count to 0.

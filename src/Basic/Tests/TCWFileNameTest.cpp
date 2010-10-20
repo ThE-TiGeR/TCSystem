@@ -140,6 +140,31 @@ namespace TC
             JFUNIT_ASSERT(WFileName::GetExtension(L"hallo/test") == L"");
          }
       };
+
+      class GetExtensionIfExtension: public jf::unittest::TestCase
+      {
+      public:
+         GetExtensionIfExtension()
+            :jf::unittest::TestCase("TC::Tests::GetExtensionIfExtension")
+         {
+         }
+
+         virtual void run()
+         {
+            JFUNIT_ASSERT(WFileName::GetExtensionIfExtension(L"test.txt", L"gz") == L"");
+            JFUNIT_ASSERT(WFileName::GetExtensionIfExtension(L"hallo/test.txt", L"gz") == L"");
+            JFUNIT_ASSERT(WFileName::GetExtensionIfExtension(L"hallo.exe/test.txt", L"gz") == L"");
+            JFUNIT_ASSERT(WFileName::GetExtensionIfExtension(L"hallo.exe/test", L"gz") == L"");
+            JFUNIT_ASSERT(WFileName::GetExtensionIfExtension(L"hallo/test", L"gz") == L"");
+
+            JFUNIT_ASSERT(WFileName::GetExtensionIfExtension(L"test.txt.gz", L"gz") == L"txt");
+            JFUNIT_ASSERT(WFileName::GetExtensionIfExtension(L"hallo/test.txt.gz", L"gz") == L"txt");
+            JFUNIT_ASSERT(WFileName::GetExtensionIfExtension(L"hallo.exe/test.txt.gz", L"gz") == L"txt");
+            JFUNIT_ASSERT(WFileName::GetExtensionIfExtension(L"hallo.exe/test.gz", L"gz") == L"");
+            JFUNIT_ASSERT(WFileName::GetExtensionIfExtension(L"hallo/test.gz", L"gz") == L"");
+         }
+      };
+
       class GetName: public jf::unittest::TestCase
       {
       public:
@@ -233,6 +258,7 @@ namespace TC
          add_test(new AddPaths);
          add_test(new GetDirectories);
          add_test(new GetExtension);
+         add_test(new GetExtensionIfExtension);
          add_test(new GetName);
          add_test(new GetPath);
          add_test(new RemoveExtension);

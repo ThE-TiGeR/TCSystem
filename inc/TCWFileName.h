@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCWFileName.h 925 2009-04-20 16:09:22Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 
 #ifndef _TC_WFILE_NAME_H_
@@ -69,6 +69,15 @@ namespace TC
        * @return The extension
        */
        TCBASE_API std::wstring GetExtension(const std::wstring& file_name);
+       /**
+       * @brief Get the extension of a filename
+       * e.g. hallo.txt.gz will return txt if gz is passed as extension
+       * @param file_name The full filename
+       * @param additional_ext extension which the file must have to search for the next extension
+       * @return The extension
+       */
+      TCBASE_API std::wstring GetExtensionIfExtension(const std::wstring& file_name, const std::wstring& additional_ext);
+
        /**
        * @brief Get the filename from a filename including the path
        *

@@ -69,6 +69,11 @@ namespace TC
       return FileNameImp::GetExtension(file_name);
    }
 
+   std::string FileName::GetExtensionIfExtension(const std::string& file_name, const std::string& additional_ext)
+   {
+      return FileNameImp::GetExtensionIfExtension(file_name, additional_ext);
+   }
+
    std::string FileName::GetName(const std::string& file_name)
    {
       return FileNameImp::GetName(file_name);
@@ -125,4 +130,5 @@ namespace TC
    {
       return FileNameTraits::PATH_SEPERATOR;
    }
+
 }

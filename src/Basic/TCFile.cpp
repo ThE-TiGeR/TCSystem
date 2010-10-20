@@ -46,7 +46,7 @@ namespace TC
 {
    namespace File
    {
-      bool CreateDirectoryRecursive(const std::string& path)
+      bool CreateDirRecursive(const std::string& path)
       {
          if (path.empty()) return false;
 
@@ -67,7 +67,7 @@ namespace TC
                   return false;
                }
 
-               if (!CreateDirectory(current_dir))
+               if (!CreateDir(current_dir))
                {
                   return false;
                }
@@ -75,6 +75,35 @@ namespace TC
          }
 
          return true;
+      }
+
+      bool RemoveDirRecursive(const std::string& path)
+      {
+         if (path.empty()) return false;
+
+         FileInfos file_infos;
+         GetFileInfosOfDirectory(file_infos, path);
+
+         for (FileInfos::const_iterator it=file_infos.begin(); it!=file_infos.end(); ++it)
+         {
+            if (it->is_directory)
+            {
+               std::string dir = FileName::AddPaths(path, it->name);
+               if (!RemoveDirRecursive(dir))
+               {
+                  return false;
+               }
+            }
+            else
+            {
+               std::string file = FileName::AddFileNameAndPath(it->name, path);
+               if (!Remove(file))
+               {
+                  return false;
+               }
+            }
+         }
+         return RemoveDir(path);
       }
 
       // Return time when touched

@@ -48,20 +48,58 @@ namespace TC
       namespace Impl
       {
 
-         MutexWin32::MutexWin32(bool locked)
+         MutexWin32::MutexWin32()
+            :m_handle(0)
          {
-            m_handle = ::CreateMutexA(0, FALSE, 0);
-
-            // lock it if it should be initially locked
-            if (locked) Lock();
          }
 
-         MutexWin32::MutexWin32(const std::string& shared_name, bool locked)
+         bool MutexWin32::Init(bool locked)
          {
-            m_handle = ::CreateMutexA(0, FALSE, shared_name.c_str());
+            m_handle = ::CreateMutexA(0, FALSE, 0);
+            if (m_handle == 0)
+            {
+               return false;
+            }
 
             // lock it if it should be initially locked
-            if (locked) Lock();
+            if (locked) 
+            {
+               return Lock();
+            }
+
+            return true;
+         }
+
+         bool MutexWin32::Init(const std::string& shared_name, bool locked, Factory::CreationMode mode)
+         {
+            bool status = false;
+            m_handle = ::CreateMutexA(0, FALSE, shared_name.c_str());
+            DWORD error = ::GetLastError();
+            if (m_handle == 0)
+            {
+               return status;
+            }
+
+            switch(mode)
+            {
+            case Factory::CRM_ALWAYS:
+               status = true;
+               break;
+            case Factory::CRM_WHEN_EXISTS:
+               status = error == ERROR_ALREADY_EXISTS;
+               break;
+            case Factory::CRM_WHEN_NOT_EXISTS:
+               status = error != ERROR_ALREADY_EXISTS;
+               break;
+            }
+
+            // lock it if it should be initially locked
+            if (status && locked) 
+            {
+               return Lock();
+            }
+
+            return status;
          }
 
          MutexWin32::~MutexWin32()

@@ -40,6 +40,8 @@
 #   include <pthread.h>
 #   include <semaphore.h>
 #   include <time.h>
+#   include <errno.h>
+#   include <stdio.h>
 #   ifdef OS_LINUX
 #      include <sys/time.h>
 #   endif

@@ -48,40 +48,134 @@ namespace TC
       namespace Impl
       {
 
-         SemaphorePthread::SemaphorePthread(uint32 initial) 
-         {
-            ::sem_init(&m_semaphore, 0, initial);
-         }
-
-         SemaphorePthread::SemaphorePthread(const std::string& shared_name, uint32 initial) 
+         SemaphorePthread::SemaphorePthread() 
+            :m_semaphore(SEM_FAILED)
+            ,m_name()
+            ,m_shared(false)
          {
          }
 
          SemaphorePthread::~SemaphorePthread()
          {
-            ::sem_destroy(&m_semaphore);
+            if (m_semaphore != SEM_FAILED)
+            {
+               if (m_shared)
+               {
+                  ::sem_close(m_semaphore);
+                  if (m_name.length() > 0)
+                  {
+                     ::sem_unlink(m_name.c_str());
+                  }
+               }
+               else
+               {
+                  ::sem_destroy(m_semaphore);
+                  delete m_semaphore;
+               }
+
+               m_semaphore = SEM_FAILED;
+            }
+            Thread::GetStatistic().m_num_semaphore--;
+         }
+
+         bool SemaphorePthread::Init(uint32 initial)
+         {
+            m_semaphore = new sem_t;
+            if (::sem_init(m_semaphore, 0, initial) != 0)
+            {
+               delete m_semaphore;
+               m_semaphore = SEM_FAILED;
+               ::perror("::sem_init failed");
+               return false;
+            }
+
+            return true;
+         }
+
+         bool SemaphorePthread::Init(const std::string& shared_name, uint32 initial, Factory::CreationMode mode)
+         {
+            switch(mode)
+            {
+            case Factory::CRM_ALWAYS:
+               m_semaphore = ::sem_open(name, O_CREAT, S_IRWXU, initial_count);
+               m_name = name;
+               break;
+            case Factory::CRM_WHEN_EXISTS:
+               m_semaphore = ::sem_open(name, O_CREAT|O_EXCL, S_IRWXU, initial_count);
+               // if unable to open it allready exists so it is ok
+               if (m_semaphore == SEM_FAILED)
+               {
+                  m_semaphore = ::sem_open(name, O_CREAT, 0, initial_count);
+               }
+               else
+               {
+                  ::sem_close(m_semaphore);
+                  m_semaphore = SEM_FAILED;
+               }
+               break;
+            case Factory::CRM_WHEN_NOT_EXISTS:
+               m_semaphore = ::sem_open(name, O_CREAT|O_EXCL, S_IRWXU, initial_count);
+               m_name = name;
+               break;
+            }
+            m_shared = true;
+            return m_semaphore != SEM_FAILED;
          }
 
          bool SemaphorePthread::Wait()
          {
-            return ::sem_wait(&m_semaphore) == 0;
+            while (::sem_wait(m_semaphore) != 0)
+            {
+               if (errno == EINTR)
+               {
+                  continue;
+               }
+
+               ::perror("::sem_wait failed");
+               return false;
+            }
+
+            return true;
          }
 
-         bool SemaphorePthread::Try()
+         bool SemaphorePthread::TryWait()
          {
-            return ::sem_trywait(&m_semaphore) == 0;
+            return ::sem_trywait(m_semaphore) == 0;
          }
 
          bool SemaphorePthread::TryWait(const Time& timeout)
          {
             Time time = Time::Now() + timeout;
             timespec t = {time.Seconds(), time.NanoSeconds()};
-            return ::sem_timedwait(&m_semaphore, &t) == 0;
+
+            while (::sem_timedwait(m_semaphore, &t) != 0)
+            {
+               if (errno == EINTR)
+               {
+                  continue;
+               }
+
+               if (errno == ETIMEDOUT)
+               {
+                  return false;
+               }
+
+               ::perror("::sem_timedwait failed");
+               return false;
+            }
+
+            return true;
          }
 
          bool SemaphorePthread::Post()
          {
-            return ::sem_post(&m_semaphore) == 0;
+            if (::sem_post(m_semaphore) != 0)
+            {
+               ::perror("::sem_post failed");
+               return false;
+            }
+
+            return true;
          }
 
       } // namespace Impl

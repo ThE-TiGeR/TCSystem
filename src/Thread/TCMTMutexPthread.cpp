@@ -48,16 +48,41 @@ namespace TC
       namespace Impl
       {
 
-         MutexPthread::MutexPthread(bool locked)
+         MutexPthread::MutexPthread()
          {
-            pthread_mutexattr_t attr;
-            ::pthread_mutexattr_init(&attr);
-            ::pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
-            ::pthread_mutex_init(&m_mutex, &attr);
+         }
+
+         bool MutexPthread::Init(bool locked)
+         {
+            ::pthread_mutexattr_t attr;
+            if (::pthread_mutexattr_init(&attr) != 0)
+            {
+               ::perror("::pthread_mutexattr_init failed");
+               return false;
+            }
+
+            if (::pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE) != 0)
+            {
+               ::perror("::pthread_mutexattr_settype failed");
+               ::pthread_mutexattr_destroy(&attr);
+               return false;
+            }
+
+            if (::pthread_mutex_init(&m_mutex, &attr) != 0)
+            {
+               ::perror("::pthread_mutex_init failed");
+               ::pthread_mutexattr_destroy(&attr);
+               return false;
+            }
+
             ::pthread_mutexattr_destroy(&attr);
 
-            // lock it if it should be initially locked
-            if (locked) Lock();
+            if (locked)
+            {
+               return Lock();
+            }
+
+            return true;
          }
 
          MutexPthread::~MutexPthread()
@@ -67,56 +92,175 @@ namespace TC
 
          bool MutexPthread::Lock()
          {
-            return ::pthread_mutex_lock(&m_mutex) == 0;
+            if (::pthread_mutex_lock(&m_mutex) != 0)
+            {
+               ::perror("::pthread_mutex_lock failed");
+               return false;
+            }
+
+            return true;
          }
 
          bool MutexPthread::TryLock()
          {
-            return ::pthread_mutex_trylock(&m_mutex) == 0;
+            if (::pthread_mutex_trylock(&m_mutex) != 0)
+            {
+               if (errno == EBUSY)
+               {
+                  return false;
+               }
+
+               ::perror("::pthread_mutex_trylock failed");
+               return false;        
+            }
+
+            return true;
          }
 
          bool MutexPthread::TryLock(const Time& timeout)
          {
             Time time = Time::Now() + timeout;
             timespec t = {time.Seconds(), time.NanoSeconds()};
-            return ::pthread_mutex_timedlock(&m_mutex, &t) == 0;
+
+            if (::pthread_mutex_timedlock(&m_mutex, &t) != 0)
+            {
+               if (errno == ETIMEDOUT)
+               {
+                  return false;
+               }
+
+               ::perror("::pthread_mutex_timedlock failed");
+               return false;        
+            }
+
+            return true;
          }
 
          bool MutexPthread::UnLock()
          {
-            return ::pthread_mutex_unlock(&m_mutex) == 0;
+            if (::pthread_mutex_unlock(&m_mutex) != 0)
+            {
+               ::perror("::pthread_mutex_lock failed");
+               return false;
+            }
+
+            return true;
          }
 
-         MutexSharedPthread::MutexSharedPthread(const std::string& shared_name, bool locked)
+         MutexSharedPthread::MutexSharedPthread() 
+            :m_nesting_level(0),
+            m_owner_process(0),
+            m_semaphore()
          {
-            m_semaphore = SemaphorePtr(new SemaphorePthread(shared_name, 1));
-            // lock it if it should be initially locked
-            if (locked) m_semaphore->Wait();
          }
 
          MutexSharedPthread::~MutexSharedPthread()
          {
-            m_semaphore = SemaphorePtr();
+         }
+
+         bool MutexSharedPthread::Init(const std::string& shared_name, bool locked, Factory::CreationMode mode)
+         {
+            m_semaphore = MT::Factory::CreateSemaphore(shared_name, locked ? 0 : 1, mode);
+            if (locked)
+            {
+               SetOwnerShip();
+            }
+
+            return m_semaphore != 0;
          }
 
          bool MutexSharedPthread::Lock()
          {
-            return m_semaphore->Wait();
+            if (TryAndGetIfOwner())
+            {
+               return true;
+            }
+
+            if (m_semaphore->Wait())
+            {
+               SetOwnerShip();
+               return true;
+            }
+
+            return false;
          }
 
          bool MutexSharedPthread::TryLock()
          {
-            return m_semaphore->Try();
+            if (TryAndGetIfOwner())
+            {
+               return true;
+            }
+
+            if (m_semaphore->TryWait())
+            {
+               SetOwnerShip();
+               return true;
+            }
+
+            return false;
          }
 
          bool MutexSharedPthread::TryLock(const Time& timeout)
          {
-            return m_semaphore->TryWait(timeout);
+            if (TryAndGetIfOwner())
+            {
+               return true;
+            }
+
+            if (m_semaphore->TryWait(timeout))
+            {
+               SetOwnerShip();
+               return true;
+            }
+
+            return false;
          }
 
          bool MutexSharedPthread::UnLock()
          {
-            return m_semaphore->Post();
+            if (UnGetIfOwner())
+            {
+               return m_semaphore->Post();
+            }
+            return true;
+         }
+
+         bool MutexSharedPthread::TryAndGetIfOwner()
+         {
+            if (::pthread_equal(::pthread_self(), m_owner_process))
+            {
+               m_nesting_level++;
+               return true;
+            }
+
+            return false;
+         }
+
+         void MutexSharedPthread::SetOwnerShip()
+         {
+            m_owner_process = ::pthread_self();
+            m_nesting_level = 1;
+         }
+
+         bool MutexSharedPthread::UnGetIfOwner()
+         {
+            if (::pthread_equal(::pthread_self(), m_owner_process) == 0)
+            {
+               return false;
+            }
+            if (m_nesting_level == 0)
+            {
+               return false;
+            }
+
+            m_nesting_level--;
+            if (m_nesting_level == 0)
+            {
+               m_owner_process = 0;
+            }
+
+            return m_nesting_level == 0;
          }
 
       } // namespace Impl

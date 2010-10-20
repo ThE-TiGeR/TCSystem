@@ -66,12 +66,12 @@ sint32 Settings::GetIntEntry(const std::string &section, const std::string &key,
 
 float Settings::GetFloatEntry(const std::string &section, const std::string &key, float defaultValue) const
 {
-   return String::ToFlt32(GetStringEntry(section, key, String::ToString(defaultValue)));
+   return String::ToFloat(GetStringEntry(section, key, String::ToString(defaultValue)));
 }
 
 double Settings::GetDoubleEntry(const std::string &section, const std::string &key, double defaultValue) const
 {
-   return String::ToFlt64(GetStringEntry(section, key, String::ToString(defaultValue)));
+   return String::ToDouble(GetStringEntry(section, key, String::ToString(defaultValue)));
 }
 
 std::string Settings::GetStringEntry(const std::string &section, const std::string &key, const std::string &defaultValue) const
