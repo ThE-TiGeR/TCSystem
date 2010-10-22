@@ -105,6 +105,28 @@ namespace TC
                                             CodecPtr codec);
 
       /**
+       * @brief Create an gz compressed file stream
+       * @param fileName  name of the file to open
+       * @param direction Direction of the stream see TC::Stream::StreamDirection
+       * @param codec     Shared pointer to a codec for encoding or decoding the data
+       * @return Shared pointer to the stream
+       */
+      TCBASE_API StreamPtr CreateGzFileStream(const std::string &fileName,
+                                            Stream::StreamDirection direction,
+                                            CodecPtr codec);
+
+      /**
+       * @brief Create an bz2 compressed file stream
+       * @param fileName  name of the file to open
+       * @param direction Direction of the stream see TC::Stream::StreamDirection
+       * @param codec     Shared pointer to a codec for encoding or decoding the data
+       * @return Shared pointer to the stream
+       */
+      TCBASE_API StreamPtr CreateBz2FileStream(const std::string &fileName,
+                                            Stream::StreamDirection direction,
+                                            CodecPtr codec);
+
+      /**
        * @brief Create an memory stream
        * @param codec Shared pointer to a codec for encoding or decoding the data
        * @return Shared pointer to the stream

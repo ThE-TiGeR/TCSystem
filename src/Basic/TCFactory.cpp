@@ -39,6 +39,8 @@
 #include "TCAsciiCodec.h"
 #include "TCBinaryCodec.h"
 #include "TCFileStream.h"
+#include "TCGzFileStream.h"
+#include "TCBz2FileStream.h"
 #ifdef TCOS_WINDOWS
 #  include "TCMemoryMappedFileWin32.h"
 #else
@@ -94,6 +96,28 @@ namespace TC
          return StreamPtr(new Impl::FileStream(stream, direction, codec));
       }
 
+      StreamPtr CreateGzFileStream(const std::string &fileName, Stream::StreamDirection direction, CodecPtr codec)
+      {
+          StreamPtr stream(new Impl::GzFileStream(fileName, direction, codec));
+          if (!stream->IsOk())
+          {
+              return StreamPtr();
+          }
+
+          return stream;
+      }
+
+      StreamPtr CreateBz2FileStream(const std::string &fileName, Stream::StreamDirection direction, CodecPtr codec)
+      {
+          StreamPtr stream(new Impl::Bz2FileStream(fileName, direction, codec));
+          if (!stream->IsOk())
+          {
+              return StreamPtr();
+          }
+
+          return stream;
+      }
+
       StreamPtr CreateMemoryStream(CodecPtr codec, ByteVector& memory)
       {
          return StreamPtr(new Impl::MemoryStream(codec, memory));
@@ -139,7 +163,6 @@ namespace TC
 
          return file;
       }
-
    }
 }
 

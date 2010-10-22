@@ -126,7 +126,7 @@ namespace Impl
        * set the stream error flag
        * @param err errornumber to set the status
        */
-      void setStatus(sint32 err);
+      void setStatus(sint32 err) const;
       /** displays the error messege because of the status */
       virtual void displayErrorMessage() const;
 
@@ -153,13 +153,13 @@ namespace Impl
         return stream_readwrite == m_stream_direction;
       }
 
-   protected:
+   private:
       /** Pointer to the codec which is used to de/encode the data */
       CodecPtr m_codec;
       /** defines the direction of the stream */
       StreamDirection m_stream_direction;
       /** stores the error of the last operation */
-      sint32 m_status;
+      mutable sint32 m_status;
       /** true if we should write out error messages else false */
       bool m_display_error_messages;
    };

@@ -623,6 +623,24 @@ static void ConvertPSKCvsToHaushaltsbuchCvs()
    }
 }
 
+static void GzStreamTest()
+{
+    TC::StreamPtr stream =TC::Factory::CreateGzFileStream("test.txt.gz", TC::Stream::stream_write, 
+        TC::Factory::CreateAsciiCodec());
+    stream << "Hallo" << TC::endl;
+    stream << "This is a gz test" << TC::endl;
+    stream << 1 << " " << 127 << TC::endl;
+}
+
+static void Bz2StreamTest()
+{
+    TC::StreamPtr stream =TC::Factory::CreateBz2FileStream("test.txt.bz2", TC::Stream::stream_write, 
+        TC::Factory::CreateAsciiCodec());
+    stream << "Hallo" << TC::endl;
+    stream << "This is a bz2 test" << TC::endl;
+    stream << 1 << " " << 127 << TC::endl;
+}
+
 int main(int narg, char** argv)
 {
    TC::Output::PrintTargetPtr trace_target(new MTTraceTarget);
@@ -636,9 +654,11 @@ int main(int narg, char** argv)
    {
       TCINFOS("TestBasic", "Start");
 
+      //GzStreamTest();
+      Bz2StreamTest();
       //RunUDPTest();
       //RunSocketTest(narg, argv);
-      ConvertPSKCvsToHaushaltsbuchCvs();
+      //ConvertPSKCvsToHaushaltsbuchCvs();
 
       TCINFO("TestBasic", "End");
    }
@@ -657,4 +677,5 @@ int main(int narg, char** argv)
 
    return 0;
 }
+
 

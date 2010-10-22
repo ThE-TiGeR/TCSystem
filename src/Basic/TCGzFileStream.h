@@ -32,82 +32,73 @@
 //*******************************************************************************
 //  $Id$
 //*******************************************************************************
+#ifndef _TC_GZ_FILE_STREAM_H_
+#define _TC_GZ_FILE_STREAM_H_
 
 #include "TCStreamBase.h"
 
-#include "TCOutput.h"
-#include "TCSystem.h"
-
-#include "TCNewEnable.h"
+#include <cstdio>
+#include <zlib.h>
 
 namespace TC
 {
-namespace Impl
-{
+    namespace Impl
+    {
 
-StreamBase::StreamBase(CodecPtr codec)
-:m_codec(codec)
-{
-   ResetStatus();
-   m_display_error_messages = true;
+        /**
+        * @addtogroup TC_BASE_IO_IMPL
+        * @{
+        */
 
-   setStreamDirection(stream_dead);
-}
+        /**
+        * @file
+        * @brief This file provides the definition of TC::GzFileStream
+        *
+        * @author Thomas Goessler
+        */
 
-StreamBase::~StreamBase()
-{
-}
+        /**
+        * @brief Class for reading/writing a gz file
+        *
+        * Just implements the writing and reading of bytes
+        * the rest is done in StreamBase
+        */
+        class TC_DLL_LOCAL GzFileStream: public StreamBase
+        {
+        public:
+            enum GzFileStreamErrorFlags
+            {
+                error_end_file=StreamBase::error_last,
+                error_read_file,
+                error_write_file,
+                error_last
+            };
 
-void StreamBase::CloseStream()
-{
-   setStreamDirection(stream_dead);
-}
+        public:
+            GzFileStream(const std::string &fileName, StreamDirection direction, CodecPtr codec);
+            virtual ~GzFileStream();
 
-void StreamBase::EnableDisplayErrorMessages(bool displ)
-{
-   m_display_error_messages = displ;
-}
+            virtual bool SetPosition(sint64, StreamPosition pos);
+            virtual uint64 GetPosition() const;
 
-// -----------------------------------------------------------------
-// status methodes
-// -----------------------------------------------------------------
-void StreamBase::setStatus(sint32 err) const
-{
-   m_status = err;
+            virtual uint64 ReadBytes (uint64 nBytes, void *bytes);
+            virtual uint64 WriteBytes(uint64 nBytes, const void *bytes);
+            virtual void Flush();
 
-   // if we shoud we display an error message
-   if (m_display_error_messages)
-   {
-      displayErrorMessage();
-      if (GetStatus() != error_none && System::GetLastError() !=0)
-      {
-         TCERROR("TCBASE", System::GetLastErrorMessage().c_str());
-      }
-   }
-}
+            virtual void CloseStream();
 
-void StreamBase::ResetStatus()
-{
-   m_status = StreamBase::error_none;
-}
+        protected:
+            virtual void displayErrorMessage() const;
 
-void StreamBase::displayErrorMessage() const
-{
-   switch (GetStatus())
-   {
-      case error_streamopen:
-         TCERROR("TCBASE", "Error opening stream");
-       break;
+        private:
+            gzFile m_file;
+        };
 
-      case error_streamclose:
-         TCERROR("TCBASE", "Error closing stream");
-       break;
+        /**
+        * @}
+        */
 
-      case error_streamdirection:
-         TCERROR("TCBASE", "Error wrong stream direction");
-       break;
-   }
-}
+    } // namespace Impl
+} // namespace TC
 
-}
-}
+#endif // _TC_GZ_FILE_STREAM_H_
