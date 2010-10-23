@@ -1,0 +1,12 @@
+# -*- python -*-
+
+PROVIDE_H('zlib.h')
+
+EXTERNAL_LIBRARY(
+    libs=['-lz'])
+
+# CMake section
+# -------------
+CMAKE_EXTERNAL_LIBRARY(
+    libs=['-lz'],
+)
