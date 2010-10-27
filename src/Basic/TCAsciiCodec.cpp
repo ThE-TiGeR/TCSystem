@@ -43,6 +43,7 @@
 
 #include <cctype>
 #include <cstring>
+#include <locale>
 
 #include "TCNewEnable.h"
 
@@ -67,13 +68,14 @@ static bool iseol(char c)
 
 static uint64 ReadNextValueString(Stream& stream, std::string& val)
 {
+   std::locale l;
    uint64 len = 0;
    char c;
    // skipp spaces and end of line
    while (stream.ReadBytes(1, &c) == 1)
    {
       len++;
-      if (std::isspace(c) || iseol(c))
+      if (std::isspace(c, l) || iseol(c))
       {
          continue;
       }
@@ -87,7 +89,7 @@ static uint64 ReadNextValueString(Stream& stream, std::string& val)
    while (stream.ReadBytes(1, &c) == 1)
    {
       len++;
-      if (std::isspace(c) || iseol(c))
+      if (std::isspace(c, l) || iseol(c))
       {
          break;
       }
