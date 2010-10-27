@@ -184,11 +184,6 @@ namespace TC
        */
       virtual uint64 Read(double &val) = 0;
       /**
-       * Method for reading one string from the stream
-       * @param val the string which should store the string
-       */
-      virtual uint64 Read(char *val) = 0;
-      /**
       * Method for reading one std::string from the stream
       * @param val the string which should store the string
       */

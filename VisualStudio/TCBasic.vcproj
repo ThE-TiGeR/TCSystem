@@ -127,7 +127,7 @@
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="1"
 				AdditionalIncludeDirectories="..\inc"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CRT_SECURE_NO_DEPRECATE;TCOS_WINDOWS;TCBASE_EXPORTS"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CRT_SECURE_NO_DEPRECATE;TCOS_WINDOWS;TCBASE_EXPORTS;_SECURE_SCL=0"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="4"
@@ -278,7 +278,7 @@
 				InlineFunctionExpansion="2"
 				EnableIntrinsicFunctions="false"
 				AdditionalIncludeDirectories="..\inc"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CRT_SECURE_NO_DEPRECATE;TCOS_WINDOWS;TCBASE_EXPORTS;HAVE_UNIT_TESTS"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CRT_SECURE_NO_DEPRECATE;TCOS_WINDOWS;TCBASE_EXPORTS;HAVE_UNIT_TESTS;_SECURE_SCL=0"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="4"
@@ -1030,6 +1030,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\inc\TCStlTypes.h"
+				>
+			</File>
+			<File
 				RelativePath="..\inc\TCStream.h"
 				>
 			</File>
@@ -1136,6 +1140,22 @@
 						Name="VCCustomBuildTool"
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\src\Basic\Tests\TCHashTableTest.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\src\Basic\Tests\TCHashTableTest.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\Basic\Tests\TCStreamTest.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\src\Basic\Tests\TCStreamTest.h"
+				>
 			</File>
 			<File
 				RelativePath="..\src\Basic\Tests\TCStringTest.cpp"

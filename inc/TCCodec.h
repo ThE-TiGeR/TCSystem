@@ -121,13 +121,6 @@ namespace TC
         */
        virtual uint64 Decode(Stream& stream, double &val) = 0;
        /**
-        * Method for reading one string from the stream
-        * @param stream Stream from which to decode the data
-        * @param val the string which should store the string
-        * @return Number of bytes decoded
-        */
-       virtual uint64 Decode(Stream& stream, char *val) = 0;
-       /**
        * Method for reading one string from the stream
        * @param stream Stream from which to decode the data
        * @param val the string which should store the string
