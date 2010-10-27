@@ -35,7 +35,9 @@
 
 #include "TCSystem.h"
 
+#include "TCException.h"
 #include "TCFile.h"
+#include "TCFileName.h"
 #include "TCString.h"
 #include "TCScopedArray.h"
 #include "TCTime.h"
@@ -619,4 +621,41 @@ namespace TC
       return handler;
    }
 
+   std::string System::GetTmpDir()
+   {
+      std::string dir = GetEnvironment("TEMP");
+      if (dir.length() == 0)
+      {
+         dir = GetEnvironment("TMP");
+      }
+
+      if (dir.length() == 0)
+      {
+#if TCOS_POSIX
+         dir = "/tmp";
+#else
+         dir = FileName::AddPaths(GetEnvironment("SystemRoot"), "TEMP");
+#endif
+      }
+
+      if (!File::IsDirectory(dir))
+      {
+         throw Exception("Unable to determine temp directory");
+      }
+
+      return dir;
+   }
+
+   std::string System::GetTmpFileName()
+   {
+      static Interlocked::Type s_tmp_file_count;
+      Interlocked::Type current = Interlocked::Increment(s_tmp_file_count);
+
+      std::string id = String::Print("%d_%d", GetProcessID(), current);
+      std::string dir = GetTmpDir();
+      std::string file_name = FileName::AddFileNameAndPath("tcs_temp_file_" + id, dir);
+      file_name = FileName::AddFileNameAndExtension(file_name, "tmp");
+
+      return file_name;
+   }
 }

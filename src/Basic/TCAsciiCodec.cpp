@@ -60,74 +60,146 @@ AsciiCodec::~AsciiCodec()
 {
 }
 
-uint64 AsciiCodec::Decode(Stream& /* stream */, sint16& /* val */)
+static bool iseol(char c)
 {
-   TC_ASSERT(!"TC::Impl::AsciiCodec::Decode not implemented");
-   return 0;
+   return c == '\n' || c == '\r';
 }
 
-uint64 AsciiCodec::Decode(Stream& /* stream */, uint16& /* val */)
+static uint64 ReadNextValueString(Stream& stream, std::string& val)
 {
-   TC_ASSERT(!"TC::Impl::AsciiCodec::Decode not implemented");
-   return 0;
+   uint64 len = 0;
+   char c;
+   // skipp spaces and end of line
+   while (stream.ReadBytes(1, &c) == 1)
+   {
+      len++;
+      if (std::isspace(c) || iseol(c))
+      {
+         continue;
+      }
+      else
+      {
+         val = c;
+         break;
+      }
+   }
+
+   while (stream.ReadBytes(1, &c) == 1)
+   {
+      len++;
+      if (std::isspace(c) || iseol(c))
+      {
+         break;
+      }
+      val += c;
+   }
+
+   return len;
 }
 
-uint64 AsciiCodec::Decode(Stream& /* stream */, sint32& /* val */)
+uint64 AsciiCodec::Decode(Stream& stream, sint16& val)
 {
-   TC_ASSERT(!"TC::Impl::AsciiCodec::Decode not implemented");
-   return 0;
+   std::string strval;
+   uint64 len = ReadNextValueString(stream, strval);
+   val = String::ToSint16(strval);
+
+   return len;
 }
 
-uint64 AsciiCodec::Decode(Stream& /* stream */, uint32& /* val */)
+uint64 AsciiCodec::Decode(Stream& stream, uint16& val)
 {
-   TC_ASSERT(!"TC::Impl::AsciiCodec::Decode not implemented");
-   return 0;
+   std::string strval;
+   uint64 len = ReadNextValueString(stream, strval);
+   val = String::ToUint16(strval);
+
+   return len;
 }
 
-uint64 AsciiCodec::Decode(Stream& /* stream */, sint64& /* val */)
+uint64 AsciiCodec::Decode(Stream& stream, sint32& val)
 {
-   TC_ASSERT(!"TC::Impl::AsciiCodec::Decode not implemented");
-   return 0;
+   std::string strval;
+   uint64 len = ReadNextValueString(stream, strval);
+   val = String::ToSint32(strval);
+
+   return len;
 }
 
-uint64 AsciiCodec::Decode(Stream& /* stream */, uint64& /* val */)
+uint64 AsciiCodec::Decode(Stream& stream, uint32& val)
 {
-   TC_ASSERT(!"TC::Impl::AsciiCodec::Decode not implemented");
-   return 0;
+   std::string strval;
+   uint64 len = ReadNextValueString(stream, strval);
+   val = String::ToUint32(strval);
+
+   return len;
 }
 
-uint64 AsciiCodec::Decode(Stream& /* stream */, float& /* val */)
+uint64 AsciiCodec::Decode(Stream& stream, sint64& val)
 {
-   TC_ASSERT(!"TC::Impl::AsciiCodec::Decode not implemented");
-   return 0;
+   std::string strval;
+   uint64 len = ReadNextValueString(stream, strval);
+   val = String::ToSint64(strval);
+
+   return len;
 }
 
-uint64 AsciiCodec::Decode(Stream& /* stream */, double& /* val */)
+uint64 AsciiCodec::Decode(Stream& stream, uint64& val)
 {
-   TC_ASSERT(!"TC::Impl::AsciiCodec::Decode not implemented");
-   return 0;
+   std::string strval;
+   uint64 len = ReadNextValueString(stream, strval);
+   val = String::ToUint64(strval);
+
+   return len;
 }
 
-uint64 AsciiCodec::Decode(Stream& /* stream */, char* /* val */)
+uint64 AsciiCodec::Decode(Stream& stream, float& val)
 {
-   TC_ASSERT(!"TC::Impl::AsciiCodec::Decode not implemented");
-   return 0;
+   std::string strval;
+   uint64 len = ReadNextValueString(stream, strval);
+   val = String::ToFloat(strval);
+
+   return len;
+}
+
+uint64 AsciiCodec::Decode(Stream& stream, double& val)
+{
+   std::string strval;
+   uint64 len = ReadNextValueString(stream, strval);
+   val = String::ToDouble(strval);
+
+   return len;
 }
 
 uint64 AsciiCodec::Decode(Stream& stream, std::string& val)
 {
    val.erase();
+   uint64 len = 0;
    char c;
-   while (Decode(stream, c) == 1)
+   // skipp end of lines
+   while (stream.ReadBytes(1, &c) == 1)
    {
-      if (c == '\n')
+      len++;
+      if (iseol(c))
+      {
+         continue;
+      }
+      else
+      {
+         val = c;
+         break;
+      }
+   }
+
+   while (stream.ReadBytes(1, &c) == 1)
+   {
+      len++;
+      if (iseol(c))
       {
          break;
       }
 
       val += c;
    }
-   return val.length();
+   return len;
 }
 
 uint64 AsciiCodec::Decode(Stream& stream, std::wstring& val)

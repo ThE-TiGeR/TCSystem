@@ -72,7 +72,6 @@ namespace Impl
       virtual uint64 Decode(Stream& stream, double &val);
       virtual uint64 Decode(Stream& stream, std::string& val);
       virtual uint64 Decode(Stream& stream, std::wstring& val);
-      virtual uint64 Decode(Stream& stream, char *val);
       virtual uint64 Decode(Stream& stream, char &val);
       virtual uint64 Decode(Stream& stream, uchar &val) ;
 

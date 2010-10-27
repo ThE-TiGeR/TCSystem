@@ -45,8 +45,9 @@
 #include "TCNewEnable.h"
 
 #ifdef _MSC_VER
-#define snprintf _snprintf
-#define snprintf _snprintf
+#define os_snprintf _snprintf
+#else
+#define os_snprintf std::snprintf
 #endif
 
 namespace TC
@@ -199,13 +200,13 @@ namespace TC
          // convert from float
          {
             char tmp_string[100];
-            std::snprintf(tmp_string, 100, "%f", 0.123456f);
+            os_snprintf(tmp_string, 100, "%f", 0.123456f);
             JFUNIT_ASSERT(String::ToString(0.123456f)    == tmp_string);
-            std::snprintf(tmp_string, 100, "%f", -0.123456f);
+            os_snprintf(tmp_string, 100, "%f", -0.123456f);
             JFUNIT_ASSERT(String::ToString(-0.123456f)   == tmp_string);
-            std::snprintf(tmp_string, 100, "%f", 123.456f);
+            os_snprintf(tmp_string, 100, "%f", 123.456f);
             JFUNIT_ASSERT(String::ToString(123.456f)     == tmp_string);
-            std::snprintf(tmp_string, 100, "%f", -123.456f);
+            os_snprintf(tmp_string, 100, "%f", -123.456f);
             JFUNIT_ASSERT(String::ToString(-123.456f)    == tmp_string);
          }
 
@@ -213,13 +214,13 @@ namespace TC
          // convert from double
          {
             char tmp_string[100];
-            std::snprintf(tmp_string, 100, "%lf", 0.123456);
+            os_snprintf(tmp_string, 100, "%lf", 0.123456);
             JFUNIT_ASSERT(String::ToString(0.123456)    == tmp_string);
-            std::snprintf(tmp_string, 100, "%lf", -0.123456);
+            os_snprintf(tmp_string, 100, "%lf", -0.123456);
             JFUNIT_ASSERT(String::ToString(-0.123456)   == tmp_string);
-            std::snprintf(tmp_string, 100, "%lf", 123.456);
+            os_snprintf(tmp_string, 100, "%lf", 123.456);
             JFUNIT_ASSERT(String::ToString(123.456)     == tmp_string);
-            std::snprintf(tmp_string, 100, "%lf", -123.456);
+            os_snprintf(tmp_string, 100, "%lf", -123.456);
             JFUNIT_ASSERT(String::ToString(-123.456)    == tmp_string);
          }
       }

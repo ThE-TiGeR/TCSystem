@@ -31,37 +31,22 @@
 //----------------------------------------------------------------------
 //  $Id$
 //----------------------------------------------------------------------
-#ifdef HAVE_UNIT_TESTS
-#include "TCBasicTestSuite.h"
 
-#include "TCStringTest.h"
-#include "TCWStringTest.h"
-#include "TCFileNameTest.h"
-#include "TCUtilTest.h"
-#include "TCTimeTest.h"
-#include "TCWFileNameTest.h"
-#include "TCHashTableTest.h"
-#include "TCStreamTest.h"
+#ifndef _TC_STREAM_TEST_H_
+#define _TC_STREAM_TEST_H_
 
-#include "TCNewEnable.h"
+#include <jf/unittest/test_suite.h>
 
 namespace TC
 {
    namespace Tests
    {
-      BasicSuite::BasicSuite()
-         :jf::unittest::TestSuite("TC::BasicSuite")
+      class StreamTestSuite : public jf::unittest::TestSuite
       {
-         add_test(new UtilTestSuite);
-         add_test(new StringTestSuite);
-         add_test(new WStringTestSuite);
-         add_test(new FileNameTestSuite);
-         add_test(new WFileNameTestSuite);
-         add_test(new TimeTestSuite);
-         add_test(new HashTableTestSuite);
-         add_test(new StreamTestSuite);
-      }
+      public:
+         StreamTestSuite();
+      };
    }
 }
 
-#endif
+#endif // _TC_STREAM_TEST_H_

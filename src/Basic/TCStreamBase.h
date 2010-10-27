@@ -95,7 +95,6 @@ namespace Impl
       virtual uint64 Read(uint64 &val) { return m_codec->Decode(*this, val); }
       virtual uint64 Read(float &val)  { return m_codec->Decode(*this, val); }
       virtual uint64 Read(double &val) { return m_codec->Decode(*this, val); }
-      virtual uint64 Read(char *val)   { return m_codec->Decode(*this, val); }
       virtual uint64 Read(std::string& val){ return m_codec->Decode(*this, val); }
       virtual uint64 Read(std::wstring& val){ return m_codec->Decode(*this, val); }
       virtual uint64 Read(char &val)   { return m_codec->Decode(*this, val); }

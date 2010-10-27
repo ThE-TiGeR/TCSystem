@@ -73,7 +73,7 @@ namespace TC
       TCBASE_API std::string GetUserName();
 
       /** @return Number of CPU´s in the computer */
-      TCBASE_API sint32 GetNumCPUs ();
+      TCBASE_API sint32 GetNumCPUs();
       /** @return The hostname */
       TCBASE_API std::string GetCpuModel();
 
@@ -109,9 +109,14 @@ namespace TC
       /** @return The last happend error code */
       TCBASE_API sint32 GetLastError();
       /** @return The string last happend error code */
-      TCBASE_API std::string  GetLastErrorMessage();
+      TCBASE_API std::string GetLastErrorMessage();
       /** @return The string of happend error code */
-      TCBASE_API std::string  GetErrorMessage(sint32 error_code);
+      TCBASE_API std::string GetErrorMessage(sint32 error_code);
+
+      /** @return Get directory for storing temporary files */
+      TCBASE_API std::string GetTmpDir();
+      /** @return Get a file name which can be used for storing temporary data */
+      TCBASE_API std::string GetTmpFileName();
 
       /**
       * @brief Interface needed by the console stop handler
@@ -131,7 +136,6 @@ namespace TC
       * @return the old stop handler
       */
       TCBASE_API ConsoleStopHandlerPtr SetConsoleStopHandler(ConsoleStopHandlerPtr handler);
-
    }
 
    /**
