@@ -8,5 +8,5 @@ EXTERNAL_LIBRARY(
 # CMake section
 # -------------
 CMAKE_EXTERNAL_LIBRARY(
-    libs=['-lbz2'],
+    libs=['bz2'],
 )
