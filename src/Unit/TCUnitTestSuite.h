@@ -41,29 +41,31 @@
 
 #include <vector>
 
-namespace TC {
-namespace Unit {
-
-class TCUNIT_API TestSuite : public Test
+namespace TC 
 {
-public:
-    typedef std::vector<Test*> Tests;
-    
-public:
-    TestSuite(const std::string& name) : Test(name) {}
-    virtual ~TestSuite();
+   namespace Unit 
+   {
 
-    void add_test(Test*);
-    const Tests& tests() const { return tests_; }
+      class TCUNIT_API TestSuite : public Test
+      {
+      public:
+         typedef std::vector<Test*> TestsVector;
 
-public:
-    virtual void run_internal(TestResult*, const CleanlinessCheck*);
+      public:
+         TestSuite(const std::string& name) : Test(name) {}
+         virtual ~TestSuite();
 
-private:
-    Tests tests_;
-};
+         void AddTest(Test*);
+         const TestsVector& Tests() const { return tests_; }
 
-}
+      public:
+         virtual void InternalRun(TestResult*, const CleanlinessCheck*);
+
+      private:
+         TestsVector tests_;
+      };
+
+   }
 }
 
 #endif

@@ -66,7 +66,7 @@ namespace TC
       namespace Tests
       {
          AddressTestSuite::AddressTestSuite()
-            :jf::unittest::TestSuite("TC::Net::Tests::AddressTestSuite")
+            :Unit::TestSuite("TC::Net::Tests::AddressTestSuite")
          {
             add_test(new AddressConstsTest);
          }

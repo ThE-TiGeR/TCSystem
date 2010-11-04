@@ -45,7 +45,7 @@ namespace TC
       namespace Tests
       {
          Suite::Suite()
-            :jf::unittest::TestSuite("TC::Net::Suite")
+            :Unit::TestSuite("TC::Net::Suite")
          {
             add_test(new AddressTestSuite);
          }

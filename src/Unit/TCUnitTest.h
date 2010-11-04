@@ -37,9 +37,10 @@
 #ifndef _TC_UNIT_TEST_H
 #define _TC_UNIT_TEST_H
 
-#include "TCTestResult.h"
-#include "TCCleanLiness.h"
+#include "TCUnitTestResult.h"
+#include "TCUnitCleanLiness.h"
 #include "TCUnitApi.h"
+#include "TCNonCopyable.h"
 
 #include <string>
 
@@ -47,22 +48,18 @@ namespace TC
 {
    namespace Unit 
    {
-      class TCUNIT_API Test
+      class TCUNIT_API Test: protected NonCopyAble
       {
       public:
          Test(const std::string& name) : name_(name) {}
          virtual ~Test() {}
 
-         const std::string& name() const { return name_; }
+         const std::string& Name() const { return name_; }
 
-         virtual void run_internal(TestResult*, const CleanlinessCheck*) = 0;
+         virtual void InternalRun(TestResult*, const CleanlinessCheck*) = 0;
 
       private:
          std::string name_;
-
-      private:
-         Test(const Test&);
-         Test& operator=(const Test&);
       };
 
    }

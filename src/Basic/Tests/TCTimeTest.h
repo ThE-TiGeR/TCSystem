@@ -34,13 +34,13 @@
 #ifndef _TC_TIME_TEST_SUITE_H_
 #define _TC_TIME_TEST_SUITE_H_
 
-#include <jf/unittest/test_suite.h>
+#include "TCUnitTestSuite.h"
 
 namespace TC
 {
    namespace Tests
    {
-      class TimeTestSuite: public jf::unittest::TestSuite
+      class TimeTestSuite: public Unit::TestSuite
       {
       public:
          TimeTestSuite();

@@ -50,7 +50,7 @@ namespace TC
    namespace Tests
    {
       BasicSuite::BasicSuite()
-         :jf::unittest::TestSuite("TC::BasicSuite")
+         :Unit::TestSuite("TC::BasicSuite")
       {
          add_test(new UtilTestSuite);
          add_test(new StringTestSuite);

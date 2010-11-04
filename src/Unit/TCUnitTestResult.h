@@ -37,14 +37,14 @@
 #ifndef _TC_UNIT_TEST_RESULT_H
 #define _TC_UNIT_TEST_RESULT_H
 
-#include "failure.h"
-#include "test_case_fwd.h"
-#include "test_suite_fwd.h"
+#include "TCUnitFailure.h"
 
 namespace TC 
 {
    namespace Unit 
    {
+      class TestSuite;
+      class TestCase;
 
       class TCUNIT_API TestResult
       {

@@ -1240,6 +1240,74 @@
 				</FileConfiguration>
 			</File>
 		</Filter>
+		<Filter
+			Name="Unit Header Files"
+			>
+			<File
+				RelativePath="..\src\Unit\TCUnitApi.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\Unit\TCUnitCleanLiness.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\Unit\TCUnitFailure.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\Unit\TCUnitSimpleTestResult.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\Unit\TCUnitTest.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\Unit\TCUnitTestCase.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\Unit\TCUnitTestResult.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\Unit\TCUnitTestSuite.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\Unit\TCUnitTreeTestResult.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\Unit\TCUnitTreeTestRunner.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Unit Source Files"
+			>
+			<File
+				RelativePath="..\src\Unit\TCUnitSimpleTestResult.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\src\Unit\TCUnitTestCase.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\src\Unit\TCUnitTestSuite.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\src\Unit\TCUnitTreeTestResult.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\src\Unit\TCUnitTreeTestRunner.cpp"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath="..\Confix2.dir"
 			>

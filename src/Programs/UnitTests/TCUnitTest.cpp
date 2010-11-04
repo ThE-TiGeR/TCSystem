@@ -14,7 +14,7 @@
 
 int RunUnitTests()
 {
-   jf::unittest::TestSuite suite("TC::Suite");
+   Unit::TestSuite suite("TC::Suite");
    suite.add_test(new jf::unittest::tests::Stage2Suite);
    suite.add_test(new TC::Tests::BasicSuite);
    suite.add_test(new TC::MT::Tests::Suite);

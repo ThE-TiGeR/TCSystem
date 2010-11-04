@@ -36,7 +36,7 @@
 #ifndef _TC_MT_THREAD_TEST_H_
 #define _TC_MT_THREAD_TEST_H_
 
-#include <jf/unittest/test_suite.h>
+#include "TCUnitTestSuite.h"
 
 namespace TC
 {
@@ -44,7 +44,7 @@ namespace TC
     {
         namespace Tests
         {
-            class ThreadSuite : public jf::unittest::TestSuite
+            class ThreadSuite : public Unit::TestSuite
             {
             public:
                 ThreadSuite();

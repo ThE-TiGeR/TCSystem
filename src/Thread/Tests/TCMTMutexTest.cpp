@@ -185,7 +185,7 @@ namespace TC
             };
 
             MutexSuite::MutexSuite()
-                : jf::unittest::TestSuite("TC::MT::Tests::MutexSuite")
+                : Unit::TestSuite("TC::MT::Tests::MutexSuite")
             {
                 add_test(new MutexLockUnlockTest);
                 add_test(new MutexSharedCreateTest);

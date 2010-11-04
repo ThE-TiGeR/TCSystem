@@ -35,13 +35,13 @@
 #ifndef _TC_WFILE_NAME_TEST_H_
 #define _TC_WFILE_NAME_TEST_H_
 
-#include <jf/unittest/test_suite.h>
+#include "TCUnitTestSuite.h"
 
 namespace TC
 {
    namespace Tests
    {
-      class WFileNameTestSuite : public jf::unittest::TestSuite
+      class WFileNameTestSuite : public Unit::TestSuite
       {
       public:
          WFileNameTestSuite();

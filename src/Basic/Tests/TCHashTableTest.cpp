@@ -201,7 +201,7 @@ namespace TC
    namespace Tests
    {
       HashTableTestSuite::HashTableTestSuite()
-         :jf::unittest::TestSuite("TC::Tests::HashTableTestSuite")
+         :Unit::TestSuite("TC::Tests::HashTableTestSuite")
       {
          add_test(new ConstructTest);
          add_test(new HashSizeTest);

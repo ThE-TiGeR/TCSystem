@@ -43,38 +43,20 @@ namespace TC
 {
    namespace Unit 
    {
-
       class TCUNIT_API TestCase : public Test
       {
       public:
-         TestCase(const std::string& name) : Test(name), result_(0) {}
+         TestCase(const std::string& name) 
+            :Test(name), result_(0) {}
          virtual ~TestCase() {}
 
-         virtual void setup() {}
-         virtual void run() = 0;
-         virtual void teardown() {}
+         virtual void Setup() {}
+         virtual void Run() = 0;
+         virtual void Teardown() {}
 
       public:
-         virtual void run_internal(TestResult*, const CleanlinessCheck*);
+         virtual void InternalRun(TestResult*, const CleanlinessCheck*);
 
-#   define TCUNIT_OBJECT_ASSERT(testcase, condition) \
-   do { \
-   testcase->do_cond_fail((condition), #condition, __FILE__, __LINE__); \
-   } while (false)
-#   define TCUNIT_OBJECT_FAIL(testcase) TCUNIT_OBJECT_ASSERT(testcase, false)
-#   define TCUNIT_ASSERT(condition) TCUNIT_OBJECT_ASSERT(this, condition)
-#   define TCUNIT_FAIL() TCUNIT_ASSERT(false)
-#   define TCUNIT_ASSERT_THROWS(Exception, expr) \
-   do { \
-   try { \
-   expr; \
-   TCUNIT_FAIL(); \
-         } \
-         catch (const Exception&) {} \
-         catch (...) { \
-         TCUNIT_FAIL(); \
-         } \
-   } while (false)
          void do_cond_fail(bool condition,
             const std::string& condition_str,
             const std::string& filename,
@@ -84,6 +66,26 @@ namespace TC
       };
 
    }
+
+#   define TCUNIT_OBJECT_ASSERT(testcase, condition) \
+      do { \
+         testcase->do_cond_fail((condition), #condition, __FILE__, __LINE__); \
+      } while (false)
+#   define TCUNIT_OBJECT_FAIL(testcase) TCUNIT_OBJECT_ASSERT(testcase, false)
+#   define TCUNIT_ASSERT(condition) TCUNIT_OBJECT_ASSERT(this, condition)
+#   define TCUNIT_FAIL() TCUNIT_ASSERT(false)
+#   define TCUNIT_ASSERT_THROWS(Exception, expr) \
+      do { \
+         try { \
+         expr; \
+            TCUNIT_FAIL(); \
+         } \
+         catch (const Exception&) {} \
+         catch (...) { \
+         TCUNIT_FAIL(); \
+         } \
+      } while (false)
+
 }
 
 #endif

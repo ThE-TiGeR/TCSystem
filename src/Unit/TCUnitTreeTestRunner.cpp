@@ -34,21 +34,20 @@
 //*******************************************************************************
 
 
-#include <TC/unittest/tree_test_runner.h>
+#include "TCUnitTreeTestRunner.h"
 
-#include <TC/unittest/tree_test_result.h>
-
-#include <TC/unittest/test.h>
+#include "TCUnitTreeTestResult.h"
+#include "TCUnitTest.h"
 
 #include <iostream>
 
 namespace TC {
 namespace Unit {
 
-bool TreeTestRunner::run(Test* test, CleanlinessCheck* cleanliness_check)
+bool TreeTestRunner::Run(Test* test, CleanlinessCheck* cleanliness_check)
 {
     TreeTestResult result(std::cerr);
-    test->run_internal(&result, cleanliness_check);
+    test->InternalRun(&result, cleanliness_check);
     result.print_summary();
     return result.ok();
 }

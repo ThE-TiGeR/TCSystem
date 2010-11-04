@@ -251,7 +251,7 @@ namespace TC
    {
 
       FileNameTestSuite::FileNameTestSuite()
-         :jf::unittest::TestSuite("TC::Tests::FileNameTestSuite")
+         :Unit::TestSuite("TC::Tests::FileNameTestSuite")
       {
          add_test(new AddFileNameAndExtension);
          add_test(new AddFileNameAndPath);

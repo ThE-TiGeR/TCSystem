@@ -35,13 +35,13 @@
 #ifndef _TC_STREAM_TEST_H_
 #define _TC_STREAM_TEST_H_
 
-#include <jf/unittest/test_suite.h>
+#include "TCUnitTestSuite.h"
 
 namespace TC
 {
    namespace Tests
    {
-      class StreamTestSuite : public jf::unittest::TestSuite
+      class StreamTestSuite : public Unit::TestSuite
       {
       public:
          StreamTestSuite();

@@ -318,7 +318,7 @@ namespace TC
    namespace Tests
    {
       TimeTestSuite::TimeTestSuite()
-         :jf::unittest::TestSuite("TC::Tests::TimeTestSuite")
+         :Unit::TestSuite("TC::Tests::TimeTestSuite")
       {
          add_test(new TimeFromSeconds);
          add_test(new TimeFromMilliSeconds);

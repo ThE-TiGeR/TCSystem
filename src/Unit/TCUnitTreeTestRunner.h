@@ -38,19 +38,19 @@
 #define _TC_UNIT_TREE_TEST_RUNNER_H
 
 #include "TCUnitApi.h"
-#include <TC/unittest/test_fwd.h>
-#include <TC/unittest/cleanliness_fwd.h>
+#include "TCUnitTest.h"
+#include "TCUnitCleanLiness.h"
 
-namespace TC {
-namespace Unit {
-
-class TCUNIT_API TreeTestRunner
+namespace TC 
 {
-public:
-    bool run(Test*, CleanlinessCheck* = 0);
-};
-
-}
+   namespace Unit 
+   {
+      class TCUNIT_API TreeTestRunner
+      {
+      public:
+         bool Run(Test*, CleanlinessCheck* = 0);
+      };
+   }
 }
 
 #endif

@@ -207,7 +207,7 @@ namespace TC
             };
 
             EventSuite::EventSuite()
-                : jf::unittest::TestSuite("TC::MT::Tests::EventSuite")
+                : Unit::TestSuite("TC::MT::Tests::EventSuite")
             {
                 add_test(new EventSetWaitTest);
                 add_test(new EventTryTest);

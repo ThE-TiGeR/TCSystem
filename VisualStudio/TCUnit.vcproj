@@ -639,83 +639,9 @@
 	</References>
 	<Files>
 		<Filter
-			Name="Source Files"
+			Name="Unit Source Files"
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
-			>
-			<File
-				RelativePath="..\src\Unit\TCUnitSimpleTestResult.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\src\Unit\TCUnitTestCase.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\src\Unit\TCUnitTestSuite.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\src\Unit\TCUnitTreeTestResult.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\src\Unit\TCUnitTreeTestRunner.cpp"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="Header Files"
-			Filter="h;hpp;hxx;hm;inl;inc;xsd"
-			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
-			>
-			<File
-				RelativePath="..\src\Unit\TCUnitApi.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\Unit\TCUnitCleanLiness.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\Unit\TCUnitFailure.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\Unit\TCUnitSimpleTestResult.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\Unit\TCUnitTest.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\Unit\TCUnitTestCase.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\Unit\TCUnitTestResult.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\Unit\TCUnitTestSuite.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\Unit\TCUnitTreeTestResult.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\Unit\TCUnitTreeTestRunner.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="Public Headers"
-			>
-		</Filter>
-		<Filter
-			Name="Test Files"
 			>
 		</Filter>
 		<File

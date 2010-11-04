@@ -34,10 +34,10 @@
 //*******************************************************************************
 
 
-#include <TC/unittest/tree_test_result.h>
+#include "TCUnitTreeTestResult.h"
 
-#include <TC/unittest/test_case.h>
-#include <TC/unittest/test_suite.h>
+#include "TCUnitTestCase.h"
+#include "TCUnitTestSuite.h"
 
 #include <iostream>
 #include <cassert>
@@ -47,14 +47,14 @@ namespace {
 class indent
 {
 public:
-    indent(int num) : num_(num) {}
-    int num() const { return num_; }
+    indent(size_t num) : num_(num) {}
+    size_t num() const { return num_; }
 private:
-    int num_;
+    size_t num_;
 };
 static std::ostream& operator<<(std::ostream& o, const indent& i)
 {
-    int num = i.num();
+    size_t num = i.num();
     while (num--)
         o << "  ";
     return o;
@@ -69,13 +69,13 @@ void TreeTestResult::Report::print(std::ostream& o) const
 {
     switch (type_) {
         case T_FAILURE: {
-            o << "  Failure: " << testcase_->name() << ": "
-              << failure_.failed_condition()
-              << " (" << failure_.filename() << ':' << failure_.line() << ')';
+            o << "  Failure: " << testcase_->Name() << ": "
+              << failure_.FailedCondition()
+              << " (" << failure_.Filename() << ':' << failure_.Line() << ')';
             break;
         }
         case T_ERROR: {
-            o << "  Error:   " << testcase_->name() << ": " << message_;
+            o << "  Error:   " << testcase_->Name() << ": " << message_;
             break;
         }
     }
@@ -98,7 +98,7 @@ TreeTestResult::TreeTestResult(std::ostream& ostream)
 void TreeTestResult::enter_suite(const TestSuite* s)
 {
     num_suites_entered_++;
-    ostream_ << indent(suite_stack_.size()) << "+ " << s->name() << '\n';
+    ostream_ << indent(suite_stack_.size()) << "+ " << s->Name() << '\n';
     suite_stack_.push(s);
 }
 
@@ -111,7 +111,7 @@ void TreeTestResult::leave_suite(const TestSuite* /*s*/)
 void TreeTestResult::enter_test(const TestCase* c)
 {
     num_tests_run_++;
-    ostream_ << indent(suite_stack_.size()) << "- " << c->name() << "...";
+    ostream_ << indent(suite_stack_.size()) << "- " << c->Name() << "...";
 }
 
 void TreeTestResult::leave_test(const TestCase* c)
@@ -162,7 +162,7 @@ void TreeTestResult::print_summary() const
 
     if (unclean_test_) {
         ostream_ << "ALARM: environment has not been cleared\n";
-        ostream_ << "       " << unclean_test_->name() << '\n';
+        ostream_ << "       " << unclean_test_->Name() << '\n';
         ostream_ << "------------------------\n";
     }
     

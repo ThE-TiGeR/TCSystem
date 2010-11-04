@@ -269,7 +269,7 @@ namespace TC
    namespace Tests
    {
       StreamTestSuite::StreamTestSuite()
-         :jf::unittest::TestSuite("TC::Tests::StreamTestSuite")
+         :Unit::TestSuite("TC::Tests::StreamTestSuite")
       {
          add_test(new MemoryTest<BinaryCodec>("Binary"));
          add_test(new MemoryTest<AsciiCodec>("Ascii"));

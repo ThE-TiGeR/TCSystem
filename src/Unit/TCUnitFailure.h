@@ -37,7 +37,7 @@
 #ifndef _TC_UNIT_FAILURE_H
 #define _TC_UNIT_FAILURE_H
 
-#include #include "TCUnitApi.h"
+#include "TCUnitApi.h"
 
 #include <string>
 
@@ -53,9 +53,9 @@ namespace TC
             filename_(filename),
             line_(line) {}
 
-         const std::string& failed_condition() const { return failed_condition_; }
-         const std::string& filename() const { return filename_; }
-         int line() const { return line_; }
+         const std::string& FailedCondition() const { return failed_condition_; }
+         const std::string& Filename() const { return filename_; }
+         int Line() const { return line_; }
 
       private:
          std::string failed_condition_;

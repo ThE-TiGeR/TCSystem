@@ -227,7 +227,7 @@ namespace TC
    namespace Tests
    {
       UtilTestSuite::UtilTestSuite()
-         :jf::unittest::TestSuite("TC::Tests::UtilTestSuite")
+         :Unit::TestSuite("TC::Tests::UtilTestSuite")
       {
          add_test(new UtilCompare);
          add_test(new UtilAbs);

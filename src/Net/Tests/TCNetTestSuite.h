@@ -37,7 +37,7 @@
 
 #include "TCNetApi.h"
 
-#include <jf/unittest/test_suite.h>
+#include "TCUnitTestSuite.h"
 
 namespace TC
 {
@@ -45,7 +45,7 @@ namespace TC
    {
       namespace Tests
       {
-         class TCNET_API Suite : public jf::unittest::TestSuite
+         class TCNET_API Suite : public Unit::TestSuite
          {
          public:
             Suite();

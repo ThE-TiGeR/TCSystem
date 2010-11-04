@@ -403,7 +403,7 @@ namespace TC
    {
       // -------------------------------------------------------------------
       StringTestSuite::StringTestSuite()
-         :jf::unittest::TestSuite("TC::StringTestSuite")
+         :Unit::TestSuite("TC::StringTestSuite")
       {
          add_test(new ConvertToUpperLower);
          add_test(new ConvertToNumber);

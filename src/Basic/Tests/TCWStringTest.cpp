@@ -411,7 +411,7 @@ namespace TC
    namespace Tests
    {
       WStringTestSuite::WStringTestSuite()
-         :jf::unittest::TestSuite("TC::WStringTestSuite")
+         :Unit::TestSuite("TC::WStringTestSuite")
       {
          add_test(new ConvertToUpperLower);
          add_test(new ConvertToNumber);

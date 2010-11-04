@@ -36,16 +36,16 @@
 #ifndef _TC_UNIT_CLEANLINESS_H
 #define _TC_UNIT_CLEANLINESS_H
 
-#include "TCUnitApi.h"
+#include "TCTypes.h"
 
 namespace TC 
 {
    namespace Unit 
    {
-      class TCUNIT_API CleanlinessCheck 
+      class CleanlinessCheck 
       {
       public:
-         virtual bool environment_is_clean() const = 0;
+         virtual bool EnvironmentIsClean() const = 0;
 
          virtual ~CleanlinessCheck() {}
       };

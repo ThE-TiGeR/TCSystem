@@ -201,7 +201,7 @@ namespace TC
             };
 
             SemaphoreSuite::SemaphoreSuite()
-                : jf::unittest::TestSuite("TC::MT::Tests::SemaphoreSuite")
+                : Unit::TestSuite("TC::MT::Tests::SemaphoreSuite")
             {
                 add_test(new SemaphorePostWaitTest);
                 add_test(new SemaphoreSharedCreateTest);

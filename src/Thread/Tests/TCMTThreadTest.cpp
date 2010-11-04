@@ -262,7 +262,7 @@ namespace TC
             };
 
             ThreadSuite::ThreadSuite()
-                : jf::unittest::TestSuite("TC::MT::Tests::ThreadSuite")
+                : Unit::TestSuite("TC::MT::Tests::ThreadSuite")
             {
                 add_test(new ThreadTest);
                 add_test(new ThreadMessageTest);
