@@ -48,6 +48,18 @@ RELOCATE_HEADER(filename='TCWeakPtr.h', directory=['src', 'Basic'])
 RELOCATE_HEADER(filename='TCWFileName.h', directory=['src', 'Basic'])
 RELOCATE_HEADER(filename='TCWString.h', directory=['src', 'Basic'])
 
+# Unit
+# ---
+RELOCATE_HEADER(filename='TCUnitApi.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCUnitCleanLiness.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCUnitFailure.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCUnitSimpleTestResult.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCUnitTest.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCUnitTestCase.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCUnitTestResult.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCUnitTestSuite.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCUnitTreeTestResult.h', directory=['src', 'Basic'])
+RELOCATE_HEADER(filename='TCUnitTreeTestRunner.h', directory=['src', 'Basic'])
 
 # Net
 # ---
