@@ -40,7 +40,7 @@
 #include "TCMTSemaphore.h"
 #include "TCTime.h"
 
-#include <jf/unittest/test_case.h>
+#include "TCUnitTestCase.h"
 
 #include "TCNewEnable.h"
 
@@ -50,152 +50,152 @@ namespace TC
     {
         namespace Tests
         {
-            class SemaphorePostWaitTest : public jf::unittest::TestCase
+            class SemaphorePostWaitTest : public Unit::TestCase
             {
             public:
                 SemaphorePostWaitTest()
-                    :jf::unittest::TestCase("TC::MT::Tests::SemaphorePostWaitTest")
+                    :Unit::TestCase("TC::MT::Tests::SemaphorePostWaitTest")
                 {
                 }
 
-                virtual void run()
+                virtual void Execute()
                 {
                     {
                         SemaphorePtr m = Factory::CreateSemaphore(0);
-                        JFUNIT_ASSERT(m);
-                        JFUNIT_ASSERT(m->Post());
-                        JFUNIT_ASSERT(m->Wait());
+                        TCUNIT_ASSERT(m);
+                        TCUNIT_ASSERT(m->Post());
+                        TCUNIT_ASSERT(m->Wait());
                     }
 
                     {
                         SemaphorePtr m = Factory::CreateSemaphore(1);
-                        JFUNIT_ASSERT(m);
-                        JFUNIT_ASSERT(m->Wait());
-                        JFUNIT_ASSERT(m->Post());
-                        JFUNIT_ASSERT(m->Wait());
+                        TCUNIT_ASSERT(m);
+                        TCUNIT_ASSERT(m->Wait());
+                        TCUNIT_ASSERT(m->Post());
+                        TCUNIT_ASSERT(m->Wait());
                     }
 
                     {
                         SemaphorePtr m = Factory::CreateSemaphore(0);
-                        JFUNIT_ASSERT(m);
-                        JFUNIT_ASSERT(m->Post());
-                        JFUNIT_ASSERT(m->Wait());
+                        TCUNIT_ASSERT(m);
+                        TCUNIT_ASSERT(m->Post());
+                        TCUNIT_ASSERT(m->Wait());
                     }
 
                     {
                         SemaphorePtr m = Factory::CreateSemaphore(0);
-                        JFUNIT_ASSERT(m);
-                        JFUNIT_ASSERT(m->Post());
-                        JFUNIT_ASSERT(m->Wait());
+                        TCUNIT_ASSERT(m);
+                        TCUNIT_ASSERT(m->Post());
+                        TCUNIT_ASSERT(m->Wait());
                     }
 
                     {
                         SemaphorePtr m = Factory::CreateSemaphore(0);
-                        JFUNIT_ASSERT(m);
+                        TCUNIT_ASSERT(m);
                         Time start_time = Time::NowMonotonic();
-                        JFUNIT_ASSERT(!m->TryWait(Time::FromMilliSeconds(100)));
+                        TCUNIT_ASSERT(!m->TryWait(Time::FromMilliSeconds(100)));
                         Time wait_time = Time::SinceMonotonic(start_time);
-                        JFUNIT_ASSERT(wait_time >= Time::FromMilliSeconds(90));
-                        JFUNIT_ASSERT(wait_time <= Time::FromMilliSeconds(200));
-                        JFUNIT_ASSERT(m->Post());
+                        TCUNIT_ASSERT(wait_time >= Time::FromMilliSeconds(90));
+                        TCUNIT_ASSERT(wait_time <= Time::FromMilliSeconds(200));
+                        TCUNIT_ASSERT(m->Post());
                     }
 
                 }
             };
 
-            class SemaphoreSharedCreateTest : public jf::unittest::TestCase
+            class SemaphoreSharedCreateTest : public Unit::TestCase
             {
             public:
                 SemaphoreSharedCreateTest()
-                    :jf::unittest::TestCase("TC::MT::Tests::SemaphoreSharedCreateTest")
+                    :Unit::TestCase("TC::MT::Tests::SemaphoreSharedCreateTest")
                 {
                 }
 
-                virtual void run()
+                virtual void Execute()
                 {
                     {
                         SemaphorePtr m = Factory::CreateSemaphore("SemaphoreSharedCreateTest",
                             0, Factory::CRM_ALWAYS);
-                        JFUNIT_ASSERT(m);
+                        TCUNIT_ASSERT(m);
                     }
 
                     {
                         SemaphorePtr m = Factory::CreateSemaphore("SemaphoreSharedCreateTest",
                             0, Factory::CRM_WHEN_NOT_EXISTS);
-                        JFUNIT_ASSERT(m);
+                        TCUNIT_ASSERT(m);
                     }
 
                     {
                         SemaphorePtr m = Factory::CreateSemaphore("SemaphoreSharedCreateTest",
                             0, Factory::CRM_WHEN_EXISTS);
-                        JFUNIT_ASSERT(!m);
+                        TCUNIT_ASSERT(!m);
                     }
 
                     {
                         SemaphorePtr m1 = Factory::CreateSemaphore("SemaphoreSharedCreateTest",
                             0, Factory::CRM_ALWAYS);
-                        JFUNIT_ASSERT(m1);
+                        TCUNIT_ASSERT(m1);
                         SemaphorePtr m2 = Factory::CreateSemaphore("SemaphoreSharedCreateTest",
                             0, Factory::CRM_WHEN_EXISTS);
-                        JFUNIT_ASSERT(m2);
+                        TCUNIT_ASSERT(m2);
                     }
 
                     {
                         SemaphorePtr m1 = Factory::CreateSemaphore("SemaphoreSharedCreateTest",
                             0, Factory::CRM_ALWAYS);
-                        JFUNIT_ASSERT(m1);
+                        TCUNIT_ASSERT(m1);
                         SemaphorePtr m2 = Factory::CreateSemaphore("SemaphoreSharedCreateTest",
                             0, Factory::CRM_WHEN_NOT_EXISTS);
-                        JFUNIT_ASSERT(!m2);
+                        TCUNIT_ASSERT(!m2);
                     }
                 }
             };
 
-            class SemaphoreSharedPostWaitTest : public jf::unittest::TestCase
+            class SemaphoreSharedPostWaitTest : public Unit::TestCase
             {
             public:
                 SemaphoreSharedPostWaitTest()
-                    :jf::unittest::TestCase("TC::MT::Tests::SemaphoreSharedPostWaitTest")
+                    :Unit::TestCase("TC::MT::Tests::SemaphoreSharedPostWaitTest")
                 {
                 }
 
-                virtual void run()
+                virtual void Execute()
                 {
                     {
                         SemaphorePtr m = Factory::CreateSemaphore("SemaphoreSharedPostWaitTest",
                             0, Factory::CRM_ALWAYS);
-                        JFUNIT_ASSERT(m);
-                        JFUNIT_ASSERT(m->Post());
-                        JFUNIT_ASSERT(m->Wait());
+                        TCUNIT_ASSERT(m);
+                        TCUNIT_ASSERT(m->Post());
+                        TCUNIT_ASSERT(m->Wait());
                     }
 
                     {
                         SemaphorePtr m = Factory::CreateSemaphore("SemaphoreSharedPostWaitTest",
                             1, Factory::CRM_ALWAYS);
-                        JFUNIT_ASSERT(m);
-                        JFUNIT_ASSERT(m->Wait());
-                        JFUNIT_ASSERT(m->Post());
-                        JFUNIT_ASSERT(m->Wait());
+                        TCUNIT_ASSERT(m);
+                        TCUNIT_ASSERT(m->Wait());
+                        TCUNIT_ASSERT(m->Post());
+                        TCUNIT_ASSERT(m->Wait());
                     }
 
                     {
                         SemaphorePtr m = Factory::CreateSemaphore("SemaphoreSharedPostWaitTest",
                             1, Factory::CRM_ALWAYS);
-                        JFUNIT_ASSERT(m);
-                        JFUNIT_ASSERT(m->Try());
-                        JFUNIT_ASSERT(m->Post());
+                        TCUNIT_ASSERT(m);
+                        TCUNIT_ASSERT(m->Try());
+                        TCUNIT_ASSERT(m->Post());
                     }
 
                     {
                         SemaphorePtr m = Factory::CreateSemaphore("SemaphoreSharedPostWaitTest",
                             0, Factory::CRM_ALWAYS);
-                        JFUNIT_ASSERT(m);
+                        TCUNIT_ASSERT(m);
                         Time start_time = Time::NowMonotonic();
-                        JFUNIT_ASSERT(!m->TryWait(Time::FromMilliSeconds(100)));
+                        TCUNIT_ASSERT(!m->TryWait(Time::FromMilliSeconds(100)));
                         Time wait_time = Time::SinceMonotonic(start_time);
-                        JFUNIT_ASSERT(wait_time >= Time::FromMilliSeconds(90));
-                        JFUNIT_ASSERT(wait_time <= Time::FromMilliSeconds(200));
-                        JFUNIT_ASSERT(m->Post());
+                        TCUNIT_ASSERT(wait_time >= Time::FromMilliSeconds(90));
+                        TCUNIT_ASSERT(wait_time <= Time::FromMilliSeconds(200));
+                        TCUNIT_ASSERT(m->Post());
                     }
                 }
             };
@@ -203,9 +203,9 @@ namespace TC
             SemaphoreSuite::SemaphoreSuite()
                 : Unit::TestSuite("TC::MT::Tests::SemaphoreSuite")
             {
-                add_test(new SemaphorePostWaitTest);
-                add_test(new SemaphoreSharedCreateTest);
-                add_test(new SemaphoreSharedPostWaitTest);
+                AddTest(new SemaphorePostWaitTest);
+                AddTest(new SemaphoreSharedCreateTest);
+                AddTest(new SemaphoreSharedPostWaitTest);
             }
 
         }

@@ -51,7 +51,7 @@ namespace TC
          virtual ~TestCase() {}
 
          virtual void Setup() {}
-         virtual void Run() = 0;
+         virtual void Execute() = 0;
          virtual void Teardown() {}
 
       public:
@@ -71,6 +71,7 @@ namespace TC
       do { \
          testcase->do_cond_fail((condition), #condition, __FILE__, __LINE__); \
       } while (false)
+
 #   define TCUNIT_OBJECT_FAIL(testcase) TCUNIT_OBJECT_ASSERT(testcase, false)
 #   define TCUNIT_ASSERT(condition) TCUNIT_OBJECT_ASSERT(this, condition)
 #   define TCUNIT_FAIL() TCUNIT_ASSERT(false)
@@ -85,7 +86,6 @@ namespace TC
          TCUNIT_FAIL(); \
          } \
       } while (false)
-
 }
 
 #endif

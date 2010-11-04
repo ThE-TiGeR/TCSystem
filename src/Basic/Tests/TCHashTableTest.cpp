@@ -36,7 +36,7 @@
 
 #include "TCHashTable.h"
 
-#include <jf/unittest/test_case.h>
+#include "TCUnitTestCase.h"
 
 #include "TCNewEnable.h"
 
@@ -44,121 +44,121 @@ namespace TC
 {
    namespace
    {
-      class ConstructTest: public jf::unittest::TestCase
+      class ConstructTest: public Unit::TestCase
       {
       public:
          ConstructTest()
-            :jf::unittest::TestCase("TC::Tests::ConstructTest")
+            :Unit::TestCase("TC::Tests::ConstructTest")
          {
          }
-         virtual void run()
+         virtual void Execute()
          {
             HashTable<std::string, sint32> hash_table(100, -1);
-            JFUNIT_ASSERT(hash_table.GetHashSize() == 100);
-            JFUNIT_ASSERT(hash_table.GetNotFoundValue() == -1);
+            TCUNIT_ASSERT(hash_table.GetHashSize() == 100);
+            TCUNIT_ASSERT(hash_table.GetNotFoundValue() == -1);
             std::vector<std::string> keys;
             hash_table.GetAllKeys(keys);
-            JFUNIT_ASSERT(keys.size() == 0);
+            TCUNIT_ASSERT(keys.size() == 0);
          }
       };
 
-      class HashSizeTest: public jf::unittest::TestCase
+      class HashSizeTest: public Unit::TestCase
       {
       public:
          HashSizeTest()
-            :jf::unittest::TestCase("TC::Tests::HashSizeTest")
+            :Unit::TestCase("TC::Tests::HashSizeTest")
          {
          }
-         virtual void run()
+         virtual void Execute()
          {
             HashTable<std::string, sint32> hash_table(100, -1);
             hash_table.SetHashSize(200);
-            JFUNIT_ASSERT(hash_table.GetHashSize() == 200);
+            TCUNIT_ASSERT(hash_table.GetHashSize() == 200);
          }
       };
 
-      class NotFoundValueTest: public jf::unittest::TestCase
+      class NotFoundValueTest: public Unit::TestCase
       {
       public:
          NotFoundValueTest()
-            :jf::unittest::TestCase("TC::Tests::NotFoundValueTest")
+            :Unit::TestCase("TC::Tests::NotFoundValueTest")
          {
          }
-         virtual void run()
+         virtual void Execute()
          {
             HashTable<std::string, sint32> hash_table(100, -1);
             hash_table.SetNotFoundValue(0);
-            JFUNIT_ASSERT(hash_table.GetNotFoundValue() == 0);
+            TCUNIT_ASSERT(hash_table.GetNotFoundValue() == 0);
          }
       };
 
-      class AddKeyTest: public jf::unittest::TestCase
+      class AddKeyTest: public Unit::TestCase
       {
       public:
          AddKeyTest()
-            :jf::unittest::TestCase("TC::Tests::AddKeyTest")
+            :Unit::TestCase("TC::Tests::AddKeyTest")
          {
          }
-         virtual void run()
+         virtual void Execute()
          {
             HashTable<std::string, sint32> hash_table(100, -1);
             hash_table.AddKey("test1", 1);
             hash_table.AddKey("test2", 2);
 
-            JFUNIT_ASSERT(hash_table.GetMappedValue("test1") == 1);
-            JFUNIT_ASSERT(hash_table.GetMappedValue("test2") == 2);
+            TCUNIT_ASSERT(hash_table.GetMappedValue("test1") == 1);
+            TCUNIT_ASSERT(hash_table.GetMappedValue("test2") == 2);
 
             hash_table.AddKey("test2", 3);
-            JFUNIT_ASSERT(hash_table.GetMappedValue("test2") == 3);
+            TCUNIT_ASSERT(hash_table.GetMappedValue("test2") == 3);
          }
       };
 
-      class RemoveKeyTest: public jf::unittest::TestCase
+      class RemoveKeyTest: public Unit::TestCase
       {
       public:
          RemoveKeyTest()
-            :jf::unittest::TestCase("TC::Tests::RemoveKeyTest")
+            :Unit::TestCase("TC::Tests::RemoveKeyTest")
          {
          }
-         virtual void run()
+         virtual void Execute()
          {
             HashTable<std::string, sint32> hash_table(100, -1);
             hash_table.AddKey("test1", 1);
             hash_table.AddKey("test2", 2);
 
             hash_table.RemoveKey("test2");
-            JFUNIT_ASSERT(hash_table.GetMappedValue("test1") == 1);
-            JFUNIT_ASSERT(hash_table.GetMappedValue("test2") == hash_table.GetNotFoundValue());
+            TCUNIT_ASSERT(hash_table.GetMappedValue("test1") == 1);
+            TCUNIT_ASSERT(hash_table.GetMappedValue("test2") == hash_table.GetNotFoundValue());
          }
       };
 
-      class ClearTest: public jf::unittest::TestCase
+      class ClearTest: public Unit::TestCase
       {
       public:
          ClearTest()
-            :jf::unittest::TestCase("TC::Tests::ClearTest")
+            :Unit::TestCase("TC::Tests::ClearTest")
          {
          }
-         virtual void run()
+         virtual void Execute()
          {
             HashTable<std::string, sint32> hash_table(100, -1);
             hash_table.AddKey("test1", 1);
             hash_table.AddKey("test2", 2);
 
             hash_table.Clear();
-            JFUNIT_ASSERT(hash_table.GetMappedValue("test1") == hash_table.GetNotFoundValue());
-            JFUNIT_ASSERT(hash_table.GetMappedValue("test2") == hash_table.GetNotFoundValue());
+            TCUNIT_ASSERT(hash_table.GetMappedValue("test1") == hash_table.GetNotFoundValue());
+            TCUNIT_ASSERT(hash_table.GetMappedValue("test2") == hash_table.GetNotFoundValue());
          }
       };
 
-      class GetAllKeysTest: public jf::unittest::TestCase
+      class GetAllKeysTest: public Unit::TestCase
       {
       public:
          GetAllKeysTest()
-            :jf::unittest::TestCase("TC::Tests::GetAllKeysTest")
+            :Unit::TestCase("TC::Tests::GetAllKeysTest")
          {
          }
-         virtual void run()
+         virtual void Execute()
          {
             HashTable<std::string, sint32> hash_table(100, -1);
             hash_table.AddKey("test1", 1);
@@ -166,20 +166,20 @@ namespace TC
 
             std::vector<std::string> keys;
             hash_table.GetAllKeys(keys);
-            JFUNIT_ASSERT(keys.size() == 2);
-            JFUNIT_ASSERT(keys[0] == "test2");
-            JFUNIT_ASSERT(keys[1] == "test1");
+            TCUNIT_ASSERT(keys.size() == 2);
+            TCUNIT_ASSERT(keys[0] == "test2");
+            TCUNIT_ASSERT(keys[1] == "test1");
          }
       };
 
-      class GetAllKeysAndValuesTest: public jf::unittest::TestCase
+      class GetAllKeysAndValuesTest: public Unit::TestCase
       {
       public:
          GetAllKeysAndValuesTest()
-            :jf::unittest::TestCase("TC::Tests::GetAllKeysAndValuesTest")
+            :Unit::TestCase("TC::Tests::GetAllKeysAndValuesTest")
          {
          }
-         virtual void run()
+         virtual void Execute()
          {
             HashTable<std::string, sint32> hash_table(100, -1);
             hash_table.AddKey("test1", 1);
@@ -188,12 +188,12 @@ namespace TC
             std::vector<std::string> keys;
             std::vector<sint32> values;
             hash_table.GetAllKeysAndValues(keys, values);
-            JFUNIT_ASSERT(keys.size() == 2);
-            JFUNIT_ASSERT(keys[0] == "test2");
-            JFUNIT_ASSERT(keys[1] == "test1");
-            JFUNIT_ASSERT(values.size() == 2);
-            JFUNIT_ASSERT(values[0] == 2);
-            JFUNIT_ASSERT(values[1] == 1);
+            TCUNIT_ASSERT(keys.size() == 2);
+            TCUNIT_ASSERT(keys[0] == "test2");
+            TCUNIT_ASSERT(keys[1] == "test1");
+            TCUNIT_ASSERT(values.size() == 2);
+            TCUNIT_ASSERT(values[0] == 2);
+            TCUNIT_ASSERT(values[1] == 1);
          }
       };
    }
@@ -203,14 +203,14 @@ namespace TC
       HashTableTestSuite::HashTableTestSuite()
          :Unit::TestSuite("TC::Tests::HashTableTestSuite")
       {
-         add_test(new ConstructTest);
-         add_test(new HashSizeTest);
-         add_test(new NotFoundValueTest);
-         add_test(new AddKeyTest);
-         add_test(new RemoveKeyTest);
-         add_test(new ClearTest);
-         add_test(new GetAllKeysTest);
-         add_test(new GetAllKeysAndValuesTest);
+         AddTest(new ConstructTest);
+         AddTest(new HashSizeTest);
+         AddTest(new NotFoundValueTest);
+         AddTest(new AddKeyTest);
+         AddTest(new RemoveKeyTest);
+         AddTest(new ClearTest);
+         AddTest(new GetAllKeysTest);
+         AddTest(new GetAllKeysAndValuesTest);
       }
    }
 }

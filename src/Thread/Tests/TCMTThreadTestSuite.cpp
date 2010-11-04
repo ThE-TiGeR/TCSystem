@@ -51,10 +51,10 @@ namespace TC
             Suite::Suite()
                 : Unit::TestSuite("TC::MT::Tests::Suite")
             {
-                add_test(new MutexSuite);
-                add_test(new SemaphoreSuite);
-                add_test(new EventSuite);
-                add_test(new ThreadSuite);
+                AddTest(new MutexSuite);
+                AddTest(new SemaphoreSuite);
+                AddTest(new EventSuite);
+                AddTest(new ThreadSuite);
             }
 
         }

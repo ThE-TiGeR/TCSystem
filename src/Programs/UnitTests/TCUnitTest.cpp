@@ -8,20 +8,17 @@
 #include "TCBasicTestSuite.h"
 #include "TCMTThreadTestSuite.h"
 #include "TCNetTestSuite.h"
-
-#include <jf/unittest/tree_test_runner.h>
-#include <jf/unittest/tests/stage2_suite.h>
+#include "TCUnitTreeTestRunner.h"
 
 int RunUnitTests()
 {
-   Unit::TestSuite suite("TC::Suite");
-   suite.add_test(new jf::unittest::tests::Stage2Suite);
-   suite.add_test(new TC::Tests::BasicSuite);
-   suite.add_test(new TC::MT::Tests::Suite);
-   suite.add_test(new TC::Net::Tests::Suite);
+   TC::Unit::TestSuite suite("TC::Suite");
+   suite.AddTest(new TC::Tests::BasicSuite);
+   suite.AddTest(new TC::MT::Tests::Suite);
+   suite.AddTest(new TC::Net::Tests::Suite);
 
-   jf::unittest::TreeTestRunner runner;
-   return runner.run(&suite)? 0: 1;
+   TC::Unit::TreeTestRunner runner;
+   return runner.Run(&suite)? 0: 1;
 }
 #endif
 

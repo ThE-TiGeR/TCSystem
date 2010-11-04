@@ -40,7 +40,7 @@
 #include "TCMTFactory.h"
 #include "TCTime.h"
 
-#include <jf/unittest/test_case.h>
+#include "TCUnitTestCase.h"
 
 #include "TCNewEnable.h"
 
@@ -51,157 +51,157 @@ namespace TC
         namespace Tests
         {
 
-            class EventSetWaitTest : public jf::unittest::TestCase
+            class EventSetWaitTest : public Unit::TestCase
             {
             public:
                 EventSetWaitTest()
-                    :jf::unittest::TestCase("TC::MT::Tests::EventSetWaitTest")
+                    :Unit::TestCase("TC::MT::Tests::EventSetWaitTest")
                 {
                 }
 
-                virtual void run()
+                virtual void Execute()
                 {
                     {
                         EventPtr m = Factory::CreateEvent(false, false);
-                        JFUNIT_ASSERT(m);
-                        JFUNIT_ASSERT(m->Set());
-                        JFUNIT_ASSERT(m->Wait());
+                        TCUNIT_ASSERT(m);
+                        TCUNIT_ASSERT(m->Set());
+                        TCUNIT_ASSERT(m->Wait());
                     }
 
                     {
                         EventPtr m = Factory::CreateEvent(false, true);
-                        JFUNIT_ASSERT(m);
-                        JFUNIT_ASSERT(m->Wait());
-                        JFUNIT_ASSERT(m->Set());
-                        JFUNIT_ASSERT(m->Wait());
+                        TCUNIT_ASSERT(m);
+                        TCUNIT_ASSERT(m->Wait());
+                        TCUNIT_ASSERT(m->Set());
+                        TCUNIT_ASSERT(m->Wait());
                     }
 
                     {
                         EventPtr m = Factory::CreateEvent(true, false);
-                        JFUNIT_ASSERT(m);
-                        JFUNIT_ASSERT(m->Set());
-                        JFUNIT_ASSERT(m->Wait());
-                        JFUNIT_ASSERT(m->Wait());
+                        TCUNIT_ASSERT(m);
+                        TCUNIT_ASSERT(m->Set());
+                        TCUNIT_ASSERT(m->Wait());
+                        TCUNIT_ASSERT(m->Wait());
                     }
 
                     {
                         EventPtr m = Factory::CreateEvent(true, true);
-                        JFUNIT_ASSERT(m);
-                        JFUNIT_ASSERT(m->Wait());
-                        JFUNIT_ASSERT(m->Wait());
-                        JFUNIT_ASSERT(m->Set());
-                        JFUNIT_ASSERT(m->Wait());
-                        JFUNIT_ASSERT(m->Wait());
+                        TCUNIT_ASSERT(m);
+                        TCUNIT_ASSERT(m->Wait());
+                        TCUNIT_ASSERT(m->Wait());
+                        TCUNIT_ASSERT(m->Set());
+                        TCUNIT_ASSERT(m->Wait());
+                        TCUNIT_ASSERT(m->Wait());
                     }
                 }
             };
 
-            class EventTryTest : public jf::unittest::TestCase
+            class EventTryTest : public Unit::TestCase
             {
             public:
                 EventTryTest()
-                    :jf::unittest::TestCase("TC::MT::Tests::EventTryTest")
+                    :Unit::TestCase("TC::MT::Tests::EventTryTest")
                 {
                 }
 
-                virtual void run()
+                virtual void Execute()
                 {
                     {
                         EventPtr m = Factory::CreateEvent(false, false);
-                        JFUNIT_ASSERT(m);
-                        JFUNIT_ASSERT(!m->Try());
-                        JFUNIT_ASSERT(m->Set());
-                        JFUNIT_ASSERT(m->Try());
+                        TCUNIT_ASSERT(m);
+                        TCUNIT_ASSERT(!m->Try());
+                        TCUNIT_ASSERT(m->Set());
+                        TCUNIT_ASSERT(m->Try());
                     }
 
                     {
                         EventPtr m = Factory::CreateEvent(false, true);
-                        JFUNIT_ASSERT(m);
-                        JFUNIT_ASSERT(m->Try());
-                        JFUNIT_ASSERT(m->Set());
-                        JFUNIT_ASSERT(m->Try());
+                        TCUNIT_ASSERT(m);
+                        TCUNIT_ASSERT(m->Try());
+                        TCUNIT_ASSERT(m->Set());
+                        TCUNIT_ASSERT(m->Try());
                     }
 
                     {
                         EventPtr m = Factory::CreateEvent(true, false);
-                        JFUNIT_ASSERT(m);
-                        JFUNIT_ASSERT(!m->Try());
-                        JFUNIT_ASSERT(m->Set());
-                        JFUNIT_ASSERT(m->Try());
-                        JFUNIT_ASSERT(m->Try());
+                        TCUNIT_ASSERT(m);
+                        TCUNIT_ASSERT(!m->Try());
+                        TCUNIT_ASSERT(m->Set());
+                        TCUNIT_ASSERT(m->Try());
+                        TCUNIT_ASSERT(m->Try());
                     }
 
                     {
                         EventPtr m = Factory::CreateEvent(true, true);
-                        JFUNIT_ASSERT(m);
-                        JFUNIT_ASSERT(m->Try());
-                        JFUNIT_ASSERT(m->Try());
-                        JFUNIT_ASSERT(m->Set());
-                        JFUNIT_ASSERT(m->Try());
-                        JFUNIT_ASSERT(m->Try());
-                        JFUNIT_ASSERT(m->Reset());
-                        JFUNIT_ASSERT(!m->Try());
+                        TCUNIT_ASSERT(m);
+                        TCUNIT_ASSERT(m->Try());
+                        TCUNIT_ASSERT(m->Try());
+                        TCUNIT_ASSERT(m->Set());
+                        TCUNIT_ASSERT(m->Try());
+                        TCUNIT_ASSERT(m->Try());
+                        TCUNIT_ASSERT(m->Reset());
+                        TCUNIT_ASSERT(!m->Try());
                     }
                 }
             };
 
-            class EventWaitTimeTest : public jf::unittest::TestCase
+            class EventWaitTimeTest : public Unit::TestCase
             {
             public:
                 EventWaitTimeTest()
-                    :jf::unittest::TestCase("TC::MT::Tests::EventWaitTimeTest")
+                    :Unit::TestCase("TC::MT::Tests::EventWaitTimeTest")
                 {
                 }
 
-                virtual void run()
+                virtual void Execute()
                 {
                     {
                         EventPtr m = Factory::CreateEvent(false, false);
-                        JFUNIT_ASSERT(m);
+                        TCUNIT_ASSERT(m);
                         Time start_time = Time::NowMonotonic();
-                        JFUNIT_ASSERT(!m->TryWait(Time::FromMilliSeconds(100)));
+                        TCUNIT_ASSERT(!m->TryWait(Time::FromMilliSeconds(100)));
                         Time wait_time = Time::SinceMonotonic(start_time);
-                        JFUNIT_ASSERT(wait_time >= Time::FromMilliSeconds(90));
-                        JFUNIT_ASSERT(wait_time <= Time::FromMilliSeconds(200));
+                        TCUNIT_ASSERT(wait_time >= Time::FromMilliSeconds(90));
+                        TCUNIT_ASSERT(wait_time <= Time::FromMilliSeconds(200));
 
-                        JFUNIT_ASSERT(m->Set());
+                        TCUNIT_ASSERT(m->Set());
                         start_time = Time::NowMonotonic();
-                        JFUNIT_ASSERT(m->TryWait(Time::FromMilliSeconds(100)));
+                        TCUNIT_ASSERT(m->TryWait(Time::FromMilliSeconds(100)));
                         wait_time = Time::SinceMonotonic(start_time);
-                        JFUNIT_ASSERT(wait_time < Time::FromMilliSeconds(100));
+                        TCUNIT_ASSERT(wait_time < Time::FromMilliSeconds(100));
                     }
 
                     {
                         EventPtr m = Factory::CreateEvent(false, true);
-                        JFUNIT_ASSERT(m);
-                        JFUNIT_ASSERT(m->TryWait(Time::FromMilliSeconds(100)));
-                        JFUNIT_ASSERT(m->Set());
-                        JFUNIT_ASSERT(m->TryWait(Time::FromMilliSeconds(100)));
+                        TCUNIT_ASSERT(m);
+                        TCUNIT_ASSERT(m->TryWait(Time::FromMilliSeconds(100)));
+                        TCUNIT_ASSERT(m->Set());
+                        TCUNIT_ASSERT(m->TryWait(Time::FromMilliSeconds(100)));
                     }
 
                     {
                         EventPtr m = Factory::CreateEvent(true, false);
-                        JFUNIT_ASSERT(m);
-                        JFUNIT_ASSERT(!m->TryWait(Time::FromMilliSeconds(100)));
-                        JFUNIT_ASSERT(m->Set());
-                        JFUNIT_ASSERT(m->TryWait(Time::FromMilliSeconds(100)));
-                        JFUNIT_ASSERT(m->TryWait(Time::FromMilliSeconds(100)));
+                        TCUNIT_ASSERT(m);
+                        TCUNIT_ASSERT(!m->TryWait(Time::FromMilliSeconds(100)));
+                        TCUNIT_ASSERT(m->Set());
+                        TCUNIT_ASSERT(m->TryWait(Time::FromMilliSeconds(100)));
+                        TCUNIT_ASSERT(m->TryWait(Time::FromMilliSeconds(100)));
                     }
 
                     {
                         EventPtr m = Factory::CreateEvent(true, true);
-                        JFUNIT_ASSERT(m);
-                        JFUNIT_ASSERT(m->TryWait(Time::FromMilliSeconds(100)));
-                        JFUNIT_ASSERT(m->TryWait(Time::FromMilliSeconds(100)));
-                        JFUNIT_ASSERT(m->Set());
-                        JFUNIT_ASSERT(m->TryWait(Time::FromMilliSeconds(100)));
-                        JFUNIT_ASSERT(m->TryWait(Time::FromMilliSeconds(100)));
-                        JFUNIT_ASSERT(m->Reset());
+                        TCUNIT_ASSERT(m);
+                        TCUNIT_ASSERT(m->TryWait(Time::FromMilliSeconds(100)));
+                        TCUNIT_ASSERT(m->TryWait(Time::FromMilliSeconds(100)));
+                        TCUNIT_ASSERT(m->Set());
+                        TCUNIT_ASSERT(m->TryWait(Time::FromMilliSeconds(100)));
+                        TCUNIT_ASSERT(m->TryWait(Time::FromMilliSeconds(100)));
+                        TCUNIT_ASSERT(m->Reset());
                         Time start_time = Time::NowMonotonic();
-                        JFUNIT_ASSERT(!m->TryWait(Time::FromMilliSeconds(100)));
+                        TCUNIT_ASSERT(!m->TryWait(Time::FromMilliSeconds(100)));
                         Time wait_time = Time::SinceMonotonic(start_time);
-                        JFUNIT_ASSERT(wait_time >= Time::FromMilliSeconds(90));
-                        JFUNIT_ASSERT(wait_time <= Time::FromMilliSeconds(200));
+                        TCUNIT_ASSERT(wait_time >= Time::FromMilliSeconds(90));
+                        TCUNIT_ASSERT(wait_time <= Time::FromMilliSeconds(200));
                     }
                 }
             };
@@ -209,9 +209,9 @@ namespace TC
             EventSuite::EventSuite()
                 : Unit::TestSuite("TC::MT::Tests::EventSuite")
             {
-                add_test(new EventSetWaitTest);
-                add_test(new EventTryTest);
-                add_test(new EventWaitTimeTest);
+                AddTest(new EventSetWaitTest);
+                AddTest(new EventTryTest);
+                AddTest(new EventWaitTimeTest);
             }
 
         }

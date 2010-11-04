@@ -40,7 +40,7 @@
 #include "TCMTMutex.h"
 #include "TCTime.h"
 
-#include <jf/unittest/test_case.h>
+#include "TCUnitTestCase.h"
 
 #include "TCNewEnable.h"
 
@@ -50,136 +50,136 @@ namespace TC
     {
         namespace Tests
         {
-            class MutexLockUnlockTest : public jf::unittest::TestCase
+            class MutexLockUnlockTest : public Unit::TestCase
             {
             public:
                 MutexLockUnlockTest()
-                    :jf::unittest::TestCase("TC::MT::Tests::MutexLockUnlockTest")
+                    :Unit::TestCase("TC::MT::Tests::MutexLockUnlockTest")
                 {
                 }
 
-                virtual void run()
+                virtual void Execute()
                 {
                     {
                         MutexPtr m = Factory::CreateMutex(false);
-                        JFUNIT_ASSERT(m);
-                        JFUNIT_ASSERT(m->Lock());
-                        JFUNIT_ASSERT(m->UnLock());
+                        TCUNIT_ASSERT(m);
+                        TCUNIT_ASSERT(m->Lock());
+                        TCUNIT_ASSERT(m->UnLock());
                     }
 
                     {
                         MutexPtr m = Factory::CreateMutex(true);
-                        JFUNIT_ASSERT(m);
-                        JFUNIT_ASSERT(m->UnLock());
-                        JFUNIT_ASSERT(m->Lock());
-                        JFUNIT_ASSERT(m->UnLock());
+                        TCUNIT_ASSERT(m);
+                        TCUNIT_ASSERT(m->UnLock());
+                        TCUNIT_ASSERT(m->Lock());
+                        TCUNIT_ASSERT(m->UnLock());
                     }
 
                     {
                         MutexPtr m = Factory::CreateMutex(false);
-                        JFUNIT_ASSERT(m);
-                        JFUNIT_ASSERT(m->TryLock());
-                        JFUNIT_ASSERT(m->UnLock());
+                        TCUNIT_ASSERT(m);
+                        TCUNIT_ASSERT(m->TryLock());
+                        TCUNIT_ASSERT(m->UnLock());
                     }
 
                     {
                         MutexPtr m = Factory::CreateMutex(false);
-                        JFUNIT_ASSERT(m);
-                        JFUNIT_ASSERT(m->TryLock(Time::FromMilliSeconds(100)));
-                        JFUNIT_ASSERT(m->UnLock());
+                        TCUNIT_ASSERT(m);
+                        TCUNIT_ASSERT(m->TryLock(Time::FromMilliSeconds(100)));
+                        TCUNIT_ASSERT(m->UnLock());
                     }
                 }
             };
 
-            class MutexSharedCreateTest : public jf::unittest::TestCase
+            class MutexSharedCreateTest : public Unit::TestCase
             {
             public:
                 MutexSharedCreateTest()
-                    :jf::unittest::TestCase("TC::MT::Tests::MutexSharedCreateTest")
+                    :Unit::TestCase("TC::MT::Tests::MutexSharedCreateTest")
                 {
                 }
 
-                virtual void run()
+                virtual void Execute()
                 {
                     {
                         MutexPtr m = Factory::CreateMutex("MutexSharedCreateTest",
                             false, Factory::CRM_ALWAYS);
-                        JFUNIT_ASSERT(m);
+                        TCUNIT_ASSERT(m);
                     }
 
                     {
                         MutexPtr m = Factory::CreateMutex("MutexSharedCreateTest",
                             false, Factory::CRM_WHEN_NOT_EXISTS);
-                        JFUNIT_ASSERT(m);
+                        TCUNIT_ASSERT(m);
                     }
 
                     {
                         MutexPtr m = Factory::CreateMutex("MutexSharedCreateTest",
                             false, Factory::CRM_WHEN_EXISTS);
-                        JFUNIT_ASSERT(!m);
+                        TCUNIT_ASSERT(!m);
                     }
 
                     {
                         MutexPtr m1 = Factory::CreateMutex("MutexSharedCreateTest",
                             false, Factory::CRM_ALWAYS);
-                        JFUNIT_ASSERT(m1);
+                        TCUNIT_ASSERT(m1);
                         MutexPtr m2 = Factory::CreateMutex("MutexSharedCreateTest",
                             false, Factory::CRM_WHEN_EXISTS);
-                        JFUNIT_ASSERT(m2);
+                        TCUNIT_ASSERT(m2);
                     }
 
                     {
                         MutexPtr m1 = Factory::CreateMutex("MutexSharedCreateTest",
                             false, Factory::CRM_ALWAYS);
-                        JFUNIT_ASSERT(m1);
+                        TCUNIT_ASSERT(m1);
                         MutexPtr m2 = Factory::CreateMutex("MutexSharedCreateTest",
                             false, Factory::CRM_WHEN_NOT_EXISTS);
-                        JFUNIT_ASSERT(!m2);
+                        TCUNIT_ASSERT(!m2);
                     }
                 }
             };
 
-            class MutexSharedLockUnlockTest : public jf::unittest::TestCase
+            class MutexSharedLockUnlockTest : public Unit::TestCase
             {
             public:
                 MutexSharedLockUnlockTest()
-                    :jf::unittest::TestCase("TC::MT::Tests::MutexSharedLockUnlockTest")
+                    :Unit::TestCase("TC::MT::Tests::MutexSharedLockUnlockTest")
                 {
                 }
 
-                virtual void run()
+                virtual void Execute()
                 {
                     {
                         MutexPtr m = Factory::CreateMutex("MutexSharedLockUnlockTest",
                             false, Factory::CRM_ALWAYS);
-                        JFUNIT_ASSERT(m);
-                        JFUNIT_ASSERT(m->Lock());
-                        JFUNIT_ASSERT(m->UnLock());
+                        TCUNIT_ASSERT(m);
+                        TCUNIT_ASSERT(m->Lock());
+                        TCUNIT_ASSERT(m->UnLock());
                     }
 
                     {
                         MutexPtr m = Factory::CreateMutex("MutexSharedLockUnlockTest",
                             true, Factory::CRM_ALWAYS);
-                        JFUNIT_ASSERT(m);
-                        JFUNIT_ASSERT(m->UnLock());
-                        JFUNIT_ASSERT(m->Lock());
-                        JFUNIT_ASSERT(m->UnLock());
+                        TCUNIT_ASSERT(m);
+                        TCUNIT_ASSERT(m->UnLock());
+                        TCUNIT_ASSERT(m->Lock());
+                        TCUNIT_ASSERT(m->UnLock());
                     }
 
                     {
                         MutexPtr m = Factory::CreateMutex("MutexSharedLockUnlockTest",
                             false, Factory::CRM_ALWAYS);
-                        JFUNIT_ASSERT(m);
-                        JFUNIT_ASSERT(m->TryLock());
-                        JFUNIT_ASSERT(m->UnLock());
+                        TCUNIT_ASSERT(m);
+                        TCUNIT_ASSERT(m->TryLock());
+                        TCUNIT_ASSERT(m->UnLock());
                     }
 
                     {
                         MutexPtr m = Factory::CreateMutex("MutexSharedLockUnlockTest",
                             false, Factory::CRM_ALWAYS);
-                        JFUNIT_ASSERT(m);
-                        JFUNIT_ASSERT(m->TryLock(Time::FromMilliSeconds(100)));
-                        JFUNIT_ASSERT(m->UnLock());
+                        TCUNIT_ASSERT(m);
+                        TCUNIT_ASSERT(m->TryLock(Time::FromMilliSeconds(100)));
+                        TCUNIT_ASSERT(m->UnLock());
                     }
                 }
             };
@@ -187,9 +187,9 @@ namespace TC
             MutexSuite::MutexSuite()
                 : Unit::TestSuite("TC::MT::Tests::MutexSuite")
             {
-                add_test(new MutexLockUnlockTest);
-                add_test(new MutexSharedCreateTest);
-                add_test(new MutexSharedLockUnlockTest);
+                AddTest(new MutexLockUnlockTest);
+                AddTest(new MutexSharedCreateTest);
+                AddTest(new MutexSharedLockUnlockTest);
             }
 
         }

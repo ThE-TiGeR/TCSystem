@@ -105,7 +105,7 @@ namespace TC
          // teardown
          if (setup_ok) {
             try {
-               this->Run();
+               this->Execute();
                result->add_success(this);
             }
             catch (const FailureException& f) {

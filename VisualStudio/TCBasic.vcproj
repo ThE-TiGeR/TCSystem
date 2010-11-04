@@ -452,7 +452,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="advapi32.lib JfUnitTestD.lib Iphlpapi.lib  zdll.lib libbz2.lib"
+				AdditionalDependencies="advapi32.lib Iphlpapi.lib  zdll.lib libbz2.lib"
 				OutputFile="$(OutDir)$(ProjectName)DUT.dll"
 				Version="1.4.0"
 				LinkIncremental="2"
@@ -606,7 +606,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="JfUnitTest.lib Iphlpapi.lib  zdll.lib libbz2.lib"
+				AdditionalDependencies="Iphlpapi.lib  zdll.lib libbz2.lib"
 				OutputFile="$(OutDir)$(ProjectName)UT.dll"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
@@ -1244,43 +1244,43 @@
 			Name="Unit Header Files"
 			>
 			<File
-				RelativePath="..\src\Unit\TCUnitApi.h"
+				RelativePath="..\inc\TCUnitApi.h"
 				>
 			</File>
 			<File
-				RelativePath="..\src\Unit\TCUnitCleanLiness.h"
+				RelativePath="..\inc\TCUnitCleanLiness.h"
 				>
 			</File>
 			<File
-				RelativePath="..\src\Unit\TCUnitFailure.h"
+				RelativePath="..\inc\TCUnitFailure.h"
 				>
 			</File>
 			<File
-				RelativePath="..\src\Unit\TCUnitSimpleTestResult.h"
+				RelativePath="..\inc\TCUnitSimpleTestResult.h"
 				>
 			</File>
 			<File
-				RelativePath="..\src\Unit\TCUnitTest.h"
+				RelativePath="..\inc\TCUnitTest.h"
 				>
 			</File>
 			<File
-				RelativePath="..\src\Unit\TCUnitTestCase.h"
+				RelativePath="..\inc\TCUnitTestCase.h"
 				>
 			</File>
 			<File
-				RelativePath="..\src\Unit\TCUnitTestResult.h"
+				RelativePath="..\inc\TCUnitTestResult.h"
 				>
 			</File>
 			<File
-				RelativePath="..\src\Unit\TCUnitTestSuite.h"
+				RelativePath="..\inc\TCUnitTestSuite.h"
 				>
 			</File>
 			<File
-				RelativePath="..\src\Unit\TCUnitTreeTestResult.h"
+				RelativePath="..\inc\TCUnitTreeTestResult.h"
 				>
 			</File>
 			<File
-				RelativePath="..\src\Unit\TCUnitTreeTestRunner.h"
+				RelativePath="..\inc\TCUnitTreeTestRunner.h"
 				>
 			</File>
 		</Filter>
@@ -1288,23 +1288,23 @@
 			Name="Unit Source Files"
 			>
 			<File
-				RelativePath="..\src\Unit\TCUnitSimpleTestResult.cpp"
+				RelativePath="..\src\Basic\Unit\TCUnitSimpleTestResult.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\src\Unit\TCUnitTestCase.cpp"
+				RelativePath="..\src\Basic\Unit\TCUnitTestCase.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\src\Unit\TCUnitTestSuite.cpp"
+				RelativePath="..\src\Basic\Unit\TCUnitTestSuite.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\src\Unit\TCUnitTreeTestResult.cpp"
+				RelativePath="..\src\Basic\Unit\TCUnitTreeTestResult.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\src\Unit\TCUnitTreeTestRunner.cpp"
+				RelativePath="..\src\Basic\Unit\TCUnitTreeTestRunner.cpp"
 				>
 			</File>
 		</Filter>

@@ -47,19 +47,13 @@
  * @file
  * @brief This file provides the definition of #TCUNIT_API
  *
- * If TCUNIT_EXPORTS is defined the define #TCUNIT_API is defined for exporting classes
- * out of an dll. otherwise for importing.
  * @author Thomas Goessler
  */
 
-#ifdef TCUNIT_EXPORTS
-#  define TCUNIT_API TC_EXPORT_DLL
-#else
-   /**
-    * @brief define for exporting or importing classes and functions from the TC::Unit dll
-    */
-#  define TCUNIT_API TC_IMPORT_DLL
-#endif
+/**
+ * @brief define for exporting or importing classes and functions from the TC::Unit dll
+ */
+#define TCUNIT_API TCBASE_API
 
 /**
  * @}
