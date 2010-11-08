@@ -41,32 +41,31 @@
 #include <cassert>
 
 namespace TC {
-namespace Unit {
+   namespace Unit {
 
-TestSuite::~TestSuite()
-{
-    for (TestsVector::const_iterator i = tests_.begin(); i != tests_.end(); ++i)
-        delete *i;
-}
+      TestSuite::~TestSuite()
+      {
+         m_tests.clear();
+      }
 
-void TestSuite::AddTest(Test* t)
-{
-    assert(t);
-    tests_.push_back(t);
-}
+      void TestSuite::AddTest(Test::Ptr t)
+      {
+         m_tests.push_back(t);
+      }
 
-void TestSuite::InternalRun(TestResult* result, const CleanlinessCheck* cleanliness_check)
-{
-    // not that the test's run_internal() method catches all errors,
-    // so it is safe to not wrap the call into try/catch.
-    result->enter_suite(this);
-    for (TestsVector::const_iterator i = tests_.begin(); i != tests_.end(); ++i) {
-        (*i)->InternalRun(result, cleanliness_check);
-        if (cleanliness_check && !cleanliness_check->EnvironmentIsClean())
-            break;
-    }
-    result->leave_suite(this);
-}
+      void TestSuite::InternalRun(TestResult::Ptr result, CleanlinessCheck::CPtr cleanliness_check)
+      {
+         // not that the test's run_internal() method catches all errors,
+         // so it is safe to not wrap the call into try/catch.
+         result->EnterSuite(Ptr(this, NoDelete()));
+         for (TestsVector::iterator i = m_tests.begin(); i != m_tests.end(); ++i) 
+         {
+            (*i)->InternalRun(result, cleanliness_check);
+            if (cleanliness_check && !cleanliness_check->EnvironmentIsClean())
+               break;
+         }
+         result->LeaveSuite(Ptr(this, NoDelete()));
+      }
 
-}
+   }
 }

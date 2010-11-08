@@ -38,6 +38,7 @@
 #define _TC_UNIT_FAILURE_H
 
 #include "TCUnitApi.h"
+#include "TCSharedPtr.h"
 
 #include <string>
 
@@ -48,19 +49,25 @@ namespace TC
       class TCUNIT_API Failure
       {
       public:
-         Failure(const std::string& failed_condition, const std::string& filename, int line)
-            : failed_condition_(failed_condition),
-            filename_(filename),
-            line_(line) {}
+         typedef SharedPtr<Failure> Ptr;
+         typedef SharedPtr<const Failure> CPtr;
 
-         const std::string& FailedCondition() const { return failed_condition_; }
-         const std::string& Filename() const { return filename_; }
-         int Line() const { return line_; }
+      public:
+         Failure(const std::string& failed_condition, const std::string& filename, int line)
+            :m_failed_condition(failed_condition)
+            ,m_filename(filename)
+            ,m_line(line) 
+         {
+         }
+
+         const std::string& FailedCondition() const { return m_failed_condition; }
+         const std::string& Filename() const { return m_filename; }
+         int Line() const { return m_line; }
 
       private:
-         std::string failed_condition_;
-         std::string filename_;
-         int line_;
+         std::string m_failed_condition;
+         std::string m_filename;
+         int m_line;
       };
 
    }

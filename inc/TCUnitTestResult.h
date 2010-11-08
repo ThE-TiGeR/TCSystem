@@ -38,6 +38,7 @@
 #define _TC_UNIT_TEST_RESULT_H
 
 #include "TCUnitFailure.h"
+#include "TCSharedPtr.h"
 
 namespace TC 
 {
@@ -46,20 +47,24 @@ namespace TC
       class TestSuite;
       class TestCase;
 
-      class TCUNIT_API TestResult
+      class TestResult
       {
       public:
-         virtual ~TestResult() {}
+         typedef SharedPtr<TestResult> Ptr;
+         typedef SharedPtr<const TestResult> CPtr;
 
-         virtual void enter_suite(const TestSuite*) = 0;
-         virtual void leave_suite(const TestSuite*) = 0;
-         virtual void enter_test(const TestCase*) = 0;
-         virtual void leave_test(const TestCase*) = 0;
-         virtual void add_success(const TestCase*) = 0;
-         virtual void add_failure(const TestCase*, const Failure&) = 0;
-         virtual void add_error(const TestCase*, const std::string& message) = 0;
-         virtual void add_assertion(const TestCase*) = 0;
-         virtual void unclean_alarm(const TestCase*) = 0;
+      public:
+         virtual void EnterSuite(SharedPtr<const TestSuite>) = 0;
+         virtual void LeaveSuite(SharedPtr<const TestSuite>) = 0;
+         virtual void EnterTest(SharedPtr<const TestCase>) = 0;
+         virtual void LeaveTest(SharedPtr<const TestCase>) = 0;
+         virtual void AddSuccess(SharedPtr<const TestCase>) = 0;
+         virtual void AddFailure(SharedPtr<const TestCase>, const Failure&) = 0;
+         virtual void AddError(SharedPtr<const TestCase>, const std::string& message) = 0;
+         virtual void AddAssertion(SharedPtr<const TestCase>) = 0;
+         virtual void UncleanAlarm(SharedPtr<const TestCase>) = 0;
+
+         virtual ~TestResult() {}
       };
 
    }

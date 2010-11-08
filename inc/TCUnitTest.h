@@ -51,15 +51,22 @@ namespace TC
       class TCUNIT_API Test: protected NonCopyAble
       {
       public:
-         Test(const std::string& name) : name_(name) {}
+         typedef SharedPtr<Test> Ptr;
+         typedef SharedPtr<const Test> CPtr;
+
+      public:
+         Test(const std::string& name)
+            :m_name(name)
+         {
+         }
          virtual ~Test() {}
 
-         const std::string& Name() const { return name_; }
+         const std::string& Name() const { return m_name; }
 
-         virtual void InternalRun(TestResult*, const CleanlinessCheck*) = 0;
+         virtual void InternalRun(TestResult::Ptr, CleanlinessCheck::CPtr) = 0;
 
       private:
-         std::string name_;
+         std::string m_name;
       };
 
    }

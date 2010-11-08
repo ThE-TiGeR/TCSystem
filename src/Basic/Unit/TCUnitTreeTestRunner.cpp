@@ -41,16 +41,18 @@
 
 #include <iostream>
 
-namespace TC {
-namespace Unit {
-
-bool TreeTestRunner::Run(Test* test, CleanlinessCheck* cleanliness_check)
+namespace TC 
 {
-    TreeTestResult result(std::cerr);
-    test->InternalRun(&result, cleanliness_check);
-    result.print_summary();
-    return result.ok();
-}
+   namespace Unit 
+   {
 
-}
+      bool TreeTestRunner::Run(Test::Ptr test, CleanlinessCheck::Ptr cleanliness_check)
+      {
+         TreeTestResult::Ptr result(new TreeTestResult(std::cerr));
+         test->InternalRun(result, cleanliness_check);
+         result->print_summary();
+         return result->ok();
+      }
+
+   }
 }

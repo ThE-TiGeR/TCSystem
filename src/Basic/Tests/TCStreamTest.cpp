@@ -271,15 +271,15 @@ namespace TC
       StreamTestSuite::StreamTestSuite()
          :Unit::TestSuite("TC::Tests::StreamTestSuite")
       {
-         AddTest(new MemoryTest<BinaryCodec>("Binary"));
-         AddTest(new MemoryTest<AsciiCodec>("Ascii"));
-         AddTest(new StringTest);
-         AddTest(new FileTest<BinaryCodec>("Binary"));
-         AddTest(new FileTest<AsciiCodec>("Ascii"));
-         AddTest(new GzFileTest<BinaryCodec>("Binary"));
-         AddTest(new GzFileTest<AsciiCodec>("Ascii"));
-         AddTest(new Bz2FileTest<BinaryCodec>("Binary"));
-         AddTest(new Bz2FileTest<AsciiCodec>("Ascii"));
+         AddTest(Unit::Test::Ptr(new MemoryTest<BinaryCodec>("Binary")));
+         AddTest(Unit::Test::Ptr(new MemoryTest<AsciiCodec>("Ascii")));
+         AddTest(Unit::Test::Ptr(new StringTest));
+         AddTest(Unit::Test::Ptr(new FileTest<BinaryCodec>("Binary")));
+         AddTest(Unit::Test::Ptr(new FileTest<AsciiCodec>("Ascii")));
+         AddTest(Unit::Test::Ptr(new GzFileTest<BinaryCodec>("Binary")));
+         AddTest(Unit::Test::Ptr(new GzFileTest<AsciiCodec>("Ascii")));
+         AddTest(Unit::Test::Ptr(new Bz2FileTest<BinaryCodec>("Binary")));
+         AddTest(Unit::Test::Ptr(new Bz2FileTest<AsciiCodec>("Ascii")));
       }
    }
 }

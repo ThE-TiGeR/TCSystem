@@ -320,15 +320,15 @@ namespace TC
       TimeTestSuite::TimeTestSuite()
          :Unit::TestSuite("TC::Tests::TimeTestSuite")
       {
-         AddTest(new TimeFromSeconds);
-         AddTest(new TimeFromMilliSeconds);
-         AddTest(new FromMicroSeconds);
-         AddTest(new FromNanoSeconds);
-         AddTest(new AddTime);
-         AddTest(new AddAssignTime);
-         AddTest(new SubTime);
-         AddTest(new SubAssignTime);
-         AddTest(new CompareTime);
+         AddTest(Unit::Test::Ptr(new TimeFromSeconds));
+         AddTest(Unit::Test::Ptr(new TimeFromMilliSeconds));
+         AddTest(Unit::Test::Ptr(new FromMicroSeconds));
+         AddTest(Unit::Test::Ptr(new FromNanoSeconds));
+         AddTest(Unit::Test::Ptr(new AddTime));
+         AddTest(Unit::Test::Ptr(new AddAssignTime));
+         AddTest(Unit::Test::Ptr(new SubTime));
+         AddTest(Unit::Test::Ptr(new SubAssignTime));
+         AddTest(Unit::Test::Ptr(new CompareTime));
       }
    }
 }

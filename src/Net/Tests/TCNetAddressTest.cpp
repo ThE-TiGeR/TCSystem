@@ -68,7 +68,7 @@ namespace TC
          AddressTestSuite::AddressTestSuite()
             :Unit::TestSuite("TC::Net::Tests::AddressTestSuite")
          {
-            AddTest(new AddressConstsTest);
+            AddTest(Unit::Test::Ptr(new AddressConstsTest));
          }
       }
    }

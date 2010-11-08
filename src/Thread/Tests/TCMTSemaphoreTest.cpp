@@ -203,9 +203,9 @@ namespace TC
             SemaphoreSuite::SemaphoreSuite()
                 : Unit::TestSuite("TC::MT::Tests::SemaphoreSuite")
             {
-                AddTest(new SemaphorePostWaitTest);
-                AddTest(new SemaphoreSharedCreateTest);
-                AddTest(new SemaphoreSharedPostWaitTest);
+                AddTest(Unit::Test::Ptr(new SemaphorePostWaitTest));
+                AddTest(Unit::Test::Ptr(new SemaphoreSharedCreateTest));
+                AddTest(Unit::Test::Ptr(new SemaphoreSharedPostWaitTest));
             }
 
         }

@@ -38,6 +38,8 @@
 #define _TC_UNIT_SIMPLE_TEST_RESULT_H
 
 #include "TCUnitTestResult.h"
+#include "TCUnitTestSuite.h"
+#include "TCUnitTestCase.h"
 
 #include <iostream>
 
@@ -48,40 +50,40 @@ namespace TC
       class TCUNIT_API SimpleTestResult : public TestResult
       {
       public:
-         SimpleTestResult(std::ostream* ostream = NULL)
-            : ostream_(ostream),
-            num_tests_run_(0),
-            num_success_(0),
-            num_failure_(0),
-            num_error_(0),
-            num_assertion_(0),
-            unclean_test_(NULL) {}
+         SimpleTestResult(std::ostream* ostream = 0)
+            :m_ostream(ostream)
+            ,m_num_tests_run(0)
+            ,m_num_success(0)
+            ,m_num_failure(0)
+            ,m_num_error(0)
+            ,m_num_assertion(0)
+            ,m_unclean_test() {}
 
-         bool ok() const { return num_failure_ + num_error_ == 0 && !unclean_test_; }
-         bool unclean() const { return unclean_test_ != NULL; }
-         int num_tests_run() const { return num_tests_run_; }
-         int num_success() const { return num_success_; }
-         int num_failure() const { return num_failure_; }
-         int num_error() const { return num_error_; }
+         bool ok() const { return m_num_failure + m_num_error == 0 && !m_unclean_test; }
+         bool unclean() const { return m_unclean_test != 0; }
+         int num_tests_run() const { return m_num_tests_run; }
+         int num_success() const { return m_num_success; }
+         int num_failure() const { return m_num_failure; }
+         int num_error() const { return m_num_error; }
 
-         virtual void enter_suite(const TestSuite*) {}
-         virtual void leave_suite(const TestSuite*) {}
-         virtual void enter_test(const TestCase*) { num_tests_run_++; }
-         virtual void leave_test(const TestCase*) {}
-         virtual void add_success(const TestCase*);
-         virtual void add_failure(const TestCase*, const Failure&);
-         virtual void add_error(const TestCase*, const std::string&);
-         virtual void add_assertion(const TestCase*);
-         virtual void unclean_alarm(const TestCase* t) { unclean_test_ = t; }
+         virtual void EnterSuite(TestSuite::CPtr) {}
+         virtual void LeaveSuite(TestSuite::CPtr) {}
+         virtual void EnterTest(TestCase::CPtr) { m_num_tests_run++; }
+         virtual void LeaveTest(TestCase::CPtr) {}
+         virtual void AddSuccess(TestCase::CPtr);
+         virtual void AddFailure(TestCase::CPtr, const Failure&);
+         virtual void AddError(TestCase::CPtr, const std::string&);
+         virtual void AddAssertion(TestCase::CPtr);
+         virtual void UncleanAlarm(TestCase::CPtr t) { m_unclean_test = t; }
 
       private:
-         std::ostream* ostream_;
-         int num_tests_run_;
-         int num_success_;
-         int num_failure_;
-         int num_error_;
-         int num_assertion_;
-         const TestCase* unclean_test_;
+         std::ostream* m_ostream;
+         int m_num_tests_run;
+         int m_num_success;
+         int m_num_failure;
+         int m_num_error;
+         int m_num_assertion;
+         TestCase::CPtr m_unclean_test;
       };
 
    }

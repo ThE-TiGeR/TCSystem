@@ -209,9 +209,9 @@ namespace TC
             EventSuite::EventSuite()
                 : Unit::TestSuite("TC::MT::Tests::EventSuite")
             {
-                AddTest(new EventSetWaitTest);
-                AddTest(new EventTryTest);
-                AddTest(new EventWaitTimeTest);
+                AddTest(Unit::Test::Ptr(new EventSetWaitTest));
+                AddTest(Unit::Test::Ptr(new EventTryTest));
+                AddTest(Unit::Test::Ptr(new EventWaitTimeTest));
             }
 
         }

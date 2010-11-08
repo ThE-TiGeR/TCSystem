@@ -262,8 +262,8 @@ namespace TC
             ThreadSuite::ThreadSuite()
                 : Unit::TestSuite("TC::MT::Tests::ThreadSuite")
             {
-                AddTest(new ThreadTest);
-                AddTest(new ThreadMessageTest);
+                AddTest(Unit::Test::Ptr(new ThreadTest));
+                AddTest(Unit::Test::Ptr(new ThreadMessageTest));
             }
 
         }

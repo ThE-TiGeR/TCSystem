@@ -187,9 +187,9 @@ namespace TC
             MutexSuite::MutexSuite()
                 : Unit::TestSuite("TC::MT::Tests::MutexSuite")
             {
-                AddTest(new MutexLockUnlockTest);
-                AddTest(new MutexSharedCreateTest);
-                AddTest(new MutexSharedLockUnlockTest);
+                AddTest(Unit::Test::Ptr(new MutexLockUnlockTest));
+                AddTest(Unit::Test::Ptr(new MutexSharedCreateTest));
+                AddTest(Unit::Test::Ptr(new MutexSharedLockUnlockTest));
             }
 
         }

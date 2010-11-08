@@ -48,7 +48,7 @@ namespace TC
       class TCUNIT_API TreeTestRunner
       {
       public:
-         bool Run(Test*, CleanlinessCheck* = 0);
+         bool Run(Test::Ptr, CleanlinessCheck::Ptr);
       };
    }
 }

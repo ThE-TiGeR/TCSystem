@@ -38,6 +38,7 @@
 #define _TC_UNIT_TEST_CASE_H
 
 #include "TCUnitTest.h"
+#include "TCSharedPtr.h"
 
 namespace TC 
 {
@@ -46,8 +47,13 @@ namespace TC
       class TCUNIT_API TestCase : public Test
       {
       public:
+         typedef SharedPtr<TestCase> Ptr;
+         typedef SharedPtr<const TestCase> CPtr;
+
+      public:
          TestCase(const std::string& name) 
-            :Test(name), result_(0) {}
+            :Test(name)
+            ,m_result() {}
          virtual ~TestCase() {}
 
          virtual void Setup() {}
@@ -55,14 +61,14 @@ namespace TC
          virtual void Teardown() {}
 
       public:
-         virtual void InternalRun(TestResult*, const CleanlinessCheck*);
+         virtual void InternalRun(TestResult::Ptr, CleanlinessCheck::CPtr);
 
          void do_cond_fail(bool condition,
             const std::string& condition_str,
             const std::string& filename,
             int line);
       private:
-         TestResult* result_;
+         TestResult::Ptr m_result;
       };
 
    }

@@ -253,16 +253,16 @@ namespace TC
       WFileNameTestSuite::WFileNameTestSuite()
          :Unit::TestSuite("TC::Tests::WFileNameTestSuite")
       {
-         AddTest(new AddFileNameAndExtension);
-         AddTest(new AddFileNameAndPath);
-         AddTest(new AddPaths);
-         AddTest(new GetDirectories);
-         AddTest(new GetExtension);
-         AddTest(new GetExtensionIfExtension);
-         AddTest(new GetName);
-         AddTest(new GetPath);
-         AddTest(new RemoveExtension);
-         AddTest(new Simplify);
+         AddTest(Unit::Test::Ptr(new AddFileNameAndExtension));
+         AddTest(Unit::Test::Ptr(new AddFileNameAndPath));
+         AddTest(Unit::Test::Ptr(new AddPaths));
+         AddTest(Unit::Test::Ptr(new GetDirectories));
+         AddTest(Unit::Test::Ptr(new GetExtension));
+         AddTest(Unit::Test::Ptr(new GetExtensionIfExtension));
+         AddTest(Unit::Test::Ptr(new GetName));
+         AddTest(Unit::Test::Ptr(new GetPath));
+         AddTest(Unit::Test::Ptr(new RemoveExtension));
+         AddTest(Unit::Test::Ptr(new Simplify));
       }
    }
 }

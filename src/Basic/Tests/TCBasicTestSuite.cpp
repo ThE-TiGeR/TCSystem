@@ -52,14 +52,14 @@ namespace TC
       BasicSuite::BasicSuite()
          :Unit::TestSuite("TC::BasicSuite")
       {
-         AddTest(new UtilTestSuite);
-         AddTest(new StringTestSuite);
-         AddTest(new WStringTestSuite);
-         AddTest(new FileNameTestSuite);
-         AddTest(new WFileNameTestSuite);
-         AddTest(new TimeTestSuite);
-         AddTest(new HashTableTestSuite);
-         AddTest(new StreamTestSuite);
+         AddTest(Unit::Test::Ptr(new UtilTestSuite));
+         AddTest(Unit::Test::Ptr(new StringTestSuite));
+         AddTest(Unit::Test::Ptr(new WStringTestSuite));
+         AddTest(Unit::Test::Ptr(new FileNameTestSuite));
+         AddTest(Unit::Test::Ptr(new WFileNameTestSuite));
+         AddTest(Unit::Test::Ptr(new TimeTestSuite));
+         AddTest(Unit::Test::Ptr(new HashTableTestSuite));
+         AddTest(Unit::Test::Ptr(new StreamTestSuite));
       }
    }
 }

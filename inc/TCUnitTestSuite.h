@@ -38,6 +38,7 @@
 #define _TC_UNIT_TEST_SUITE_H
 
 #include "TCUnitTest.h"
+#include "TCSharedPtr.h"
 
 #include <vector>
 
@@ -49,20 +50,22 @@ namespace TC
       class TCUNIT_API TestSuite : public Test
       {
       public:
-         typedef std::vector<Test*> TestsVector;
+         typedef SharedPtr<TestSuite> Ptr;
+         typedef SharedPtr<const TestSuite> CPtr;
+         typedef std::vector<Test::Ptr> TestsVector;
 
       public:
          TestSuite(const std::string& name) : Test(name) {}
          virtual ~TestSuite();
 
-         void AddTest(Test*);
-         const TestsVector& Tests() const { return tests_; }
+         void AddTest(Test::Ptr);
+         const TestsVector& Tests() const { return m_tests; }
 
       public:
-         virtual void InternalRun(TestResult*, const CleanlinessCheck*);
+         virtual void InternalRun(TestResult::Ptr, CleanlinessCheck::CPtr);
 
       private:
-         TestsVector tests_;
+         TestsVector m_tests;
       };
 
    }

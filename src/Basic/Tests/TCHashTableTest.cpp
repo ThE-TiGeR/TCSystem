@@ -203,14 +203,14 @@ namespace TC
       HashTableTestSuite::HashTableTestSuite()
          :Unit::TestSuite("TC::Tests::HashTableTestSuite")
       {
-         AddTest(new ConstructTest);
-         AddTest(new HashSizeTest);
-         AddTest(new NotFoundValueTest);
-         AddTest(new AddKeyTest);
-         AddTest(new RemoveKeyTest);
-         AddTest(new ClearTest);
-         AddTest(new GetAllKeysTest);
-         AddTest(new GetAllKeysAndValuesTest);
+         AddTest(Unit::Test::Ptr(new ConstructTest));
+         AddTest(Unit::Test::Ptr(new HashSizeTest));
+         AddTest(Unit::Test::Ptr(new NotFoundValueTest));
+         AddTest(Unit::Test::Ptr(new AddKeyTest));
+         AddTest(Unit::Test::Ptr(new RemoveKeyTest));
+         AddTest(Unit::Test::Ptr(new ClearTest));
+         AddTest(Unit::Test::Ptr(new GetAllKeysTest));
+         AddTest(Unit::Test::Ptr(new GetAllKeysAndValuesTest));
       }
    }
 }

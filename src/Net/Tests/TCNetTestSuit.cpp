@@ -47,7 +47,7 @@ namespace TC
          Suite::Suite()
             :Unit::TestSuite("TC::Net::Suite")
          {
-            AddTest(new AddressTestSuite);
+            AddTest(Unit::Test::Ptr(new AddressTestSuite));
          }
       }
    }

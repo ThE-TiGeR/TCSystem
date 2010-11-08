@@ -124,7 +124,7 @@ namespace TC
             TCUNIT_ASSERT(WString::ToString("testing ToString( const char* string )")
                == L"testing ToString( const char* string )");
             TCUNIT_ASSERT(WString::ToString("") == L"");
-            TCUNIT_ASSERT(WString::ToString(static_cast<char *>(NULL)).empty());
+            TCUNIT_ASSERT(WString::ToString(static_cast<char *>(0)).empty());
          }
 
 
@@ -133,7 +133,7 @@ namespace TC
             TCUNIT_ASSERT(WString::ToString(L"testing ToString( const char* string )")
                == "testing ToString( const char* string )");
             TCUNIT_ASSERT(WString::ToString(L"") == "");
-            TCUNIT_ASSERT(WString::ToString(static_cast<wchar_t *>(NULL)).empty());
+            TCUNIT_ASSERT(WString::ToString(static_cast<wchar_t *>(0)).empty());
          }
 
          // convert from uint64
@@ -413,12 +413,12 @@ namespace TC
       WStringTestSuite::WStringTestSuite()
          :Unit::TestSuite("TC::WStringTestSuite")
       {
-         AddTest(new ConvertToUpperLower);
-         AddTest(new ConvertToNumber);
-         AddTest(new ConvertToString);
-         AddTest(new StringManipulation);
-         AddTest(new Split);
-         AddTest(new Print);
+         AddTest(Unit::Test::Ptr(new ConvertToUpperLower));
+         AddTest(Unit::Test::Ptr(new ConvertToNumber));
+         AddTest(Unit::Test::Ptr(new ConvertToString));
+         AddTest(Unit::Test::Ptr(new StringManipulation));
+         AddTest(Unit::Test::Ptr(new Split));
+         AddTest(Unit::Test::Ptr(new Print));
       }
    }
 }

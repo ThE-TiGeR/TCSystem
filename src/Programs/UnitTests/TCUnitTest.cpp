@@ -1,8 +1,7 @@
 // CONFIX:EXENAME('TCUnitTest')
-#define TC_USE_MEM_CHECK 0
 
 #include "TCOutput.h"
-#include "TCNewDisable.h"
+#include "TCDebugNew.h"
 
 #ifdef HAVE_UNIT_TESTS
 #include "TCBasicTestSuite.h"
@@ -12,13 +11,13 @@
 
 int RunUnitTests()
 {
-   TC::Unit::TestSuite suite("TC::Suite");
-   suite.AddTest(new TC::Tests::BasicSuite);
-   suite.AddTest(new TC::MT::Tests::Suite);
-   suite.AddTest(new TC::Net::Tests::Suite);
+   TC::Unit::TestSuite::Ptr suite(new TC::Unit::TestSuite("TC::Suite"));
+   suite->AddTest(TC::Unit::Test::Ptr(new TC::Tests::BasicSuite));
+   suite->AddTest(TC::Unit::Test::Ptr(new TC::MT::Tests::Suite));
+   suite->AddTest(TC::Unit::Test::Ptr(new TC::Net::Tests::Suite));
 
    TC::Unit::TreeTestRunner runner;
-   return runner.Run(&suite)? 0: 1;
+   return runner.Run(suite, TC::Unit::CleanlinessCheck::Ptr())? 0: 1;
 }
 #endif
 

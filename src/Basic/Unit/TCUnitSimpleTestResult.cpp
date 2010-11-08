@@ -44,29 +44,29 @@ namespace TC
 {
    namespace Unit 
    {
-      void SimpleTestResult::add_success(const TestCase*)
+      void SimpleTestResult::AddSuccess(TestCase::CPtr)
       {
-         num_success_++;
+         m_num_success++;
       }
 
-      void SimpleTestResult::add_failure(const TestCase* tc, const Failure& f)
+      void SimpleTestResult::AddFailure(TestCase::CPtr tc, const Failure& f)
       {
-         num_failure_++;
-         if (ostream_)
+         m_num_failure++;
+         if (m_ostream)
             std::cerr << "FAILURE: " << tc->Name() << ": " << f.FailedCondition()
             << " (" << f.Filename() << ':' << f.Line() << ')' << std::endl;
       }
 
-      void SimpleTestResult::add_error(const TestCase* tc, const std::string& message)
+      void SimpleTestResult::AddError(TestCase::CPtr tc, const std::string& message)
       {
-         num_error_++;
-         if (ostream_)
+         m_num_error++;
+         if (m_ostream)
             std::cerr << "ERROR:   " << tc->Name() << ": " << message << std::endl;
       }
 
-      void SimpleTestResult::add_assertion(const TestCase*)
+      void SimpleTestResult::AddAssertion(TestCase::CPtr)
       {
-         num_assertion_++;
+         m_num_assertion++;
       }
 
    }

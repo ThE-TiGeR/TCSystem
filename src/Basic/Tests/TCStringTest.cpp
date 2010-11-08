@@ -121,7 +121,7 @@ namespace TC
             TCUNIT_ASSERT(String::ToString("testing ToString( const char* string )")
                == "testing ToString( const char* string )");
             TCUNIT_ASSERT(String::ToString("") == "");
-            TCUNIT_ASSERT(String::ToString(static_cast<char *>(NULL)).empty());
+            TCUNIT_ASSERT(String::ToString(static_cast<char *>(0)).empty());
          }
 
          // convert from uint64
@@ -405,12 +405,12 @@ namespace TC
       StringTestSuite::StringTestSuite()
          :Unit::TestSuite("TC::StringTestSuite")
       {
-         AddTest(new ConvertToUpperLower);
-         AddTest(new ConvertToNumber);
-         AddTest(new ConvertToString);
-         AddTest(new StringManipulation);
-         AddTest(new Split);
-         AddTest(new Print);
+         AddTest(Unit::Test::Ptr(new ConvertToUpperLower));
+         AddTest(Unit::Test::Ptr(new ConvertToNumber));
+         AddTest(Unit::Test::Ptr(new ConvertToString));
+         AddTest(Unit::Test::Ptr(new StringManipulation));
+         AddTest(Unit::Test::Ptr(new Split));
+         AddTest(Unit::Test::Ptr(new Print));
       }
    }
 }

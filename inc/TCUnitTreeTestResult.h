@@ -37,6 +37,8 @@
 #define _TC_UNIT_TREE_TEST_RESULT_H
 
 #include "TCUnitTestResult.h"
+#include "TCUnitTestSuite.h"
+#include "TCUnitTestCase.h"
 
 #include <stack>
 #include <vector>
@@ -48,32 +50,36 @@ namespace TC
       class TCUNIT_API TreeTestResult : public TestResult
       {
       public:
+         typedef SharedPtr<TreeTestResult> Ptr;
+         typedef SharedPtr<const TreeTestResult> CPtr;
+
+      public:
          TreeTestResult(std::ostream& ostream);
 
-         virtual void enter_suite(const TestSuite*);
-         virtual void leave_suite(const TestSuite*);
-         virtual void enter_test(const TestCase*);
-         virtual void leave_test(const TestCase*);
-         virtual void add_success(const TestCase*);
-         virtual void add_failure(const TestCase*, const Failure&);
-         virtual void add_error(const TestCase*, const std::string& message);
-         virtual void add_assertion(const TestCase*);
-         virtual void unclean_alarm(const TestCase*);
+         virtual void EnterSuite(TestSuite::CPtr);
+         virtual void LeaveSuite(TestSuite::CPtr);
+         virtual void EnterTest(TestCase::CPtr);
+         virtual void LeaveTest(TestCase::CPtr);
+         virtual void AddSuccess(TestCase::CPtr);
+         virtual void AddFailure(TestCase::CPtr, const Failure&);
+         virtual void AddError(TestCase::CPtr, const std::string& message);
+         virtual void AddAssertion(TestCase::CPtr);
+         virtual void UncleanAlarm(TestCase::CPtr);
 
          void print_summary() const;
          bool ok() const { return num_success_ == num_tests_run_; }
 
       private:
-         typedef std::stack<const TestSuite*> SuiteStack;
+         typedef std::stack<TestSuite::CPtr> SuiteStack;
 
          class Report 
          {
          public:
-            Report(const TestCase* c, const Failure& f)
+            Report(TestCase::CPtr c, const Failure& f)
                : testcase_(c),
                type_(T_FAILURE),
                failure_(f) {}
-            Report(const TestCase* c, const std::string& m)
+            Report(TestCase::CPtr c, const std::string& m)
                : testcase_(c),
                type_(T_ERROR),
                failure_(std::string(), std::string(), 0),
@@ -85,7 +91,7 @@ namespace TC
                T_FAILURE,
                T_ERROR
             };
-            const TestCase* testcase_;
+            TestCase::CPtr testcase_;
             Type type_;
             Failure failure_;
             std::string message_;
@@ -112,7 +118,7 @@ namespace TC
          int num_assertion_;
 
          // the one who made the environmental-cleanliness-check fail.
-         const TestCase* unclean_test_;
+         TestCase::CPtr unclean_test_;
 
          TreeTestResult(const TreeTestResult&);
          TreeTestResult& operator=(const TreeTestResult&);

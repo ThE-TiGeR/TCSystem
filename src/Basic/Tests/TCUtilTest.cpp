@@ -229,13 +229,13 @@ namespace TC
       UtilTestSuite::UtilTestSuite()
          :Unit::TestSuite("TC::Tests::UtilTestSuite")
       {
-         AddTest(new UtilCompare);
-         AddTest(new UtilAbs);
-         AddTest(new UtilMinMax);
-         AddTest(new UtilPow);
-         AddTest(new UtilAlign);
-         AddTest(new UtilStlContainer);
-         AddTest(new UtilSafeRelease);
+         AddTest(Unit::Test::Ptr(new UtilCompare));
+         AddTest(Unit::Test::Ptr(new UtilAbs));
+         AddTest(Unit::Test::Ptr(new UtilMinMax));
+         AddTest(Unit::Test::Ptr(new UtilPow));
+         AddTest(Unit::Test::Ptr(new UtilAlign));
+         AddTest(Unit::Test::Ptr(new UtilStlContainer));
+         AddTest(Unit::Test::Ptr(new UtilSafeRelease));
       }
    }
 }

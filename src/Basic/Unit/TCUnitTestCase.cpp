@@ -77,10 +77,10 @@ namespace TC
    namespace Unit 
    {
 
-      void TestCase::InternalRun(TestResult* result, const CleanlinessCheck* cleanliness_check)
+      void TestCase::InternalRun(TestResult::Ptr result, CleanlinessCheck::CPtr cleanliness_check)
       {
-         result_ = result;
-         result->enter_test(this);
+         m_result = result;
+         result->EnterTest(Ptr(this, NoDelete()));
 
          bool setup_ok = false;
          try {
@@ -90,15 +90,15 @@ namespace TC
          catch (const FailureException& e) {
             std::string msg("setup: ");
             add_failure_description(msg, e.failure());
-            result->add_error(this, msg);
+            result->AddError(Ptr(this, NoDelete()), msg);
          }
          catch (const std::exception& e) {
             std::string msg("setup: ");
             msg += e.what();
-            result->add_error(this, msg);
+            result->AddError(Ptr(this, NoDelete()), msg);
          }
          catch (...) {
-            result->add_error(this, "setup: \"...\" caught");
+            result->AddError(Ptr(this, NoDelete()), "setup: \"...\" caught");
          }
 
          // only if setup went ok go on to execute the test code and
@@ -106,16 +106,16 @@ namespace TC
          if (setup_ok) {
             try {
                this->Execute();
-               result->add_success(this);
+               result->AddSuccess(Ptr(this, NoDelete()));
             }
             catch (const FailureException& f) {
-               result->add_failure(this, f.failure());
+               result->AddFailure(Ptr(this, NoDelete()), f.failure());
             }
             catch (const std::exception& e) {
-               result->add_error(this, e.what());
+               result->AddError(Ptr(this, NoDelete()), e.what());
             }
             catch (...) {
-               result->add_error(this, "\"...\" caught");
+               result->AddError(Ptr(this, NoDelete()), "\"...\" caught");
             }
 
             try {
@@ -124,24 +124,24 @@ namespace TC
             catch (const FailureException& e) {
                std::string msg("teardown: ");
                add_failure_description(msg, e.failure());
-               result->add_error(this, msg);
+               result->AddError(Ptr(this, NoDelete()), msg);
             }
             catch (const std::exception& e) {
                std::string msg("teardown: ");
                msg += e.what();
-               result->add_error(this, msg);
+               result->AddError(Ptr(this, NoDelete()), msg);
             }
             catch (...) {
-               result->add_error(this, "teardown: \"...\" caught");
+               result->AddError(Ptr(this, NoDelete()), "teardown: \"...\" caught");
             }
          }
 
-         result->leave_test(this);
+         result->LeaveTest(Ptr(this, NoDelete()));
 
          if (cleanliness_check && !cleanliness_check->EnvironmentIsClean())
-            result->unclean_alarm(this);
+            result->UncleanAlarm(Ptr(this, NoDelete()));
 
-         result_ = 0;
+         m_result = TestResult::Ptr();
       }
 
       void TestCase::do_cond_fail(
@@ -150,8 +150,8 @@ namespace TC
          const std::string& filename,
          int line)
       {
-         if (result_)
-            result_->add_assertion(this);
+         if (m_result)
+            m_result->AddAssertion(Ptr(this, NoDelete()));
 
          if (!condition)
             throw FailureException(Failure(condition_str, filename, line));

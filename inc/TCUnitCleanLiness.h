@@ -37,6 +37,7 @@
 #define _TC_UNIT_CLEANLINESS_H
 
 #include "TCTypes.h"
+#include "TCSharedPtr.h"
 
 namespace TC 
 {
@@ -44,6 +45,10 @@ namespace TC
    {
       class CleanlinessCheck 
       {
+      public:
+         typedef SharedPtr<CleanlinessCheck> Ptr;
+         typedef SharedPtr<const CleanlinessCheck> CPtr;
+
       public:
          virtual bool EnvironmentIsClean() const = 0;
 

@@ -85,36 +85,36 @@ void TreeTestResult::Report::print(std::ostream& o) const
 TreeTestResult::TreeTestResult(std::ostream& ostream)
 : ostream_(ostream),
   cur_failure(std::string(), std::string(), 0),
-  p_cur_failure(NULL),
-  p_cur_error(NULL),
+  p_cur_failure(0),
+  p_cur_error(0),
   num_suites_entered_(0),
   num_tests_run_(0),
   num_success_(0),
   num_failure_(0),
   num_error_(0),
   num_assertion_(0),
-  unclean_test_(NULL) {}
+  unclean_test_() {}
 
-void TreeTestResult::enter_suite(const TestSuite* s)
+void TreeTestResult::EnterSuite(TestSuite::CPtr s)
 {
     num_suites_entered_++;
     ostream_ << indent(suite_stack_.size()) << "+ " << s->Name() << '\n';
     suite_stack_.push(s);
 }
 
-void TreeTestResult::leave_suite(const TestSuite* /*s*/)
+void TreeTestResult::LeaveSuite(TestSuite::CPtr /*s*/)
 {
     assert(suite_stack_.size() != 0);
     suite_stack_.pop();
 }
 
-void TreeTestResult::enter_test(const TestCase* c)
+void TreeTestResult::EnterTest(TestCase::CPtr c)
 {
     num_tests_run_++;
     ostream_ << indent(suite_stack_.size()) << "- " << c->Name() << "...";
 }
 
-void TreeTestResult::leave_test(const TestCase* c)
+void TreeTestResult::LeaveTest(TestCase::CPtr c)
 {
     if (p_cur_error) {
         num_error_++;
@@ -132,25 +132,25 @@ void TreeTestResult::leave_test(const TestCase* c)
     }
 
     ostream_ << '\n';
-    p_cur_failure = NULL;
-    p_cur_error = NULL;
+    p_cur_failure = 0;
+    p_cur_error = 0;
 }
 
-void TreeTestResult::add_success(const TestCase*) {}
+void TreeTestResult::AddSuccess(TestCase::CPtr) {}
 
-void TreeTestResult::add_failure(const TestCase*, const Failure& f)
+void TreeTestResult::AddFailure(TestCase::CPtr, const Failure& f)
 {
     cur_failure = f;
     p_cur_failure = &cur_failure;
 }
 
-void TreeTestResult::add_error(const TestCase*, const std::string& message)
+void TreeTestResult::AddError(TestCase::CPtr, const std::string& message)
 {
     cur_error = message;
     p_cur_error = &cur_error;
 }
 
-void TreeTestResult::unclean_alarm(const TestCase* t)
+void TreeTestResult::UncleanAlarm(TestCase::CPtr t)
 {
     unclean_test_ = t;
 }
@@ -184,7 +184,7 @@ void TreeTestResult::print_summary() const
     }
 }
 
-void TreeTestResult::add_assertion( const TestCase* )
+void TreeTestResult::AddAssertion( TestCase::CPtr )
 {
     num_assertion_++;
 }
