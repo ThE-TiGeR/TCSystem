@@ -1243,10 +1243,6 @@
 			Name="Unit Header Files"
 			>
 			<File
-				RelativePath="..\src\Basic\Unit\Confix2.dir"
-				>
-			</File>
-			<File
 				RelativePath="..\inc\TCUnitApi.h"
 				>
 			</File>
@@ -1290,6 +1286,10 @@
 		<Filter
 			Name="Unit Source Files"
 			>
+			<File
+				RelativePath="..\src\Basic\Unit\Confix2.dir"
+				>
+			</File>
 			<File
 				RelativePath="..\src\Basic\Unit\TCUnitSimpleTestResult.cpp"
 				>
