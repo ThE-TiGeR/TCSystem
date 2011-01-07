@@ -318,10 +318,10 @@ namespace TC
    template <class T>
    inline StreamPtr operator<<(StreamPtr stream, const std::vector<T>& values)
    {
-       stream << static_cast<uint64>(values.size());
+       stream << static_cast<uint64>(values.size()) << space;
        for (typename std::vector<T>::const_iterator it=values.begin(); it!=values.end(); ++it)
        {
-           stream << *it;
+           stream << *it << space;
        }
        return stream;
    }

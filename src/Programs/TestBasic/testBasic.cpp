@@ -655,10 +655,10 @@ int main(int narg, char** argv)
       TCINFOS("TestBasic", "Start");
 
       //GzStreamTest();
-      Bz2StreamTest();
+      //Bz2StreamTest();
       //RunUDPTest();
       //RunSocketTest(narg, argv);
-      //ConvertPSKCvsToHaushaltsbuchCvs();
+      ConvertPSKCvsToHaushaltsbuchCvs();
 
       TCINFO("TestBasic", "End");
    }
