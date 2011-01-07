@@ -50,16 +50,16 @@ namespace TC
    namespace Tests
    {
       BasicSuite::BasicSuite()
-         :jf::unittest::TestSuite("TC::BasicSuite")
+         :Unit::TestSuite("TC::BasicSuite")
       {
-         add_test(new UtilTestSuite);
-         add_test(new StringTestSuite);
-         add_test(new WStringTestSuite);
-         add_test(new FileNameTestSuite);
-         add_test(new WFileNameTestSuite);
-         add_test(new TimeTestSuite);
-         add_test(new HashTableTestSuite);
-         add_test(new StreamTestSuite);
+         AddTest(Unit::Test::Ptr(new UtilTestSuite));
+         AddTest(Unit::Test::Ptr(new StringTestSuite));
+         AddTest(Unit::Test::Ptr(new WStringTestSuite));
+         AddTest(Unit::Test::Ptr(new FileNameTestSuite));
+         AddTest(Unit::Test::Ptr(new WFileNameTestSuite));
+         AddTest(Unit::Test::Ptr(new TimeTestSuite));
+         AddTest(Unit::Test::Ptr(new HashTableTestSuite));
+         AddTest(Unit::Test::Ptr(new StreamTestSuite));
       }
    }
 }

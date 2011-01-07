@@ -1,27 +1,23 @@
 // CONFIX:EXENAME('TCUnitTest')
-#define TC_USE_MEM_CHECK 0
 
 #include "TCOutput.h"
-#include "TCNewDisable.h"
+#include "TCDebugNew.h"
 
 #ifdef HAVE_UNIT_TESTS
 #include "TCBasicTestSuite.h"
 #include "TCMTThreadTestSuite.h"
 #include "TCNetTestSuite.h"
-
-#include <jf/unittest/tree_test_runner.h>
-#include <jf/unittest/tests/stage2_suite.h>
+#include "TCUnitTreeTestRunner.h"
 
 int RunUnitTests()
 {
-   jf::unittest::TestSuite suite("TC::Suite");
-   suite.add_test(new jf::unittest::tests::Stage2Suite);
-   suite.add_test(new TC::Tests::BasicSuite);
-   suite.add_test(new TC::MT::Tests::Suite);
-   suite.add_test(new TC::Net::Tests::Suite);
+   TC::Unit::TestSuite::Ptr suite(new TC::Unit::TestSuite("TC::Suite"));
+   suite->AddTest(TC::Unit::Test::Ptr(new TC::Tests::BasicSuite));
+   suite->AddTest(TC::Unit::Test::Ptr(new TC::MT::Tests::Suite));
+   suite->AddTest(TC::Unit::Test::Ptr(new TC::Net::Tests::Suite));
 
-   jf::unittest::TreeTestRunner runner;
-   return runner.run(&suite)? 0: 1;
+   TC::Unit::TreeTestRunner runner;
+   return runner.Run(suite, TC::Unit::CleanlinessCheck::Ptr())? 0: 1;
 }
 #endif
 

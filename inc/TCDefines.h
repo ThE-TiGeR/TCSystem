@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCDefines.h 957 2010-01-28 23:17:00Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 #ifndef _TC_DEFINES_H_
 #define _TC_DEFINES_H_
@@ -209,7 +209,7 @@
       // warning C4251: 'AnyClass::m_member' : class 'std::vector<_Ty>' needs to have dll-interface to be used by clients of class 'AnyClass'
 #     pragma warning (disable: 4251)
       // warning C4127: conditional expression is constant
-#//     pragma warning (disable: 4127)
+#     pragma warning (disable: 4127)
       // warning C4275: non dll-interface class 'AnyClass' used as base for dll-interface class 'AnyClass'
 #     pragma warning (disable: 4275)
 #   endif

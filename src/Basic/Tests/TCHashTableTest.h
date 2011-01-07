@@ -35,13 +35,13 @@
 #ifndef _TC_HASH_TABLE_TEST_H_
 #define _TC_HASH_TABLE_TEST_H_
 
-#include <jf/unittest/test_suite.h>
+#include "TCUnitTestSuite.h"
 
 namespace TC
 {
    namespace Tests
    {
-      class HashTableTestSuite : public jf::unittest::TestSuite
+      class HashTableTestSuite : public Unit::TestSuite
       {
       public:
          HashTableTestSuite();

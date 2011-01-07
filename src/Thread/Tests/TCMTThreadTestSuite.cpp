@@ -49,12 +49,12 @@ namespace TC
         namespace Tests
         {
             Suite::Suite()
-                : jf::unittest::TestSuite("TC::MT::Tests::Suite")
+                : Unit::TestSuite("TC::MT::Tests::Suite")
             {
-                add_test(new MutexSuite);
-                add_test(new SemaphoreSuite);
-                add_test(new EventSuite);
-                add_test(new ThreadSuite);
+                AddTest(Unit::Test::Ptr(new MutexSuite));
+                AddTest(Unit::Test::Ptr(new SemaphoreSuite));
+                AddTest(Unit::Test::Ptr(new EventSuite));
+                AddTest(Unit::Test::Ptr(new ThreadSuite));
             }
 
         }

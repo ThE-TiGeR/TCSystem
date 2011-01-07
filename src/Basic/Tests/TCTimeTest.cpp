@@ -37,7 +37,7 @@
 
 #include "TCTime.h"
 
-#include <jf/unittest/test_case.h>
+#include "TCUnitTestCase.h"
 
 #include "TCNewEnable.h"
 
@@ -45,271 +45,271 @@ namespace TC
 {
    namespace
    {
-      class TimeFromSeconds: public jf::unittest::TestCase
+      class TimeFromSeconds: public Unit::TestCase
       {
       public:
          TimeFromSeconds()
-            :jf::unittest::TestCase("TC::Tests::TimeFromSeconds")
+            :Unit::TestCase("TC::Tests::TimeFromSeconds")
          {
          }
 
-         virtual void run()
+         virtual void Execute()
          {
             Time t = Time::FromSeconds(100);
-            JFUNIT_ASSERT(t.Seconds() == 100);
-            JFUNIT_ASSERT(t.NanoSeconds() == 0);
+            TCUNIT_ASSERT(t.Seconds() == 100);
+            TCUNIT_ASSERT(t.NanoSeconds() == 0);
 
-            JFUNIT_ASSERT(t.ToMilliSeconds() == 100 * 1000);
-            JFUNIT_ASSERT(t.ToMicroSeconds() == 100 * 1000 * 1000);
-            JFUNIT_ASSERT(t.ToNanoSeconds() == 100 * 1000 * 1000 * TC_UINT64_VAL(1000));
+            TCUNIT_ASSERT(t.ToMilliSeconds() == 100 * 1000);
+            TCUNIT_ASSERT(t.ToMicroSeconds() == 100 * 1000 * 1000);
+            TCUNIT_ASSERT(t.ToNanoSeconds() == 100 * 1000 * 1000 * TC_UINT64_VAL(1000));
          }
       };
 
-      class TimeFromMilliSeconds: public jf::unittest::TestCase
+      class TimeFromMilliSeconds: public Unit::TestCase
       {
       public:
          TimeFromMilliSeconds()
-            :jf::unittest::TestCase("TC::Tests::TimeFromMilliSeconds")
+            :Unit::TestCase("TC::Tests::TimeFromMilliSeconds")
          {
          }
 
-         virtual void run()
+         virtual void Execute()
          {
             {
                Time t = Time::FromMilliSeconds(100);
-               JFUNIT_ASSERT(t.Seconds() == 0);
-               JFUNIT_ASSERT(t.NanoSeconds() == 100 * 1000 * 1000);
+               TCUNIT_ASSERT(t.Seconds() == 0);
+               TCUNIT_ASSERT(t.NanoSeconds() == 100 * 1000 * 1000);
 
-               JFUNIT_ASSERT(t.ToMilliSeconds() == 100);
-               JFUNIT_ASSERT(t.ToMicroSeconds() == 100 * 1000);
-               JFUNIT_ASSERT(t.ToNanoSeconds() == 100 * 1000 * 1000);
+               TCUNIT_ASSERT(t.ToMilliSeconds() == 100);
+               TCUNIT_ASSERT(t.ToMicroSeconds() == 100 * 1000);
+               TCUNIT_ASSERT(t.ToNanoSeconds() == 100 * 1000 * 1000);
             }
 
             {
                Time t = Time::FromMilliSeconds(1100);
-               JFUNIT_ASSERT(t.Seconds() == 1);
-               JFUNIT_ASSERT(t.NanoSeconds() == 100 * 1000 * 1000);
+               TCUNIT_ASSERT(t.Seconds() == 1);
+               TCUNIT_ASSERT(t.NanoSeconds() == 100 * 1000 * 1000);
 
-               JFUNIT_ASSERT(t.ToMilliSeconds() == 1100);
-               JFUNIT_ASSERT(t.ToMicroSeconds() == 1100 * 1000);
-               JFUNIT_ASSERT(t.ToNanoSeconds() == 1100 * 1000 * 1000);
+               TCUNIT_ASSERT(t.ToMilliSeconds() == 1100);
+               TCUNIT_ASSERT(t.ToMicroSeconds() == 1100 * 1000);
+               TCUNIT_ASSERT(t.ToNanoSeconds() == 1100 * 1000 * 1000);
             }
          }
       };
 
-      class FromMicroSeconds: public jf::unittest::TestCase
+      class FromMicroSeconds: public Unit::TestCase
       {
       public:
          FromMicroSeconds()
-            :jf::unittest::TestCase("TC::Tests::FromMicroSeconds")
+            :Unit::TestCase("TC::Tests::FromMicroSeconds")
          {
          }
 
-         virtual void run()
+         virtual void Execute()
          {
             {
                Time t = Time::FromMicroSeconds(100);
-               JFUNIT_ASSERT(t.Seconds() == 0);
-               JFUNIT_ASSERT(t.NanoSeconds() == 100 * 1000);
+               TCUNIT_ASSERT(t.Seconds() == 0);
+               TCUNIT_ASSERT(t.NanoSeconds() == 100 * 1000);
 
-               JFUNIT_ASSERT(t.ToMilliSeconds() == 0);
-               JFUNIT_ASSERT(t.ToMicroSeconds() == 100);
-               JFUNIT_ASSERT(t.ToNanoSeconds() == 100 * 1000);
+               TCUNIT_ASSERT(t.ToMilliSeconds() == 0);
+               TCUNIT_ASSERT(t.ToMicroSeconds() == 100);
+               TCUNIT_ASSERT(t.ToNanoSeconds() == 100 * 1000);
             }
 
             {
                Time t = Time::FromMicroSeconds(1100);
-               JFUNIT_ASSERT(t.Seconds() == 0);
-               JFUNIT_ASSERT(t.NanoSeconds() == 1100 * 1000);
+               TCUNIT_ASSERT(t.Seconds() == 0);
+               TCUNIT_ASSERT(t.NanoSeconds() == 1100 * 1000);
 
-               JFUNIT_ASSERT(t.ToMilliSeconds() == 1);
-               JFUNIT_ASSERT(t.ToMicroSeconds() == 1100);
-               JFUNIT_ASSERT(t.ToNanoSeconds() == 1100 * 1000);
+               TCUNIT_ASSERT(t.ToMilliSeconds() == 1);
+               TCUNIT_ASSERT(t.ToMicroSeconds() == 1100);
+               TCUNIT_ASSERT(t.ToNanoSeconds() == 1100 * 1000);
             }
 
             {
                Time t = Time::FromMicroSeconds(1100100);
-               JFUNIT_ASSERT(t.Seconds() == 1);
-               JFUNIT_ASSERT(t.NanoSeconds() == 100100 * 1000);
+               TCUNIT_ASSERT(t.Seconds() == 1);
+               TCUNIT_ASSERT(t.NanoSeconds() == 100100 * 1000);
 
-               JFUNIT_ASSERT(t.ToMilliSeconds() == 1100);
-               JFUNIT_ASSERT(t.ToMicroSeconds() == 1100100);
-               JFUNIT_ASSERT(t.ToNanoSeconds() == 1100100 * 1000);
+               TCUNIT_ASSERT(t.ToMilliSeconds() == 1100);
+               TCUNIT_ASSERT(t.ToMicroSeconds() == 1100100);
+               TCUNIT_ASSERT(t.ToNanoSeconds() == 1100100 * 1000);
             }
          }
       };
 
-      class FromNanoSeconds: public jf::unittest::TestCase
+      class FromNanoSeconds: public Unit::TestCase
       {
       public:
          FromNanoSeconds()
-            :jf::unittest::TestCase("TC::Tests::FromNanoSeconds")
+            :Unit::TestCase("TC::Tests::FromNanoSeconds")
          {
          }
 
-         virtual void run()
+         virtual void Execute()
          {
             {
                Time t = Time::FromNanoSeconds(100);
-               JFUNIT_ASSERT(t.Seconds() == 0);
-               JFUNIT_ASSERT(t.NanoSeconds() == 100);
+               TCUNIT_ASSERT(t.Seconds() == 0);
+               TCUNIT_ASSERT(t.NanoSeconds() == 100);
 
-               JFUNIT_ASSERT(t.ToMilliSeconds() == 0);
-               JFUNIT_ASSERT(t.ToMicroSeconds() == 0);
-               JFUNIT_ASSERT(t.ToNanoSeconds() == 100);
+               TCUNIT_ASSERT(t.ToMilliSeconds() == 0);
+               TCUNIT_ASSERT(t.ToMicroSeconds() == 0);
+               TCUNIT_ASSERT(t.ToNanoSeconds() == 100);
             }
 
             {
                Time t = Time::FromNanoSeconds(1100);
-               JFUNIT_ASSERT(t.Seconds() == 0);
-               JFUNIT_ASSERT(t.NanoSeconds() == 1100);
+               TCUNIT_ASSERT(t.Seconds() == 0);
+               TCUNIT_ASSERT(t.NanoSeconds() == 1100);
 
-               JFUNIT_ASSERT(t.ToMilliSeconds() == 0);
-               JFUNIT_ASSERT(t.ToMicroSeconds() == 1);
-               JFUNIT_ASSERT(t.ToNanoSeconds() == 1100);
+               TCUNIT_ASSERT(t.ToMilliSeconds() == 0);
+               TCUNIT_ASSERT(t.ToMicroSeconds() == 1);
+               TCUNIT_ASSERT(t.ToNanoSeconds() == 1100);
             }
 
             {
                Time t = Time::FromNanoSeconds(1100100);
-               JFUNIT_ASSERT(t.Seconds() == 0);
-               JFUNIT_ASSERT(t.NanoSeconds() == 1100100);
+               TCUNIT_ASSERT(t.Seconds() == 0);
+               TCUNIT_ASSERT(t.NanoSeconds() == 1100100);
 
-               JFUNIT_ASSERT(t.ToMilliSeconds() == 1);
-               JFUNIT_ASSERT(t.ToMicroSeconds() == 1100);
-               JFUNIT_ASSERT(t.ToNanoSeconds() == 1100100);
+               TCUNIT_ASSERT(t.ToMilliSeconds() == 1);
+               TCUNIT_ASSERT(t.ToMicroSeconds() == 1100);
+               TCUNIT_ASSERT(t.ToNanoSeconds() == 1100100);
             }
 
             {
                Time t = Time::FromNanoSeconds(1100100100);
-               JFUNIT_ASSERT(t.Seconds() == 1);
-               JFUNIT_ASSERT(t.NanoSeconds() == 100100100);
+               TCUNIT_ASSERT(t.Seconds() == 1);
+               TCUNIT_ASSERT(t.NanoSeconds() == 100100100);
 
-               JFUNIT_ASSERT(t.ToMilliSeconds() == 1100);
-               JFUNIT_ASSERT(t.ToMicroSeconds() == 1100100);
-               JFUNIT_ASSERT(t.ToNanoSeconds() == 1100100100);
+               TCUNIT_ASSERT(t.ToMilliSeconds() == 1100);
+               TCUNIT_ASSERT(t.ToMicroSeconds() == 1100100);
+               TCUNIT_ASSERT(t.ToNanoSeconds() == 1100100100);
             }
 
          }
       };
 
-      class AddTime: public jf::unittest::TestCase
+      class AddTime: public Unit::TestCase
       {
       public:
          AddTime()
-            :jf::unittest::TestCase("TC::Tests::AddTime")
+            :Unit::TestCase("TC::Tests::AddTime")
          {
          }
 
-         virtual void run()
+         virtual void Execute()
          {
             {
                Time t1 = Time::FromSeconds(100);
                Time t2 = Time::FromNanoSeconds(100);
                Time t3 = t1 + t2;
-               JFUNIT_ASSERT(t3.Seconds() == 100);
-               JFUNIT_ASSERT(t3.NanoSeconds() == 100);
+               TCUNIT_ASSERT(t3.Seconds() == 100);
+               TCUNIT_ASSERT(t3.NanoSeconds() == 100);
             }
 
             {
                Time t1 = Time::FromSeconds(100);
                Time t2 = Time::FromNanoSeconds(TC_UINT64_VAL(101110001000));
                Time t3 = t1 + t2;
-               JFUNIT_ASSERT(t3.Seconds() == 201);
-               JFUNIT_ASSERT(t3.NanoSeconds() == 110001000);
+               TCUNIT_ASSERT(t3.Seconds() == 201);
+               TCUNIT_ASSERT(t3.NanoSeconds() == 110001000);
             }
          }
       };
 
-      class AddAssignTime: public jf::unittest::TestCase
+      class AddAssignTime: public Unit::TestCase
       {
       public:
          AddAssignTime()
-            :jf::unittest::TestCase("TC::Tests::AddAssignTime")
+            :Unit::TestCase("TC::Tests::AddAssignTime")
          {
          }
 
-         virtual void run()
+         virtual void Execute()
          {
             {
                Time t1 = Time::FromSeconds(100);
                Time t2 = Time::FromNanoSeconds(100);
                t2 += t1;
-               JFUNIT_ASSERT(t2.Seconds() == 100);
-               JFUNIT_ASSERT(t2.NanoSeconds() == 100);
+               TCUNIT_ASSERT(t2.Seconds() == 100);
+               TCUNIT_ASSERT(t2.NanoSeconds() == 100);
             }
 
             {
                Time t1 = Time::FromSeconds(100);
                Time t2 = Time::FromNanoSeconds(TC_UINT64_VAL(101110001000));
                t2 += t1;
-               JFUNIT_ASSERT(t2.Seconds() == 201);
-               JFUNIT_ASSERT(t2.NanoSeconds() == 110001000);
+               TCUNIT_ASSERT(t2.Seconds() == 201);
+               TCUNIT_ASSERT(t2.NanoSeconds() == 110001000);
             }
          }
       };
 
-      class SubTime: public jf::unittest::TestCase
+      class SubTime: public Unit::TestCase
       {
       public:
          SubTime()
-            :jf::unittest::TestCase("TC::Tests::SubTime")
+            :Unit::TestCase("TC::Tests::SubTime")
          {
          }
 
-         virtual void run()
+         virtual void Execute()
          {
             {
                Time t1 = Time::FromSeconds(100);
                Time t2 = Time::FromNanoSeconds(100);
                Time t3 = t1 - t2;
-               JFUNIT_ASSERT(t3.Seconds() == 99);
-               JFUNIT_ASSERT(t3.NanoSeconds() == 1 * 1000 * 1000 * 1000 - 100);
+               TCUNIT_ASSERT(t3.Seconds() == 99);
+               TCUNIT_ASSERT(t3.NanoSeconds() == 1 * 1000 * 1000 * 1000 - 100);
             }
          }
       };
 
-      class SubAssignTime: public jf::unittest::TestCase
+      class SubAssignTime: public Unit::TestCase
       {
       public:
          SubAssignTime()
-            :jf::unittest::TestCase("TC::Tests::SubAssignTime")
+            :Unit::TestCase("TC::Tests::SubAssignTime")
          {
          }
 
-         virtual void run()
+         virtual void Execute()
          {
             {
                Time t1 = Time::FromSeconds(100);
                Time t2 = Time::FromNanoSeconds(100);
                t1 -= t2;
-               JFUNIT_ASSERT(t1.Seconds() == 99);
-               JFUNIT_ASSERT(t1.NanoSeconds() == 1 * 1000 * 1000 * 1000 - 100);
+               TCUNIT_ASSERT(t1.Seconds() == 99);
+               TCUNIT_ASSERT(t1.NanoSeconds() == 1 * 1000 * 1000 * 1000 - 100);
             }
          }
       };
 
-      class CompareTime: public jf::unittest::TestCase
+      class CompareTime: public Unit::TestCase
       {
       public:
          CompareTime()
-            :jf::unittest::TestCase("TC::Tests::CompareTime")
+            :Unit::TestCase("TC::Tests::CompareTime")
          {
          }
 
-         virtual void run()
+         virtual void Execute()
          {
             {
                Time t1 = Time::FromSeconds(100);
                Time t2 = Time::FromNanoSeconds(100);
-               JFUNIT_ASSERT(!(t1 == t2));
-               JFUNIT_ASSERT(t1 != t2);
+               TCUNIT_ASSERT(!(t1 == t2));
+               TCUNIT_ASSERT(t1 != t2);
             }
 
             {
                Time t1 = Time::FromSeconds(100);
                Time t2 = Time::FromMilliSeconds(100 * 1000);
-               JFUNIT_ASSERT(t1 == t2);
-               JFUNIT_ASSERT(!(t1 != t2));
+               TCUNIT_ASSERT(t1 == t2);
+               TCUNIT_ASSERT(!(t1 != t2));
             }
          }
       };
@@ -318,17 +318,17 @@ namespace TC
    namespace Tests
    {
       TimeTestSuite::TimeTestSuite()
-         :jf::unittest::TestSuite("TC::Tests::TimeTestSuite")
+         :Unit::TestSuite("TC::Tests::TimeTestSuite")
       {
-         add_test(new TimeFromSeconds);
-         add_test(new TimeFromMilliSeconds);
-         add_test(new FromMicroSeconds);
-         add_test(new FromNanoSeconds);
-         add_test(new AddTime);
-         add_test(new AddAssignTime);
-         add_test(new SubTime);
-         add_test(new SubAssignTime);
-         add_test(new CompareTime);
+         AddTest(Unit::Test::Ptr(new TimeFromSeconds));
+         AddTest(Unit::Test::Ptr(new TimeFromMilliSeconds));
+         AddTest(Unit::Test::Ptr(new FromMicroSeconds));
+         AddTest(Unit::Test::Ptr(new FromNanoSeconds));
+         AddTest(Unit::Test::Ptr(new AddTime));
+         AddTest(Unit::Test::Ptr(new AddAssignTime));
+         AddTest(Unit::Test::Ptr(new SubTime));
+         AddTest(Unit::Test::Ptr(new SubAssignTime));
+         AddTest(Unit::Test::Ptr(new CompareTime));
       }
    }
 }

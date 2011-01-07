@@ -36,7 +36,7 @@
 
 #include "TCNetAddress.h"
 
-#include <jf/unittest/test_case.h>
+#include "TCUnitTestCase.h"
 
 #include "TCNewEnable.h"
 
@@ -46,19 +46,19 @@ namespace TC
    {
       namespace
       {
-         class AddressConstsTest: public jf::unittest::TestCase
+         class AddressConstsTest: public Unit::TestCase
          {
          public:
             AddressConstsTest()
-               :jf::unittest::TestCase("TC::Net::Tests::AddressConstsTest")
+               :Unit::TestCase("TC::Net::Tests::AddressConstsTest")
             {
             }
 
-            virtual void run()
+            virtual void Execute()
             {
-               JFUNIT_ASSERT(Address::GetAnyAddress().GetDotNotation() == "0.0.0.0");
-               JFUNIT_ASSERT(Address::GetBroadcastAddress().GetDotNotation() == "255.255.255.255");
-               JFUNIT_ASSERT(Address::GetLoopBackAddress().GetDotNotation() == "127.0.0.1");
+               TCUNIT_ASSERT(Address::GetAnyAddress().GetDotNotation() == "0.0.0.0");
+               TCUNIT_ASSERT(Address::GetBroadcastAddress().GetDotNotation() == "255.255.255.255");
+               TCUNIT_ASSERT(Address::GetLoopBackAddress().GetDotNotation() == "127.0.0.1");
             }
          };
       }
@@ -66,9 +66,9 @@ namespace TC
       namespace Tests
       {
          AddressTestSuite::AddressTestSuite()
-            :jf::unittest::TestSuite("TC::Net::Tests::AddressTestSuite")
+            :Unit::TestSuite("TC::Net::Tests::AddressTestSuite")
          {
-            add_test(new AddressConstsTest);
+            AddTest(Unit::Test::Ptr(new AddressConstsTest));
          }
       }
    }

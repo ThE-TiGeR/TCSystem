@@ -34,13 +34,13 @@
 #ifndef _TC_STRING_TEST_H_
 #define _TC_STRING_TEST_H_
 
-#include <jf/unittest/test_suite.h>
+#include "TCUnitTestSuite.h"
 
 namespace TC
 {
    namespace Tests
    {
-      class StringTestSuite: public jf::unittest::TestSuite
+      class StringTestSuite: public Unit::TestSuite
       {
       public:
          StringTestSuite();

@@ -34,13 +34,13 @@
 #ifndef _TC_UTIL_TEST_H_
 #define _TC_UTIL_TEST_H_
 
-#include <jf/unittest/test_suite.h>
+#include "TCUnitTestSuite.h"
 
 namespace TC
 {
    namespace Tests
    {
-      class UtilTestSuite: public jf::unittest::TestSuite
+      class UtilTestSuite: public Unit::TestSuite
       {
       public:
          UtilTestSuite();

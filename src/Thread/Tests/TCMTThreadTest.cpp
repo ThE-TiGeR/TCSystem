@@ -40,9 +40,7 @@
 #include "TCMTFactory.h"
 #include "TCMTThread.h"
 #include "TCUtil.h"
-
-#include <jf/unittest/test_case.h>
-#include <jf/unittest/failure.h>
+#include "TCUnitTestCase.h"
 
 #include "TCNewEnable.h"
 
@@ -53,12 +51,12 @@ namespace TC
         namespace Tests
         {
 
-            class ThreadTest : public jf::unittest::TestCase, 
+            class ThreadTest : public Unit::TestCase, 
                 public ThreadObject
             {
             public:
                 ThreadTest()
-                    :jf::unittest::TestCase("TC::MT::Tests::ThreadTest"),
+                    :Unit::TestCase("TC::MT::Tests::ThreadTest"),
                     m_exeption(0)
                 {
                 }
@@ -68,22 +66,22 @@ namespace TC
                     Util::SafeRelease(m_exeption);
                 }
 
-                virtual void run()
+                virtual void Execute()
                 {
                     m_thread_start_event = Factory::CreateEvent();
                     m_thread_started_event = Factory::CreateEvent();
                     m_thread_handle = Factory::CreateThread("TC::MT::Tests::ThreadTest");
 
-                    JFUNIT_ASSERT(m_thread_handle);
-                    JFUNIT_ASSERT(m_thread_handle->Start(ThreadObjectPtr(this, NoDelete())));
+                    TCUNIT_ASSERT(m_thread_handle);
+                    TCUNIT_ASSERT(m_thread_handle->Start(ThreadObjectPtr(this, NoDelete())));
 
 //                     uint32 thread_id = m_thread_handle->GetID();
-//                     JFUNIT_ASSERT(m_thread_handle == GetThreadHandle(thread_id));
+//                     TCUNIT_ASSERT(m_thread_handle == GetThreadHandle(thread_id));
 
-                    JFUNIT_ASSERT(m_thread_start_event->Set());
-                    JFUNIT_ASSERT(m_thread_started_event->Wait());
+                    TCUNIT_ASSERT(m_thread_start_event->Set());
+                    TCUNIT_ASSERT(m_thread_started_event->Wait());
 
-                    JFUNIT_ASSERT(m_thread_handle->Join());
+                    TCUNIT_ASSERT(m_thread_handle->Join());
 
                     m_thread_handle = ThreadPtr();
                     m_thread_start_event = EventPtr();
@@ -103,12 +101,12 @@ namespace TC
                         m_thread_start_event->Wait();
                         m_thread_started_event->Set();
 
-                        JFUNIT_ASSERT(m_thread_handle == Factory::GetCurrentThread());
+                        TCUNIT_ASSERT(m_thread_handle == Factory::GetCurrentThread());
                     }
 
-                    catch (const jf::unittest::Failure& ex)
+                    catch (const Unit::Failure& ex)
                     {
-                        m_exeption = new jf::unittest::Failure(ex);
+                        m_exeption = new Unit::Failure(ex);
                     }
 
                     return true;
@@ -117,15 +115,15 @@ namespace TC
                 ThreadPtr m_thread_handle;
                 EventPtr m_thread_start_event;
                 EventPtr m_thread_started_event;
-                jf::unittest::Failure* m_exeption;
+                Unit::Failure* m_exeption;
           };
 
 
-            class ThreadMessageTest : public jf::unittest::TestCase
+            class ThreadMessageTest : public Unit::TestCase
             {
             public:
                 ThreadMessageTest()
-                    :jf::unittest::TestCase("TC::MT::Tests::ThreadMessageTest"),
+                    :Unit::TestCase("TC::MT::Tests::ThreadMessageTest"),
                     m_exeption(0)
                 {
                 }
@@ -144,12 +142,12 @@ namespace TC
                     TEST_MESSAGE_ID4
                 };
 
-                virtual void run()
+                virtual void Execute()
                 {
                     /*
                     ThreadPtr h = Factory::CreateThread("TC::MT::Tests::ThreadMessageTest");
-                    JFUNIT_ASSERT(h);
-                    JFUNIT_ASSERT(h->Start(ThreadObjectPtr(this, NoDelete())));
+                    TCUNIT_ASSERT(h);
+                    TCUNIT_ASSERT(h->Start(ThreadObjectPtr(this, NoDelete())));
 
                     Message::Post(h, TEST_MESSAGE_ID1, 0);
                     Message::Post(h, TEST_MESSAGE_ID2, (void*)0x1);
@@ -174,7 +172,7 @@ namespace TC
                     {
                         throw(*m_exeption);
                     }
-                    JFUNIT_ASSERT(false);
+                    TCUNIT_ASSERT(false);
                     */
                 }
 
@@ -189,83 +187,83 @@ namespace TC
 //                         uint32 num_all_ids = Util::ArraySize(all_ids);
 // 
 //                         {
-//                             JFUNIT_ASSERT(Message::Get(TEST_MESSAGE_ID1, &msg) == Message::MSG_RECEIVED);
-//                             JFUNIT_ASSERT(msg == 0x0);
+//                             TCUNIT_ASSERT(Message::Get(TEST_MESSAGE_ID1, &msg) == Message::MSG_RECEIVED);
+//                             TCUNIT_ASSERT(msg == 0x0);
 // 
-//                             JFUNIT_ASSERT(Message::Get(TEST_MESSAGE_ID2, &msg) == Message::MSG_RECEIVED);
-//                             JFUNIT_ASSERT(msg == (void*)0x1);
+//                             TCUNIT_ASSERT(Message::Get(TEST_MESSAGE_ID2, &msg) == Message::MSG_RECEIVED);
+//                             TCUNIT_ASSERT(msg == (void*)0x1);
 // 
-//                             JFUNIT_ASSERT(Message::Get(num_all_ids, all_ids, msg_id, &msg)
+//                             TCUNIT_ASSERT(Message::Get(num_all_ids, all_ids, msg_id, &msg)
 //                                 == Message::MSG_RECEIVED);
-//                             JFUNIT_ASSERT(msg == (void*)0x1);
-//                             JFUNIT_ASSERT(msg_id == TEST_MESSAGE_ID3);
+//                             TCUNIT_ASSERT(msg == (void*)0x1);
+//                             TCUNIT_ASSERT(msg_id == TEST_MESSAGE_ID3);
 //                         }
 // 
 //                         {
-//                             JFUNIT_ASSERT(Message::Get(TEST_MESSAGE_ID1, &msg, Time::FromMilliSeconds(200)) == Message::MSG_RECEIVE_FAILED);
-//                             JFUNIT_ASSERT(Message::Get(num_all_ids, all_ids, msg_id, &msg, Time::FromMilliSeconds(200))
+//                             TCUNIT_ASSERT(Message::Get(TEST_MESSAGE_ID1, &msg, Time::FromMilliSeconds(200)) == Message::MSG_RECEIVE_FAILED);
+//                             TCUNIT_ASSERT(Message::Get(num_all_ids, all_ids, msg_id, &msg, Time::FromMilliSeconds(200))
 //                                 == Message::MSG_RECEIVE_FAILED);
 // 
-//                             JFUNIT_ASSERT(Message::Get(TEST_MESSAGE_ID1, &msg, Time::FromMilliSeconds(2000)) == Message::MSG_RECEIVED);
-//                             JFUNIT_ASSERT(Message::Get(num_all_ids, all_ids, msg_id, &msg, Time::FromMilliSeconds(2000))
+//                             TCUNIT_ASSERT(Message::Get(TEST_MESSAGE_ID1, &msg, Time::FromMilliSeconds(2000)) == Message::MSG_RECEIVED);
+//                             TCUNIT_ASSERT(Message::Get(num_all_ids, all_ids, msg_id, &msg, Time::FromMilliSeconds(2000))
 //                                 == Message::MSG_RECEIVED);
-//                             JFUNIT_ASSERT(msg == (void*)0x1);
-//                             JFUNIT_ASSERT(msg_id == TEST_MESSAGE_ID3);
+//                             TCUNIT_ASSERT(msg == (void*)0x1);
+//                             TCUNIT_ASSERT(msg_id == TEST_MESSAGE_ID3);
 //                         }
 // 
 //                         {
-//                             JFUNIT_ASSERT(Message::TryGet(TEST_MESSAGE_ID1, &msg, true) == Message::MSG_RECEIVE_FAILED);
-//                             JFUNIT_ASSERT(Message::TryGet(num_all_ids, all_ids, msg_id, &msg, true)
+//                             TCUNIT_ASSERT(Message::TryGet(TEST_MESSAGE_ID1, &msg, true) == Message::MSG_RECEIVE_FAILED);
+//                             TCUNIT_ASSERT(Message::TryGet(num_all_ids, all_ids, msg_id, &msg, true)
 //                                 == Message::MSG_RECEIVE_FAILED);
 //                             System::Sleep(2000);
 // 
-//                             JFUNIT_ASSERT(Message::TryGet(TEST_MESSAGE_ID1, &msg, true) == Message::MSG_RECEIVED);
-//                             JFUNIT_ASSERT(Message::TryGet(TEST_MESSAGE_ID2, &msg, false) == Message::MSG_RECEIVED);
-//                             JFUNIT_ASSERT(Message::TryGet(TEST_MESSAGE_ID2, &msg, false) == Message::MSG_RECEIVED);
-//                             JFUNIT_ASSERT(Message::TryGet(TEST_MESSAGE_ID2, &msg, false) == Message::MSG_RECEIVED);
-//                             JFUNIT_ASSERT(Message::TryGet(TEST_MESSAGE_ID2, &msg, false) == Message::MSG_RECEIVED);
+//                             TCUNIT_ASSERT(Message::TryGet(TEST_MESSAGE_ID1, &msg, true) == Message::MSG_RECEIVED);
+//                             TCUNIT_ASSERT(Message::TryGet(TEST_MESSAGE_ID2, &msg, false) == Message::MSG_RECEIVED);
+//                             TCUNIT_ASSERT(Message::TryGet(TEST_MESSAGE_ID2, &msg, false) == Message::MSG_RECEIVED);
+//                             TCUNIT_ASSERT(Message::TryGet(TEST_MESSAGE_ID2, &msg, false) == Message::MSG_RECEIVED);
+//                             TCUNIT_ASSERT(Message::TryGet(TEST_MESSAGE_ID2, &msg, false) == Message::MSG_RECEIVED);
 // 
-//                             JFUNIT_ASSERT(Message::TryGet(num_all_ids, all_ids, msg_id, &msg, true)
+//                             TCUNIT_ASSERT(Message::TryGet(num_all_ids, all_ids, msg_id, &msg, true)
 //                                 == Message::MSG_RECEIVED);
-//                             JFUNIT_ASSERT(msg_id == TEST_MESSAGE_ID2);
-//                             JFUNIT_ASSERT(Message::TryGet(num_all_ids, all_ids, msg_id, &msg, false)
+//                             TCUNIT_ASSERT(msg_id == TEST_MESSAGE_ID2);
+//                             TCUNIT_ASSERT(Message::TryGet(num_all_ids, all_ids, msg_id, &msg, false)
 //                                 == Message::MSG_RECEIVED);
-//                             JFUNIT_ASSERT(msg_id == TEST_MESSAGE_ID3);
-//                             JFUNIT_ASSERT(Message::TryGet(num_all_ids, all_ids, msg_id, &msg, false)
+//                             TCUNIT_ASSERT(msg_id == TEST_MESSAGE_ID3);
+//                             TCUNIT_ASSERT(Message::TryGet(num_all_ids, all_ids, msg_id, &msg, false)
 //                                 == Message::MSG_RECEIVED);
-//                             JFUNIT_ASSERT(msg_id == TEST_MESSAGE_ID3);
-//                             JFUNIT_ASSERT(Message::TryGet(num_all_ids, all_ids, msg_id, &msg, false)
+//                             TCUNIT_ASSERT(msg_id == TEST_MESSAGE_ID3);
+//                             TCUNIT_ASSERT(Message::TryGet(num_all_ids, all_ids, msg_id, &msg, false)
 //                                 == Message::MSG_RECEIVED);
-//                             JFUNIT_ASSERT(msg_id == TEST_MESSAGE_ID3);
-//                             JFUNIT_ASSERT(Message::TryGet(num_all_ids, all_ids, msg_id, &msg, false)
+//                             TCUNIT_ASSERT(msg_id == TEST_MESSAGE_ID3);
+//                             TCUNIT_ASSERT(Message::TryGet(num_all_ids, all_ids, msg_id, &msg, false)
 //                                 == Message::MSG_RECEIVED);
-//                             JFUNIT_ASSERT(msg_id == TEST_MESSAGE_ID3);
-//                             JFUNIT_ASSERT(Message::TryGet(num_all_ids, all_ids, msg_id, &msg, true)
+//                             TCUNIT_ASSERT(msg_id == TEST_MESSAGE_ID3);
+//                             TCUNIT_ASSERT(Message::TryGet(num_all_ids, all_ids, msg_id, &msg, true)
 //                                 == Message::MSG_RECEIVED);
-//                             JFUNIT_ASSERT(msg_id == TEST_MESSAGE_ID3);
-//                             JFUNIT_ASSERT(Message::TryGet(num_all_ids, all_ids, msg_id, &msg, true)
+//                             TCUNIT_ASSERT(msg_id == TEST_MESSAGE_ID3);
+//                             TCUNIT_ASSERT(Message::TryGet(num_all_ids, all_ids, msg_id, &msg, true)
 //                                 == Message::MSG_RECEIVED);
-//                             JFUNIT_ASSERT(msg_id == TEST_MESSAGE_ID4);
+//                             TCUNIT_ASSERT(msg_id == TEST_MESSAGE_ID4);
 //                         }
 //                     }
 // 
-//                     catch (const jf::unittest::Failure& ex)
+//                     catch (const Unit::Failure& ex)
 //                     {
-//                         m_exeption = new jf::unittest::Failure(ex);
+//                         m_exeption = new Unit::Failure(ex);
 //                     }
 // 
 //                     return 0;
                    return false;
                 }
 
-                jf::unittest::Failure* m_exeption;
+                Unit::Failure* m_exeption;
             };
 
             ThreadSuite::ThreadSuite()
-                : jf::unittest::TestSuite("TC::MT::Tests::ThreadSuite")
+                : Unit::TestSuite("TC::MT::Tests::ThreadSuite")
             {
-                add_test(new ThreadTest);
-                add_test(new ThreadMessageTest);
+                AddTest(Unit::Test::Ptr(new ThreadTest));
+                AddTest(Unit::Test::Ptr(new ThreadMessageTest));
             }
 
         }

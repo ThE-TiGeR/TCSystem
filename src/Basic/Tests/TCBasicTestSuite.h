@@ -36,14 +36,13 @@
 #define _TC_BASIC_TEST_SUITE_H_
 
 #include "TCDefines.h"
-
-#include <jf/unittest/test_suite.h>
+#include "TCUnitTestSuite.h"
 
 namespace TC
 {
    namespace Tests
    {
-      class TCBASE_API BasicSuite : public jf::unittest::TestSuite
+      class TCBASE_API BasicSuite : public Unit::TestSuite
       {
       public:
          BasicSuite();

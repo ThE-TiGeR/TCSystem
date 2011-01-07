@@ -38,7 +38,7 @@
 #include "TCSystem.h"
 #include "TCFile.h"
 
-#include <jf/unittest/test_case.h>
+#include "TCUnitTestCase.h"
 
 #include "TCNewEnable.h"
 
@@ -46,15 +46,15 @@ namespace TC
 {
    namespace
    {
-      class StreamTest: public jf::unittest::TestCase
+      class StreamTest: public Unit::TestCase
       {
       public:
          StreamTest(const std::string& test_name)
-            :jf::unittest::TestCase("TC::Tests::" + test_name + "Test")
+            :Unit::TestCase("TC::Tests::" + test_name + "Test")
          {
          }
 
-         virtual void run()
+         virtual void Execute()
          {
             DoWrite();
             DoRead();
@@ -69,7 +69,7 @@ namespace TC
          void WriteValue(StreamPtr stream, TYPE val)
          {
             stream << val;
-            JFUNIT_ASSERT(stream->IsOk());
+            TCUNIT_ASSERT(stream->IsOk());
          }
 
          template <class TYPE>
@@ -77,8 +77,8 @@ namespace TC
          {
             TYPE val;
             stream >> val;
-            JFUNIT_ASSERT(val == val_in);
-            JFUNIT_ASSERT(stream->IsOk());
+            TCUNIT_ASSERT(val == val_in);
+            TCUNIT_ASSERT(stream->IsOk());
          }
 
          void DoWrite()
@@ -269,17 +269,17 @@ namespace TC
    namespace Tests
    {
       StreamTestSuite::StreamTestSuite()
-         :jf::unittest::TestSuite("TC::Tests::StreamTestSuite")
+         :Unit::TestSuite("TC::Tests::StreamTestSuite")
       {
-         add_test(new MemoryTest<BinaryCodec>("Binary"));
-         add_test(new MemoryTest<AsciiCodec>("Ascii"));
-         add_test(new StringTest);
-         add_test(new FileTest<BinaryCodec>("Binary"));
-         add_test(new FileTest<AsciiCodec>("Ascii"));
-         add_test(new GzFileTest<BinaryCodec>("Binary"));
-         add_test(new GzFileTest<AsciiCodec>("Ascii"));
-         add_test(new Bz2FileTest<BinaryCodec>("Binary"));
-         add_test(new Bz2FileTest<AsciiCodec>("Ascii"));
+         AddTest(Unit::Test::Ptr(new MemoryTest<BinaryCodec>("Binary")));
+         AddTest(Unit::Test::Ptr(new MemoryTest<AsciiCodec>("Ascii")));
+         AddTest(Unit::Test::Ptr(new StringTest));
+         AddTest(Unit::Test::Ptr(new FileTest<BinaryCodec>("Binary")));
+         AddTest(Unit::Test::Ptr(new FileTest<AsciiCodec>("Ascii")));
+         AddTest(Unit::Test::Ptr(new GzFileTest<BinaryCodec>("Binary")));
+         AddTest(Unit::Test::Ptr(new GzFileTest<AsciiCodec>("Ascii")));
+         AddTest(Unit::Test::Ptr(new Bz2FileTest<BinaryCodec>("Binary")));
+         AddTest(Unit::Test::Ptr(new Bz2FileTest<AsciiCodec>("Ascii")));
       }
    }
 }

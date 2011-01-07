@@ -38,7 +38,7 @@
 
 #include "TCMTApi.h"
 
-#include <jf/unittest/test_suite.h>
+#include "TCUnitTestSuite.h"
 
 namespace TC
 {
@@ -47,7 +47,7 @@ namespace TC
         namespace Tests
         {
 
-            class TCMT_API Suite : public jf::unittest::TestSuite
+            class TCMT_API Suite : public Unit::TestSuite
             {
             public:
                 Suite();

@@ -37,7 +37,7 @@
 
 #include "TCWFileName.h"
 
-#include <jf/unittest/test_case.h>
+#include "TCUnitTestCase.h"
 
 #include "TCNewEnable.h"
 
@@ -45,205 +45,205 @@ namespace TC
 {
    namespace
    {
-      class AddFileNameAndExtension: public jf::unittest::TestCase
+      class AddFileNameAndExtension: public Unit::TestCase
       {
       public:
          AddFileNameAndExtension()
-            :jf::unittest::TestCase("TC::Tests::AddFileNameAndExtension")
+            :Unit::TestCase("TC::Tests::AddFileNameAndExtension")
          {
          }
-         virtual void run()
+         virtual void Execute()
          {
-            JFUNIT_ASSERT(WFileName::AddFileNameAndExtension(L"hallo", L"txt") == L"hallo.txt");
-            JFUNIT_ASSERT(WFileName::AddFileNameAndExtension(L"hallo", L"") == L"hallo");
-            JFUNIT_ASSERT(WFileName::AddFileNameAndExtension(L"", L"") == L"");
-            JFUNIT_ASSERT(WFileName::AddFileNameAndExtension(L"", L"txt") == L".txt");
+            TCUNIT_ASSERT(WFileName::AddFileNameAndExtension(L"hallo", L"txt") == L"hallo.txt");
+            TCUNIT_ASSERT(WFileName::AddFileNameAndExtension(L"hallo", L"") == L"hallo");
+            TCUNIT_ASSERT(WFileName::AddFileNameAndExtension(L"", L"") == L"");
+            TCUNIT_ASSERT(WFileName::AddFileNameAndExtension(L"", L"txt") == L".txt");
          }
       };
 
-      class AddFileNameAndPath: public jf::unittest::TestCase
+      class AddFileNameAndPath: public Unit::TestCase
       {
       public:
          AddFileNameAndPath()
-            :jf::unittest::TestCase("TC::Tests::AddFileNameAndPath")
+            :Unit::TestCase("TC::Tests::AddFileNameAndPath")
          {
          }
 
-         virtual void run()
+         virtual void Execute()
          {
-            JFUNIT_ASSERT(WFileName::AddFileNameAndPath(L"hallo.txt", L"test") == L"test/hallo.txt");
-            JFUNIT_ASSERT(WFileName::AddFileNameAndPath(L"hallo.txt", L"") == L"hallo.txt");
-            JFUNIT_ASSERT(WFileName::AddFileNameAndPath(L"hallo.txt", L".") == L"./hallo.txt");
-            JFUNIT_ASSERT(WFileName::AddFileNameAndPath(L"", L"test") == L"test/");
+            TCUNIT_ASSERT(WFileName::AddFileNameAndPath(L"hallo.txt", L"test") == L"test/hallo.txt");
+            TCUNIT_ASSERT(WFileName::AddFileNameAndPath(L"hallo.txt", L"") == L"hallo.txt");
+            TCUNIT_ASSERT(WFileName::AddFileNameAndPath(L"hallo.txt", L".") == L"./hallo.txt");
+            TCUNIT_ASSERT(WFileName::AddFileNameAndPath(L"", L"test") == L"test/");
          }
       };
 
-      class AddPaths: public jf::unittest::TestCase
+      class AddPaths: public Unit::TestCase
       {
       public:
          AddPaths()
-            :jf::unittest::TestCase("TC::Tests::AddPaths")
+            :Unit::TestCase("TC::Tests::AddPaths")
          {
          }
 
-         virtual void run()
+         virtual void Execute()
          {
-            JFUNIT_ASSERT(WFileName::AddPaths(L"test1", L"test2") == L"test1/test2");
+            TCUNIT_ASSERT(WFileName::AddPaths(L"test1", L"test2") == L"test1/test2");
          }
       };
 
-      class GetDirectories: public jf::unittest::TestCase
+      class GetDirectories: public Unit::TestCase
       {
       public:
          GetDirectories()
-            :jf::unittest::TestCase("TC::Tests::GetDirectories")
+            :Unit::TestCase("TC::Tests::GetDirectories")
          {
          }
 
-         virtual void run()
+         virtual void Execute()
          {
             {
                std::vector<std::wstring> dirs;
                WFileName::GetDirectoriesOfFileName(L"test1/test2/test3/text.txt", dirs);
-               JFUNIT_ASSERT(dirs.size() == 3);
-               JFUNIT_ASSERT(dirs[0] == L"test1");
-               JFUNIT_ASSERT(dirs[1] == L"test2");
-               JFUNIT_ASSERT(dirs[2] == L"test3");
+               TCUNIT_ASSERT(dirs.size() == 3);
+               TCUNIT_ASSERT(dirs[0] == L"test1");
+               TCUNIT_ASSERT(dirs[1] == L"test2");
+               TCUNIT_ASSERT(dirs[2] == L"test3");
             }
 
             {
                std::vector<std::wstring> dirs;
                WFileName::GetDirectoriesOfPath(L"test1/test2/test3/text.txt", dirs);
-               JFUNIT_ASSERT(dirs.size() == 4);
-               JFUNIT_ASSERT(dirs[0] == L"test1");
-               JFUNIT_ASSERT(dirs[1] == L"test2");
-               JFUNIT_ASSERT(dirs[2] == L"test3");
-               JFUNIT_ASSERT(dirs[3] == L"text.txt");
+               TCUNIT_ASSERT(dirs.size() == 4);
+               TCUNIT_ASSERT(dirs[0] == L"test1");
+               TCUNIT_ASSERT(dirs[1] == L"test2");
+               TCUNIT_ASSERT(dirs[2] == L"test3");
+               TCUNIT_ASSERT(dirs[3] == L"text.txt");
             }
          }
       };
 
-      class GetExtension: public jf::unittest::TestCase
+      class GetExtension: public Unit::TestCase
       {
       public:
          GetExtension()
-            :jf::unittest::TestCase("TC::Tests::GetExtension")
+            :Unit::TestCase("TC::Tests::GetExtension")
          {
          }
 
-         virtual void run()
+         virtual void Execute()
          {
-            JFUNIT_ASSERT(WFileName::GetExtension(L"test.txt") == L"txt");
-            JFUNIT_ASSERT(WFileName::GetExtension(L"hallo/test.txt") == L"txt");
-            JFUNIT_ASSERT(WFileName::GetExtension(L"hallo.exe/test.txt") == L"txt");
-            JFUNIT_ASSERT(WFileName::GetExtension(L"hallo.exe/test") == L"");
-            JFUNIT_ASSERT(WFileName::GetExtension(L"hallo/test") == L"");
+            TCUNIT_ASSERT(WFileName::GetExtension(L"test.txt") == L"txt");
+            TCUNIT_ASSERT(WFileName::GetExtension(L"hallo/test.txt") == L"txt");
+            TCUNIT_ASSERT(WFileName::GetExtension(L"hallo.exe/test.txt") == L"txt");
+            TCUNIT_ASSERT(WFileName::GetExtension(L"hallo.exe/test") == L"");
+            TCUNIT_ASSERT(WFileName::GetExtension(L"hallo/test") == L"");
          }
       };
 
-      class GetExtensionIfExtension: public jf::unittest::TestCase
+      class GetExtensionIfExtension: public Unit::TestCase
       {
       public:
          GetExtensionIfExtension()
-            :jf::unittest::TestCase("TC::Tests::GetExtensionIfExtension")
+            :Unit::TestCase("TC::Tests::GetExtensionIfExtension")
          {
          }
 
-         virtual void run()
+         virtual void Execute()
          {
-            JFUNIT_ASSERT(WFileName::GetExtensionIfExtension(L"test.txt", L"gz") == L"");
-            JFUNIT_ASSERT(WFileName::GetExtensionIfExtension(L"hallo/test.txt", L"gz") == L"");
-            JFUNIT_ASSERT(WFileName::GetExtensionIfExtension(L"hallo.exe/test.txt", L"gz") == L"");
-            JFUNIT_ASSERT(WFileName::GetExtensionIfExtension(L"hallo.exe/test", L"gz") == L"");
-            JFUNIT_ASSERT(WFileName::GetExtensionIfExtension(L"hallo/test", L"gz") == L"");
+            TCUNIT_ASSERT(WFileName::GetExtensionIfExtension(L"test.txt", L"gz") == L"");
+            TCUNIT_ASSERT(WFileName::GetExtensionIfExtension(L"hallo/test.txt", L"gz") == L"");
+            TCUNIT_ASSERT(WFileName::GetExtensionIfExtension(L"hallo.exe/test.txt", L"gz") == L"");
+            TCUNIT_ASSERT(WFileName::GetExtensionIfExtension(L"hallo.exe/test", L"gz") == L"");
+            TCUNIT_ASSERT(WFileName::GetExtensionIfExtension(L"hallo/test", L"gz") == L"");
 
-            JFUNIT_ASSERT(WFileName::GetExtensionIfExtension(L"test.txt.gz", L"gz") == L"txt");
-            JFUNIT_ASSERT(WFileName::GetExtensionIfExtension(L"hallo/test.txt.gz", L"gz") == L"txt");
-            JFUNIT_ASSERT(WFileName::GetExtensionIfExtension(L"hallo.exe/test.txt.gz", L"gz") == L"txt");
-            JFUNIT_ASSERT(WFileName::GetExtensionIfExtension(L"hallo.exe/test.gz", L"gz") == L"");
-            JFUNIT_ASSERT(WFileName::GetExtensionIfExtension(L"hallo/test.gz", L"gz") == L"");
+            TCUNIT_ASSERT(WFileName::GetExtensionIfExtension(L"test.txt.gz", L"gz") == L"txt");
+            TCUNIT_ASSERT(WFileName::GetExtensionIfExtension(L"hallo/test.txt.gz", L"gz") == L"txt");
+            TCUNIT_ASSERT(WFileName::GetExtensionIfExtension(L"hallo.exe/test.txt.gz", L"gz") == L"txt");
+            TCUNIT_ASSERT(WFileName::GetExtensionIfExtension(L"hallo.exe/test.gz", L"gz") == L"");
+            TCUNIT_ASSERT(WFileName::GetExtensionIfExtension(L"hallo/test.gz", L"gz") == L"");
          }
       };
 
-      class GetName: public jf::unittest::TestCase
+      class GetName: public Unit::TestCase
       {
       public:
          GetName()
-            :jf::unittest::TestCase("TC::Tests::GetName")
+            :Unit::TestCase("TC::Tests::GetName")
          {
          }
 
-         virtual void run()
+         virtual void Execute()
          {
-            JFUNIT_ASSERT(WFileName::GetName(L"test.txt") == L"test.txt");
-            JFUNIT_ASSERT(WFileName::GetName(L"hallo/test.txt") == L"test.txt");
-            JFUNIT_ASSERT(WFileName::GetName(L"/1/2/3/test.txt") == L"test.txt");
-            JFUNIT_ASSERT(WFileName::GetName(L"/1/2/3/test.txt/") == L"");
-            JFUNIT_ASSERT(WFileName::GetName(L"1/2/3/") == L"");
+            TCUNIT_ASSERT(WFileName::GetName(L"test.txt") == L"test.txt");
+            TCUNIT_ASSERT(WFileName::GetName(L"hallo/test.txt") == L"test.txt");
+            TCUNIT_ASSERT(WFileName::GetName(L"/1/2/3/test.txt") == L"test.txt");
+            TCUNIT_ASSERT(WFileName::GetName(L"/1/2/3/test.txt/") == L"");
+            TCUNIT_ASSERT(WFileName::GetName(L"1/2/3/") == L"");
          }
       };
-      class GetPath: public jf::unittest::TestCase
+      class GetPath: public Unit::TestCase
       {
       public:
          GetPath()
-            :jf::unittest::TestCase("TC::Tests::GetPath")
+            :Unit::TestCase("TC::Tests::GetPath")
          {
          }
 
-         virtual void run()
+         virtual void Execute()
          {
-            JFUNIT_ASSERT(WFileName::GetPath(L"test.txt") == L"");
-            JFUNIT_ASSERT(WFileName::GetPath(L"hallo/test.txt") == L"hallo/");
-            JFUNIT_ASSERT(WFileName::GetPath(L"/1/2/3/test.txt") == L"/1/2/3/");
-            JFUNIT_ASSERT(WFileName::GetPath(L"/1/2/3/test.txt/") == L"/1/2/3/test.txt/");
-            JFUNIT_ASSERT(WFileName::GetPath(L"1/2/3/") == L"1/2/3/");
+            TCUNIT_ASSERT(WFileName::GetPath(L"test.txt") == L"");
+            TCUNIT_ASSERT(WFileName::GetPath(L"hallo/test.txt") == L"hallo/");
+            TCUNIT_ASSERT(WFileName::GetPath(L"/1/2/3/test.txt") == L"/1/2/3/");
+            TCUNIT_ASSERT(WFileName::GetPath(L"/1/2/3/test.txt/") == L"/1/2/3/test.txt/");
+            TCUNIT_ASSERT(WFileName::GetPath(L"1/2/3/") == L"1/2/3/");
          }
       };
 
-      class RemoveExtension: public jf::unittest::TestCase
+      class RemoveExtension: public Unit::TestCase
       {
       public:
          RemoveExtension()
-            :jf::unittest::TestCase("TC::Tests::RemoveExtension")
+            :Unit::TestCase("TC::Tests::RemoveExtension")
          {
          }
 
-         virtual void run()
+         virtual void Execute()
          {
-            JFUNIT_ASSERT(WFileName::RemoveExtension(L"test.txt") == L"test");
-            JFUNIT_ASSERT(WFileName::RemoveExtension(L"hallo/test.txt") == L"hallo/test");
-            JFUNIT_ASSERT(WFileName::RemoveExtension(L"hallo/test.txt/") == L"hallo/test.txt/");
+            TCUNIT_ASSERT(WFileName::RemoveExtension(L"test.txt") == L"test");
+            TCUNIT_ASSERT(WFileName::RemoveExtension(L"hallo/test.txt") == L"hallo/test");
+            TCUNIT_ASSERT(WFileName::RemoveExtension(L"hallo/test.txt/") == L"hallo/test.txt/");
          }
       };
 
-      class Simplify: public jf::unittest::TestCase
+      class Simplify: public Unit::TestCase
       {
       public:
          Simplify()
-            :jf::unittest::TestCase("TC::Tests::Simplify")
+            :Unit::TestCase("TC::Tests::Simplify")
          {
          }
 
-         virtual void run()
+         virtual void Execute()
          {
-            JFUNIT_ASSERT(WFileName::Simplify(L"/aa/bb/../cc") == L"/aa/cc");
-            JFUNIT_ASSERT(WFileName::Simplify(L"/aa/bb/../cc/") == L"/aa/cc/");
-            JFUNIT_ASSERT(WFileName::Simplify(L"/aa/bb/../..") == L"/");
-            JFUNIT_ASSERT(WFileName::Simplify(L"../../bb") == L"../../bb");
-            JFUNIT_ASSERT(WFileName::Simplify(L"../../bb/") == L"../../bb/");
-            JFUNIT_ASSERT(WFileName::Simplify(L"/../") == L"/");
-            JFUNIT_ASSERT(WFileName::Simplify(L"./aa/bb/../../") == L"./");
-            JFUNIT_ASSERT(WFileName::Simplify(L"a/..") == L".");
-            JFUNIT_ASSERT(WFileName::Simplify(L"a/../") == L"./");
-            JFUNIT_ASSERT(WFileName::Simplify(L"./a") == L"./a");
+            TCUNIT_ASSERT(WFileName::Simplify(L"/aa/bb/../cc") == L"/aa/cc");
+            TCUNIT_ASSERT(WFileName::Simplify(L"/aa/bb/../cc/") == L"/aa/cc/");
+            TCUNIT_ASSERT(WFileName::Simplify(L"/aa/bb/../..") == L"/");
+            TCUNIT_ASSERT(WFileName::Simplify(L"../../bb") == L"../../bb");
+            TCUNIT_ASSERT(WFileName::Simplify(L"../../bb/") == L"../../bb/");
+            TCUNIT_ASSERT(WFileName::Simplify(L"/../") == L"/");
+            TCUNIT_ASSERT(WFileName::Simplify(L"./aa/bb/../../") == L"./");
+            TCUNIT_ASSERT(WFileName::Simplify(L"a/..") == L".");
+            TCUNIT_ASSERT(WFileName::Simplify(L"a/../") == L"./");
+            TCUNIT_ASSERT(WFileName::Simplify(L"./a") == L"./a");
 #ifdef TCOS_WINDOWS
-            JFUNIT_ASSERT(WFileName::Simplify(L"/////./././") == L"//");
-            JFUNIT_ASSERT(WFileName::Simplify(L"c:/../") == L"c:/");
-            JFUNIT_ASSERT(WFileName::Simplify(L"c:a/..") == L"c:");
+            TCUNIT_ASSERT(WFileName::Simplify(L"/////./././") == L"//");
+            TCUNIT_ASSERT(WFileName::Simplify(L"c:/../") == L"c:/");
+            TCUNIT_ASSERT(WFileName::Simplify(L"c:a/..") == L"c:");
 #else
-            JFUNIT_ASSERT(WFileName::Simplify(L"/////./././") == L"/");
+            TCUNIT_ASSERT(WFileName::Simplify(L"/////./././") == L"/");
 #endif
-            JFUNIT_ASSERT(WFileName::Simplify(L"/.") == L"/");
+            TCUNIT_ASSERT(WFileName::Simplify(L"/.") == L"/");
          }
       };
    }
@@ -251,18 +251,18 @@ namespace TC
    namespace Tests
    {
       WFileNameTestSuite::WFileNameTestSuite()
-         :jf::unittest::TestSuite("TC::Tests::WFileNameTestSuite")
+         :Unit::TestSuite("TC::Tests::WFileNameTestSuite")
       {
-         add_test(new AddFileNameAndExtension);
-         add_test(new AddFileNameAndPath);
-         add_test(new AddPaths);
-         add_test(new GetDirectories);
-         add_test(new GetExtension);
-         add_test(new GetExtensionIfExtension);
-         add_test(new GetName);
-         add_test(new GetPath);
-         add_test(new RemoveExtension);
-         add_test(new Simplify);
+         AddTest(Unit::Test::Ptr(new AddFileNameAndExtension));
+         AddTest(Unit::Test::Ptr(new AddFileNameAndPath));
+         AddTest(Unit::Test::Ptr(new AddPaths));
+         AddTest(Unit::Test::Ptr(new GetDirectories));
+         AddTest(Unit::Test::Ptr(new GetExtension));
+         AddTest(Unit::Test::Ptr(new GetExtensionIfExtension));
+         AddTest(Unit::Test::Ptr(new GetName));
+         AddTest(Unit::Test::Ptr(new GetPath));
+         AddTest(Unit::Test::Ptr(new RemoveExtension));
+         AddTest(Unit::Test::Ptr(new Simplify));
       }
    }
 }
