@@ -1,6 +1,0 @@
-
-RELOCATE_SOURCE(filename='TCUnitSimpleTestResult.cpp', directory=['src', 'Basic'])
-RELOCATE_SOURCE(filename='TCUnitTestCase.cpp', directory=['src', 'Basic'])
-RELOCATE_SOURCE(filename='TCUnitTestSuite.cpp', directory=['src', 'Basic'])
-RELOCATE_SOURCE(filename='TCUnitTreeTestResult.cpp', directory=['src', 'Basic'])
-RELOCATE_SOURCE(filename='TCUnitTreeTestRunner.cpp', directory=['src', 'Basic'])
