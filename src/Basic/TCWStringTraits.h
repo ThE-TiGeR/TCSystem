@@ -35,8 +35,6 @@
 
 #include "TCTypes.h"
 
-#ifdef UNICODE
-
 #ifdef TCOS_WINDOWS
 #   include <windows.h>
 #elif defined TCOS_LINUX
@@ -85,5 +83,3 @@ namespace TC
       }
    };
 }
-
-#endif // UNICODE

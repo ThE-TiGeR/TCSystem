@@ -35,8 +35,6 @@
 #include <cstdlib>
 #include "TCWString.h"
 
-#ifdef UNICODE
-
 #include "TCStringImp.h"
 #include "TCUtil.h"
 #include "TCWStringTraits.h"
@@ -451,5 +449,3 @@ namespace TC
    }
 
 }
-
-#endif // UNICODE
