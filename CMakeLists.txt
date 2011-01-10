@@ -8,6 +8,7 @@ set (TCSystem_VERSION_MINOR 6)
 
 set (LIBRARY_OUTPUT_PATH ${TCSystem_BINARY_DIR}/bin)
 set (EXECUTABLE_OUTPUT_PATH ${TCSystem_BINARY_DIR}/bin)
+set (CMAKE_MODULE_PATH ${TCSystem_BINARY_DIR}/cmake)
 
 # global properties
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
@@ -52,4 +53,5 @@ set (CMAKE_EXE_LINKER_FLAGS         "${CMAKE_EXE_LINKER_FLAGS}         ${TC_EXE_
 set (CMAKE_EXE_LINKER_FLAGS_DEBUG   "${CMAKE_EXE_LINKER_FLAGS_DEBUG}   ${TC_EXE_LINK_FLAGS_DEBUG}")
 set (CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} ${TC_EXE_LINK_FLAGS_RELEASE}")
 
-add_subdirectory (src)
+add_subdirectory (Modules)
+add_subdirectory (Tests)

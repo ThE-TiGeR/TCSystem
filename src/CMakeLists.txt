@@ -1,5 +1,0 @@
-add_subdirectory (Basic)
-add_subdirectory (Thread)
-add_subdirectory (Net)
-add_subdirectory (Math)
-add_subdirectory (Gui)
