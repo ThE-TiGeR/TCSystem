@@ -12,12 +12,14 @@ lib*.a
 vc90.idb
 BuildLog.htm
 mt.dep
+*.sln
+*.vcproj
 *.vcproj.*.user
-VisualStudio/*.ncb
-VisualStudio/*.suo
+*.ncb
+*.suo
 CMakeCache.txt
 CMakeFiles/*
-*.cmake
+cmake_install.cmake
 Makefile.am
 Makefile.im
 Makefile.in
@@ -31,7 +33,4 @@ config.h.in
 configure
 configure.ac
 install_manifest.txt
-src/Programs/AudioTest/TCAudioTest
-src/Programs/MathSheet/TCMathSheet
-src/Programs/TestBasic/TCSystem_src_Programs_TestBasic_testBasic
-src/Programs/UnitTests/TCUnitTest
+bin/*

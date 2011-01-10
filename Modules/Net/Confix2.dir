@@ -1,7 +1,0 @@
-# -*- python -*-
-
-LIBNAME('TCNet')
-
-CONFIGURE_AC(
-    lines=['CHECK_SSL'],
-    order=AC_LIBRARIES)
