@@ -15,7 +15,6 @@ mt.dep
 *.vcproj.*.user
 VisualStudio/*.ncb
 VisualStudio/*.suo
-CMakeLists.txt
 CMakeCache.txt
 CMakeFiles/*
 *.cmake
