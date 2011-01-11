@@ -1,9 +1,36 @@
 include (FindFOX)
 
-aux_source_directory(. TC_GUI_SOURCES)
-
 add_library (TCGui
-    ${TC_GUI_SOURCES}
+	TCGuiActionBox.cpp
+	TCGuiActionBox.h
+	TCGuiApi.h
+	TCGuiApplication.cpp
+	TCGuiApplication.h
+	TCGuiBase.cpp
+	TCGuiBase.h
+	TCGuiButton.cpp
+	TCGuiButton.h
+	TCGuiDebugNew.cpp
+	TCGuiDialogBox.cpp
+	TCGuiDialogBox.h
+	TCGuiImageHandler.cpp
+	TCGuiImageHandler.h
+	TCGuiImages.cpp
+	TCGuiLabel.cpp
+	TCGuiLabel.h
+	TCGuiMenu.cpp
+	TCGuiMenu.h
+	TCGuiMessageBox.cpp
+	TCGuiMessageBox.h
+	TCGuiMLS.cpp
+	TCGuiShutterMenu.cpp
+	TCGuiShutterMenu.h
+	TCGuiTreeList.cpp
+	TCGuiTreeList.h
+	TCGuiWidget.cpp
+	TCGuiWidget.h
+	TCGuiWindow.cpp
+	TCGuiWindow.h
 )
 
 include_directories (

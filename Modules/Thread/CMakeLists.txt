@@ -1,7 +1,37 @@
-aux_source_directory(. TC_THREAD_SOURCES)
+aux_source_directory(Tests TC_THREAD_TESTS_SOURCES)
 
 add_library (TCThread
-	${TC_THREAD_SOURCES}
+	TCMTCommandExecutionThread.h
+	TCMTConditionPthread.cpp
+	TCMTConditionPthread.h
+	TCMTConditionWin32.cpp
+	TCMTConditionWin32.h
+	TCMTDebugNew.cpp
+	TCMTEventPthread.cpp
+	TCMTEventPthread.h
+	TCMTEventWin32.cpp
+	TCMTEventWin32.h
+	TCMTFactory.cpp
+	TCMTMessage.cpp
+	TCMTMessageDispatcherImp.h
+	TCMTMessageQueue.cpp
+	TCMTMessageQueue.h
+	TCMTMutexPthread.cpp
+	TCMTMutexPthread.h
+	TCMTMutexWin32.cpp
+	TCMTMutexWin32.h
+	TCMTOS.h
+	TCMTSemaphorePthread.cpp
+	TCMTSemaphorePthread.h
+	TCMTSemaphoreWin32.cpp
+	TCMTSemaphoreWin32.h
+	TCMTThreadBase.cpp
+	TCMTThreadBase.h
+	TCMTThreadPthread.cpp
+	TCMTThreadPthread.h
+	TCMTThreadWin32.cpp
+	TCMTThreadWin32.h
+	${TC_THREAD_TESTS_SOURCES}
 	${TCSystem_SOURCE_DIR}/inc/TCMTApi.h
 	${TCSystem_SOURCE_DIR}/inc/TCMTCondition.h
 	${TCSystem_SOURCE_DIR}/inc/TCMTCommandMessage.h

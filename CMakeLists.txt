@@ -22,7 +22,7 @@ include_directories (
 
 # set our compiler flags
 if (UNIX)
-   set (TC_COMPILE_FLAGS "")
+   set (TC_COMPILE_FLAGS "-DHAVE_UNIT_TESTS")
    set (TC_COMPILE_FLAGS_DEBUG "-g")
    set (TC_COMPILE_FLAGS_RELEASE "-O3")
 
@@ -32,7 +32,7 @@ if (UNIX)
 endif()
 
 if (CMAKE_BUILD_TOOL MATCHES "(msdev|devenv|nmake)")
-   set (TC_COMPILE_FLAGS         "/EHsc /W4 /D_SCL_SECURE_NO_WARNINGS /D_CRT_SECURE_NO_WARNINGS")
+   set (TC_COMPILE_FLAGS         "/DHAVE_UNIT_TESTS /EHsc /W4 /D_SCL_SECURE_NO_WARNINGS /D_CRT_SECURE_NO_WARNINGS")
    set (TC_COMPILE_FLAGS_DEBUG   "")
    set (TC_COMPILE_FLAGS_RELEASE "/Ox /Ob2 /Ot /Oi /GL /GS- /fp:fast /D_SECURE_SCL=0")
    
@@ -55,3 +55,4 @@ set (CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} ${TC_EXE_
 
 add_subdirectory (Modules)
 add_subdirectory (Tests)
+add_subdirectory (Programs)

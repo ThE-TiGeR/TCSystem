@@ -1,5 +1,3 @@
-// CONFIX:EXENAME('TCUnitTest')
-
 #include "TCOutput.h"
 #include "TCDebugNew.h"
 

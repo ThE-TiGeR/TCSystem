@@ -1,5 +1,3 @@
-// CONFIX:EXENAME('TCAudioTest')
-
 #include "TCAudioManager.h"
 #include "TCOutput.h"
 #include "TCMTLockable.h"

@@ -1,9 +1,22 @@
 include (FindOpenSSL)
 
-aux_source_directory(. TC_NET_SOURCES)
-
 add_library (TCNet
-	${TC_NET_SOURCES}
+	TCNetAddress.cpp
+	TCNetBase.cpp
+	TCNetBase.h
+	TCNetDebugNew.cpp
+	TCNetFactory.cpp
+	TCNetOS.h
+	TCNetSocketImp.cpp
+	TCNetSocketImp.h
+	TCNetSocketServerImp.cpp
+	TCNetSocketServerImp.h
+	TCNetSSLFactory.cpp
+	TCNetSSLSocket.cpp
+	TCNetSslSocket.h
+	TCNetUtil.cpp
+	TCNetUtil.h
+	${TC_NET_TESTS_SOURCES}
 	${TCSystem_SOURCE_DIR}/inc/TCNetApi.h
 	${TCSystem_SOURCE_DIR}/inc/TCNetAddress.h
 	${TCSystem_SOURCE_DIR}/inc/TCNetBroadCastSocket.h

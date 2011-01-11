@@ -1,5 +1,3 @@
-// CONFIX:EXENAME('TCMathSheet')
-
 #include "TCFactory.h"
 #include "TCString.h"
 #include "TCOutput.h"

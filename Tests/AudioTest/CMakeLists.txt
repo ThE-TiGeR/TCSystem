@@ -1,18 +1,16 @@
 
-aux_source_directory(. TC_TESTS_AUDIO_SOURCES)
-
 include_directories (
    "${TCSystem_BINARY_DIR}/Modules/Audio"
 )
-add_library (TCTestAudio
-    ${TC_TESTS_AUDIO_SOURCES}
+add_executable (TCAudioTest
+    audio_test.cpp
 )
 
-target_link_libraries(TCTestAudio
+target_link_libraries(TCAudioTest
     TCAudio
 )
-add_dependencies(TCTestAudio
+add_dependencies(TCAudioTest
     TCAudio
 )
 
-set_target_properties(TCTestAudio PROPERTIES FOLDER Tests)
+set_target_properties(TCAudioTest PROPERTIES FOLDER Tests)

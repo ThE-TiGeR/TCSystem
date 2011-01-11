@@ -1,15 +1,69 @@
 include(FindBZip2)
 include(FindZLIB)
 
-include_directories (
-   "${BZIP2_INCLUDE_DIR}"
-   "${ZLIB_INCLUDE_DIRS}"
-)
-
-aux_source_directory(. TC_BASIC_SOURCES)
+aux_source_directory(Tests TC_BASIC_TESTS_SOURCES)
 
 add_library (TCBasic
-	${TC_BASIC_SOURCES}
+	TCApplication.cpp
+	TCAsciiCodec.cpp
+	TCAsciiCodec.h
+	TCBinaryCodec.cpp
+	TCBinaryCodec.h
+	TCBz2FileStream.cpp
+	TCBz2FileStream.h
+	TCClock.cpp
+	TCClock.h
+	TCDebugHeap.cpp
+	TCDebugHeap.h
+	TCDebugNew.cpp
+	TCException.cpp
+	TCFactory.cpp
+	TCFile.cpp
+	TCFileName.cpp
+	TCFileNameImp.h
+	TCFilePosix.cpp
+	TCFileStream.cpp
+	TCFileStream.h
+	TCFileWin32.cpp
+	TCGzFileStream.cpp
+	TCGzFileStream.h
+	TCHeapCrtlib.cpp
+	TCHeapCrtlib.h
+	TCHeapMutex.h
+	TCInterlocked.cpp
+	TCMemoryMappedFilePosix.cpp
+	TCMemoryMappedFilePosix.h
+	TCMemoryMappedFileWin32.cpp
+	TCMemoryMappedFileWin32.h
+	TCMemoryStream.cpp
+	TCMemoryStream.h
+	TCMLSHandler.cpp
+	TCNew.cpp
+	TCOutput.cpp
+	TCRng69069.cpp
+	TCRng69069.h
+	TCSettings.cpp
+	TCSettings.h
+	TCStreamAble.cpp
+	TCStreamBase.cpp
+	TCStreamBase.h
+	TCString.cpp
+	TCStringImp.h
+	TCStringStream.cpp
+	TCStringStream.h
+	TCStringTraits.h
+	TCSystem.cpp
+	TCTime.cpp
+	TCUnitSimpleTestResult.cpp
+	TCUnitTestCase.cpp
+	TCUnitTestSuite.cpp
+	TCUnitTreeTestResult.cpp
+	TCUnitTreeTestRunner.cpp
+	TCUtil.cpp
+	TCWFileName.cpp
+	TCWstring.cpp
+	TCWStringTraits.h
+	${TC_BASIC_TESTS_SOURCES}
 	${TCSystem_SOURCE_DIR}/inc/TCApplication.h
 	${TCSystem_SOURCE_DIR}/inc/TCAssert.h
 	${TCSystem_SOURCE_DIR}/inc/TCCodec.h
@@ -48,6 +102,11 @@ add_library (TCBasic
 	${TCSystem_SOURCE_DIR}/inc/TCWeakPtr.h
 	${TCSystem_SOURCE_DIR}/inc/TCWFileName.h
 	${TCSystem_SOURCE_DIR}/inc/TCWString.h
+)
+
+include_directories (
+   "${BZIP2_INCLUDE_DIR}"
+   "${ZLIB_INCLUDE_DIRS}"
 )
 
 if (MSVC)

@@ -1,14 +1,47 @@
 include (FindFOX)
 include (FindOpenGL)
-
-aux_source_directory(. TC_OPENGL_SOURCES)
+include (FindGLext)
 
 add_library (TCOpenGL
-    ${TC_OPENGL_SOURCES}
+	TCOpenGL.h
+	TCOpenGLApi.h
+	TCOpenGLColor.cpp
+	TCOpenGLColor.h
+	TCOpenGLCoordinateCross.cpp
+	TCOpenGLCoordinateCross.h
+	TCOpenGLCrossHair.cpp
+	TCOpenGLCrossHair.h
+	TCOpenGLDebugNew.cpp
+	TCOpenGLFace.cpp
+	TCOpenGLFace.h
+	TCOpenGLFactory.cpp
+	TCOpenGLFactory.h
+	TCOpenGLLineRenderer.cpp
+	TCOpenGLLineRenderer.h
+	TCOpenGLMaterial.cpp
+	TCOpenGLMaterial.h
+	TCOpenGLObject.cpp
+	TCOpenGLObject.h
+	TCOpenGLObject2D.cpp
+	TCOpenGLObject2D.h
+	TCOpenGLObject3D.cpp
+	TCOpenGLObject3D.h
+	TCOpenGLObjectGroup.cpp
+	TCOpenGLObjectGroup.h
+	TCOpenGLPatchRenderer.cpp
+	TCOpenGLPatchRenderer.h
+	TCOpenGLTextRenderer.cpp
+	TCOpenGLTextRenderer.h
+	TCOpenGLTypes.h
+	TCOpenGLUtil.cpp
+	TCOpenGLUtil.h
+	TCOpenGLViewer.cpp
+	TCOpenGLViewer.h
 )
 
 include_directories (
    "${FOX_INCLUDE_DIR}"
+   "${GLEXT_INCLUDE_DIR}"
 )
 if (!WIN32)
 	include_directories (

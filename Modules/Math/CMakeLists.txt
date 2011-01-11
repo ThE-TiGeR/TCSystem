@@ -1,8 +1,10 @@
 
-aux_source_directory(. TC_MATH_SOURCES)
-
 add_library (TCMath
-	${TC_MATH_SOURCES}
+	TCMathDebugNew.cpp
+	TCMathFactory.cpp
+	TCMathUtil.cpp
+	TCMD5.cpp
+	TCMD5.h
 	${TCSystem_SOURCE_DIR}/inc/TCMathApi.h
 	${TCSystem_SOURCE_DIR}/inc/TCMathChecksum.h
 	${TCSystem_SOURCE_DIR}/inc/TCMathCoord2D.h
