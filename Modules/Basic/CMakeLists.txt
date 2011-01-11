@@ -1,8 +1,6 @@
 include(FindBZip2)
 include(FindZLIB)
 
-aux_source_directory(Tests TC_BASIC_TESTS_SOURCES)
-
 add_library (TCBasic
 	TCApplication.cpp
 	TCAsciiCodec.cpp
@@ -63,7 +61,24 @@ add_library (TCBasic
 	TCWFileName.cpp
 	TCWstring.cpp
 	TCWStringTraits.h
-	${TC_BASIC_TESTS_SOURCES}
+	Tests/TCWStringTest.h
+	Tests/TCBasicTestSuite.cpp
+	Tests/TCBasicTestSuite.h
+	Tests/TCFileNameTest.cpp
+	Tests/TCFileNameTest.h
+	Tests/TCHashTableTest.cpp
+	Tests/TCHashTableTest.h
+	Tests/TCStreamTest.cpp
+	Tests/TCStreamTest.h
+	Tests/TCStringTest.cpp
+	Tests/TCStringTest.h
+	Tests/TCTimeTest.cpp
+	Tests/TCTimeTest.h
+	Tests/TCUtilTest.cpp
+	Tests/TCUtilTest.h
+	Tests/TCWFileNameTest.cpp
+	Tests/TCWFileNameTest.h
+	Tests/TCWStringTest.cpp	
 	${TCSystem_SOURCE_DIR}/inc/TCApplication.h
 	${TCSystem_SOURCE_DIR}/inc/TCAssert.h
 	${TCSystem_SOURCE_DIR}/inc/TCCodec.h

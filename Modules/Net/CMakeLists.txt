@@ -16,7 +16,10 @@ add_library (TCNet
 	TCNetSslSocket.h
 	TCNetUtil.cpp
 	TCNetUtil.h
-	${TC_NET_TESTS_SOURCES}
+	Tests/TCNetAddressTest.cpp
+	Tests/TCNetAddressTest.h
+	Tests/TCNetTestSuit.cpp
+	Tests/TCNetTestSuite.h
 	${TCSystem_SOURCE_DIR}/inc/TCNetApi.h
 	${TCSystem_SOURCE_DIR}/inc/TCNetAddress.h
 	${TCSystem_SOURCE_DIR}/inc/TCNetBroadCastSocket.h
