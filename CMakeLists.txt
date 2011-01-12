@@ -60,3 +60,4 @@ set (CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} ${TC_EXE_
 add_subdirectory (Modules)
 add_subdirectory (Tests)
 add_subdirectory (Programs)
+

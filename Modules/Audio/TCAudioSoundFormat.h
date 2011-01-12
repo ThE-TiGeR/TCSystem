@@ -54,7 +54,7 @@ namespace TC
       */
 
       /** class holding audio format information */
-      class SoundFormat
+      class TC_DLL_LOCAL SoundFormat
       {
       public:
          uint16 audio_format;       ///< 1 = Uncompressed (PCM), > 1: Compressed

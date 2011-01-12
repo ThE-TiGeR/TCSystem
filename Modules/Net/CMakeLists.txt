@@ -1,5 +1,17 @@
 include (FindOpenSSL)
 
+set (TC_NET_PUBLIC_HEADER
+        ${TCSystem_SOURCE_DIR}/inc/TCNetApi.h
+        ${TCSystem_SOURCE_DIR}/inc/TCNetAddress.h
+        ${TCSystem_SOURCE_DIR}/inc/TCNetBroadCastSocket.h
+        ${TCSystem_SOURCE_DIR}/inc/TCNetReadWriteSocket.h
+        ${TCSystem_SOURCE_DIR}/inc/TCNetFactory.h
+        ${TCSystem_SOURCE_DIR}/inc/TCNetSSLFactory.h
+        ${TCSystem_SOURCE_DIR}/inc/TCNetSocket.h
+        ${TCSystem_SOURCE_DIR}/inc/TCNetSocketServer.h
+        ${TCSystem_SOURCE_DIR}/inc/TCNetTypes.h
+)
+
 add_library (TCNet
 	TCNetAddress.cpp
 	TCNetBase.cpp
@@ -20,15 +32,7 @@ add_library (TCNet
 	Tests/TCNetAddressTest.h
 	Tests/TCNetTestSuit.cpp
 	Tests/TCNetTestSuite.h
-	${TCSystem_SOURCE_DIR}/inc/TCNetApi.h
-	${TCSystem_SOURCE_DIR}/inc/TCNetAddress.h
-	${TCSystem_SOURCE_DIR}/inc/TCNetBroadCastSocket.h
-	${TCSystem_SOURCE_DIR}/inc/TCNetReadWriteSocket.h
-	${TCSystem_SOURCE_DIR}/inc/TCNetFactory.h
-	${TCSystem_SOURCE_DIR}/inc/TCNetSSLFactory.h
-	${TCSystem_SOURCE_DIR}/inc/TCNetSocket.h
-	${TCSystem_SOURCE_DIR}/inc/TCNetSocketServer.h
-	${TCSystem_SOURCE_DIR}/inc/TCNetTypes.h
+	${TC_NET_PUBLIC_HEADER}
 )
 
 if (OPENSSL_FOUND)
@@ -53,3 +57,11 @@ add_dependencies(TCNet
 )
 
 set_target_properties(TCNet PROPERTIES FOLDER Modules)
+set_target_properties(TCNet PROPERTIES PUBLIC_HEADER "${TC_NET_PUBLIC_HEADER}")
+
+install(TARGETS TCNet
+   LIBRARY DESTINATION lib
+   PUBLIC_HEADER DESTINATION include
+   COMPONENT Networking
+)
+

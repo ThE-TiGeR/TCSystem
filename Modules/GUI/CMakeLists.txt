@@ -1,36 +1,40 @@
 include (FindFOX)
 
+set (TC_GUI_PUBLIC_HEADER
+        TCGuiActionBox.h
+        TCGuiApi.h
+        TCGuiApplication.h
+        TCGuiBase.h
+        TCGuiButton.h
+        TCGuiDialogBox.h
+        TCGuiImageHandler.h
+        TCGuiLabel.h
+        TCGuiMenu.h
+        TCGuiMessageBox.h
+        TCGuiShutterMenu.h
+        TCGuiTreeList.h
+        TCGuiWidget.h
+        TCGuiWindow.h
+)
+
 add_library (TCGui
 	TCGuiActionBox.cpp
-	TCGuiActionBox.h
-	TCGuiApi.h
 	TCGuiApplication.cpp
-	TCGuiApplication.h
 	TCGuiBase.cpp
-	TCGuiBase.h
 	TCGuiButton.cpp
-	TCGuiButton.h
 	TCGuiDebugNew.cpp
 	TCGuiDialogBox.cpp
-	TCGuiDialogBox.h
 	TCGuiImageHandler.cpp
-	TCGuiImageHandler.h
 	TCGuiImages.cpp
 	TCGuiLabel.cpp
-	TCGuiLabel.h
 	TCGuiMenu.cpp
-	TCGuiMenu.h
 	TCGuiMessageBox.cpp
-	TCGuiMessageBox.h
 	TCGuiMLS.cpp
 	TCGuiShutterMenu.cpp
-	TCGuiShutterMenu.h
 	TCGuiTreeList.cpp
-	TCGuiTreeList.h
 	TCGuiWidget.cpp
-	TCGuiWidget.h
 	TCGuiWindow.cpp
-	TCGuiWindow.h
+        ${TC_GUI_PUBLIC_HEADER}
 )
 
 include_directories (
@@ -49,3 +53,11 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${FOX_CFLAGS}")
 
 set_target_properties(TCGui PROPERTIES COMPILE_DEFINITIONS "TCGUI_EXPORTS")
 set_target_properties(TCGui PROPERTIES FOLDER Modules)
+set_target_properties(TCGui PROPERTIES PUBLIC_HEADER "${TC_GUI_PUBLIC_HEADER}")
+
+install(TARGETS TCGui
+   LIBRARY DESTINATION lib
+   PUBLIC_HEADER DESTINATION include
+   COMPONENT Gui
+)
+

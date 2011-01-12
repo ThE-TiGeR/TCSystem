@@ -1,5 +1,21 @@
 include (FindThreads)
 
+set (TC_THREAD_PUBLIC_HEADER
+        ${TCSystem_SOURCE_DIR}/inc/TCMTApi.h
+        ${TCSystem_SOURCE_DIR}/inc/TCMTCondition.h
+        ${TCSystem_SOURCE_DIR}/inc/TCMTCommandMessage.h
+        ${TCSystem_SOURCE_DIR}/inc/TCMTEvent.h
+        ${TCSystem_SOURCE_DIR}/inc/TCMTFactory.h
+        ${TCSystem_SOURCE_DIR}/inc/TCMTLock.h
+        ${TCSystem_SOURCE_DIR}/inc/TCMTLockable.h
+        ${TCSystem_SOURCE_DIR}/inc/TCMTMessage.h
+        ${TCSystem_SOURCE_DIR}/inc/TCMTMessageDispatcher.h
+        ${TCSystem_SOURCE_DIR}/inc/TCMTMutex.h
+        ${TCSystem_SOURCE_DIR}/inc/TCMTSemaphore.h
+        ${TCSystem_SOURCE_DIR}/inc/TCMTThread.h
+        ${TCSystem_SOURCE_DIR}/inc/TCMTThreadObject.h
+)
+
 add_library (TCThread
 	TCMTCommandExecutionThread.h
 	TCMTConditionPthread.cpp
@@ -41,19 +57,7 @@ add_library (TCThread
 	Tests/TCMTThreadTest.cpp
 	Tests/TCMTThreadTest.h
 	Tests/TCMTThreadTestSuite.cpp
-	${TCSystem_SOURCE_DIR}/inc/TCMTApi.h
-	${TCSystem_SOURCE_DIR}/inc/TCMTCondition.h
-	${TCSystem_SOURCE_DIR}/inc/TCMTCommandMessage.h
-	${TCSystem_SOURCE_DIR}/inc/TCMTEvent.h
-	${TCSystem_SOURCE_DIR}/inc/TCMTFactory.h
-	${TCSystem_SOURCE_DIR}/inc/TCMTLock.h
-	${TCSystem_SOURCE_DIR}/inc/TCMTLockable.h
-	${TCSystem_SOURCE_DIR}/inc/TCMTMessage.h
-	${TCSystem_SOURCE_DIR}/inc/TCMTMessageDispatcher.h
-	${TCSystem_SOURCE_DIR}/inc/TCMTMutex.h
-	${TCSystem_SOURCE_DIR}/inc/TCMTSemaphore.h
-	${TCSystem_SOURCE_DIR}/inc/TCMTThread.h
-	${TCSystem_SOURCE_DIR}/inc/TCMTThreadObject.h
+	${TC_THREAD_PUBLIC_HEADER}
 )
 
 target_link_libraries(TCThread
@@ -66,3 +70,11 @@ add_dependencies(TCThread
 
 set_target_properties(TCThread PROPERTIES FOLDER Modules)
 set_target_properties(TCThread PROPERTIES COMPILE_DEFINITIONS "TCMT_EXPORTS")
+set_target_properties(TCThread PROPERTIES PUBLIC_HEADER "${TC_THREAD_PUBLIC_HEADER}")
+
+install(TARGETS TCThread
+   LIBRARY DESTINATION lib
+   PUBLIC_HEADER DESTINATION include
+   COMPONENT Threading
+)
+

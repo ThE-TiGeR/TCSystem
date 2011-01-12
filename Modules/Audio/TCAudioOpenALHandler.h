@@ -47,7 +47,7 @@ namespace TC
       class OpenALHandler;
       typedef SharedPtr<OpenALHandler> OpenALHandlerPtr;
 
-      class OpenALHandler
+      class TC_DLL_LOCAL OpenALHandler
       {
       public:
          static void CreateInstance();

@@ -1,8 +1,14 @@
 include(FindOpenAL)
 include(FindMPG123)
 
+set (TC_AUDIO_PUBLIC_HEADER
+        TCAudioApi.h
+        TCAudioManager.h
+        TCAudioSound.h
+        TCAudioSoundCompound.h
+)
+
 add_library (TCAudio
-	TCAudioApi.h
 	TCAudioChangePanTask.cpp
 	TCAudioChangePanTask.h
 	TCAudioChangePitchTask.cpp
@@ -13,12 +19,9 @@ add_library (TCAudio
 	TCAudioChangeVolumeTask.h
 	TCAudioDebugNew.cpp
 	TCAudioManager.cpp
-	TCAudioManager.h
 	TCAudioOpenAL.h
 	TCAudioOpenALHandler.cpp
 	TCAudioOpenALHandler.h
-	TCAudioSound.h
-	TCAudioSoundCompound.h
 	TCAudioSoundData.h
 	TCAudioSoundDataCompound.cpp
 	TCAudioSoundDataCompound.h
@@ -44,6 +47,7 @@ add_library (TCAudio
 	TCAudioStreamingThread.cpp
 	TCAudioStreamingThread.h
 	TCAudioUtil.h
+        ${TC_AUDIO_PUBLIC_HEADER}
 )
 
 include_directories (
@@ -54,15 +58,23 @@ include_directories (
 
 target_link_libraries (TCAudio
     TCThread
-	TCBasic
-	${OPENAL_LIBRARY}
-	${MPG123_LIBRARIES}
+    TCBasic
+    ${OPENAL_LIBRARY}
+    ${MPG123_LIBRARIES}
 )
 
 add_dependencies (TCAudio
     TCThread
-	TCBasic
+    TCBasic
 )
 
 set_target_properties(TCAudio PROPERTIES FOLDER Modules)
 set_target_properties(TCAudio PROPERTIES COMPILE_DEFINITIONS "TCAUDIO_EXPORTS")
+set_target_properties(TCAudio PROPERTIES PUBLIC_HEADER "${TC_AUDIO_PUBLIC_HEADER}")
+
+install(TARGETS TCAudio
+   LIBRARY DESTINATION lib
+   PUBLIC_HEADER DESTINATION include
+   COMPONENT Audio
+)
+
