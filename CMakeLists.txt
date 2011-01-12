@@ -26,6 +26,10 @@ if (UNIX)
    set (TC_COMPILE_FLAGS_DEBUG "-g")
    set (TC_COMPILE_FLAGS_RELEASE "-O3")
 
+   if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
+      set (TC_COMPILE_FLAGS "${TC_COMPILE_FLAGS} -DTCOS_LINUX")
+   endif ()
+
    set (TC_EXE_LINK_FLAGS         "")
    set (TC_EXE_LINK_FLAGS_DEBUG   "")
    set (TC_EXE_LINK_FLAGS_RELEASE "")

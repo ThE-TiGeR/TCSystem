@@ -288,6 +288,25 @@ namespace TC
    /** @brief Shared pointer of an stream object */
    typedef SharedPtr<Stream> StreamPtr;
 
+   /**
+    * Flush the stream
+    * @param stream The stream which to flush
+    * @return The stream
+    */
+   inline StreamPtr flush(StreamPtr stream) { stream->Flush(); return stream; }
+   /**
+    * Write end of line to the stream
+    * @param stream Where to write end of line
+    * @return The stream
+    */
+   inline StreamPtr endl(StreamPtr stream) { stream->WriteEndOfLine(); return stream; }
+   /**
+    * Write a word or number separator to the stream
+    * @param stream Where to write the seperator
+    * @return The stream
+    */
+   inline StreamPtr space(StreamPtr stream) { stream->WriteSpace(); return stream; }
+
    // -----------------------------------------------------------------
    // read operators
    // -----------------------------------------------------------------
@@ -325,25 +344,6 @@ namespace TC
        }
        return stream;
    }
-
-   /**
-    * Flush the stream
-    * @param stream The stream which to flush
-    * @return The stream
-    */
-   inline StreamPtr flush(StreamPtr stream) { stream->Flush(); return stream; }
-   /**
-    * Write end of line to the stream
-    * @param stream Where to write end of line
-    * @return The stream
-    */
-   inline StreamPtr endl(StreamPtr stream) { stream->WriteEndOfLine(); return stream; }
-   /**
-    * Write a word or number separator to the stream
-    * @param stream Where to write the seperator
-    * @return The stream
-    */
-   inline StreamPtr space(StreamPtr stream) { stream->WriteSpace(); return stream; }
 
    /**
     * @}

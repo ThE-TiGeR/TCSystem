@@ -63,5 +63,4 @@ add_dependencies(TCOpenGL
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${FOX_CFLAGS}")
 
 set_target_properties(TCOpenGL PROPERTIES COMPILE_DEFINITIONS "TCOGL_EXPORTS")
-set_target_properties(TCOpenGL PROPERTIES LINK_FLAGS  "${FOX_LDFLAGS}")
 set_target_properties(TCOpenGL PROPERTIES FOLDER Modules)

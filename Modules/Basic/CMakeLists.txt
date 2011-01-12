@@ -125,7 +125,9 @@ include_directories (
 )
 
 if (MSVC)
-	target_link_libraries (TCBasic iphlpapi.lib)
+   target_link_libraries (TCBasic iphlpapi.lib)
+elseif (UNIX)
+   target_link_libraries (TCBasic -lrt)
 endif ()
 
 target_link_libraries (TCBasic ${BZIP2_LIBRARIES} ${ZLIB_LIBRARIES})

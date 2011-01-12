@@ -1,3 +1,4 @@
+include (FindThreads)
 
 add_library (TCThread
 	TCMTCommandExecutionThread.h
@@ -57,6 +58,7 @@ add_library (TCThread
 
 target_link_libraries(TCThread
     TCBasic
+    ${CMAKE_THREAD_LIBS_INIT}
 )
 add_dependencies(TCThread
     TCBasic

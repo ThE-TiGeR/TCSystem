@@ -48,5 +48,4 @@ add_dependencies(TCGui
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${FOX_CFLAGS}")
 
 set_target_properties(TCGui PROPERTIES COMPILE_DEFINITIONS "TCGUI_EXPORTS")
-set_target_properties(TCGui PROPERTIES LINK_FLAGS  "${FOX_LDFLAGS}")
 set_target_properties(TCGui PROPERTIES FOLDER Modules)
