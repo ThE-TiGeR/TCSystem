@@ -34,7 +34,7 @@ add_library (TCGui
 )
 
 include_directories (
-   "${FOX_INCLUDE_DIR}"
+   "${FOX_INCLUDE_DIRS}"
 )
 
 target_link_libraries(TCGui
@@ -45,5 +45,8 @@ add_dependencies(TCGui
     TCBasic
 )
 
-set_target_properties(TCGui PROPERTIES COMPILE_DEFINITIONS "TCGUI_EXPORTS;${FOX_DEFINES}")
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${FOX_CFLAGS}")
+
+set_target_properties(TCGui PROPERTIES COMPILE_DEFINITIONS "TCGUI_EXPORTS")
+set_target_properties(TCGui PROPERTIES LINK_FLAGS  "${FOX_LDFLAGS}")
 set_target_properties(TCGui PROPERTIES FOLDER Modules)
