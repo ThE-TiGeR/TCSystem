@@ -34,7 +34,7 @@ add_library (TCGui
 	TCGuiTreeList.cpp
 	TCGuiWidget.cpp
 	TCGuiWindow.cpp
-        ${TC_GUI_PUBLIC_HEADER}
+    ${TC_GUI_PUBLIC_HEADER}
 )
 
 include_directories (
@@ -56,7 +56,9 @@ set_target_properties(TCGui PROPERTIES FOLDER Modules)
 set_target_properties(TCGui PROPERTIES PUBLIC_HEADER "${TC_GUI_PUBLIC_HEADER}")
 
 install(TARGETS TCGui
-   LIBRARY DESTINATION lib
+   RUNTIME DESTINATION ${TC_SYSTEM_BIN_INSTALL_DIR}
+   LIBRARY DESTINATION ${TC_SYSTEM_LIB_INSTALL_DIR}
+   ARCHIVE DESTINATION ${TC_SYSTEM_LIB_INSTALL_DIR}
    PUBLIC_HEADER DESTINATION include
    COMPONENT Gui
 )

@@ -61,7 +61,7 @@
 # OPENAL_LIBRARY to override this selection or set the CMake environment
 # CMAKE_INCLUDE_PATH to modify the search paths.
 
-FIND_PATH(OPENAL_INCLUDE_DIR al.h AL/al.h
+FIND_PATH(OPENAL_INCLUDE_DIR AL/al.h
   HINTS
   $ENV{OPENALDIR}
   PATH_SUFFIXES include/AL include/OpenAL include

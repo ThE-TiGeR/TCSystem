@@ -1,6 +1,6 @@
 
 include_directories (
-   "${TCSystem_BINARY_DIR}/Modules/Audio"
+   "${TCSystem_SOURCE_DIR}/Modules/Audio"
 )
 add_executable (TCAudioTest
     audio_test.cpp
@@ -14,3 +14,11 @@ add_dependencies(TCAudioTest
 )
 
 set_target_properties(TCAudioTest PROPERTIES FOLDER Tests)
+
+install(TARGETS TCAudioTest 
+   RUNTIME DESTINATION ${TC_SYSTEM_BIN_INSTALL_DIR}
+   LIBRARY DESTINATION ${TC_SYSTEM_LIB_INSTALL_DIR}
+   ARCHIVE DESTINATION ${TC_SYSTEM_LIB_INSTALL_DIR}
+   PUBLIC_HEADER DESTINATION include
+   COMPONENT Tests
+)
