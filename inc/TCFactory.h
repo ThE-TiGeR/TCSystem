@@ -129,12 +129,14 @@ namespace TC
       /**
        * @brief Create an memory stream
        * @param codec Shared pointer to a codec for encoding or decoding the data
+       * @param memory Buffer into which the stream should read or write
        * @return Shared pointer to the stream
        */
       TCBASE_API StreamPtr CreateMemoryStream(CodecPtr codec, ByteVector& memory);
 
       /**
       * @brief Create an string stream
+      * @param memory Buffer into which the stream should read or write
       * @return Shared pointer to the stream
       */
       TCBASE_API StreamPtr CreateStringStream(std::string& memory);

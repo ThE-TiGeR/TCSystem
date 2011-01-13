@@ -10,5 +10,7 @@ cmake_install.cmake
 install_manifest.txt
 Makefile
 bin/*
+lib/*
+doc/html/*
 *.dir
-glob:lib/*
+doc/warning.txt

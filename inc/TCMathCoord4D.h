@@ -92,6 +92,7 @@ namespace TC
          * @param xIn value to init first vector component
          * @param yIn value to init second vector component
          * @param zIn value to init third vector component
+         * @param wIn value to init forth vector component
          */
          Coord4D(T xIn, T yIn, T zIn, T wIn)
          {

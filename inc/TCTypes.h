@@ -46,7 +46,7 @@ namespace TC
 
    /**
     * @file
-    * @brief This file provides the definition of global data types like #sint32, #uint32 
+    * @brief This file provides the definition of global data types
     *
     * @author Thomas Goessler
     */

@@ -44,6 +44,9 @@
 
 namespace TC
 {
+   /**
+    * @brief namspace including all network classes
+    */
    namespace Net
    {
       /**
@@ -64,20 +67,25 @@ namespace TC
       };
 
       /**
+      * @}
+      */
+
+      /**
       * @brief Factory for creating TC::Net objects
       */
       namespace Factory
       {
          /**
-         * @addtogroup NET
+         * @addtogroup TC_NET
          * @{
          */
 
          /**
          * @brief Connects to specified server and returns the socket
          *
-         * @param ip_addr Network name or ip address of the server to which to connect
-         * @@param port   Port on which to connect to the server
+         * @param ip_addr  Network name or ip address of the server to which to connect
+         * @@param port    Port on which to connect to the server
+         * @@param protocol Protocol to use @see Protocol
          */
          TCNET_API ReadWriteSocketPtr Connect(const Address& ip_addr, PortNumber port, Protocol protocol);
 
@@ -86,6 +94,8 @@ namespace TC
          *
          * @param port        Port on which to listen for incoming connections
          * @param connections Number of connections it will accept
+         * @param ip_addr     Ip Address to find the correct network adapter to listen on
+         *                    (Any addres is used to listen on all adapters)
          */
          TCNET_API SocketPtr CreateTcpListenSocket(PortNumber port, uint32 connections, const Address& ip_addr=Address::GetAnyAddress());
 
@@ -94,14 +104,13 @@ namespace TC
          *
          * @param port        Port on which to listen for incoming connections
          * @param connections Number of connections it will accept
+         * @param ip_addr     Ip Address to find the correct network adapter to listen on
+         *                    (Any addres is used to listen on all adapters)
          */
          TCNET_API BroadcastReadSocketPtr CreateUdpListenSocket(PortNumber port, uint32 connections, const Address& ip_addr=Address::GetAnyAddress());
 
          /**
          * @brief Creates a socket which can accept new UPD Broadcast messages
-         *
-         * @param port        Port on which to listen for incoming broadcast messages
-         * @param connections Number of connections it will accept
          */
          TCNET_API BroadcastWriteSocketPtr CreateUdpBroadcastSocket();
 

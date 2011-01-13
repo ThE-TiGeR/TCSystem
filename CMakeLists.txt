@@ -2,9 +2,22 @@ cmake_minimum_required (VERSION 2.6)
 
 project (TCSystem)
 
-# The version number.
+#-----------------------------------------------------------------------------
+# TCSYSTEM version number, useful for packaging and doxygen doc:
 set (TCSystem_VERSION_MAJOR 1)
 set (TCSystem_VERSION_MINOR 6)
+set (TCSystem_VERSION_BUILD 0)
+
+SET(TCSystem_VERSION
+  "${TCSystem_VERSION_MAJOR}.${TCSystem_VERSION_MINOR}.${TCSystem_VERSION_BUILD}")
+SET(PACKAGE_VERSION
+  "${TCSystem_VERSION_MAJOR}.${TCSystem_VERSION_MINOR}.${TCSystem_VERSION_BUILD}")
+# This setting of SOVERSION assumes that any API change
+# will increment either the minor or major version number of openjpeg
+SET(TCSystem_LIBRARY_PROPERTIES
+  VERSION   "${TCSystem_VERSION_MAJOR}.${TCSystem_VERSION_MINOR}.${TCSystem_VERSION_BUILD}"
+  SOVERSION "${TCSystem_VERSION_MAJOR}.${TCSystem_VERSION_MINOR}"
+)
 
 if (CMAKE_CL_64)
     set (TC_SYSTEM_LIB_INSTALL_DIR lib/x64)
@@ -69,4 +82,5 @@ set (CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} ${TC_EXE_
 add_subdirectory (Modules)
 add_subdirectory (Tests)
 add_subdirectory (Programs)
+add_subdirectory (doc)
 
