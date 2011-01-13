@@ -29,3 +29,5 @@ install(TARGETS TCUnitTests
    PUBLIC_HEADER DESTINATION include
    COMPONENT Tests
 )
+
+add_test(NAME TCUnitTests COMMAND TCUnitTests)

@@ -222,6 +222,63 @@ namespace TC
          TCUNIT_ASSERT(TC::Util::ArraySize(c_array) == 100);
          TCUNIT_ASSERT(TC::Util::ArraySize(s_array) == 100);
       }
+
+      class UtilSwap : public Unit::TestCase
+      {
+      public:
+         UtilSwap() : Unit::TestCase("TC::Tests::UtilSwap") {}
+         virtual void Execute()
+         {
+            TCUNIT_ASSERT(TestSwap( uint8(0)));
+            TCUNIT_ASSERT(TestSwap( uint8(125)));
+            TCUNIT_ASSERT(TestSwap( uint8(255)));
+
+            TCUNIT_ASSERT(TestSwap(uint16(0)));
+            TCUNIT_ASSERT(TestSwap(uint16(12345)));
+            TCUNIT_ASSERT(TestSwap(uint16(65535)));
+
+            TCUNIT_ASSERT(TestSwap(uint32(0)));
+            TCUNIT_ASSERT(TestSwap(uint32(1234567890ul)));
+            TCUNIT_ASSERT(TestSwap(uint32(4294967295ul)));
+
+            TCUNIT_ASSERT(TestSwap(sint8(0)));
+            TCUNIT_ASSERT(TestSwap(sint8(127)));
+            TCUNIT_ASSERT(TestSwap(sint8(-128)));
+
+            TCUNIT_ASSERT(TestSwap(sint16(0)));
+            TCUNIT_ASSERT(TestSwap(sint16(32767)));
+            TCUNIT_ASSERT(TestSwap(sint16(-32768)));
+
+            TCUNIT_ASSERT(TestSwap(sint32(0)));
+            TCUNIT_ASSERT(TestSwap(sint32(2147483647)));
+            TCUNIT_ASSERT(TestSwap(sint32(-2147483647)));
+
+            TCUNIT_ASSERT(TestSwap(double(123456.789)));
+            TCUNIT_ASSERT(TestSwap(float(123456.789f)));
+
+            TCUNIT_ASSERT(TestSwap(uint64(0)));
+            TCUNIT_ASSERT(TestSwap(uint64(1234567)));
+            TCUNIT_ASSERT(TestSwap(uint64(TC_UINT64_VAL(12345678901234567890))));
+            TCUNIT_ASSERT(TestSwap(uint64(TC_UINT64_VAL(18446744073709551615))));
+
+            TCUNIT_ASSERT(TestSwap(sint64(0)));
+            TCUNIT_ASSERT(TestSwap(sint64(1234567)));
+            TCUNIT_ASSERT(TestSwap(sint64(-1234567)));
+            TCUNIT_ASSERT(TestSwap(sint64(TC_SINT64_VAL(9223372036854775807))));
+            TCUNIT_ASSERT(TestSwap(sint64(TC_SINT64_VAL(-9223372036854775807))));
+
+         }
+
+      private:
+         template<typename T>
+         bool TestSwap(T val)
+         {
+            T orig = val;
+            TC::Util::SwapBytes(val);
+            TC::Util::SwapBytes(val);
+            return val == orig;
+         }
+      };
    }
 
    namespace Tests
@@ -236,6 +293,7 @@ namespace TC
          AddTest(Unit::Test::Ptr(new UtilAlign));
          AddTest(Unit::Test::Ptr(new UtilStlContainer));
          AddTest(Unit::Test::Ptr(new UtilSafeRelease));
+         AddTest(Unit::Test::Ptr(new UtilSwap));
       }
    }
 }
