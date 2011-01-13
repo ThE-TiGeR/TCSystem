@@ -40,6 +40,16 @@ set (TC_BASIC_PUBLIC_HEADER
 	${TCSystem_SOURCE_DIR}/inc/TCWeakPtr.h
 	${TCSystem_SOURCE_DIR}/inc/TCWFileName.h
 	${TCSystem_SOURCE_DIR}/inc/TCWString.h
+        ${TCSystem_SOURCE_DIR}/inc/TCUnitApi.h
+        ${TCSystem_SOURCE_DIR}/inc/TCUnitCleanLiness.h
+        ${TCSystem_SOURCE_DIR}/inc/TCUnitFailure.h
+        ${TCSystem_SOURCE_DIR}/inc/TCUnitSimpleTestResult.h
+        ${TCSystem_SOURCE_DIR}/inc/TCUnitTestCase.h
+        ${TCSystem_SOURCE_DIR}/inc/TCUnitTest.h
+        ${TCSystem_SOURCE_DIR}/inc/TCUnitTestResult.h
+        ${TCSystem_SOURCE_DIR}/inc/TCUnitTestSuite.h
+        ${TCSystem_SOURCE_DIR}/inc/TCUnitTreeTestResult.h
+        ${TCSystem_SOURCE_DIR}/inc/TCUnitTreeTestRunner.h
 )
 
 add_library (TCBasic
