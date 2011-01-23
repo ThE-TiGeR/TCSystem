@@ -29,7 +29,7 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //----------------------------------------------------------------------
-//  $Id: TCOutput.h 942 2009-06-30 21:13:45Z the_____tiger $
+//  $Id$
 //----------------------------------------------------------------------
 
 #ifndef _TC_OUTPUT_H_
@@ -96,6 +96,8 @@ namespace TC
       /**
        * @brief Write output to the current active error print target
        * @param module Name of the module to which this error belongs to
+       * @param function Name of the function, to which this error belongs to
+       * @param line_number line number of this error
        * @param format of the output used by snprintf
        * @param ... parameters needed because of the format by snprintf
        */
@@ -104,6 +106,8 @@ namespace TC
       /**
       * @brief Write output to the current active warning print target
       * @param module Name of the module to which this warning belongs to
+      * @param function Name of the function, to which this warning belongs to
+      * @param line_number line number of this warning
       * @param format of the output used by snprintf
       * @param ... parameters needed because of the format by snprintf
       */
@@ -112,6 +116,8 @@ namespace TC
       /**
       * @brief Write output to the current active info print target
       * @param module Name of the module to which this info belongs to
+      * @param function Name of the function, to which this info belongs to
+      * @param line_number line number of this info
       * @param format of the output used by snprintf
       * @param ... parameters needed because of the format by snprintf
       */
@@ -122,6 +128,8 @@ namespace TC
       * when the level is lower then the global trace level TC::Debug::m_trace_level
       * @param module Name of the module to which this trace belongs to
       * @param level trace level of this output
+      * @param function Name of the function, to which this trace belongs to
+      * @param line_number line number of this trace
       * @param format of the output used by snprintf
       * @param ... parameters needed because of the format by snprintf
       */

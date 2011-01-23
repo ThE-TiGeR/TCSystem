@@ -1,8 +1,0 @@
-# -*- python -*-
-
-LIBNAME('TCBasic')
-
-EXTERNAL_LIBRARY(
-    cflags=['-DTCBASE_EXPORTS'],
-    cxxflags=['-DTCBASE_EXPORTS'])
-

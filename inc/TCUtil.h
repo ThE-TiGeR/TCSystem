@@ -118,7 +118,7 @@ namespace TC
 
       /**
       * Function template for safe memory pointer deletion
-      * @param p_mem memory pointer to delete
+      * @param mem memory pointer to delete
       */
       template <class T>
       inline void SafeRelease(T& mem)
@@ -132,7 +132,7 @@ namespace TC
 
       /**
       * Function template for safe memory pointer deletion of an allocated array
-      * @param p_mem memory pointer to delete
+      * @param mem memory pointer to delete
       */
       template <class T>
       inline void SafeReleaseArray(T& mem)

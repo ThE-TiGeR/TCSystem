@@ -12,6 +12,9 @@
  * @defgroup TC_BASE_DEBUG Debug Support Classes
  */
 /**
+ * @defgroup TC_UNIT Unit test Classes
+ */
+/**
  * @defgroup TC_NET Networking
  */
 /**
@@ -33,6 +36,9 @@
 	 */
 	/**
 	 * @addtogroup TC_BASE_DEBUG
+	 */
+	/**
+	 * @addtogroup TC_UNIT
 	 */
 /**
  * @}

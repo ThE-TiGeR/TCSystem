@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCNetFactory.h 1000 2010-07-14 23:27:05Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 
 #ifndef _TCNET_SSL_FACTORY_H_
@@ -41,28 +41,32 @@
 #include "TCNetReadWriteSocket.h"
 #include "TCNetSocketServer.h"
 
+/**
+* @addtogroup TC_NET
+* @{
+*/
+
+/**
+* @file
+* @brief This file provides the definition of TC::Net::SSFactory
+* @author Thomas Goessler
+*/
+
+/**
+* @}
+*/
+
 namespace TC
 {
    namespace Net
    {
       /**
-      * @addtogroup TC_NET
-      * @{
-      */
-
-      /**
-      * @file
-      * @brief This file provides the definition of TC::Net::SSFactory
-      * @author Thomas Goessler
-      */
-
-      /**
-      * @brief Factory for creating TC::Net objects
+      * @brief Factory for creating TC::Net SSL objects
       */
       namespace SSLFactory
       {
          /**
-         * @addtogroup NET
+         * @addtogroup TC_NET
          * @{
          */
 
@@ -70,15 +74,17 @@ namespace TC
          * @brief Connects to specified server and returns the socket
          *
          * @param ip_addr Network name or ip address of the server to which to connect
-         * @@param port   Port on which to connect to the server
+         * @param port   Port on which to connect to the server
+         * @param protocol @see Protocol
          */
          TCNET_API ReadWriteSocketPtr Connect(const Address& ip_addr, PortNumber port, Protocol protocol);
+
+         /**
+         * @}
+         */
       }
 
 
-      /**
-      * @}
-      */
 
    } // namespace Net
 } // namespace TC

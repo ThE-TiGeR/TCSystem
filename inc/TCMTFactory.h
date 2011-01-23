@@ -121,6 +121,7 @@ namespace MT
       * For detailed description @see TCMT::Mutex
       * @param shared_name the name of the mutex so that it can be created inside other processes
       * @param locked true if the mutex should be already owned(locked)
+      * @param mode How to create the mutex
       * @return A shared pointer of the created mutex
       */
       TCMT_API MutexPtr CreateMutex(const std::string& shared_name, bool locked=false, CreationMode mode=CRM_ALWAYS);
@@ -141,6 +142,7 @@ namespace MT
        * @brief Construct an shared semaphore object
        * @param shared_name the name of the mutex so that it can be created inside other processes
        * @param initial_value The initial value of the semaphore
+       * @param mode How to create the mutex
        */
       TCMT_API SemaphorePtr CreateSemaphore(const std::string& shared_name, uint32 initial_value, CreationMode mode=CRM_ALWAYS);
 

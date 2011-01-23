@@ -38,6 +38,8 @@
 
 #include "TCTypes.h"
 
+#include <algorithm>
+
 namespace TC
 {
    /**

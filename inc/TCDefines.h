@@ -135,25 +135,28 @@
 #  define TC_IMPORT_DLL
 #endif
 
-/**
- * @define TC_EXPORT_DLL
- * @brief Define for exporting classes functions from a dll
- */
-/**
- * @define TC_IMPORT_DLL
- * @brief Define for importing classes functions from a dll
- */
-/**
- * @define TC_DLL_LOCAL
- * @brief Define for not exporting a symbol from the dll
- */
-
 #ifdef TCBASE_EXPORTS
 #  define TCBASE_API TC_EXPORT_DLL
 #else
-   /** @brief define for exporting or importing classes and functions from the TC dll */
 #  define TCBASE_API TC_IMPORT_DLL
 #endif
+
+/**
+ * @def TC_EXPORT_DLL
+ * @brief Define for exporting classes functions from a dll
+ */
+/**
+ * @def TC_IMPORT_DLL
+ * @brief Define for importing classes functions from a dll
+ */
+/**
+ * @def TC_DLL_LOCAL
+ * @brief Define for not exporting a symbol from the dll
+ */
+/**
+ * @def TCBASE_API
+ * @brief Define for exporting or importing classes and functions from the TCBasic dll
+ */
 
 // ---------------------------------------------------------------
 // string formats
@@ -161,9 +164,11 @@
 #ifdef TCOS_WINDOWS
    /** @brief  Defines the format which should be used for sint64 data type */
 #  define TC_SINT64_FORMAT   "I64d"
+   /** @brief  Defines the wformat which should be used for sint64 data type */
 #  define TC_SINT64_WFORMAT L"I64d"
    /** @brief  Defines the format which should be used for uint64 data type */
 #  define TC_UINT64_FORMAT   "I64u"
+   /** @brief  Defines the wformat which should be used for uint64 data type */
 #  define TC_UINT64_WFORMAT L"I64u"
 
    /**
