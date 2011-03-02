@@ -65,15 +65,6 @@ namespace Impl
    class TC_DLL_LOCAL FileStream: public StreamBase
    {
    public:
-      enum FileStreamErrorFlags
-      {
-         error_end_file=StreamBase::error_last,
-         error_read_file,
-         error_write_file,
-         error_last
-      };
-
-   public:
       /**
        * construct an TCAscciStreamObject with an istream
        * stream direction is set to stream_read
@@ -131,10 +122,6 @@ namespace Impl
        */
       virtual void CloseStream();
 
-   protected:
-      /** displays the error messege because of the status */
-      virtual void displayErrorMessage() const;
-      
    protected:
       /** pointer to the stream where to read or write the data */
       std::FILE* m_stream_pointer;

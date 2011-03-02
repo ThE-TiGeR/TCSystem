@@ -86,7 +86,11 @@
 #ifndef TCOS_WINDOWS
 /** @brief defines that we are compiling for a posix compatible system */
 #  define TCOS_POSIX 1
-#  define TCOS_32BIT 1
+#  if __x86_64__
+#     define TCOS_64BIT 1
+#  else
+#     define TCOS_32BIT 1
+#  endif
 #else
 #  ifndef _WIN32_WINNT
 #     define _WIN32_WINNT 0x0500

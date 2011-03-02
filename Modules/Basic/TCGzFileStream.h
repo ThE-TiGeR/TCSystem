@@ -66,15 +66,6 @@ namespace TC
         class TC_DLL_LOCAL GzFileStream: public StreamBase
         {
         public:
-            enum GzFileStreamErrorFlags
-            {
-                error_end_file=StreamBase::error_last,
-                error_read_file,
-                error_write_file,
-                error_last
-            };
-
-        public:
             GzFileStream(const std::string &fileName, StreamDirection direction, CodecPtr codec);
             virtual ~GzFileStream();
 
@@ -86,9 +77,6 @@ namespace TC
             virtual void Flush();
 
             virtual void CloseStream();
-
-        protected:
-            virtual void displayErrorMessage() const;
 
         private:
             gzFile m_file;

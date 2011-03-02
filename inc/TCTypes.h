@@ -61,7 +61,7 @@ namespace TC
    /** @brief typedef for 64bit signed int */
    typedef __int64          sint64;
 #else
-#  ifdef TCOS_64
+#  ifdef TCOS_64BIT
    /** typedef for 64bit signed int */
    typedef long          sint64;
 #  else
@@ -80,7 +80,7 @@ namespace TC
    /** @brief typedef for 64bit signed int */
    typedef unsigned __int64       uint64;
 #else
-#  ifdef TCOS_64
+#  ifdef TCOS_64BIT
    /** @brief typedef for 64bit unsigned int */
    typedef unsigned long uint64;
 #  else
@@ -97,14 +97,10 @@ namespace TC
    typedef unsigned char uchar;
 
    typedef unsigned long size_type;
-#ifdef _MSC_VER
-# ifdef TCOS_64
+#ifdef TCOS_64BIT
    typedef sint64 ssize_type;
-# else
-   typedef sint32 ssize_type;
-# endif
 #else
-   typedef signed long ssize_type;
+   typedef sint32 ssize_type;
 #endif
 
 } // namespac TC

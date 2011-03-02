@@ -108,7 +108,7 @@ void FileStream::SetStream(const std::string &fileName, StreamDirection directio
    if (!file)
    {
       TCERROR1("TCBASE", "Error opening file '%s'", fileName.c_str());
-      setStatus(error_streamopen);
+      setStatus(error_stream_open);
    }
 
    SetStream(file, direction);
@@ -127,7 +127,7 @@ uint64 FileStream::ReadBytes(uint64 nBytes, void *bytes)
    // check mode
    if (!isReading())
    {
-      setStatus(error_streamdirection);
+      setStatus(error_stream_direction);
       return 0;
    }
 
@@ -140,11 +140,11 @@ uint64 FileStream::ReadBytes(uint64 nBytes, void *bytes)
        {
            if (std::feof(m_stream_pointer))
            {
-               setStatus(error_end_file);
+               setStatus(error_end_of_stream);
            }
            else
            {
-               setStatus(error_read_file);
+               setStatus(error_read_from_stream);
            }
            break;
        }
@@ -170,7 +170,7 @@ uint64 FileStream::WriteBytes(uint64 nBytes, const void *bytes)
    // check mode
    if (!isWriting())
    {
-      setStatus(error_streamdirection);
+      setStatus(error_stream_direction);
       return 0;
    }
 
@@ -181,7 +181,7 @@ uint64 FileStream::WriteBytes(uint64 nBytes, const void *bytes)
            std::size_t(nBytes-wrote_bytes), m_stream_pointer);
        if (num <= 0)
        {
-           setStatus(error_write_file);
+           setStatus(error_write_to_stream);
            break;
        }
        wrote_bytes += num;
@@ -205,19 +205,7 @@ void FileStream::Flush()
    }
    else
    {
-      setStatus(error_streamdirection);
-   }
-}
-
-void FileStream::displayErrorMessage() const
-{
-   switch (GetStatus())
-   {
-      case error_end_file:
-       break;
-
-      default:
-         StreamBase::displayErrorMessage();
+      setStatus(error_stream_direction);
    }
 }
 
@@ -228,13 +216,13 @@ bool FileStream::SetPosition(sint64 pos, StreamPosition pos_mode)
    switch(pos_mode)
    {
    case POSITION_SET:
-      return std::fseek(m_stream_pointer, ssize_type(pos), SEEK_SET) == 0;
+      return std::fseek(m_stream_pointer, long(pos), SEEK_SET) == 0;
 
    case POSITION_CURRENT:
-      return std::fseek(m_stream_pointer, ssize_type(pos), SEEK_CUR) == 0;
+      return std::fseek(m_stream_pointer, long(pos), SEEK_CUR) == 0;
 
    case POSITION_END:
-      return std::fseek(m_stream_pointer, ssize_type(pos), SEEK_END) == 0;
+      return std::fseek(m_stream_pointer, long(pos), SEEK_END) == 0;
    }
 
    return false;

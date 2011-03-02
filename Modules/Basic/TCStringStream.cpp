@@ -35,6 +35,8 @@
 
 #include "TCStringStream.h"
 
+#include "TCUtil.h"
+
 #include <cstring>
 #include <limits>
 
@@ -59,14 +61,36 @@ namespace TC
 
       uint64 StringStream::ReadBytes(uint64 nBytes, void *bytes)
       {
+         // check for an error
+         if (Error())
+         {
+            return 0;
+         }
+
+         // check mode
+         if (!isReading())
+         {
+            setStatus(error_stream_direction);
+            return 0;
+         }
+
          if (nBytes > std::numeric_limits<std::string::size_type>::max())
          {
              return 0;
          }
 
-         std::memcpy(bytes, &m_string[m_string_position], std::string::size_type(nBytes));
+         if (m_string_position < m_string.size())
+         {
+            uint64 num_bytes_to_read = Util::Min(nBytes, m_string.size() - m_string_position);
+            std::memcpy(bytes, &m_string[m_string_position], std::string::size_type(num_bytes_to_read));
 
-         m_string_position += std::string::size_type(nBytes);
+            m_string_position += std::string::size_type(num_bytes_to_read);
+         }
+
+         if (m_string_position == m_string.size())
+         {
+            setStatus(error_end_of_stream);
+         }
 
          return nBytes;
       }

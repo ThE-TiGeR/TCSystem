@@ -69,12 +69,21 @@ namespace TC
       {
          /** no error happened */
          error_none,
-         /** Error openening the stream */
-         error_streamopen,
+         /** Error opening the stream */
+         error_stream_open,
          /** Error closing the stream */
-         error_streamclose,
+         error_stream_close,
          /** Using wrong stream direction */
-         error_streamdirection,
+         error_stream_direction,
+         /** end of stream reached */
+         error_end_of_stream,
+         /** error during reading of stream */
+         error_read_from_stream,
+         /** error during writing to stream */
+         error_write_to_stream,
+         /** error setting stream position */
+         error_set_stream_position,
+
          /** Last error flag */
          error_last
       };

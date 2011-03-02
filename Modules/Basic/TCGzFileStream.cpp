@@ -62,7 +62,7 @@ namespace TC
             if (!m_file)
             {
                 TCERROR1("TCBASE", "Error opening file '%s'", fileName.c_str());
-                setStatus(error_streamopen);
+                setStatus(error_stream_open);
             }
             setStreamDirection(direction);
         }
@@ -94,7 +94,7 @@ namespace TC
             // check mode
             if (!isReading())
             {
-                setStatus(error_streamdirection);
+                setStatus(error_stream_direction);
                 return 0;
             }
 
@@ -107,11 +107,11 @@ namespace TC
                 {
                     if (::gzeof(m_file))
                     {
-                        setStatus(error_end_file);
+                        setStatus(error_end_of_stream);
                     }
                     else
                     {
-                        setStatus(error_read_file);
+                        setStatus(error_read_from_stream);
                     }
                     break;
                 }
@@ -137,7 +137,7 @@ namespace TC
             // check mode
             if (!isWriting())
             {
-                setStatus(error_streamdirection);
+                setStatus(error_stream_direction);
                 return 0;
             }
 
@@ -148,7 +148,7 @@ namespace TC
                     unsigned(nBytes-wrote_bytes));
                 if (num <= 0)
                 {
-                    setStatus(error_write_file);
+                    setStatus(error_write_to_stream);
                     break;
                 }
                 wrote_bytes += num;
@@ -172,19 +172,7 @@ namespace TC
             }
             else
             {
-                setStatus(error_streamdirection);
-            }
-        }
-
-        void GzFileStream::displayErrorMessage() const
-        {
-            switch (GetStatus())
-            {
-            case error_end_file:
-                break;
-
-            default:
-                StreamBase::displayErrorMessage();
+                setStatus(error_stream_direction);
             }
         }
 
@@ -195,13 +183,13 @@ namespace TC
             switch(pos_mode)
             {
             case POSITION_SET:
-                return ::gzseek(m_file, ssize_type(pos), SEEK_SET) == 0;
+                return ::gzseek(m_file, z_off_t(pos), SEEK_SET) == 0;
 
             case POSITION_CURRENT:
-                return ::gzseek(m_file, ssize_type(pos), SEEK_CUR) == 0;
+                return ::gzseek(m_file, z_off_t(pos), SEEK_CUR) == 0;
 
             case POSITION_END:
-                return ::gzseek(m_file, ssize_type(pos), SEEK_END) == 0;
+                return ::gzseek(m_file, z_off_t(pos), SEEK_END) == 0;
             }
 
             return false;

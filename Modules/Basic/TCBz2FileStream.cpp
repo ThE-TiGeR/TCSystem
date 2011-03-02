@@ -62,7 +62,7 @@ namespace TC
             if (!m_file)
             {
                 TCERROR1("TCBASE", "Error opening file '%s'", fileName.c_str());
-                setStatus(error_streamopen);
+                setStatus(error_stream_open);
             }
             setStreamDirection(direction);
         }
@@ -94,7 +94,7 @@ namespace TC
             // check mode
             if (!isReading())
             {
-                setStatus(error_streamdirection);
+                setStatus(error_stream_direction);
                 return 0;
             }
 
@@ -109,11 +109,11 @@ namespace TC
                     BZ2_bzerror(m_file, &error_num);
                     if (error_num == BZ_STREAM_END)
                     {
-                        setStatus(error_end_file);
+                        setStatus(error_end_of_stream);
                     }
                     else
                     {
-                        setStatus(error_read_file);
+                        setStatus(error_read_from_stream);
                     }
                     break;
                 }
@@ -139,7 +139,7 @@ namespace TC
             // check mode
             if (!isWriting())
             {
-                setStatus(error_streamdirection);
+                setStatus(error_stream_direction);
                 return 0;
             }
 
@@ -150,7 +150,7 @@ namespace TC
                     int(nBytes-wrote_bytes));
                 if (num <= 0)
                 {
-                    setStatus(error_write_file);
+                    setStatus(error_write_to_stream);
                     break;
                 }
                 wrote_bytes += num;
@@ -174,35 +174,19 @@ namespace TC
             }
             else
             {
-                setStatus(error_streamdirection);
-            }
-        }
-
-        void Bz2FileStream::displayErrorMessage() const
-        {
-            switch (GetStatus())
-            {
-            case error_end_file:
-                break;
-
-            case error_seek:
-                TCERROR("TCBASE", "Set or get position of a BZ2Stream not supported");
-                break;
-
-            default:
-                StreamBase::displayErrorMessage();
+                setStatus(error_stream_direction);
             }
         }
 
         bool Bz2FileStream::SetPosition(sint64, StreamPosition)
         {
-            setStatus(error_seek);
+            setStatus(error_set_stream_position);
             return false;
         }
 
         uint64 Bz2FileStream::GetPosition() const
         {
-            setStatus(error_seek);
+            setStatus(error_set_stream_position);
             return 0;
         }
 

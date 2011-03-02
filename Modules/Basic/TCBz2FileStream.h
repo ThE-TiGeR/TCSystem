@@ -66,16 +66,6 @@ namespace TC
         class TC_DLL_LOCAL Bz2FileStream: public StreamBase
         {
         public:
-            enum Bz2FileStreamErrorFlags
-            {
-                error_end_file=StreamBase::error_last,
-                error_read_file,
-                error_write_file,
-                error_seek,
-                error_last
-            };
-
-        public:
             Bz2FileStream(const std::string &fileName, StreamDirection direction, CodecPtr codec);
             virtual ~Bz2FileStream();
 
@@ -87,9 +77,6 @@ namespace TC
             virtual void Flush();
 
             virtual void CloseStream();
-
-        protected:
-            virtual void displayErrorMessage() const;
 
         private:
             BZFILE* m_file;

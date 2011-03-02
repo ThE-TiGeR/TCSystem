@@ -95,17 +95,33 @@ void StreamBase::displayErrorMessage() const
 {
    switch (GetStatus())
    {
-      case error_streamopen:
+      case error_stream_open:
          TCERROR("TCBASE", "Error opening stream");
        break;
 
-      case error_streamclose:
+      case error_stream_close:
          TCERROR("TCBASE", "Error closing stream");
        break;
 
-      case error_streamdirection:
+      case error_stream_direction:
          TCERROR("TCBASE", "Error wrong stream direction");
        break;
+
+      case error_read_from_stream:
+         TCERROR("TCBASE", "Error during read from stream");
+         break;
+
+      case error_write_to_stream:
+         TCERROR("TCBASE", "Error during write to stream");
+         break;
+
+      case error_end_of_stream:
+         break;
+
+      case error_set_stream_position:
+         TCERROR("TCBASE", "Set or get position of stream not supported");
+         break;
+
    }
 }
 
