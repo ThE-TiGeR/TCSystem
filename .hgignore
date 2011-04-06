@@ -10,6 +10,7 @@ syntax: glob
 TCSystem.pc
 TCSystemNet.pc
 TCSystemGui.pc
+TCSystemAudio.pc
 CMakeCache.txt
 CMakeFiles
 cmake_install.cmake

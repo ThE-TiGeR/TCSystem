@@ -1,0 +1,12 @@
+prefix="@CMAKE_INSTALL_PREFIX@"
+exec_prefix="${prefix}/bin"
+libdir="${prefix}/lib"
+includedir="${prefix}/include"
+
+Name: TCSystemAudio
+Description: TCSystemAudio
+Version: @PACKAGE_VERSION@
+Requires: TCSystem openal libmpg123
+Libs: -L${libdir} -lTCAudio
+Libs.private:
+Cflags: -I${includedir}
