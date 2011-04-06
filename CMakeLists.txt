@@ -40,6 +40,14 @@ set (CMAKE_MODULE_PATH ${TCSystem_SOURCE_DIR}/cmake)
 # global properties
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
+# package config file
+configure_file(TCSystem.pc.in "${PROJECT_BINARY_DIR}/TCSystem.pc" @ONLY)
+configure_file(TCSystemNet.pc.in "${PROJECT_BINARY_DIR}/TCSystemNet.pc" @ONLY)
+configure_file(TCSystemGui.pc.in "${PROJECT_BINARY_DIR}/TCSystemGui.pc" @ONLY)
+install(FILES "${PROJECT_BINARY_DIR}/TCSystem.pc" DESTINATION "lib/pkgconfig" COMPONENT dev)
+install(FILES "${PROJECT_BINARY_DIR}/TCSystemNet.pc" DESTINATION "lib/pkgconfig" COMPONENT dev)
+install(FILES "${PROJECT_BINARY_DIR}/TCSystemGui.pc" DESTINATION "lib/pkgconfig" COMPONENT dev)
+
 # add the binary tree to the search path for include files
 # so that we will find TCSystemConfig.h
 # also add the Basic directory for all sub projects

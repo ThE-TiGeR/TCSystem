@@ -7,6 +7,9 @@ syntax: glob
 *.orig
 *.dir
 
+TCSystem.pc
+TCSystemNet.pc
+TCSystemGui.pc
 CMakeCache.txt
 CMakeFiles
 cmake_install.cmake
