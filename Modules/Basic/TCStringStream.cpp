@@ -81,7 +81,7 @@ namespace TC
 
          if (m_string_position < m_string.size())
          {
-            uint64 num_bytes_to_read = Util::Min(nBytes, m_string.size() - m_string_position);
+            uint64 num_bytes_to_read = Util::Min(nBytes, uint64(m_string.size() - m_string_position));
             std::memcpy(bytes, &m_string[m_string_position], std::string::size_type(num_bytes_to_read));
 
             m_string_position += std::string::size_type(num_bytes_to_read);
