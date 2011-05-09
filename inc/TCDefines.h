@@ -86,8 +86,12 @@
 #ifndef TCOS_WINDOWS
 /** @brief defines that we are compiling for a posix compatible system */
 #  define TCOS_POSIX 1
-#  if __x86_64__
-#     define TCOS_64BIT 1
+#  ifdef __x86_64__
+#     if __x86_64__
+#        define TCOS_64BIT 1
+#     else
+#        define TCOS_32BIT 1
+#     endif
 #  else
 #     define TCOS_32BIT 1
 #  endif
@@ -119,14 +123,17 @@
 #  define TC_EXPORT_DLL __declspec(dllexport)
 #  define TC_IMPORT_DLL __declspec(dllimport)
 #  define TC_DLL_LOCAL
-#elif defined _GNUC_
-#  if _GNUC_ > 3
-#     define TC_EXPORT_DLL __attribute__ ((visibility("default")))
-#  endif
-#  if _GNUC_ > 4
+#elif defined __GNUC__
+#  if __GNUC__ >= 4
 #     define TC_DLL_LOCAL  __attribute__ ((visibility("hidden")))
+#     define TC_EXPORT_DLL __attribute__ ((visibility("default")))
+#  elif __GNUC__ >= 3
+#     define TC_EXPORT_DLL __attribute__ ((visibility("default")))
+#  else
+#      error unsupported gnu compiler
 #  endif
 #else
+#      error unsupported compiler
 #endif
 
 #ifndef TC_DLL_LOCAL
@@ -206,7 +213,7 @@
 #  define TC_SINT64_VAL(val) (val##ll)
 #endif
 
-#if TCOS_WINDOWS 
+#ifdef TCOS_WINDOWS 
 #  define _WINSOCKAPI_ // Prevent inclusion of winsock.h in windows.h
 
 #  ifdef _MSC_VER
