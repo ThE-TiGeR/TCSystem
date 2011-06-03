@@ -106,7 +106,8 @@ namespace TC
          }
          else
          {
-            std::printf("%s\n", s.c_str());
+            std::fprintf(stderr, "%s\n", s.c_str());
+            std::fflush(stderr);
          }
       }
 
@@ -127,7 +128,8 @@ namespace TC
          }
          else
          {
-            std::printf("%s\n", s.c_str());
+            std::fprintf(stderr, "%s\n", s.c_str());
+            std::fflush(stderr);
          }
       }
 
@@ -148,7 +150,8 @@ namespace TC
          }
          else
          {
-            std::printf("%s\n", s.c_str());
+            std::fprintf(stdout, "%s\n", s.c_str());
+            std::fflush(stdout);
          }
       }
 
@@ -171,7 +174,8 @@ namespace TC
             }
             else
             {
-               std::printf("%s\n", s.c_str());
+               std::fprintf(stdout, "%s\n", s.c_str());
+               std::fflush(stdout);
             }
          }
       }
