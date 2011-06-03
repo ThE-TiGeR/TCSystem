@@ -5,6 +5,7 @@
 #include "TCBasicTestSuite.h"
 #include "TCMTThreadTestSuite.h"
 #include "TCNetTestSuite.h"
+#include "TCMathTestSuite.h"
 #include "TCUnitTreeTestRunner.h"
 
 int RunUnitTests()
@@ -13,6 +14,7 @@ int RunUnitTests()
    suite->AddTest(TC::Unit::Test::Ptr(new TC::Tests::BasicSuite));
    suite->AddTest(TC::Unit::Test::Ptr(new TC::MT::Tests::Suite));
    suite->AddTest(TC::Unit::Test::Ptr(new TC::Net::Tests::Suite));
+   suite->AddTest(TC::Unit::Test::Ptr(new TC::Math::Tests::Suite));
 
    TC::Unit::TreeTestRunner runner;
    return runner.Run(suite, TC::Unit::CleanlinessCheck::Ptr())? 0: 1;

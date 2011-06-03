@@ -9,9 +9,6 @@ add_executable (TCAudioTest
 target_link_libraries(TCAudioTest
     TCAudio
 )
-add_dependencies(TCAudioTest
-    TCAudio
-)
 
 set_target_properties(TCAudioTest PROPERTIES FOLDER Tests)
 

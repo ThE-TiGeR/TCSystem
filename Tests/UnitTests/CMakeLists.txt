@@ -7,14 +7,11 @@ include_directories (
    "${TCSystem_SOURCE_DIR}/Modules/Basic/Tests"
    "${TCSystem_SOURCE_DIR}/Modules/Thread/Tests"
    "${TCSystem_SOURCE_DIR}/Modules/Net/Tests"
+   "${TCSystem_SOURCE_DIR}/Modules/Math/Tests"
 )
 
 target_link_libraries(TCUnitTests
-    TCNet
-	TCThread
-    TCBasic
-)
-add_dependencies(TCUnitTests
+    TCMath
     TCNet
 	TCThread
     TCBasic

@@ -1,3 +1,5 @@
+include(FindBoost)
+include_directories(${Boost_INCLUDE_DIRS})
 
 set (TC_MATH_PUBLIC_HEADER
         ${TCSystem_SOURCE_DIR}/inc/TCMathApi.h
@@ -5,6 +7,7 @@ set (TC_MATH_PUBLIC_HEADER
         ${TCSystem_SOURCE_DIR}/inc/TCMathCoord2D.h
         ${TCSystem_SOURCE_DIR}/inc/TCMathCoord3D.h
         ${TCSystem_SOURCE_DIR}/inc/TCMathCoord4D.h
+        ${TCSystem_SOURCE_DIR}/inc/TCMathCoordN.h
         ${TCSystem_SOURCE_DIR}/inc/TCMathCoordUtil.h
         ${TCSystem_SOURCE_DIR}/inc/TCMathBox.h
         ${TCSystem_SOURCE_DIR}/inc/TCMathFactory.h
@@ -19,15 +22,18 @@ set (TC_MATH_SOURCE
 	TCMD5.h
 )
 
+set (TC_MATH_TEST_FILES
+    Tests/TCMathTestSuite.h
+    Tests/TCMathTestSuite.cpp
+)
+
 add_library (TCMath
         ${TC_MATH_SOURCE}
         ${TC_MATH_PUBLIC_HEADER}
+        ${TC_MATH_TEST_FILES}
 )
 
 target_link_libraries(TCMath
-    TCBasic
-)
-add_dependencies(TCMath
     TCBasic
 )
 

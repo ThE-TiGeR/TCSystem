@@ -9,12 +9,6 @@ target_link_libraries(TCTestBasic
     TCThread
     TCBasic
 )
-add_dependencies(TCTestBasic
-    TCNet
-    TCMath
-    TCThread
-    TCBasic
-)
 
 set_target_properties(TCTestBasic PROPERTIES FOLDER Tests)
 

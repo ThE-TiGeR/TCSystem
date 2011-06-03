@@ -109,7 +109,7 @@ namespace TC
          glLineWidth(DEFAULT_WIDTH);
       }
 
-      void LineRenderer::RenderLines(const std::vector< std::vector< Math::Coord3D< float > > > &vertexes,
+      void LineRenderer::RenderLines(const std::vector< Vertex3DVector > &vertexes,
          const std::vector< std::vector<Color> >& colors, 
          uint32 num_pixels, GLenum line_type)
       {
@@ -119,7 +119,7 @@ namespace TC
          }
       }
 
-      void LineRenderer::RenderLines(const std::vector< std::vector< Math::Coord3D< float > > > &vertexes,
+      void LineRenderer::RenderLines(const std::vector< Vertex3DVector > &vertexes,
          const Color& color, uint32 num_pixels,      
          GLenum line_type) 
       {
@@ -129,7 +129,7 @@ namespace TC
          }
       }
 
-      void LineRenderer::RenderBox(const Math::Box< Math::Coord3D< float > >& box,     
+      void LineRenderer::RenderBox(const Math::Box< Vertex3D >& box,     
          const Color& color, uint32 num_pixels/*=DEFAULT_WIDTH*/) 
       {
          ::glColor4fv(color);
@@ -163,7 +163,7 @@ namespace TC
          glLineWidth(DEFAULT_WIDTH);
       }
 
-      void LineRenderer::RenderBox(const Math::Box< Math::Coord2D< float > >& box,     
+      void LineRenderer::RenderBox(const Math::Box< Vertex2D >& box,     
          const Color& color, uint32 num_pixels/*=DEFAULT_WIDTH*/) 
       {
          ::glColor4fv(color);

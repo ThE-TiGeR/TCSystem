@@ -64,9 +64,6 @@ target_link_libraries(TCThread
     TCBasic
     ${CMAKE_THREAD_LIBS_INIT}
 )
-add_dependencies(TCThread
-    TCBasic
-)
 
 set_target_properties(TCThread PROPERTIES FOLDER Modules)
 set_target_properties(TCThread PROPERTIES COMPILE_DEFINITIONS "TCMT_EXPORTS")

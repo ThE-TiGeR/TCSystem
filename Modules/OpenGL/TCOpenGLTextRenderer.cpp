@@ -124,7 +124,7 @@ namespace TC
       }
 
       void TextRenderer::Render3DText(const std::string &text,
-         const Math::Coord3D < float >&xyzco,
+         const Vertex3D& xyzco,
          const Color & color)
       {
          TC_ASSERT(m_current_font != -1);
@@ -142,7 +142,7 @@ namespace TC
       }
 
       void TextRenderer::Render2DText(const std::string &text,
-         Math::Coord2D< sint32 > xyco,
+         Math::CoordN<sint32,2> xyco,
          const Color &color,
          bool clip)
       {
@@ -181,7 +181,7 @@ namespace TC
       }
 
       void TextRenderer::Render3DTexts(const std::vector < std::string > &textArray,
-         const std::vector < Math::Coord3D <float> > &xyzcoArray,
+         const Vertex3DVector &xyzcoArray,
          const Color &color)
       {
          TC_ASSERT(m_current_font != -1);
