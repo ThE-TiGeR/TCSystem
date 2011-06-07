@@ -70,6 +70,16 @@ namespace Math
                   > > > >
    {
    public:
+      typedef T* Iterator;
+      typedef const T* ConstIterator;
+      typedef T DataType;
+
+      enum
+      {
+         NUM_COMPONENTS = SIZE
+      };
+
+   public:
       /** all components are init with 0 */
       CoordN()
       {
@@ -218,7 +228,7 @@ namespace Math
       bool operator==(const CoordN<T, SIZE>& val) const
       {
          const T* in_data = val.m_data;
-         for (const T* data=m_data; data<m_data+SIZE; ++data)
+         for (const T* data=m_data; data<m_data+SIZE; ++data, ++in_data)
          {
             if (*data != *in_data)
             {
@@ -231,7 +241,8 @@ namespace Math
       bool operator<(const CoordN<T, SIZE>& val) const
       {
          const T* in_data = val.m_data;
-         for (const T* data=m_data; data<m_data+SIZE; ++data)
+         const T* data = m_data;
+         for (; data<m_data+SIZE-1; ++data, ++in_data)
          {
             if (*data < *in_data)
             {
@@ -242,11 +253,11 @@ namespace Math
                return false;
             }
          }
-         return true;
+         return *data < *in_data;
       }
 
       /** @return The template argument pointer type of this coordinate */
-      //operator T*() {return m_data;}
+      operator T*() {return m_data;}
       /** @return The const template argument pointer type of this coordinate */
       operator const T*() const {return m_data;}
 
@@ -277,19 +288,12 @@ namespace Math
          }
       }
       
-      /**
-       * @return the maximum of all 3 components
-       */
-      T MaxValue() const
-      {
-         return *std::max_element(m_data, m_data + SIZE);
-      }
+      Iterator* Begin() {return m_data;}
+      ConstIterator* Begin() const {return m_data + SIZE;}
 
-      typedef T DataType;
-      enum
-      {
-         NUM_COMPONENTS = SIZE
-      };
+      Iterator* End() {return m_data;}
+      ConstIterator* End() const {return m_data + SIZE;}
+
    private:
       /** stores the three components of the coordinate */
       T m_data[NUM_COMPONENTS];  
@@ -303,12 +307,12 @@ namespace Math
       return v * T(-1);
    }
 
-   template <class T, uint32 SIZE>
-   inline const CoordN<T, SIZE> operator^(const CoordN<T, SIZE> &a, const CoordN<T, SIZE> &b)
+   template <class T>
+   inline const CoordN<T, 3> operator^(const CoordN<T, 3> &a, const CoordN<T, 3> &b)
    {
-      return CoordN<T, SIZE>(a[1] * b[2] - a[2] * b[1],
-                        a[2] * b[0] - a[0] * b[2],
-                        a[0] * b[1] - a[1] * b[0]);
+      return CoordN<T, 3>(a[1] * b[2] - a[2] * b[1],
+                          a[2] * b[0] - a[0] * b[2],
+                          a[0] * b[1] - a[1] * b[0]);
    }
 
    /**

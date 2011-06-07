@@ -46,6 +46,16 @@ namespace TC
       namespace Tests
       {
          typedef CoordN<int, 5> CoordType;
+         static CoordType GetDefaultCoord()
+         {
+            CoordType val;
+            for (int i=0; i<CoordType::NUM_COMPONENTS; i++)
+            {
+               val[i] = i;
+            }
+
+            return val;
+         }
 
          class CoordNCunstructTest: public Unit::TestCase
          {
@@ -74,11 +84,7 @@ namespace TC
                }
 
                {
-                  CoordType val;
-                  for (int i=0; i<CoordType::NUM_COMPONENTS; i++)
-                  {
-                     val[i] = i;
-                  }
+                  CoordType val(GetDefaultCoord());
 
                   CoordType val1(val);
                   for (int i=0; i<CoordType::NUM_COMPONENTS; i++)
@@ -113,11 +119,7 @@ namespace TC
             virtual void Execute()
             {
                {
-                  CoordType val;
-                  for (int i=0; i<CoordType::NUM_COMPONENTS; i++)
-                  {
-                     val[i] = i;
-                  }
+                  CoordType val(GetDefaultCoord());
 
                   CoordType val1;
                   val1 = val;
@@ -151,11 +153,7 @@ namespace TC
             virtual void Execute()
             {
                {
-                  CoordType val1;
-                  for (int i=0; i<CoordType::NUM_COMPONENTS; i++)
-                  {
-                     val1[i] = i;
-                  }
+                  CoordType val1(GetDefaultCoord());
 
                   CoordType val;
                   val += val1;
@@ -174,11 +172,7 @@ namespace TC
                }
 
                {
-                  CoordType val1;
-                  for (int i=0; i<CoordType::NUM_COMPONENTS; i++)
-                  {
-                     val1[i] = i;
-                  }
+                  CoordType val1(GetDefaultCoord());
 
                   CoordType val;
                   val += val1;
@@ -210,11 +204,7 @@ namespace TC
             virtual void Execute()
             {
                {
-                  CoordType val1;
-                  for (int i=0; i<CoordType::NUM_COMPONENTS; i++)
-                  {
-                     val1[i] = i;
-                  }
+                  CoordType val1(GetDefaultCoord());
 
                   CoordType val;
                   val -= val1;
@@ -233,11 +223,7 @@ namespace TC
                }
 
                {
-                  CoordType val1;
-                  for (int i=0; i<CoordType::NUM_COMPONENTS; i++)
-                  {
-                     val1[i] = i;
-                  }
+                  CoordType val1(GetDefaultCoord());
 
                   CoordType val;
                   val -= val1;
@@ -269,11 +255,7 @@ namespace TC
             virtual void Execute()
             {
                {
-                  CoordType val1;
-                  for (int i=0; i<CoordType::NUM_COMPONENTS; i++)
-                  {
-                     val1[i] = i;
-                  }
+                  CoordType val1(GetDefaultCoord());
 
                   CoordType val(val1);
                   val *= 7;
@@ -332,6 +314,102 @@ namespace TC
             }
          };
 
+         class CoordNEqualTest: public Unit::TestCase
+         {
+         public:
+            CoordNEqualTest()
+               :Unit::TestCase("TC::Math::Tests::CoordNEqualTest")
+            {
+            }
+
+            virtual void Execute()
+            {
+               {
+                  CoordType val1;
+                  CoordType val2;
+                  TCUNIT_ASSERT(val1 == val2);
+                  TCUNIT_ASSERT(!(val1 != val2));
+               }
+
+               {
+                  CoordType val1(GetDefaultCoord());
+                  CoordType val2(GetDefaultCoord());
+                  TCUNIT_ASSERT(val1 == val2);
+                  TCUNIT_ASSERT(!(val1 != val2));
+
+                  val1[0] = 12345;
+                  TCUNIT_ASSERT(val1 != val2);
+                  TCUNIT_ASSERT(!(val1 == val2));
+               }
+            }
+         };
+
+         class CoordNLessTest: public Unit::TestCase
+         {
+         public:
+            CoordNLessTest()
+               :Unit::TestCase("TC::Math::Tests::CoordNLessTest")
+            {
+            }
+
+            virtual void Execute()
+            {
+               {
+                  CoordType val1;
+                  CoordType val2;
+
+                  TCUNIT_ASSERT(!(val1 <  val2));
+                  TCUNIT_ASSERT( (val1 <= val2));
+                  TCUNIT_ASSERT(!(val1 >  val2));
+                  TCUNIT_ASSERT( (val1 >= val2));
+               }
+
+               {
+                  CoordType val1(GetDefaultCoord());
+                  CoordType val2(GetDefaultCoord());
+                  val2[0] = -1;
+
+                  TCUNIT_ASSERT(!(val1 <  val2));
+                  TCUNIT_ASSERT(!(val1 <= val2));
+                  TCUNIT_ASSERT( (val1 >  val2));
+                  TCUNIT_ASSERT( (val1 >= val2));
+               }
+
+               {
+                  CoordType val1(GetDefaultCoord());
+                  CoordType val2(GetDefaultCoord());
+                  val1[0] = -1;
+
+                  TCUNIT_ASSERT( (val1 <  val2));
+                  TCUNIT_ASSERT( (val1 <= val2));
+                  TCUNIT_ASSERT(!(val1 >  val2));
+                  TCUNIT_ASSERT(!(val1 >= val2));
+               }
+
+               {
+                  CoordType val1(GetDefaultCoord());
+                  CoordType val2(GetDefaultCoord());
+                  val2[CoordType::NUM_COMPONENTS-1] = -1;
+
+                  TCUNIT_ASSERT(!(val1 <  val2));
+                  TCUNIT_ASSERT(!(val1 <= val2));
+                  TCUNIT_ASSERT( (val1 >  val2));
+                  TCUNIT_ASSERT( (val1 >= val2));
+               }
+
+               {
+                  CoordType val1(GetDefaultCoord());
+                  CoordType val2(GetDefaultCoord());
+                  val1[CoordType::NUM_COMPONENTS-1] = -1;
+
+                  TCUNIT_ASSERT( (val1 <  val2));
+                  TCUNIT_ASSERT( (val1 <= val2));
+                  TCUNIT_ASSERT(!(val1 >  val2));
+                  TCUNIT_ASSERT(!(val1 >= val2));
+               }
+            }
+         };
+
          class CoordNSuite : public Unit::TestSuite
          {
          public:
@@ -344,6 +422,8 @@ namespace TC
                AddTest(Unit::Test::Ptr(new CoordNSubtractAssignTest));
                AddTest(Unit::Test::Ptr(new CoordNMultiplyAssignTest));
                AddTest(Unit::Test::Ptr(new CoordNDivideAssignTest));
+               AddTest(Unit::Test::Ptr(new CoordNEqualTest));
+               AddTest(Unit::Test::Ptr(new CoordNLessTest));
             }
          };
 

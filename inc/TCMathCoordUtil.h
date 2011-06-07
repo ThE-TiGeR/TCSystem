@@ -36,8 +36,7 @@
 #ifndef _TC_COORD_UTIL_H_
 #define _TC_COORD_UTIL_H_
 
-#include "TCMathCoord3D.h"
-#include "TCMathCoord2D.h"
+#include "TCMathCoordN.h"
 
 namespace TC
 {
@@ -71,7 +70,7 @@ namespace TC
       * Computes the square distance of two 3-coordinates
       * @param a     the 1st 3D coordinate
       * @param b     the 2nd 3D coordinate
-      * @return The square distance between the towo coordinates
+      * @return The square distance between the two coordinates
       */
       template <class COORD_TYPE>
       inline double Distance2(const COORD_TYPE &a, const COORD_TYPE &b)
@@ -81,7 +80,7 @@ namespace TC
       }
 
       /**
-      * Computes the dot product of two 3-coordinates (float-precision version).
+      * Computes the dot product of coordinates.
       * @param a     the 1st 3D coordinate
       * @param b     the 2nd 3D coordinate
       * @return the Dot product of the 2 coordinates
@@ -89,7 +88,16 @@ namespace TC
       template <class COORD_TYPE>
       inline typename COORD_TYPE::DataType DotProduct(const COORD_TYPE& a, const COORD_TYPE& b)
       {
-         return a * b;
+         typename COORD_TYPE::DataType val(0);
+         COORD_TYPE::ConstIterator it1=a.Begin();
+         COORD_TYPE::ConstIterator it2=b.Begin();
+
+         for (; it1!=a.End(); ++it1, ++it2)
+         {
+            val += (*it1) * (*it2)
+         }
+
+         return val;
       }
 
       /**
@@ -101,7 +109,7 @@ namespace TC
       template <class COORD_TYPE>
       inline typename COORD_TYPE::DataType DotProduct2(const COORD_TYPE& a, const COORD_TYPE& b)
       {
-         COORD_TYPE v = a * b;
+         COORD_TYPE::DataType v = DotProduct(a, b);
          return v * v;
       }
 
@@ -132,44 +140,43 @@ namespace TC
          return a ^ b;
       }
 
-      template <class T>
-      inline CoordN<T,3> Max(const CoordN<T,3>& a, const CoordN<T,3>& b)
+      /**
+       * @return the maximum of all components of the coordinate
+       */
+      template <class COORD_TYPE>
+      typename COORD_TYPE::DataType MaxValue(const COORD_TYPE& a)
       {
-         CoordN<T,3> coord;
-         coord[0] = Util::Max(a[0], b[0]);
-         coord[1] = Util::Max(a[1], b[1]);
-         coord[2] = Util::Max(a[2], b[2]);
+         return *std::max_element(a.Begin(), a.End());
+      }
+
+      template <class COORD_TYPE>
+      inline COORD_TYPE Max(const COORD_TYPE& a, const COORD_TYPE& b)
+      {
+         COORD_TYPE coord;
+         COORD_TYPE::Iterator it=coord.Begin();
+         COORD_TYPE::ConstIterator it1=a.Begin();
+         COORD_TYPE::ConstIterator it2=b.Begin();
+
+         for (; it!=coord.End(); ++it, ++it1, ++it2)
+         {
+            *it = Util::Max(*it1, *it2);
+         }
 
          return coord;
       }
 
-      template <class T>
-      inline CoordN<T,2> Max(const CoordN<T,2>& a, const CoordN<T,2>& b)
+      template <class COORD_TYPE>
+      inline COORD_TYPE Min(const COORD_TYPE& a, const COORD_TYPE& b)
       {
-         CoordN<T,2> coord;
-         coord[0] = Util::Max(a[0], b[0]);
-         coord[1] = Util::Max(a[1], b[1]);
+         COORD_TYPE coord;
+         COORD_TYPE::Iterator it=coord.Begin();
+         COORD_TYPE::ConstIterator it1=a.Begin();
+         COORD_TYPE::ConstIterator it2=b.Begin();
 
-         return coord;
-      }
-
-      template <class T>
-      inline CoordN<T,3> Min(const CoordN<T,3>& a, const CoordN<T,3>& b)
-      {
-         CoordN<T,3> coord;
-         coord[0] = Util::Min(a[0], b[0]);
-         coord[1] = Util::Min(a[1], b[1]);
-         coord[2] = Util::Min(a[2], b[2]);
-
-         return coord;
-      }
-
-      template <class T>
-      inline CoordN<T,2> Min(const CoordN<T,2>& a, const CoordN<T,2>& b)
-      {
-         CoordN<T,2> coord;
-         coord[0] = Util::Min(a[0], b[0]);
-         coord[1] = Util::Min(a[1], b[1]);
+         for (; it!=coord.End(); ++it, ++it1, ++it2)
+         {
+            *it = Util::Min(*it1, *it2);
+         }
 
          return coord;
       }
