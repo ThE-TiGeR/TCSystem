@@ -47,18 +47,18 @@ namespace TC
 {
    namespace OpenGL
    {
-      typedef Math::Coord3D<float>   Vertex3D;
+      typedef Math::CoordN<float,3>  Vertex3D;
       typedef std::vector<Vertex3D>  Vertex3DVector;
       typedef Math::Box< Vertex3D >  BoundingBox3D;
 
-      typedef Math::Coord2D<float>   Vertex2D;
+      typedef Math::CoordN<float,2>  Vertex2D;
       typedef std::vector<Vertex2D>  Vertex2DVector;
       typedef Math::Box< Vertex2D >  BoundingBox2D;
 
       typedef Vertex3D   Normal3D;
       typedef std::vector<Vertex3D>  Normal3DVector;
 
-      typedef Math::Coord2D<float>           TextureCoordinate;
+      typedef Math::CoordN<float,2>          TextureCoordinate;
       typedef std::vector<TextureCoordinate> TextureCoordinateVector;
 
       enum Sizes

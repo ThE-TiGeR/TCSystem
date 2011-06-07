@@ -63,11 +63,6 @@ target_link_libraries (TCAudio
     ${MPG123_LIBRARIES}
 )
 
-add_dependencies (TCAudio
-    TCThread
-    TCBasic
-)
-
 set_target_properties(TCAudio PROPERTIES FOLDER Modules)
 set_target_properties(TCAudio PROPERTIES COMPILE_DEFINITIONS "TCAUDIO_EXPORTS")
 set_target_properties(TCAudio PROPERTIES PUBLIC_HEADER "${TC_AUDIO_PUBLIC_HEADER}")

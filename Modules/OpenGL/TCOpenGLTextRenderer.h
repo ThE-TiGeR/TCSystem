@@ -67,7 +67,7 @@ namespace TC
          * @param color  color in which the text should be rendered
          */
          void Render3DText(const std::string &text,
-            const Math::Coord3D< float > &xyzco,
+            const Vertex3D &xyzco,
             const Color &color);
          /**
          * Renders an arry of texts at 3D positions.
@@ -88,7 +88,7 @@ namespace TC
          * @param clip     if true, clip text to left edge of window. (Quite slow.)
          */
          void Render2DText(const std::string &text,
-            Math::Coord2D< sint32 > xyco,
+            Math::CoordN<sint32,2> xyco,
             const Color &color,
             bool clip = false);
 

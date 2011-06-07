@@ -30,14 +30,13 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCMathCoordUtil.h 957 2010-01-28 23:17:00Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 
 #ifndef _TC_COORD_UTIL_H_
 #define _TC_COORD_UTIL_H_
 
-#include "TCMathCoord3D.h"
-#include "TCMathCoord2D.h"
+#include "TCMathCoordN.h"
 
 namespace TC
 {
@@ -71,7 +70,7 @@ namespace TC
       * Computes the square distance of two 3-coordinates
       * @param a     the 1st 3D coordinate
       * @param b     the 2nd 3D coordinate
-      * @return The square distance between the towo coordinates
+      * @return The square distance between the two coordinates
       */
       template <class COORD_TYPE>
       inline double Distance2(const COORD_TYPE &a, const COORD_TYPE &b)
@@ -81,7 +80,7 @@ namespace TC
       }
 
       /**
-      * Computes the dot product of two 3-coordinates (float-precision version).
+      * Computes the dot product of coordinates.
       * @param a     the 1st 3D coordinate
       * @param b     the 2nd 3D coordinate
       * @return the Dot product of the 2 coordinates
@@ -89,7 +88,16 @@ namespace TC
       template <class COORD_TYPE>
       inline typename COORD_TYPE::DataType DotProduct(const COORD_TYPE& a, const COORD_TYPE& b)
       {
-         return a * b;
+         typename COORD_TYPE::DataType val(0);
+         COORD_TYPE::ConstIterator it1=a.Begin();
+         COORD_TYPE::ConstIterator it2=b.Begin();
+
+         for (; it1!=a.End(); ++it1, ++it2)
+         {
+            val += (*it1) * (*it2)
+         }
+
+         return val;
       }
 
       /**
@@ -101,7 +109,7 @@ namespace TC
       template <class COORD_TYPE>
       inline typename COORD_TYPE::DataType DotProduct2(const COORD_TYPE& a, const COORD_TYPE& b)
       {
-         COORD_TYPE v = a * b;
+         COORD_TYPE::DataType v = DotProduct(a, b);
          return v * v;
       }
 
@@ -132,44 +140,43 @@ namespace TC
          return a ^ b;
       }
 
-      template <class T>
-      inline Coord3D<T> Max(const Coord3D<T>& a, const Coord3D<T>& b)
+      /**
+       * @return the maximum of all components of the coordinate
+       */
+      template <class COORD_TYPE>
+      typename COORD_TYPE::DataType MaxValue(const COORD_TYPE& a)
       {
-         Coord3D<T> coord;
-         coord[0] = Util::Max(a[0], b[0]);
-         coord[1] = Util::Max(a[1], b[1]);
-         coord[2] = Util::Max(a[2], b[2]);
+         return *std::max_element(a.Begin(), a.End());
+      }
+
+      template <class COORD_TYPE>
+      inline COORD_TYPE Max(const COORD_TYPE& a, const COORD_TYPE& b)
+      {
+         COORD_TYPE coord;
+         COORD_TYPE::Iterator it=coord.Begin();
+         COORD_TYPE::ConstIterator it1=a.Begin();
+         COORD_TYPE::ConstIterator it2=b.Begin();
+
+         for (; it!=coord.End(); ++it, ++it1, ++it2)
+         {
+            *it = Util::Max(*it1, *it2);
+         }
 
          return coord;
       }
 
-      template <class T>
-      inline Coord2D<T> Max(const Coord2D<T>& a, const Coord2D<T>& b)
+      template <class COORD_TYPE>
+      inline COORD_TYPE Min(const COORD_TYPE& a, const COORD_TYPE& b)
       {
-         Coord2D<T> coord;
-         coord[0] = Util::Max(a[0], b[0]);
-         coord[1] = Util::Max(a[1], b[1]);
+         COORD_TYPE coord;
+         COORD_TYPE::Iterator it=coord.Begin();
+         COORD_TYPE::ConstIterator it1=a.Begin();
+         COORD_TYPE::ConstIterator it2=b.Begin();
 
-         return coord;
-      }
-
-      template <class T>
-      inline Coord3D<T> Min(const Coord3D<T>& a, const Coord3D<T>& b)
-      {
-         Coord3D<T> coord;
-         coord[0] = Util::Min(a[0], b[0]);
-         coord[1] = Util::Min(a[1], b[1]);
-         coord[2] = Util::Min(a[2], b[2]);
-
-         return coord;
-      }
-
-      template <class T>
-      inline Coord2D<T> Min(const Coord2D<T>& a, const Coord2D<T>& b)
-      {
-         Coord2D<T> coord;
-         coord[0] = Util::Min(a[0], b[0]);
-         coord[1] = Util::Min(a[1], b[1]);
+         for (; it!=coord.End(); ++it, ++it1, ++it2)
+         {
+            *it = Util::Min(*it1, *it2);
+         }
 
          return coord;
       }
@@ -181,9 +188,9 @@ namespace TC
       * @return The not normalized normal vector of the plane
       */
       template <class T>
-      inline Coord3D<T> Normalvector(uint32 numPoints, const Coord3D<T>* coords)
+      inline CoordN<T,3> Normalvector(uint32 numPoints, const CoordN<T,3>* coords)
       {
-         Coord3D<T> out;
+         CoordN<T,3> out;
 
          for (uint32 pos=0; pos<numPoints; pos++)
          {
@@ -221,8 +228,8 @@ namespace TC
       }
 
       template <class T>
-      inline bool IsPointInCircle(const Coord2D<T> &Point,
-         const Coord2D<T> &center,
+      inline bool IsPointInCircle(const CoordN<T,2> &Point,
+         const CoordN<T,2> &center,
          double radius)
       {   
          double distance = sqrt((double)((Point[0]-center[0])*(Point[0]-center[0]) 
@@ -232,16 +239,16 @@ namespace TC
       }
 
       template <class T>
-      inline bool CheckInsidePolygon(const Coord2D<T> &point,
-         uint32 num_points, const Coord2D<T> *polygon)
+      inline bool CheckInsidePolygon(const CoordN<T,2> &point,
+         uint32 num_points, const CoordN<T,2> *polygon)
       {
          uint32 crossings = 0;
          //loop over all edges of polygon
          for(uint32 num1=0; num1<num_points; num1++)
          {
             uint32 num2 = (num1 - 1 + num_points) % num_points;
-            Coord2D<T> point1 = polygon[num1] - point;
-            Coord2D<T> point2 = polygon[num2] - point;
+            CoordN<T,2> point1 = polygon[num1] - point;
+            CoordN<T,2> point2 = polygon[num2] - point;
 
             //check if edge i-num2 straddles x axis
             if (((point1[1] > 0.0) && (polygon[num2][1] <= 0.0)) ||

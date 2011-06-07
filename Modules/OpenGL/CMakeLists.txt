@@ -58,10 +58,6 @@ target_link_libraries(TCOpenGL
     ${FOX_LIBRARIES}
     ${OPENGL_LIBRARIES}
 )
-add_dependencies(TCOpenGL
-    TCGui
-    TCBasic
-)
 
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${FOX_CFLAGS}")
 

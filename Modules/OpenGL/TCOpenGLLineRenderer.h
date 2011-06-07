@@ -164,7 +164,7 @@ namespace TC
           * @param colors     The color of the line vertex including alpha value
           * @param num_pixels The thickness of the line in pixel (default = 1)
           */
-         void RenderBox(const Math::Box< Math::Coord3D< float > >& box,
+         void RenderBox(const Math::Box< Vertex3D >& box,
                         const Color& color, uint32 num_pixels=DEFAULT_WIDTH);
 
          /**
@@ -174,7 +174,7 @@ namespace TC
           * @param colors     The color of the line vertex including alpha value
           * @param num_pixels The thickness of the line in pixel (default = 1)
           */
-         void RenderBox(const Math::Box< Math::Coord2D< float > >& box,
+         void RenderBox(const Math::Box< Vertex2D >& box,
                         const Color& color, uint32 num_pixels=DEFAULT_WIDTH);
       };
    }

@@ -45,9 +45,6 @@ target_link_libraries(TCGui
     TCBasic
     ${FOX_LIBRARIES}
 )
-add_dependencies(TCGui
-    TCBasic
-)
 
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${FOX_CFLAGS}")
 

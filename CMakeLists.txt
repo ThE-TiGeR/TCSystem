@@ -57,6 +57,9 @@ include_directories (
    "${PROJECT_BINARY_DIR}/inc"
 )
 
+include(FindBoost)
+include_directories(${Boost_INCLUDE_DIRS})
+
 # set our compiler flags
 if (UNIX)
    set (TC_COMPILE_FLAGS "-fPIC -Wall -Wno-multichar -ggdb -DHAVE_UNIT_TESTS -fvisibility=hidden")

@@ -51,10 +51,6 @@ target_link_libraries(TCNet
     TCThread
     TCBasic
 )
-add_dependencies(TCNet
-    TCThread
-    TCBasic
-)
 
 set_target_properties(TCNet PROPERTIES FOLDER Modules)
 set_target_properties(TCNet PROPERTIES PUBLIC_HEADER "${TC_NET_PUBLIC_HEADER}")
