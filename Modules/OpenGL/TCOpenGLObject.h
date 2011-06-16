@@ -41,7 +41,6 @@
 #include "TCOpenGLColor.h"
 #include "TCOpenGLTypes.h"
 #include "TCMathBox.h"
-#include "TCMathCoord3D.h"
 #include "TCSharedPtr.h"
 
 #ifdef TCOS_WINDOWS

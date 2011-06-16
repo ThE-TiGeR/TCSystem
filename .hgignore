@@ -27,3 +27,8 @@ lib/*
 doc/html/*
 doc/warning.txt
 
+*.vcxproj*
+*.tlog
+*.log
+*.cache
+*.lastbuildstate

@@ -31,14 +31,11 @@
 //----------------------------------------------------------------------
 //  $Id$
 //----------------------------------------------------------------------
-#ifdef HAVE_UNIT_TESTS
-#include "TCMathTestSuite.h"
 
-#include "TCUnitTestCase.h"
-#include "TCMathCoordNTestSuite.h"
-#include "TCMathMatrixNTestSuite.h"
+#ifndef _TC_MATH_COORDN_TEST_SUITE_H_
+#define _TC_MATH_COORDN_TEST_SUITE_H_
 
-#include "TCNewEnable.h"
+#include "TCUnitTestSuite.h"
 
 namespace TC
 {
@@ -46,14 +43,13 @@ namespace TC
    {
       namespace Tests
       {
-         Suite::Suite()
-            :Unit::TestSuite("TC::Math::Tests::Suite")
+         class CoordNSuite : public Unit::TestSuite
          {
-            AddTest(Unit::Test::Ptr(new CoordNSuite));
-            AddTest(Unit::Test::Ptr(new MatrixNSuite));
-         }
+         public:
+            CoordNSuite();
+         };
       }
    }
 }
 
-#endif
+#endif // _TC_MATH_COORDN_TEST_SUITE_H_

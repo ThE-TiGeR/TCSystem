@@ -262,12 +262,14 @@ namespace TC
       {
          if(!file.empty())
          {
-            STRING_TYPE result(file);
-            FILE_NAME_TRAITS::ReplaceString(result, 
+            STRING_TYPE result_str(file);
+            FILE_NAME_TRAITS::ReplaceString(result_str, 
                FILE_NAME_TRAITS::PATH_SEPERATOR_WRONG, FILE_NAME_TRAITS::PATH_SEPERATOR);
             sint32 p=0;
             sint32 q=0;
             sint32 s;
+
+            STRING_TYPE::value_type* result = &result_str.front();
 #ifdef TCOS_WINDOWS
             if(IsPathSeperator(result[q]))
             {         // UNC
@@ -344,7 +346,7 @@ namespace TC
                   }
                }
             }
-            return result.substr(0, p);
+            return result_str.substr(0, p);
          }
          return STRING_TYPE();
       }

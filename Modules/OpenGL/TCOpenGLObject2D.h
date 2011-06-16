@@ -38,7 +38,6 @@
 
 #include "TCOpenGLObject.h"
 
-#include "TCMathCoord2D.h"
 #include "TCMathBox.h"
 #include "TCOpenGLColor.h"
 

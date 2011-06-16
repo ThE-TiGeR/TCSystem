@@ -37,8 +37,7 @@
 #define _TC_OPENGL_TYPES_H_
 
 #include "TCMathBox.h"
-#include "TCMathCoord3D.h"
-#include "TCMathCoord2D.h"
+#include "TCMathCoordN.h"
 #include "TCOpenGLColor.h"
 
 #include <vector>

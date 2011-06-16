@@ -160,7 +160,7 @@ namespace Math
       /** Set one of the n component values */
       inline T& operator[](int pos) { return m_data[pos];}
 
-      CoordN<T, SIZE>& operator=(const T &val) 
+      CoordN<T, SIZE>& operator=(T val) 
       { 
          for (T* data=m_data; data<m_data+SIZE; ++data)
          {
@@ -179,7 +179,7 @@ namespace Math
          return *this;
       }
 
-      CoordN<T, SIZE>& operator+=(const T &val)
+      CoordN<T, SIZE>& operator+=(T val)
       { 
          for (T* data=m_data; data<m_data+SIZE; ++data)
          {
@@ -198,7 +198,7 @@ namespace Math
          return *this;
       }
 
-      CoordN<T, SIZE>& operator-=(const T &val)
+      CoordN<T, SIZE>& operator-=(T val)
       { 
          for (T* data=m_data; data<m_data+SIZE; ++data)
          {
@@ -207,7 +207,7 @@ namespace Math
          return *this;
       }
 
-      CoordN<T, SIZE>& operator*=(const T &val)
+      CoordN<T, SIZE>& operator*=(T val)
       { 
          for (T* data=m_data; data<m_data+SIZE; ++data)
          {
@@ -216,7 +216,7 @@ namespace Math
          return *this;
       }
 
-      CoordN<T, SIZE>& operator/=(const T &val)
+      CoordN<T, SIZE>& operator/=(T val)
       { 
          for (T* data=m_data; data<m_data+SIZE; ++data)
          {
@@ -288,11 +288,11 @@ namespace Math
          }
       }
       
-      Iterator* Begin() {return m_data;}
-      ConstIterator* Begin() const {return m_data + SIZE;}
+      Iterator Begin() {return m_data;}
+      ConstIterator Begin() const {return m_data + SIZE;}
 
-      Iterator* End() {return m_data;}
-      ConstIterator* End() const {return m_data + SIZE;}
+      Iterator End() {return m_data;}
+      ConstIterator End() const {return m_data + SIZE;}
 
    private:
       /** stores the three components of the coordinate */
