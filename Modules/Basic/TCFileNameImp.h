@@ -269,7 +269,7 @@ namespace TC
             sint32 q=0;
             sint32 s;
 
-            STRING_TYPE::value_type* result = &result_str.front();
+            typename STRING_TYPE::value_type* result = const_cast<typename STRING_TYPE::value_type*>(result_str.c_str());
 #ifdef TCOS_WINDOWS
             if(IsPathSeperator(result[q]))
             {         // UNC

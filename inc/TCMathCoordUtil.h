@@ -89,12 +89,12 @@ namespace TC
       inline typename COORD_TYPE::DataType DotProduct(const COORD_TYPE& a, const COORD_TYPE& b)
       {
          typename COORD_TYPE::DataType val(0);
-         COORD_TYPE::ConstIterator it1=a.Begin();
-         COORD_TYPE::ConstIterator it2=b.Begin();
+         typename COORD_TYPE::ConstIterator it1=a.Begin();
+         typename COORD_TYPE::ConstIterator it2=b.Begin();
 
          for (; it1!=a.End(); ++it1, ++it2)
          {
-            val += (*it1) * (*it2)
+            val += (*it1) * (*it2);
          }
 
          return val;
@@ -109,7 +109,7 @@ namespace TC
       template <class COORD_TYPE>
       inline typename COORD_TYPE::DataType DotProduct2(const COORD_TYPE& a, const COORD_TYPE& b)
       {
-         COORD_TYPE::DataType v = DotProduct(a, b);
+         typename COORD_TYPE::DataType v = DotProduct(a, b);
          return v * v;
       }
 
@@ -153,9 +153,9 @@ namespace TC
       inline COORD_TYPE Max(const COORD_TYPE& a, const COORD_TYPE& b)
       {
          COORD_TYPE coord;
-         COORD_TYPE::Iterator it=coord.Begin();
-         COORD_TYPE::ConstIterator it1=a.Begin();
-         COORD_TYPE::ConstIterator it2=b.Begin();
+         typename COORD_TYPE::Iterator it=coord.Begin();
+         typename COORD_TYPE::ConstIterator it1=a.Begin();
+         typename COORD_TYPE::ConstIterator it2=b.Begin();
 
          for (; it!=coord.End(); ++it, ++it1, ++it2)
          {
@@ -169,9 +169,9 @@ namespace TC
       inline COORD_TYPE Min(const COORD_TYPE& a, const COORD_TYPE& b)
       {
          COORD_TYPE coord;
-         COORD_TYPE::Iterator it=coord.Begin();
-         COORD_TYPE::ConstIterator it1=a.Begin();
-         COORD_TYPE::ConstIterator it2=b.Begin();
+         typename COORD_TYPE::Iterator it=coord.Begin();
+         typename COORD_TYPE::ConstIterator it1=a.Begin();
+         typename COORD_TYPE::ConstIterator it2=b.Begin();
 
          for (; it!=coord.End(); ++it, ++it1, ++it2)
          {

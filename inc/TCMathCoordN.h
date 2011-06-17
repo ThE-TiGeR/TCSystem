@@ -298,7 +298,7 @@ namespace Math
       /** stores the three components of the coordinate */
       T m_data[NUM_COMPONENTS];  
 
-      template <class T1, uint32 SIZE> friend class CoordN;
+      template <class T1, uint32 SIZE1> friend class CoordN;
    };
 
    template <class T, uint32 SIZE>

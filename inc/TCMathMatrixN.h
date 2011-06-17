@@ -228,7 +228,7 @@ namespace TC
       private:
          T m_data[ARRAY_DIMENSION];
 
-         template <class T1, uint32 SIZE> friend class MatrixN;
+         template <class T1, uint32 SIZE1> friend class MatrixN;
       };
 
       /**
