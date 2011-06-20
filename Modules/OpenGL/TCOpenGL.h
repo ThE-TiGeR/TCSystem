@@ -46,6 +46,7 @@
 #ifdef TCOS_WINDOWS
 #  include <wtypes.h>
 #undef MessageBox
+#undef GetObject
 #else
 #  define GL_GLEXT_PROTOTYPES
 #endif
