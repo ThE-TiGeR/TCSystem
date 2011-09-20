@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id: TCNetAddress.h 999 2010-07-14 23:04:00Z the_____tiger $
+//  $Id$
 //*******************************************************************************
 
 #ifndef _TCNET_ADRESS_H_
