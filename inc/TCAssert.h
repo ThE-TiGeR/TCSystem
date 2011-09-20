@@ -29,7 +29,7 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //----------------------------------------------------------------------
-//  $Id: TCAssert.h 780 2007-11-08 15:14:29Z the_____tiger $
+//  $Id$
 //----------------------------------------------------------------------
 
 #ifndef _TC_ASSERT_H_
