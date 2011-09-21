@@ -43,6 +43,8 @@ add_library (TCOpenGL
 )
 
 include_directories (
+   ../Basic/inc
+   ../Math/inc
    "${FOX_INCLUDE_DIRS}"
    "${GLEXT_INCLUDE_DIR}"
 )
@@ -53,7 +55,7 @@ if (UNIX)
 endif ()
 
 target_link_libraries(TCOpenGL
-    TCGui
+    TCMath
     TCBasic
     ${FOX_LIBRARIES}
     ${OPENGL_LIBRARIES}

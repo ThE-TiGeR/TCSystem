@@ -1,4 +1,9 @@
 
+include_directories (
+   "../../Modules/Basic/inc"
+   "../../Modules/Math"
+)
+
 add_executable (TCMathSheet
     MathSheet.cpp
 )

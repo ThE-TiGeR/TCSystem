@@ -1,7 +1,10 @@
 
 include_directories (
-   "${TCSystem_SOURCE_DIR}/Modules/Audio"
+   "../../Modules/Basic/inc"
+   "../../Modules/Thread/inc"
+   "../../Modules/Audio"
 )
+
 add_executable (TCAudioTest
     audio_test.cpp
 )

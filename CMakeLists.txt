@@ -50,13 +50,6 @@ install(FILES "${PROJECT_BINARY_DIR}/TCSystemNet.pc" DESTINATION "lib/pkgconfig"
 install(FILES "${PROJECT_BINARY_DIR}/TCSystemGui.pc" DESTINATION "lib/pkgconfig" COMPONENT dev)
 install(FILES "${PROJECT_BINARY_DIR}/TCSystemAudio.pc" DESTINATION "lib/pkgconfig" COMPONENT dev)
 
-# add the binary tree to the search path for include files
-# so that we will find TCSystemConfig.h
-# also add the Basic directory for all sub projects
-include_directories (
-   "${PROJECT_BINARY_DIR}/inc"
-)
-
 include(FindBoost)
 include_directories(${Boost_INCLUDE_DIRS})
 

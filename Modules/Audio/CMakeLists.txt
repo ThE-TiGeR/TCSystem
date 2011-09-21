@@ -1,6 +1,14 @@
 include(FindOpenAL)
 include(FindMPG123)
 
+include_directories (
+   ../Basic/inc
+   ../Thread/inc
+   "${OPENAL_INCLUDE_DIR}"
+   "${MPG123_INCLUDE_DIR1}"
+   "${MPG123_INCLUDE_DIR2}"
+)
+
 set (TC_AUDIO_PUBLIC_HEADER
         TCAudioApi.h
         TCAudioManager.h
@@ -48,12 +56,6 @@ add_library (TCAudio
 	TCAudioStreamingThread.h
 	TCAudioUtil.h
         ${TC_AUDIO_PUBLIC_HEADER}
-)
-
-include_directories (
-   "${OPENAL_INCLUDE_DIR}"
-   "${MPG123_INCLUDE_DIR1}"
-   "${MPG123_INCLUDE_DIR2}"
 )
 
 target_link_libraries (TCAudio

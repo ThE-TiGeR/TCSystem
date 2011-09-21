@@ -36,7 +36,6 @@
 #include "TCUtilTest.h"
 
 #include "TCUtil.h"
-#include "TCMathUtil.h"
 
 #include "TCUnitTestCase.h"
 
@@ -95,57 +94,6 @@ namespace TC
       }
 
 
-      class UtilPow : public Unit::TestCase
-      {
-      public:
-         UtilPow() : Unit::TestCase("TC::Tests::UtilPow") {}
-         virtual void Execute();
-      };
-
-      void UtilPow::Execute()
-      {
-         TCUNIT_ASSERT(TC::Math::Pow(2, 2) == 4);
-         TCUNIT_ASSERT(TC::Math::Pow(2, 3) == 8);
-
-         TCUNIT_ASSERT(TC::Math::Pow(7, 6) == 117649);
-      }
-
-
-      class UtilAlign : public Unit::TestCase
-      {
-      public:
-         UtilAlign() : Unit::TestCase("TC::Tests::UtilAlign") {}
-         virtual void Execute();
-      };
-
-      void UtilAlign::Execute()
-      {
-         TCUNIT_ASSERT(TC::Math::Align32(0) == 0);
-         TCUNIT_ASSERT(TC::Math::Align32(4) == 32);
-         TCUNIT_ASSERT(TC::Math::Align32(31) == 32);
-         TCUNIT_ASSERT(TC::Math::Align32(32) == 32);
-         TCUNIT_ASSERT(TC::Math::Align32(33) == 64);
-
-         TCUNIT_ASSERT(TC::Math::Align16(0) == 0);
-         TCUNIT_ASSERT(TC::Math::Align16(4) == 16);
-         TCUNIT_ASSERT(TC::Math::Align16(15) == 16);
-         TCUNIT_ASSERT(TC::Math::Align16(32) == 32);
-         TCUNIT_ASSERT(TC::Math::Align16(33) == 48);
-      }
-
-      class UtilCompare : public Unit::TestCase
-      {
-      public:
-         UtilCompare() : Unit::TestCase("TC::Tests::UtilCompare") {}
-         virtual void Execute();
-      };
-
-      void UtilCompare::Execute()
-      {
-         TCUNIT_ASSERT(TC::Math::Compare(2.0001, 2.0001));
-         TCUNIT_ASSERT(!TC::Math::Compare(-2.0001, 2.0001));
-         TCUNIT_ASSERT(!TC::Math::Compare(2.0001, 2.0001001));
-      }
 
       class UtilStlContainer : public Unit::TestCase
       {
@@ -286,11 +234,8 @@ namespace TC
       UtilTestSuite::UtilTestSuite()
          :Unit::TestSuite("TC::Tests::UtilTestSuite")
       {
-         AddTest(Unit::Test::Ptr(new UtilCompare));
          AddTest(Unit::Test::Ptr(new UtilAbs));
          AddTest(Unit::Test::Ptr(new UtilMinMax));
-         AddTest(Unit::Test::Ptr(new UtilPow));
-         AddTest(Unit::Test::Ptr(new UtilAlign));
          AddTest(Unit::Test::Ptr(new UtilStlContainer));
          AddTest(Unit::Test::Ptr(new UtilSafeRelease));
          AddTest(Unit::Test::Ptr(new UtilSwap));

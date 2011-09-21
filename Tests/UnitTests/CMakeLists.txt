@@ -1,4 +1,11 @@
 
+include_directories (
+   "../../Modules/Basic/inc"
+   "../../Modules/Math/inc"
+   "../../Modules/Thread/inc"
+   "../../Modules/Net/inc"
+)
+
 add_executable (TCUnitTests
     TCUnitTest.cpp
 )

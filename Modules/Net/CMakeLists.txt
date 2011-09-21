@@ -1,37 +1,50 @@
 include (FindOpenSSL)
 
+if (OPENSSL_FOUND)
+	include_directories(
+		inc
+        ../Basic/inc
+        ../Thread/inc
+		${OPENSSL_INCLUDE_DIR}
+	)
+else ()
+	include_directories(
+		inc
+	)
+endif ()
+
 set (TC_NET_PUBLIC_HEADER
-        ${TCSystem_SOURCE_DIR}/inc/TCNetApi.h
-        ${TCSystem_SOURCE_DIR}/inc/TCNetAddress.h
-        ${TCSystem_SOURCE_DIR}/inc/TCNetBroadCastSocket.h
-        ${TCSystem_SOURCE_DIR}/inc/TCNetReadWriteSocket.h
-        ${TCSystem_SOURCE_DIR}/inc/TCNetFactory.h
-        ${TCSystem_SOURCE_DIR}/inc/TCNetSSLFactory.h
-        ${TCSystem_SOURCE_DIR}/inc/TCNetSocket.h
-        ${TCSystem_SOURCE_DIR}/inc/TCNetSocketServer.h
-        ${TCSystem_SOURCE_DIR}/inc/TCNetTypes.h
+    inc/TCNetApi.h
+    inc/TCNetAddress.h
+    inc/TCNetBroadCastSocket.h
+    inc/TCNetReadWriteSocket.h
+    inc/TCNetFactory.h
+    inc/TCNetSSLFactory.h
+    inc/TCNetSocket.h
+    inc/TCNetSocketServer.h
+    inc/TCNetTypes.h
 )
 
 add_library (TCNet
-	TCNetAddress.cpp
-	TCNetBase.cpp
-	TCNetBase.h
-	TCNetDebugNew.cpp
-	TCNetFactory.cpp
-	TCNetOS.h
-	TCNetSocketImp.cpp
-	TCNetSocketImp.h
-	TCNetSocketServerImp.cpp
-	TCNetSocketServerImp.h
-	TCNetSSLFactory.cpp
-	TCNetSSLSocket.cpp
-	TCNetSslSocket.h
-	TCNetUtil.cpp
-	TCNetUtil.h
-	Tests/TCNetAddressTest.cpp
-	Tests/TCNetAddressTest.h
-	Tests/TCNetTestSuit.cpp
-	Tests/TCNetTestSuite.h
+	src/TCNetAddress.cpp
+	src/TCNetBase.cpp
+	src/TCNetBase.h
+	src/TCNetDebugNew.cpp
+	src/TCNetFactory.cpp
+	src/TCNetOS.h
+	src/TCNetSocketImp.cpp
+	src/TCNetSocketImp.h
+	src/TCNetSocketServerImp.cpp
+	src/TCNetSocketServerImp.h
+	src/TCNetSSLFactory.cpp
+	src/TCNetSSLSocket.cpp
+	src/TCNetSslSocket.h
+	src/TCNetUtil.cpp
+	src/TCNetUtil.h
+	tests/TCNetAddressTest.cpp
+	tests/TCNetAddressTest.h
+	tests/TCNetTestSuit.cpp
+	tests/TCNetTestSuite.h
 	${TC_NET_PUBLIC_HEADER}
 )
 

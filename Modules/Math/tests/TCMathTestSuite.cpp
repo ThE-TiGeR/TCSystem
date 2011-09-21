@@ -37,6 +37,7 @@
 #include "TCUnitTestCase.h"
 #include "TCMathCoordNTestSuite.h"
 #include "TCMathMatrixNTestSuite.h"
+#include "TCMathUtil.h"
 
 #include "TCNewEnable.h"
 
@@ -46,11 +47,64 @@ namespace TC
    {
       namespace Tests
       {
+         class PowTest : public Unit::TestCase
+         {
+         public:
+            PowTest() : Unit::TestCase("TC::Math::Tests::PowTest") {}
+            virtual void Execute();
+         };
+
+         void PowTest::Execute()
+         {
+            TCUNIT_ASSERT(TC::Math::Pow(2, 2) == 4);
+            TCUNIT_ASSERT(TC::Math::Pow(2, 3) == 8);
+
+            TCUNIT_ASSERT(TC::Math::Pow(7, 6) == 117649);
+         }
+
+         class AlignTest : public Unit::TestCase
+         {
+         public:
+            AlignTest() : Unit::TestCase("TC::Math::Tests::AlignTest") {}
+            virtual void Execute();
+         };
+
+         void AlignTest::Execute()
+         {
+            TCUNIT_ASSERT(TC::Math::Align32(0) == 0);
+            TCUNIT_ASSERT(TC::Math::Align32(4) == 32);
+            TCUNIT_ASSERT(TC::Math::Align32(31) == 32);
+            TCUNIT_ASSERT(TC::Math::Align32(32) == 32);
+            TCUNIT_ASSERT(TC::Math::Align32(33) == 64);
+
+            TCUNIT_ASSERT(TC::Math::Align16(0) == 0);
+            TCUNIT_ASSERT(TC::Math::Align16(4) == 16);
+            TCUNIT_ASSERT(TC::Math::Align16(15) == 16);
+            TCUNIT_ASSERT(TC::Math::Align16(32) == 32);
+            TCUNIT_ASSERT(TC::Math::Align16(33) == 48);
+         }
+
+         class CompareTests : public Unit::TestCase
+         {
+         public:
+            CompareTests() : Unit::TestCase("TC::Math::Tests::CompareTests") {}
+            virtual void Execute();
+         };
+
+         void CompareTests::Execute()
+         {
+            TCUNIT_ASSERT(TC::Math::Compare(2.0001, 2.0001));
+            TCUNIT_ASSERT(!TC::Math::Compare(-2.0001, 2.0001));
+            TCUNIT_ASSERT(!TC::Math::Compare(2.0001, 2.0001001));
+         }
+
+
          Suite::Suite()
             :Unit::TestSuite("TC::Math::Tests::Suite")
          {
             AddTest(Unit::Test::Ptr(new CoordNSuite));
             AddTest(Unit::Test::Ptr(new MatrixNSuite));
+            AddTest(Unit::Test::Ptr(new PowTest));
          }
       }
    }

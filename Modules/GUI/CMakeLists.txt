@@ -1,5 +1,10 @@
 include (FindFOX)
 
+include_directories (
+   ../Basic/inc
+   "${FOX_INCLUDE_DIRS}"
+)
+
 set (TC_GUI_PUBLIC_HEADER
         TCGuiActionBox.h
         TCGuiApi.h
@@ -35,10 +40,6 @@ add_library (TCGui
 	TCGuiWidget.cpp
 	TCGuiWindow.cpp
     ${TC_GUI_PUBLIC_HEADER}
-)
-
-include_directories (
-   "${FOX_INCLUDE_DIRS}"
 )
 
 target_link_libraries(TCGui

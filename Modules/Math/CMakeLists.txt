@@ -1,32 +1,37 @@
 include(FindBoost)
-include_directories(${Boost_INCLUDE_DIRS})
+
+include_directories(
+    inc
+    ../Basic/inc
+    ${Boost_INCLUDE_DIRS}
+)
 
 set (TC_MATH_PUBLIC_HEADER
-        ${TCSystem_SOURCE_DIR}/inc/TCMathApi.h
-        ${TCSystem_SOURCE_DIR}/inc/TCMathChecksum.h
-        ${TCSystem_SOURCE_DIR}/inc/TCMathCoordN.h
-        ${TCSystem_SOURCE_DIR}/inc/TCMathMatrixN.h
-        ${TCSystem_SOURCE_DIR}/inc/TCMathCoordUtil.h
-        ${TCSystem_SOURCE_DIR}/inc/TCMathBox.h
-        ${TCSystem_SOURCE_DIR}/inc/TCMathFactory.h
-        ${TCSystem_SOURCE_DIR}/inc/TCMathUtil.h 
+    inc/TCMathApi.h
+    inc/TCMathChecksum.h
+    inc/TCMathCoordN.h
+    inc/TCMathMatrixN.h
+    inc/TCMathCoordUtil.h
+    inc/TCMathBox.h
+    inc/TCMathFactory.h
+    inc/TCMathUtil.h 
 )
 
 set (TC_MATH_SOURCE
-	TCMathDebugNew.cpp
-	TCMathFactory.cpp
-	TCMathUtil.cpp
-	TCMD5.cpp
-	TCMD5.h
+	src/TCMathDebugNew.cpp
+	src/TCMathFactory.cpp
+	src/TCMathUtil.cpp
+	src/TCMD5.cpp
+	src/TCMD5.h
 )
 
 set (TC_MATH_TEST_FILES
-    Tests/TCMathTestSuite.h
-    Tests/TCMathTestSuite.cpp
-    Tests/TCMathCoordNTestSuite.h
-    Tests/TCMathCoordNTestSuite.cpp
-    Tests/TCMathMatrixNTestSuite.h
-    Tests/TCMathMatrixNTestSuite.cpp
+    tests/TCMathTestSuite.h
+    tests/TCMathTestSuite.cpp
+    tests/TCMathCoordNTestSuite.h
+    tests/TCMathCoordNTestSuite.cpp
+    tests/TCMathMatrixNTestSuite.h
+    tests/TCMathMatrixNTestSuite.cpp
 )
 
 add_library (TCMath
