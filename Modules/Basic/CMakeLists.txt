@@ -138,10 +138,10 @@ add_library (TCBasic
 	tests/TCWStringTest.cpp	
 	${TC_BASIC_PUBLIC_HEADER}
 
-	../cmake/FindFOX.cmake
-	../cmake/FindGLext.cmake
-	../cmake/FindMPG123.cmake
-	../cmake/FindOpenAL.cmake
+	../../cmake/FindFOX.cmake
+	../../cmake/FindGLext.cmake
+	../../cmake/FindMPG123.cmake
+	../../cmake/FindOpenAL.cmake
 )
 
 if (MSVC)
