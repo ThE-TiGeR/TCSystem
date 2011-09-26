@@ -61,13 +61,8 @@ namespace TC
    /** @brief typedef for 64bit signed int */
    typedef __int64          sint64;
 #else
-#  ifdef TCOS_64BIT
-   /** typedef for 64bit signed int */
-   typedef long          sint64;
-#  else
    /** typedef for 64bi signed int */
    typedef long long     sint64;
-#  endif
 #endif
 
    /** @brief typedef for 8bit unsigned int */
@@ -80,13 +75,8 @@ namespace TC
    /** @brief typedef for 64bit signed int */
    typedef unsigned __int64       uint64;
 #else
-#  ifdef TCOS_64BIT
-   /** @brief typedef for 64bit unsigned int */
-   typedef unsigned long uint64;
-#  else
    /** @brief typedef for 64bit unsigned int */
    typedef unsigned long long uint64;
-#  endif
 #endif
 
    // typedef for 32bit float does not need to be defined -> is float

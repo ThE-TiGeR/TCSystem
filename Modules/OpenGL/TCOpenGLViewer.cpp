@@ -2612,7 +2612,7 @@ namespace TC
 
                // Try open printer
                if(!pdc.beginPrint(printer)){
-                  FXMessageBox::error(this,MBOX_OK,tr("Printer Error"),tr("Unable to print."));
+                  FXMessageBox::error(this,MBOX_OK,tr("Printer Error"), "%s", tr("Unable to print."));
                   return 1;
                }
 
@@ -2786,7 +2786,7 @@ namespace TC
             dlg.getPrinter(printer);
             FXDCPrint pdc(getApp());
             if(!pdc.beginPrint(printer)){
-               FXMessageBox::error(this,MBOX_OK,tr("Printer Error"),tr("Unable to print."));
+               FXMessageBox::error(this,MBOX_OK,tr("Printer Error"), "%s", tr("Unable to print."));
                return 1;
             }
 
