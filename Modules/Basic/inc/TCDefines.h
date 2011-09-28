@@ -114,7 +114,7 @@
 /** @brief The Homepage of TCSystem */
 #define TCHOMPAGE       "http://sourceforge.net/projects/tcsystem/"
 /** @brief The copyright string*/
-#define TCCOPYRIGHT     "Copyright (C) 2003 - 2010 Thomas Goessler. All rights reserved"
+#define TCCOPYRIGHT     "Copyright (C) 2003 - 2011 Thomas Goessler. All rights reserved"
 
 // ---------------------------------------------------------------
 // For DLL´s
@@ -209,10 +209,17 @@
 #  define TC_SINT64_VAL(val) (val##i64)
 
 #else
-#  define TC_SINT64_FORMAT   "lld"
-#  define TC_SINT64_WFORMAT L"lld"
-#  define TC_UINT64_FORMAT   "llu"
-#  define TC_UINT64_WFORMAT L"llu"
+#  ifdef TCOS_64BIT
+#    define TC_SINT64_FORMAT   "ld"
+#    define TC_SINT64_WFORMAT L"ld"
+#    define TC_UINT64_FORMAT   "lu"
+#    define TC_UINT64_WFORMAT L"lu"
+#  else
+#    define TC_SINT64_FORMAT   "lld"
+#    define TC_SINT64_WFORMAT L"lld"
+#    define TC_UINT64_FORMAT   "llu"
+#    define TC_UINT64_WFORMAT L"llu"
+#  endif
 
 #  define TC_UINT64_VAL(val) (val##ull)
 #  define TC_SINT64_VAL(val) (val##ll)

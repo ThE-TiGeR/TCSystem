@@ -56,21 +56,21 @@ namespace Net
 namespace Impl
 {
 
-class StartMessage: public MT::Message
+class TC_DLL_LOCAL StartMessage: public MT::Message
 {
 public:
    enum { MESSAGE_ID = MT::Message::MSG_ID_USER_START+1 };
    StartMessage():MT::Message(MESSAGE_ID) {}
 };
 
-class StopMessage: public MT::Message
+class TC_DLL_LOCAL StopMessage: public MT::Message
 {
 public:
    enum { MESSAGE_ID = MT::Message::MSG_ID_USER_START+2 };
    StopMessage():MT::Message(MESSAGE_ID) {}
 };
 
-class AddSocketMessage: public MT::Message
+class TC_DLL_LOCAL AddSocketMessage: public MT::Message
 {
 public:
    enum { MESSAGE_ID = MT::Message::MSG_ID_USER_START+3 };
@@ -85,10 +85,10 @@ public:
    SocketServerImp::DataReceiverPtr m_receiver_to_add;
 };
 
-class RemoveSocketMessage: public MT::Message
+class TC_DLL_LOCAL RemoveSocketMessage: public MT::Message
 {
 public:
-   enum { MESSAGE_ID = 4 };
+   enum { MESSAGE_ID = MT::Message::MSG_ID_USER_START+4 };
    RemoveSocketMessage(SocketPtr socket_to_remove)
       :MT::Message(MESSAGE_ID),
       m_socket_to_remove(socket_to_remove)
@@ -97,7 +97,7 @@ public:
    SocketPtr m_socket_to_remove;
 };
 
-class ThreadObject: public MT::ThreadObject
+class TC_DLL_LOCAL ThreadObject: public MT::ThreadObject
 {
 public:
    ThreadObject(SocketServerImp* server)
