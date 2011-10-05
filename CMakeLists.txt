@@ -4,8 +4,8 @@ project (TCSystem)
 
 #-----------------------------------------------------------------------------
 # TCSYSTEM version number, useful for packaging and doxygen doc:
-set (TCSystem_VERSION_MAJOR 1)
-set (TCSystem_VERSION_MINOR 6)
+set (TCSystem_VERSION_MAJOR 2)
+set (TCSystem_VERSION_MINOR 0)
 set (TCSystem_VERSION_PATCH 0)
 
 SET(TCSystem_VERSION

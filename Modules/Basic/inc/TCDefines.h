@@ -106,7 +106,7 @@
 // Version and build numbers
 // ---------------------------------------------------------------
 /** @brief Version string of TCSystem */
-#define TCVERSION_STR   "1.4.0"
+#define TCVERSION_STR   "2.0.0"
 /** @brief The TCSystem string */
 #define TCPRODUCT_STR   "TC-System"
 /** @brief The Version string + TCSystem string */
@@ -114,7 +114,7 @@
 /** @brief The Homepage of TCSystem */
 #define TCHOMPAGE       "http://sourceforge.net/projects/tcsystem/"
 /** @brief The copyright string*/
-#define TCCOPYRIGHT     "Copyright (C) 2003 - 2010 Thomas Goessler. All rights reserved"
+#define TCCOPYRIGHT     "Copyright (C) 2003 - 2011 Thomas Goessler. All rights reserved"
 
 // ---------------------------------------------------------------
 // For DLL´s
