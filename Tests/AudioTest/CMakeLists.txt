@@ -2,7 +2,7 @@
 include_directories (
    "../../Modules/Basic/inc"
    "../../Modules/Thread/inc"
-   "../../Modules/Audio"
+   "../../Modules/Audio/inc"
 )
 
 add_executable (TCAudioTest
