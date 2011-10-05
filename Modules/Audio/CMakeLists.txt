@@ -1,59 +1,62 @@
 include(FindOpenAL)
 include(FindMPG123)
 
-set (TC_AUDIO_PUBLIC_HEADER
-        TCAudioApi.h
-        TCAudioManager.h
-        TCAudioSound.h
-        TCAudioSoundCompound.h
-)
-
-add_library (TCAudio
-	TCAudioChangePanTask.cpp
-	TCAudioChangePanTask.h
-	TCAudioChangePitchTask.cpp
-	TCAudioChangePitchTask.h
-	TCAudioChangeSoundValueTask.cpp
-	TCAudioChangeSoundValueTask.h
-	TCAudioChangeVolumeTask.cpp
-	TCAudioChangeVolumeTask.h
-	TCAudioDebugNew.cpp
-	TCAudioManager.cpp
-	TCAudioOpenAL.h
-	TCAudioOpenALHandler.cpp
-	TCAudioOpenALHandler.h
-	TCAudioSoundData.h
-	TCAudioSoundDataCompound.cpp
-	TCAudioSoundDataCompound.h
-	TCAudioSoundDataMapper.h
-	TCAudioSoundDataMp3.cpp
-	TCAudioSoundDataMp3.h
-	TCAudioSoundDataMultitrack.cpp
-	TCAudioSoundDataMultitrack.h
-	TCAudioSoundDataSequence.cpp
-	TCAudioSoundDataSequence.h
-	TCAudioSoundDataWav.cpp
-	TCAudioSoundDataWav.h
-	TCAudioSoundFormat.h
-	TCAudioSoundImp.cpp
-	TCAudioSoundImp.h
-	TCAudioSoundMultitrackImp.cpp
-	TCAudioSoundMultitrackImp.h
-	TCAudioSoundPlayer.h
-	TCAudioSoundSequenceImp.cpp
-	TCAudioSoundSequenceImp.h
-	TCAudioStreamingTask.cpp
-	TCAudioStreamingTask.h
-	TCAudioStreamingThread.cpp
-	TCAudioStreamingThread.h
-	TCAudioUtil.h
-        ${TC_AUDIO_PUBLIC_HEADER}
-)
-
 include_directories (
+   inc
+   ../Basic/inc
+   ../Thread/inc
    "${OPENAL_INCLUDE_DIR}"
    "${MPG123_INCLUDE_DIR1}"
    "${MPG123_INCLUDE_DIR2}"
+)
+
+set (TC_AUDIO_PUBLIC_HEADER
+    inc/TCAudioApi.h
+    inc/TCAudioManager.h
+    inc/TCAudioSound.h
+    inc/TCAudioSoundCompound.h
+    inc/TCAudioSoundFormat.h
+)
+
+add_library (TCAudio
+	src/TCAudioChangePanTask.cpp
+	src/TCAudioChangePanTask.h
+	src/TCAudioChangePitchTask.cpp
+	src/TCAudioChangePitchTask.h
+	src/TCAudioChangeSoundValueTask.cpp
+	src/TCAudioChangeSoundValueTask.h
+	src/TCAudioChangeVolumeTask.cpp
+	src/TCAudioChangeVolumeTask.h
+	src/TCAudioDebugNew.cpp
+	src/TCAudioManager.cpp
+	src/TCAudioOpenAL.h
+	src/TCAudioOpenALHandler.cpp
+	src/TCAudioOpenALHandler.h
+	src/TCAudioSoundData.h
+	src/TCAudioSoundDataCompound.cpp
+	src/TCAudioSoundDataCompound.h
+	src/TCAudioSoundDataMapper.h
+	src/TCAudioSoundDataMp3.cpp
+	src/TCAudioSoundDataMp3.h
+	src/TCAudioSoundDataMultitrack.cpp
+	src/TCAudioSoundDataMultitrack.h
+	src/TCAudioSoundDataSequence.cpp
+	src/TCAudioSoundDataSequence.h
+	src/TCAudioSoundDataWav.cpp
+	src/TCAudioSoundDataWav.h
+	src/TCAudioSoundImp.cpp
+	src/TCAudioSoundImp.h
+	src/TCAudioSoundMultitrackImp.cpp
+	src/TCAudioSoundMultitrackImp.h
+	src/TCAudioSoundPlayer.h
+	src/TCAudioSoundSequenceImp.cpp
+	src/TCAudioSoundSequenceImp.h
+	src/TCAudioStreamingTask.cpp
+	src/TCAudioStreamingTask.h
+	src/TCAudioStreamingThread.cpp
+	src/TCAudioStreamingThread.h
+	src/TCAudioUtil.h
+    ${TC_AUDIO_PUBLIC_HEADER}
 )
 
 target_link_libraries (TCAudio

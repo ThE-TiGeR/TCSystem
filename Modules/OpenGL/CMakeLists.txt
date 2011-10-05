@@ -3,46 +3,49 @@ include (FindOpenGL)
 include (FindGLext)
 
 set (TC_OPENGL_PUBLIC_HEADER
-    TCOpenGL.h
-    TCOpenGLApi.h
-    TCOpenGLColor.h
-    TCOpenGLCoordinateCross.h
-    TCOpenGLCrossHair.h
-    TCOpenGLFace.h
-    TCOpenGLFactory.h
-    TCOpenGLLineRenderer.h
-    TCOpenGLMaterial.h
-    TCOpenGLObject.h
-    TCOpenGLObject2D.h
-    TCOpenGLObject3D.h
-    TCOpenGLObjectGroup.h
-    TCOpenGLPatchRenderer.h
-    TCOpenGLTextRenderer.h
-    TCOpenGLTypes.h
-    TCOpenGLUtil.h
-    TCOpenGLViewer.h
+    inc/TCOpenGL.h
+    inc/TCOpenGLApi.h
+    inc/TCOpenGLColor.h
+    inc/TCOpenGLCoordinateCross.h
+    inc/TCOpenGLCrossHair.h
+    inc/TCOpenGLFace.h
+    inc/TCOpenGLFactory.h
+    inc/TCOpenGLLineRenderer.h
+    inc/TCOpenGLMaterial.h
+    inc/TCOpenGLObject.h
+    inc/TCOpenGLObject2D.h
+    inc/TCOpenGLObject3D.h
+    inc/TCOpenGLObjectGroup.h
+    inc/TCOpenGLPatchRenderer.h
+    inc/TCOpenGLTextRenderer.h
+    inc/TCOpenGLTypes.h
+    inc/TCOpenGLUtil.h
+    inc/TCOpenGLViewer.h
 )
 add_library (TCOpenGL
-    TCOpenGLColor.cpp
-    TCOpenGLCoordinateCross.cpp
-    TCOpenGLCrossHair.cpp
-    TCOpenGLDebugNew.cpp
-    TCOpenGLFace.cpp
-    TCOpenGLFactory.cpp
-    TCOpenGLLineRenderer.cpp
-    TCOpenGLMaterial.cpp
-    TCOpenGLObject.cpp
-    TCOpenGLObject2D.cpp
-    TCOpenGLObject3D.cpp
-    TCOpenGLObjectGroup.cpp
-    TCOpenGLPatchRenderer.cpp
-    TCOpenGLTextRenderer.cpp
-    TCOpenGLUtil.cpp
-    TCOpenGLViewer.cpp
+    src/TCOpenGLColor.cpp
+    src/TCOpenGLCoordinateCross.cpp
+    src/TCOpenGLCrossHair.cpp
+    src/TCOpenGLDebugNew.cpp
+    src/TCOpenGLFace.cpp
+    src/TCOpenGLFactory.cpp
+    src/TCOpenGLLineRenderer.cpp
+    src/TCOpenGLMaterial.cpp
+    src/TCOpenGLObject.cpp
+    src/TCOpenGLObject2D.cpp
+    src/TCOpenGLObject3D.cpp
+    src/TCOpenGLObjectGroup.cpp
+    src/TCOpenGLPatchRenderer.cpp
+    src/TCOpenGLTextRenderer.cpp
+    src/TCOpenGLUtil.cpp
+    src/TCOpenGLViewer.cpp
     ${TC_OPENGL_PUBLIC_HEADER}
 )
 
 include_directories (
+   inc
+   ../Basic/inc
+   ../Math/inc
    "${FOX_INCLUDE_DIRS}"
    "${GLEXT_INCLUDE_DIR}"
 )
@@ -53,7 +56,7 @@ if (UNIX)
 endif ()
 
 target_link_libraries(TCOpenGL
-    TCGui
+    TCMath
     TCBasic
     ${FOX_LIBRARIES}
     ${OPENGL_LIBRARIES}

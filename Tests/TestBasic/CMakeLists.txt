@@ -1,4 +1,10 @@
 
+include_directories (
+   "../../Modules/Basic/inc"
+   "../../Modules/Thread/inc"
+   "../../Modules/Net/inc"
+)
+
 add_executable (TCTestBasic
     testBasic.cpp
 )

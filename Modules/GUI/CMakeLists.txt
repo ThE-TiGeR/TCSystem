@@ -1,49 +1,51 @@
 include (FindFOX)
 
-set (TC_GUI_PUBLIC_HEADER
-        TCGuiActionBox.h
-        TCGuiApi.h
-        TCGuiApplication.h
-        TCGuiBase.h
-        TCGuiButton.h
-        TCGuiDialogBox.h
-        TCGuiImageHandler.h
-        TCGuiLabel.h
-        TCGuiMenu.h
-        TCGuiMessageBox.h
-        TCGuiShutterMenu.h
-        TCGuiTreeList.h
-        TCGuiWidget.h
-        TCGuiWindow.h
-)
-
-add_library (TCGui
-	TCGuiActionBox.cpp
-	TCGuiApplication.cpp
-	TCGuiBase.cpp
-	TCGuiButton.cpp
-	TCGuiDebugNew.cpp
-	TCGuiDialogBox.cpp
-	TCGuiImageHandler.cpp
-	TCGuiImages.cpp
-	TCGuiLabel.cpp
-	TCGuiMenu.cpp
-	TCGuiMessageBox.cpp
-	TCGuiMLS.cpp
-	TCGuiShutterMenu.cpp
-	TCGuiTreeList.cpp
-	TCGuiWidget.cpp
-	TCGuiWindow.cpp
-    ${TC_GUI_PUBLIC_HEADER}
-)
-
 include_directories (
+   inc
+   ../Basic/inc
    "${FOX_INCLUDE_DIRS}"
 )
 
+set (TC_GUI_PUBLIC_HEADER
+	inc/TCGuiActionBox.h
+	inc/TCGuiApi.h
+	inc/TCGuiApplication.h
+	inc/TCGuiBase.h
+	inc/TCGuiButton.h
+	inc/TCGuiDialogBox.h
+	inc/TCGuiImageHandler.h
+	inc/TCGuiLabel.h
+	inc/TCGuiMenu.h
+	inc/TCGuiMessageBox.h
+	inc/TCGuiShutterMenu.h
+	inc/TCGuiTreeList.h
+	inc/TCGuiWidget.h
+	inc/TCGuiWindow.h
+)
+
+add_library (TCGui
+	src/TCGuiActionBox.cpp
+	src/TCGuiApplication.cpp
+	src/TCGuiBase.cpp
+	src/TCGuiButton.cpp
+	src/TCGuiDebugNew.cpp
+	src/TCGuiDialogBox.cpp
+	src/TCGuiImageHandler.cpp
+	src/TCGuiImages.cpp
+	src/TCGuiLabel.cpp
+	src/TCGuiMenu.cpp
+	src/TCGuiMessageBox.cpp
+	src/TCGuiMLS.cpp
+	src/TCGuiShutterMenu.cpp
+	src/TCGuiTreeList.cpp
+	src/TCGuiWidget.cpp
+	src/TCGuiWindow.cpp
+    ${TC_GUI_PUBLIC_HEADER}
+)
+
 target_link_libraries(TCGui
-    TCBasic
-    ${FOX_LIBRARIES}
+	TCBasic
+	${FOX_LIBRARIES}
 )
 
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${FOX_CFLAGS}")
