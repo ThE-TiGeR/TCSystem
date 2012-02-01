@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -41,11 +41,11 @@
 
 #include <string>
 
-namespace TC
+namespace tc
 {
-namespace Math
+namespace math
 {
-namespace Impl
+namespace imp
 {
    /**
     * @addtogroup TC_MATH_IMPL
@@ -54,7 +54,7 @@ namespace Impl
 
    /**
     * @file
-    * @brief This file provides the definition of TC::Math::Impl::MD5
+    * @brief This file provides the definition of tc::math::imp::MD5
     * @author Thomas Goessler
     */
 
@@ -90,8 +90,8 @@ namespace Impl
     * @}
     */
 
-} // namespace Impl
-} // namespace Math
-} // namespace TC
+} // namespace imp
+} // namespace math
+} // namespace tc
 
 #endif //_TC_MD5_H_

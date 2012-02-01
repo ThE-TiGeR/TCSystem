@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -39,7 +39,7 @@
 #include "TCDelete.h"
 #include "TCSharedPtrImpl.h"
 
-namespace TC
+namespace tc
 {
    template<class T> class SharedPtr;
    template<class T> class WeakPtr;
@@ -51,7 +51,7 @@ namespace TC
 
    /**
     * @file
-    * This header file provides the definition of the class TC::SharedPtr
+    * This header file provides the definition of the class tc::SharedPtr
     *
     * @author Thomas Goessler
     */
@@ -220,7 +220,7 @@ namespace TC
     * @}
     */
 
-} // namespace TC
+} // namespace tc
 
 #endif // _TC_SHARED_PTR_H_
 

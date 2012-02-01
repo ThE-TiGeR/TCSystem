@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -42,22 +42,22 @@
 
 #include <vector>
 
-namespace TC
+namespace tc
 {
-   namespace OpenGL
+   namespace open_gl
    {
-      typedef Math::CoordN<float,3>  Vertex3D;
+      typedef math::CoordN<float,3>  Vertex3D;
       typedef std::vector<Vertex3D>  Vertex3DVector;
-      typedef Math::Box< Vertex3D >  BoundingBox3D;
+      typedef math::Box< Vertex3D >  BoundingBox3D;
 
-      typedef Math::CoordN<float,2>  Vertex2D;
+      typedef math::CoordN<float,2>  Vertex2D;
       typedef std::vector<Vertex2D>  Vertex2DVector;
-      typedef Math::Box< Vertex2D >  BoundingBox2D;
+      typedef math::Box< Vertex2D >  BoundingBox2D;
 
       typedef Vertex3D   Normal3D;
       typedef std::vector<Vertex3D>  Normal3DVector;
 
-      typedef Math::CoordN<float,2>          TextureCoordinate;
+      typedef math::CoordN<float,2>          TextureCoordinate;
       typedef std::vector<TextureCoordinate> TextureCoordinateVector;
 
       enum Sizes

@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -44,31 +44,31 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-    namespace MT
+    namespace multi_threading
     {
-        namespace Tests
+        namespace tests
         {
-            class SemaphorePostWaitTest : public Unit::TestCase
+            class SemaphorePostWaitTest : public unit::TestCase
             {
             public:
                 SemaphorePostWaitTest()
-                    :Unit::TestCase("TC::MT::Tests::SemaphorePostWaitTest")
+                    :unit::TestCase("tc::multi_threading::tests::SemaphorePostWaitTest")
                 {
                 }
 
                 virtual void Execute()
                 {
                     {
-                        SemaphorePtr m = Factory::CreateSemaphore(0);
+                        SemaphorePtr m = factory::CreateSemaphore(0);
                         TCUNIT_ASSERT(m);
                         TCUNIT_ASSERT(m->Post());
                         TCUNIT_ASSERT(m->Wait());
                     }
 
                     {
-                        SemaphorePtr m = Factory::CreateSemaphore(1);
+                        SemaphorePtr m = factory::CreateSemaphore(1);
                         TCUNIT_ASSERT(m);
                         TCUNIT_ASSERT(m->Wait());
                         TCUNIT_ASSERT(m->Post());
@@ -76,21 +76,21 @@ namespace TC
                     }
 
                     {
-                        SemaphorePtr m = Factory::CreateSemaphore(0);
+                        SemaphorePtr m = factory::CreateSemaphore(0);
                         TCUNIT_ASSERT(m);
                         TCUNIT_ASSERT(m->Post());
                         TCUNIT_ASSERT(m->Wait());
                     }
 
                     {
-                        SemaphorePtr m = Factory::CreateSemaphore(0);
+                        SemaphorePtr m = factory::CreateSemaphore(0);
                         TCUNIT_ASSERT(m);
                         TCUNIT_ASSERT(m->Post());
                         TCUNIT_ASSERT(m->Wait());
                     }
 
                     {
-                        SemaphorePtr m = Factory::CreateSemaphore(0);
+                        SemaphorePtr m = factory::CreateSemaphore(0);
                         TCUNIT_ASSERT(m);
                         Time start_time = Time::NowMonotonic();
                         TCUNIT_ASSERT(!m->TryWait(Time::FromMilliSeconds(100)));
@@ -103,75 +103,75 @@ namespace TC
                 }
             };
 
-            class SemaphoreSharedCreateTest : public Unit::TestCase
+            class SemaphoreSharedCreateTest : public unit::TestCase
             {
             public:
                 SemaphoreSharedCreateTest()
-                    :Unit::TestCase("TC::MT::Tests::SemaphoreSharedCreateTest")
+                    :unit::TestCase("tc::multi_threading::tests::SemaphoreSharedCreateTest")
                 {
                 }
 
                 virtual void Execute()
                 {
                     {
-                        SemaphorePtr m = Factory::CreateSemaphore("SemaphoreSharedCreateTest",
-                            0, Factory::CRM_ALWAYS);
+                        SemaphorePtr m = factory::CreateSemaphore("SemaphoreSharedCreateTest",
+                            0, factory::CRM_ALWAYS);
                         TCUNIT_ASSERT(m);
                     }
 
                     {
-                        SemaphorePtr m = Factory::CreateSemaphore("SemaphoreSharedCreateTest",
-                            0, Factory::CRM_WHEN_NOT_EXISTS);
+                        SemaphorePtr m = factory::CreateSemaphore("SemaphoreSharedCreateTest",
+                            0, factory::CRM_WHEN_NOT_EXISTS);
                         TCUNIT_ASSERT(m);
                     }
 
                     {
-                        SemaphorePtr m = Factory::CreateSemaphore("SemaphoreSharedCreateTest",
-                            0, Factory::CRM_WHEN_EXISTS);
+                        SemaphorePtr m = factory::CreateSemaphore("SemaphoreSharedCreateTest",
+                            0, factory::CRM_WHEN_EXISTS);
                         TCUNIT_ASSERT(!m);
                     }
 
                     {
-                        SemaphorePtr m1 = Factory::CreateSemaphore("SemaphoreSharedCreateTest",
-                            0, Factory::CRM_ALWAYS);
+                        SemaphorePtr m1 = factory::CreateSemaphore("SemaphoreSharedCreateTest",
+                            0, factory::CRM_ALWAYS);
                         TCUNIT_ASSERT(m1);
-                        SemaphorePtr m2 = Factory::CreateSemaphore("SemaphoreSharedCreateTest",
-                            0, Factory::CRM_WHEN_EXISTS);
+                        SemaphorePtr m2 = factory::CreateSemaphore("SemaphoreSharedCreateTest",
+                            0, factory::CRM_WHEN_EXISTS);
                         TCUNIT_ASSERT(m2);
                     }
 
                     {
-                        SemaphorePtr m1 = Factory::CreateSemaphore("SemaphoreSharedCreateTest",
-                            0, Factory::CRM_ALWAYS);
+                        SemaphorePtr m1 = factory::CreateSemaphore("SemaphoreSharedCreateTest",
+                            0, factory::CRM_ALWAYS);
                         TCUNIT_ASSERT(m1);
-                        SemaphorePtr m2 = Factory::CreateSemaphore("SemaphoreSharedCreateTest",
-                            0, Factory::CRM_WHEN_NOT_EXISTS);
+                        SemaphorePtr m2 = factory::CreateSemaphore("SemaphoreSharedCreateTest",
+                            0, factory::CRM_WHEN_NOT_EXISTS);
                         TCUNIT_ASSERT(!m2);
                     }
                 }
             };
 
-            class SemaphoreSharedPostWaitTest : public Unit::TestCase
+            class SemaphoreSharedPostWaitTest : public unit::TestCase
             {
             public:
                 SemaphoreSharedPostWaitTest()
-                    :Unit::TestCase("TC::MT::Tests::SemaphoreSharedPostWaitTest")
+                    :unit::TestCase("tc::multi_threading::tests::SemaphoreSharedPostWaitTest")
                 {
                 }
 
                 virtual void Execute()
                 {
                     {
-                        SemaphorePtr m = Factory::CreateSemaphore("SemaphoreSharedPostWaitTest",
-                            0, Factory::CRM_ALWAYS);
+                        SemaphorePtr m = factory::CreateSemaphore("SemaphoreSharedPostWaitTest",
+                            0, factory::CRM_ALWAYS);
                         TCUNIT_ASSERT(m);
                         TCUNIT_ASSERT(m->Post());
                         TCUNIT_ASSERT(m->Wait());
                     }
 
                     {
-                        SemaphorePtr m = Factory::CreateSemaphore("SemaphoreSharedPostWaitTest",
-                            1, Factory::CRM_ALWAYS);
+                        SemaphorePtr m = factory::CreateSemaphore("SemaphoreSharedPostWaitTest",
+                            1, factory::CRM_ALWAYS);
                         TCUNIT_ASSERT(m);
                         TCUNIT_ASSERT(m->Wait());
                         TCUNIT_ASSERT(m->Post());
@@ -179,16 +179,16 @@ namespace TC
                     }
 
                     {
-                        SemaphorePtr m = Factory::CreateSemaphore("SemaphoreSharedPostWaitTest",
-                            1, Factory::CRM_ALWAYS);
+                        SemaphorePtr m = factory::CreateSemaphore("SemaphoreSharedPostWaitTest",
+                            1, factory::CRM_ALWAYS);
                         TCUNIT_ASSERT(m);
                         TCUNIT_ASSERT(m->Try());
                         TCUNIT_ASSERT(m->Post());
                     }
 
                     {
-                        SemaphorePtr m = Factory::CreateSemaphore("SemaphoreSharedPostWaitTest",
-                            0, Factory::CRM_ALWAYS);
+                        SemaphorePtr m = factory::CreateSemaphore("SemaphoreSharedPostWaitTest",
+                            0, factory::CRM_ALWAYS);
                         TCUNIT_ASSERT(m);
                         Time start_time = Time::NowMonotonic();
                         TCUNIT_ASSERT(!m->TryWait(Time::FromMilliSeconds(100)));
@@ -201,11 +201,11 @@ namespace TC
             };
 
             SemaphoreSuite::SemaphoreSuite()
-                : Unit::TestSuite("TC::MT::Tests::SemaphoreSuite")
+                : unit::TestSuite("tc::multi_threading::tests::SemaphoreSuite")
             {
-                AddTest(Unit::Test::Ptr(new SemaphorePostWaitTest));
-                AddTest(Unit::Test::Ptr(new SemaphoreSharedCreateTest));
-                AddTest(Unit::Test::Ptr(new SemaphoreSharedPostWaitTest));
+                AddTest(unit::Test::Ptr(new SemaphorePostWaitTest));
+                AddTest(unit::Test::Ptr(new SemaphoreSharedCreateTest));
+                AddTest(unit::Test::Ptr(new SemaphoreSharedPostWaitTest));
             }
 
         }

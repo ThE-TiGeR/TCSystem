@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -42,14 +42,14 @@
 //@{
 /**
 * @file
-* This header file provides the definition of the class TC::Heap::Mutex
+* This header file provides the definition of the class tc::Heap::Mutex
 */
 /** @} */
 
 #ifdef TCOS_WINDOWS
 #   include <windows.h>
 
-namespace TC
+namespace tc
 {
    class Heap::Mutex
    {
@@ -78,7 +78,7 @@ namespace TC
 #   include <pthread.h>
 #   include <cstdio>
 
-namespace TC
+namespace tc
 {
 class Heap::Mutex
 {

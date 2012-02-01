@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -40,9 +40,9 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-   namespace Gui
+   namespace gui
    {
 
       FXDEFMAP(Window) WindowMap[] =

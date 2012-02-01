@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -41,9 +41,9 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-   namespace Audio
+   namespace audio
    {
       SoundDataWav::SoundDataWav(StreamPtr stream)
          :m_sound_format()
@@ -90,7 +90,7 @@ namespace TC
       void SoundDataWav::ProcessStream()
       {
          uint32 magic_id;
-         m_stream >> magic_id; Util::SwapBytes(magic_id);
+         m_stream >> magic_id; util::SwapBytes(magic_id);
          if (magic_id != 'RIFF')
          {
             throw  Exception("Sound format no RIFF");
@@ -98,7 +98,7 @@ namespace TC
 
          uint32 chunk_length;
          m_stream >> chunk_length;
-         m_stream >> magic_id; Util::SwapBytes(magic_id);
+         m_stream >> magic_id; util::SwapBytes(magic_id);
          if ( magic_id != 'WAVE')
          {
             throw  Exception("Sound format wrong magic id");
@@ -107,7 +107,7 @@ namespace TC
          bool data_processed = false;
          while (data_processed)
          {
-            m_stream >> magic_id; Util::SwapBytes(magic_id);
+            m_stream >> magic_id; util::SwapBytes(magic_id);
             m_stream >> chunk_length;
 
             if (magic_id == 'fmt ')
@@ -146,9 +146,9 @@ namespace TC
          switch (m_sound_format.audio_format)
          {
          case 1: /* PCM */
-            //                codec = (m_bit_sper_sample == 8 || Util::IsLittleEndian()) ?
+            //                codec = (m_bit_sper_sample == 8 || util::IsLittleEndian()) ?
             //                        _alutCodecLinear : _alutCodecPCM16;
-            if (m_sound_format.bits_per_sample == 8 || Util::IsLittleEndian())
+            if (m_sound_format.bits_per_sample == 8 || util::IsLittleEndian())
             {
 
             }

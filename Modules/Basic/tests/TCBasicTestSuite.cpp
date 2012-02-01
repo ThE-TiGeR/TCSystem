@@ -45,21 +45,21 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-   namespace Tests
+   namespace tests
    {
       BasicSuite::BasicSuite()
-         :Unit::TestSuite("TC::BasicSuite")
+         :unit::TestSuite("tc::BasicSuite")
       {
-         AddTest(Unit::Test::Ptr(new UtilTestSuite));
-         AddTest(Unit::Test::Ptr(new StringTestSuite));
-         AddTest(Unit::Test::Ptr(new WStringTestSuite));
-         AddTest(Unit::Test::Ptr(new FileNameTestSuite));
-         AddTest(Unit::Test::Ptr(new WFileNameTestSuite));
-         AddTest(Unit::Test::Ptr(new TimeTestSuite));
-         AddTest(Unit::Test::Ptr(new HashTableTestSuite));
-         AddTest(Unit::Test::Ptr(new StreamTestSuite));
+         AddTest(unit::Test::Ptr(new UtilTestSuite));
+         AddTest(unit::Test::Ptr(new StringTestSuite));
+         AddTest(unit::Test::Ptr(new WStringTestSuite));
+         AddTest(unit::Test::Ptr(new FileNameTestSuite));
+         AddTest(unit::Test::Ptr(new WFileNameTestSuite));
+         AddTest(unit::Test::Ptr(new TimeTestSuite));
+         AddTest(unit::Test::Ptr(new HashTableTestSuite));
+         AddTest(unit::Test::Ptr(new StreamTestSuite));
       }
    }
 }

@@ -39,11 +39,11 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-   namespace Math
+   namespace math
    {
-      namespace Tests
+      namespace tests
       {
          typedef CoordN<int, 5> CoordType;
          static CoordType GetDefaultCoord()
@@ -57,11 +57,11 @@ namespace TC
             return val;
          }
 
-         class CoordNConstructTest: public Unit::TestCase
+         class CoordNConstructTest: public unit::TestCase
          {
          public:
             CoordNConstructTest()
-               :Unit::TestCase("TC::Math::Tests::CoordNCunstructTest")
+               :unit::TestCase("tc::math::tests::CoordNCunstructTest")
             {
             }
 
@@ -108,11 +108,11 @@ namespace TC
             }
          };
 
-         class CoordNAssignTest: public Unit::TestCase
+         class CoordNAssignTest: public unit::TestCase
          {
          public:
             CoordNAssignTest()
-               :Unit::TestCase("TC::Math::Tests::CoordNAssignTest")
+               :unit::TestCase("tc::math::tests::CoordNAssignTest")
             {
             }
 
@@ -142,11 +142,11 @@ namespace TC
             }
          };
 
-         class CoordNAddAssignTest: public Unit::TestCase
+         class CoordNAddAssignTest: public unit::TestCase
          {
          public:
             CoordNAddAssignTest()
-               :Unit::TestCase("TC::Math::Tests::CoordNAddAssignTest")
+               :unit::TestCase("tc::math::tests::CoordNAddAssignTest")
             {
             }
 
@@ -193,11 +193,11 @@ namespace TC
             }
          };
 
-         class CoordNSubtractAssignTest: public Unit::TestCase
+         class CoordNSubtractAssignTest: public unit::TestCase
          {
          public:
             CoordNSubtractAssignTest()
-               :Unit::TestCase("TC::Math::Tests::CoordNSubtractAssignTest")
+               :unit::TestCase("tc::math::tests::CoordNSubtractAssignTest")
             {
             }
 
@@ -244,11 +244,11 @@ namespace TC
          };
 
 
-         class CoordNMultiplyAssignTest: public Unit::TestCase
+         class CoordNMultiplyAssignTest: public unit::TestCase
          {
          public:
             CoordNMultiplyAssignTest()
-               :Unit::TestCase("TC::Math::Tests::CoordNMultiplyAssignTest")
+               :unit::TestCase("tc::math::tests::CoordNMultiplyAssignTest")
             {
             }
 
@@ -280,11 +280,11 @@ namespace TC
             }
          };
 
-         class CoordNDivideAssignTest: public Unit::TestCase
+         class CoordNDivideAssignTest: public unit::TestCase
          {
          public:
             CoordNDivideAssignTest()
-               :Unit::TestCase("TC::Math::Tests::CoordNDivideAssignTest")
+               :unit::TestCase("tc::math::tests::CoordNDivideAssignTest")
             {
             }
 
@@ -314,11 +314,11 @@ namespace TC
             }
          };
 
-         class CoordNEqualTest: public Unit::TestCase
+         class CoordNEqualTest: public unit::TestCase
          {
          public:
             CoordNEqualTest()
-               :Unit::TestCase("TC::Math::Tests::CoordNEqualTest")
+               :unit::TestCase("tc::math::tests::CoordNEqualTest")
             {
             }
 
@@ -344,11 +344,11 @@ namespace TC
             }
          };
 
-         class CoordNLessTest: public Unit::TestCase
+         class CoordNLessTest: public unit::TestCase
          {
          public:
             CoordNLessTest()
-               :Unit::TestCase("TC::Math::Tests::CoordNLessTest")
+               :unit::TestCase("tc::math::tests::CoordNLessTest")
             {
             }
 
@@ -411,16 +411,16 @@ namespace TC
          };
 
          CoordNSuite::CoordNSuite()
-            :Unit::TestSuite("TC::Math::Tests::CoordNSuite")
+            :unit::TestSuite("tc::math::tests::CoordNSuite")
          {
-            AddTest(Unit::Test::Ptr(new CoordNConstructTest));
-            AddTest(Unit::Test::Ptr(new CoordNAssignTest));
-            AddTest(Unit::Test::Ptr(new CoordNAddAssignTest));
-            AddTest(Unit::Test::Ptr(new CoordNSubtractAssignTest));
-            AddTest(Unit::Test::Ptr(new CoordNMultiplyAssignTest));
-            AddTest(Unit::Test::Ptr(new CoordNDivideAssignTest));
-            AddTest(Unit::Test::Ptr(new CoordNEqualTest));
-            AddTest(Unit::Test::Ptr(new CoordNLessTest));
+            AddTest(unit::Test::Ptr(new CoordNConstructTest));
+            AddTest(unit::Test::Ptr(new CoordNAssignTest));
+            AddTest(unit::Test::Ptr(new CoordNAddAssignTest));
+            AddTest(unit::Test::Ptr(new CoordNSubtractAssignTest));
+            AddTest(unit::Test::Ptr(new CoordNMultiplyAssignTest));
+            AddTest(unit::Test::Ptr(new CoordNDivideAssignTest));
+            AddTest(unit::Test::Ptr(new CoordNEqualTest));
+            AddTest(unit::Test::Ptr(new CoordNLessTest));
          }
       }
    }

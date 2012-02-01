@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -43,7 +43,7 @@
 
 #define TC_HEAP_CRTLIB_INITIAL_VALUE   0xcd
 
-namespace TC
+namespace tc
 {
    struct HeapCrtlib::Header
    {
@@ -110,7 +110,7 @@ namespace TC
       Header* header = static_cast<Header*>(memory);
       --header;
 
-      uint32 mem_size = Util::Min(size, header->m_allocation_size - uint32(sizeof(Header)));
+      uint32 mem_size = util::Min(size, header->m_allocation_size - uint32(sizeof(Header)));
       std::memcpy(new_memory, memory, mem_size);
 
       Free(memory);

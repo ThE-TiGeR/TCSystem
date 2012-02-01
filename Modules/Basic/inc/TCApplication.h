@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -41,7 +41,7 @@
 #include <string>
 #include <cstdarg>
 
-namespace TC
+namespace tc
 {
    /**
     * @addtogroup TC_BASE
@@ -50,7 +50,7 @@ namespace TC
 
    /**
     * @file
-    * @brief This file provides the definition of TC::BaseApplication
+    * @brief This file provides the definition of tc::BaseApplication
     *
     * It also defines some macros for implementing classes derived from TCBase
     *
@@ -81,7 +81,7 @@ namespace TC
       /** @return the one and only existing BaseApplication object */
       static Application* GetInstance();
 
-      /** @return the name of the program e.g. TC*/
+      /** @return the name of the program e.g. tc*/
       inline const std::string& GetProgrammName() const      { return m_programm_name;}
       /** @return the version of the program e.g. 1.0*/
       inline const std::string& GetProgrammVersion() const   { return m_programm_version;}
@@ -103,6 +103,6 @@ namespace TC
     * @}
     */
 
-} // namespace TC
+} // namespace tc
 
 #endif // _TCBASE_APPLICATION_H_

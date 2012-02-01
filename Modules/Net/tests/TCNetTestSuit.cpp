@@ -38,16 +38,16 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-   namespace Net
+   namespace net
    {
-      namespace Tests
+      namespace tests
       {
          Suite::Suite()
-            :Unit::TestSuite("TC::Net::Suite")
+            :unit::TestSuite("tc::net::Suite")
          {
-            AddTest(Unit::Test::Ptr(new AddressTestSuite));
+            AddTest(unit::Test::Ptr(new AddressTestSuite));
          }
       }
    }

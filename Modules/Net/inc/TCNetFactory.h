@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -42,12 +42,12 @@
 #include "TCNetBroadCastSocket.h"
 #include "TCNetSocketServer.h"
 
-namespace TC
+namespace tc
 {
    /**
     * @brief namspace including all network classes
     */
-   namespace Net
+   namespace net
    {
       /**
       * @addtogroup TC_NET
@@ -56,7 +56,7 @@ namespace TC
 
       /**
       * @file
-      * @brief This file provides the definition of TC::Net::Factory
+      * @brief This file provides the definition of tc::net::factory
       * @author Thomas Goessler
       */
 
@@ -71,9 +71,9 @@ namespace TC
       */
 
       /**
-      * @brief Factory for creating TC::Net objects
+      * @brief factory for creating tc::net objects
       */
-      namespace Factory
+      namespace factory
       {
          /**
          * @addtogroup TC_NET
@@ -142,8 +142,8 @@ namespace TC
       * @}
       */
 
-   } // namespace Net
-} // namespace TC
+   } // namespace net
+} // namespace tc
 
 
 #endif // _TCNET_FACTORY_H_

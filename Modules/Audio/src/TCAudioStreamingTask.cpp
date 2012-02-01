@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -49,9 +49,9 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-   namespace Audio
+   namespace audio
    {
       const Time STREAMING_TIMEOUT(0, 50 * Time::ONE_MILLI_SECOND_AS_NANO_SECONDS);
       const Time RESPONSE_TIMEOUT(0, 200 * Time::ONE_MILLI_SECOND_AS_NANO_SECONDS);
@@ -102,7 +102,7 @@ namespace TC
             // update buffer size for this format
             UpdateBufferSize(streaming_source->m_sound_data->GetFormat());
             // Fill all the Buffers with audio data from the wavefile
-            for (uint32 iLoop = 0; iLoop < TC::Util::ArraySize(streaming_source->m_buffer); iLoop++)
+            for (uint32 iLoop = 0; iLoop < tc::util::ArraySize(streaming_source->m_buffer); iLoop++)
             {
                QueueBuffer(streaming_source, streaming_source->m_buffer[iLoop]);
             }
@@ -258,7 +258,7 @@ namespace TC
             bytes_in_buffer += bytes_in_buffer % 4;
          }
 
-         ::alBufferData(buffer_to_queue, Util::SoundFormat2BufferFormat(format),
+         ::alBufferData(buffer_to_queue, util::SoundFormat2BufferFormat(format),
             m_streaming_buffer, ALsizei(bytes_in_buffer), format.samples_per_second);
          OpenALHandler::GetInstance()->CheckErrorAndThrowException("alBufferData");
 
@@ -270,7 +270,7 @@ namespace TC
       {
          StreamingSourcePtr streaming_source(new StreamingSource);
          streaming_source->m_source = OpenALHandler::GetInstance()->GetUnusedSource();
-         for (uint32 i=0; i<TC::Util::ArraySize(streaming_source->m_buffer); i++)
+         for (uint32 i=0; i<tc::util::ArraySize(streaming_source->m_buffer); i++)
          {
             streaming_source->m_buffer[i] = OpenALHandler::GetInstance()->GetUnusedBuffer();
          }
@@ -303,7 +303,7 @@ namespace TC
          OpenALHandler::GetInstance()->CheckErrorAndThrowException("alSourcei");
 
          OpenALHandler::GetInstance()->ReleaseSource((*streaming_source)->m_source);
-         for (uint32 i=0; i<TC::Util::ArraySize((*streaming_source)->m_buffer); i++)
+         for (uint32 i=0; i<tc::util::ArraySize((*streaming_source)->m_buffer); i++)
          {
             OpenALHandler::GetInstance()->ReleaseBuffer((*streaming_source)->m_buffer[i]);
          }
@@ -331,7 +331,7 @@ namespace TC
          uint32 buffer_size = format.bytes_per_second >> 2;
          // we always force a multiple of 4
          // IMPORTANT : The Buffer Size must be an exact multiple of the BlockAlignment ...
-         buffer_size -= (buffer_size % TC::Util::Max(format.bytes_per_sample, uint16(4)));
+         buffer_size -= (buffer_size % tc::util::Max(format.bytes_per_sample, uint16(4)));
 
          //tcout << double(buffer_size)/format.bytes_per_second << "block time" << endl;
 

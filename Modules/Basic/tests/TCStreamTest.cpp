@@ -42,15 +42,15 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
    namespace
    {
-      class StreamTest: public Unit::TestCase
+      class StreamTest: public unit::TestCase
       {
       public:
          StreamTest(const std::string& test_name)
-            :Unit::TestCase("TC::Tests::" + test_name + "Test")
+            :unit::TestCase("tc::tests::" + test_name + "Test")
          {
          }
 
@@ -121,13 +121,13 @@ namespace TC
       class AsciiCodec
       {
       public:
-         CodecPtr CreateCodec() {return Factory::CreateAsciiCodec();}
+         CodecPtr CreateCodec() {return factory::CreateAsciiCodec();}
       };
 
       class BinaryCodec
       {
       public:
-         CodecPtr CreateCodec() {return Factory::CreateBinaryCodec();}
+         CodecPtr CreateCodec() {return factory::CreateBinaryCodec();}
       };
 
       template <class CodecType>
@@ -142,12 +142,12 @@ namespace TC
       protected:
          virtual StreamPtr CreateWriteStream()
          {
-            return Factory::CreateMemoryStream(this->CreateCodec(), m_data);
+            return factory::CreateMemoryStream(this->CreateCodec(), m_data);
          }
 
          virtual StreamPtr CreateReadStream()
          {
-            return Factory::CreateMemoryStream(this->CreateCodec(), m_data);
+            return factory::CreateMemoryStream(this->CreateCodec(), m_data);
          }
 
       private:
@@ -165,12 +165,12 @@ namespace TC
       protected:
          virtual StreamPtr CreateWriteStream()
          {
-            return Factory::CreateStringStream(m_data);
+            return factory::CreateStringStream(m_data);
          }
 
          virtual StreamPtr CreateReadStream()
          {
-            return Factory::CreateStringStream(m_data);
+            return factory::CreateStringStream(m_data);
          }
 
       private:
@@ -182,25 +182,25 @@ namespace TC
       {
       public:
          FileTest(const std::string& name)
-            :StreamTest(name + "File")
-            ,m_file_name(System::GetTmpFileName())
+            :StreamTest(name + "file")
+            ,m_file_name(system::GetTmpFileName())
          {
          }
 
       protected:
          virtual StreamPtr CreateWriteStream()
          {
-            return Factory::CreateFileStream(m_file_name, Stream::stream_write, this->CreateCodec());
+            return factory::CreateFileStream(m_file_name, Stream::stream_write, this->CreateCodec());
          }
 
          virtual StreamPtr CreateReadStream()
          {
-            return Factory::CreateFileStream(m_file_name, Stream::stream_read, this->CreateCodec());
+            return factory::CreateFileStream(m_file_name, Stream::stream_read, this->CreateCodec());
          }
 
          virtual void teardown()
          {
-            File::Remove(m_file_name);
+            file::Remove(m_file_name);
          }
       private:
          std::string m_file_name;
@@ -212,24 +212,24 @@ namespace TC
       public:
          GzFileTest(const std::string& name)
             :StreamTest(name + "GzFile")
-            ,m_file_name(System::GetTmpFileName())
+            ,m_file_name(system::GetTmpFileName())
          {
          }
 
       protected:
          virtual StreamPtr CreateWriteStream()
          {
-            return Factory::CreateGzFileStream(m_file_name, Stream::stream_write, this->CreateCodec());
+            return factory::CreateGzFileStream(m_file_name, Stream::stream_write, this->CreateCodec());
          }
 
          virtual StreamPtr CreateReadStream()
          {
-            return Factory::CreateGzFileStream(m_file_name, Stream::stream_read, this->CreateCodec());
+            return factory::CreateGzFileStream(m_file_name, Stream::stream_read, this->CreateCodec());
          }
 
          virtual void teardown()
          {
-            File::Remove(m_file_name);
+            file::Remove(m_file_name);
          }
       private:
          std::string m_file_name;
@@ -241,24 +241,24 @@ namespace TC
       public:
          Bz2FileTest(const std::string& name)
             :StreamTest(name + "Bz2File")
-            ,m_file_name(System::GetTmpFileName())
+            ,m_file_name(system::GetTmpFileName())
          {
          }
 
       protected:
          virtual StreamPtr CreateWriteStream()
          {
-            return Factory::CreateBz2FileStream(m_file_name, Stream::stream_write, this->CreateCodec());
+            return factory::CreateBz2FileStream(m_file_name, Stream::stream_write, this->CreateCodec());
          }
 
          virtual StreamPtr CreateReadStream()
          {
-            return Factory::CreateBz2FileStream(m_file_name, Stream::stream_read, this->CreateCodec());
+            return factory::CreateBz2FileStream(m_file_name, Stream::stream_read, this->CreateCodec());
          }
 
          virtual void teardown()
          {
-            File::Remove(m_file_name);
+            file::Remove(m_file_name);
          }
       private:
          std::string m_file_name;
@@ -266,20 +266,20 @@ namespace TC
 
    }
 
-   namespace Tests
+   namespace tests
    {
       StreamTestSuite::StreamTestSuite()
-         :Unit::TestSuite("TC::Tests::StreamTestSuite")
+         :unit::TestSuite("tc::tests::StreamTestSuite")
       {
-         AddTest(Unit::Test::Ptr(new MemoryTest<BinaryCodec>("Binary")));
-         AddTest(Unit::Test::Ptr(new MemoryTest<AsciiCodec>("Ascii")));
-         AddTest(Unit::Test::Ptr(new StringTest));
-         AddTest(Unit::Test::Ptr(new FileTest<BinaryCodec>("Binary")));
-         AddTest(Unit::Test::Ptr(new FileTest<AsciiCodec>("Ascii")));
-         AddTest(Unit::Test::Ptr(new GzFileTest<BinaryCodec>("Binary")));
-         AddTest(Unit::Test::Ptr(new GzFileTest<AsciiCodec>("Ascii")));
-         AddTest(Unit::Test::Ptr(new Bz2FileTest<BinaryCodec>("Binary")));
-         AddTest(Unit::Test::Ptr(new Bz2FileTest<AsciiCodec>("Ascii")));
+         AddTest(unit::Test::Ptr(new MemoryTest<BinaryCodec>("Binary")));
+         AddTest(unit::Test::Ptr(new MemoryTest<AsciiCodec>("Ascii")));
+         AddTest(unit::Test::Ptr(new StringTest));
+         AddTest(unit::Test::Ptr(new FileTest<BinaryCodec>("Binary")));
+         AddTest(unit::Test::Ptr(new FileTest<AsciiCodec>("Ascii")));
+         AddTest(unit::Test::Ptr(new GzFileTest<BinaryCodec>("Binary")));
+         AddTest(unit::Test::Ptr(new GzFileTest<AsciiCodec>("Ascii")));
+         AddTest(unit::Test::Ptr(new Bz2FileTest<BinaryCodec>("Binary")));
+         AddTest(unit::Test::Ptr(new Bz2FileTest<AsciiCodec>("Ascii")));
       }
    }
 }

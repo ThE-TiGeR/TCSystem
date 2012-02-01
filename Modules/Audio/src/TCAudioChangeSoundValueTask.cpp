@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -39,15 +39,15 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-   namespace Audio
+   namespace audio
    {
       const Time ChangeSoundValueTask::CHANGE_VALUE_TIMEOUT(0, 100 * Time::ONE_MILLI_SECOND_AS_NANO_SECONDS);
 
       ChangeSoundValueTask::ChangeSoundValueTask(SoundDataPtr sound_data, 
          double start_value, double end_value, const Time& duration)
-         :StreamingThread::Task(CHANGE_VALUE_TIMEOUT, TC::Time::Now()),
+         :StreamingThread::Task(CHANGE_VALUE_TIMEOUT, tc::Time::Now()),
          m_sound_data(sound_data),
          m_start_value(start_value),
          m_end_value(end_value),
@@ -89,5 +89,5 @@ namespace TC
             static_cast<double>(m_change_value_duration.ToNanoSeconds());
       }
 
-   } // end namespace Audio
-} // end namespace TC
+   } // end namespace audio
+} // end namespace tc

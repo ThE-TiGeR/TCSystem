@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -41,7 +41,7 @@
 #include <vector>
 #include <cstdarg>
 
-namespace TC
+namespace tc
 {
    /**
     * @addtogroup TC_BASE
@@ -50,7 +50,7 @@ namespace TC
 
    /**
     * @file 
-    * This header file provides the definition of the namespace TC::String. 
+    * This header file provides the definition of the namespace tc::string. 
     * 
     * @author Thomas Goessler 
     */
@@ -58,7 +58,7 @@ namespace TC
     /**
     * @brief This namespace provided functions for manipulating and converting strings
     */
-   namespace String
+   namespace string
    {
       TCBASE_API std::string ToString(const char* val);
       TCBASE_API std::string ToString(char val);
@@ -135,12 +135,12 @@ namespace TC
       TCBASE_API std::string Print(const char* format, ...);
       TCBASE_API std::string VPrint(const char* format, va_list arguments);
 
-   } // namespace String
+   } // namespace string
 
    /**
     * @}
     */
 
-} // namspace TC
+} // namspace tc
 
 #endif  // _TCSTRING_H_

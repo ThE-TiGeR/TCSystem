@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -41,37 +41,37 @@
 
 #include <string>
 
-namespace TC
+namespace tc
 {
-namespace Math
-{
-   /**
-    * @addtogroup TC_MATH
-    * @{
-    */
-
-   /**
-    * @file
-    * @brief This file provides the definition of TC::Math::Factory
-    * @author Thomas Goessler
-    */
-
-   /**
-    * @brief Factory for creating TC::Math objects
-    */
-   namespace Factory
+   namespace math
    {
       /**
-       * @brief Creates an MD5 Checksum calculation object
-       */
-      TCMATH_API ChecksumPtr CreateMD5Checksum();
-   }
+      * @addtogroup TC_MATH
+      * @{
+      */
 
-   /**
-    * @}
-    */
+      /**
+      * @file
+      * @brief This file provides the definition of tc::math::factory
+      * @author Thomas Goessler
+      */
 
-} // namespace Math
-} // namespace TC
+      /**
+      * @brief factory for creating tc::math objects
+      */
+      namespace factory
+      {
+         /**
+         * @brief Creates an MD5 Checksum calculation object
+         */
+         TCMATH_API ChecksumPtr CreateMD5Checksum();
+      }
+
+      /**
+      * @}
+      */
+
+   } // namespace math
+} // namespace tc
 
 #endif //_TC_MATH_FACTORY_H_

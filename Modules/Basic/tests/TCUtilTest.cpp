@@ -41,64 +41,64 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
    namespace
    {
-      class UtilAbs : public Unit::TestCase
+      class UtilAbs : public unit::TestCase
       {
       public:
-         UtilAbs() : Unit::TestCase("TC::Tests::UtilAbs") {}
+         UtilAbs() : unit::TestCase("tc::tests::UtilAbs") {}
          virtual void Execute();
       };
 
       void UtilAbs::Execute()
       {
-         TCUNIT_ASSERT(TC::Util::Abs(-1) == 1);
-         TCUNIT_ASSERT(TC::Util::Abs( 1) == 1);
-         TCUNIT_ASSERT(TC::Util::Abs(-1234567) == 1234567);
-         TCUNIT_ASSERT(TC::Util::Abs( 1234567) == 1234567);
+         TCUNIT_ASSERT(tc::util::Abs(-1) == 1);
+         TCUNIT_ASSERT(tc::util::Abs( 1) == 1);
+         TCUNIT_ASSERT(tc::util::Abs(-1234567) == 1234567);
+         TCUNIT_ASSERT(tc::util::Abs( 1234567) == 1234567);
 
-         TCUNIT_ASSERT(TC::Util::Abs( 0.0) == 0.0);
-         TCUNIT_ASSERT(TC::Util::Abs(-0.0) == 0.0);
-         TCUNIT_ASSERT(TC::Util::Abs( 0.1) == 0.1);
-         TCUNIT_ASSERT(TC::Util::Abs(-0.1) == 0.1);
-         TCUNIT_ASSERT(TC::Util::Abs( 1.1) == 1.1);
-         TCUNIT_ASSERT(TC::Util::Abs(-1.1) == 1.1);
+         TCUNIT_ASSERT(tc::util::Abs( 0.0) == 0.0);
+         TCUNIT_ASSERT(tc::util::Abs(-0.0) == 0.0);
+         TCUNIT_ASSERT(tc::util::Abs( 0.1) == 0.1);
+         TCUNIT_ASSERT(tc::util::Abs(-0.1) == 0.1);
+         TCUNIT_ASSERT(tc::util::Abs( 1.1) == 1.1);
+         TCUNIT_ASSERT(tc::util::Abs(-1.1) == 1.1);
       }
 
-      class UtilMinMax : public Unit::TestCase
+      class UtilMinMax : public unit::TestCase
       {
       public:
-         UtilMinMax() : Unit::TestCase("TC::Tests::UtilMinMax") {}
+         UtilMinMax() : unit::TestCase("tc::tests::UtilMinMax") {}
          virtual void Execute();
       };
 
       void UtilMinMax::Execute()
       {
-         TCUNIT_ASSERT(TC::Util::Min(1, 2) == 1);
+         TCUNIT_ASSERT(tc::util::Min(1, 2) == 1);
 
-         TCUNIT_ASSERT(TC::Util::Min(-2, -3) == -3);
+         TCUNIT_ASSERT(tc::util::Min(-2, -3) == -3);
 
-         TCUNIT_ASSERT(TC::Util::Min(1, 2, 3) == 1);
+         TCUNIT_ASSERT(tc::util::Min(1, 2, 3) == 1);
 
-         TCUNIT_ASSERT(TC::Util::Min(1, -2, -3) == -3);
+         TCUNIT_ASSERT(tc::util::Min(1, -2, -3) == -3);
 
-         TCUNIT_ASSERT(TC::Util::Max(1, 2) == 2);
+         TCUNIT_ASSERT(tc::util::Max(1, 2) == 2);
 
-         TCUNIT_ASSERT(TC::Util::Max(-2, -3) == -2);
+         TCUNIT_ASSERT(tc::util::Max(-2, -3) == -2);
 
-         TCUNIT_ASSERT(TC::Util::Max(1, 2, 3) == 3);
+         TCUNIT_ASSERT(tc::util::Max(1, 2, 3) == 3);
 
-         TCUNIT_ASSERT(TC::Util::Max(1, -2, -3) == 1);
+         TCUNIT_ASSERT(tc::util::Max(1, -2, -3) == 1);
       }
 
 
 
-      class UtilStlContainer : public Unit::TestCase
+      class UtilStlContainer : public unit::TestCase
       {
       public:
-         UtilStlContainer() : Unit::TestCase("TC::Tests::UtilStlContainer") {}
+         UtilStlContainer() : unit::TestCase("tc::tests::UtilStlContainer") {}
          virtual void Execute();
       };
 
@@ -109,7 +109,7 @@ namespace TC
          TCUNIT_ASSERT(vec.size() == 10);
          TCUNIT_ASSERT(vec.capacity() == 10);
 
-         TC::Util::FreeMemoryOfStlContainer(vec);
+         tc::util::FreeMemoryOfStlContainer(vec);
          TCUNIT_ASSERT(vec.size() == 0);
          TCUNIT_ASSERT(vec.capacity() == 0);
 
@@ -119,40 +119,40 @@ namespace TC
          TCUNIT_ASSERT(vec1.size() == 11);
          TCUNIT_ASSERT(vec1.capacity() > 11);
 
-         TC::Util::MinimizeMemoryOfStlContainer(vec1);
+         tc::util::MinimizeMemoryOfStlContainer(vec1);
          TCUNIT_ASSERT(vec1.size() == 11);
          TCUNIT_ASSERT(vec1.capacity() == 11);
       }
 
-      class UtilSafeRelease : public Unit::TestCase
+      class UtilSafeRelease : public unit::TestCase
       {
       public:
-         UtilSafeRelease() : Unit::TestCase("TC::Tests::UtilSafeRelease") {}
+         UtilSafeRelease() : unit::TestCase("tc::tests::UtilSafeRelease") {}
          virtual void Execute();
       };
 
       void UtilSafeRelease::Execute()
       {
          int* x = 0;
-         TC::Util::SafeRelease(x);
+         tc::util::SafeRelease(x);
          TCUNIT_ASSERT(x == 0);
 
-         TC::Util::SafeReleaseArray(x);
+         tc::util::SafeReleaseArray(x);
          TCUNIT_ASSERT(x == 0);
 
          x = new int[10];
-         TC::Util::SafeReleaseArray(x);
+         tc::util::SafeReleaseArray(x);
          TCUNIT_ASSERT(x == 0);
 
          x = new int;
-         TC::Util::SafeRelease(x);
+         tc::util::SafeRelease(x);
          TCUNIT_ASSERT(x == 0);
       }
 
-      class UtilArraySize : public Unit::TestCase
+      class UtilArraySize : public unit::TestCase
       {
       public:
-         UtilArraySize() : Unit::TestCase("TC::Tests::UtilArraySize") {}
+         UtilArraySize() : unit::TestCase("tc::tests::UtilArraySize") {}
          virtual void Execute();
 
          struct test_struct
@@ -167,14 +167,14 @@ namespace TC
          char c_array[100];
          test_struct s_array[100];
 
-         TCUNIT_ASSERT(TC::Util::ArraySize(c_array) == 100);
-         TCUNIT_ASSERT(TC::Util::ArraySize(s_array) == 100);
+         TCUNIT_ASSERT(tc::util::ArraySize(c_array) == 100);
+         TCUNIT_ASSERT(tc::util::ArraySize(s_array) == 100);
       }
 
-      class UtilSwap : public Unit::TestCase
+      class UtilSwap : public unit::TestCase
       {
       public:
-         UtilSwap() : Unit::TestCase("TC::Tests::UtilSwap") {}
+         UtilSwap() : unit::TestCase("tc::tests::UtilSwap") {}
          virtual void Execute()
          {
             TCUNIT_ASSERT(TestSwap( uint8(0)));
@@ -222,23 +222,23 @@ namespace TC
          bool TestSwap(T val)
          {
             T orig = val;
-            TC::Util::SwapBytes(val);
-            TC::Util::SwapBytes(val);
+            tc::util::SwapBytes(val);
+            tc::util::SwapBytes(val);
             return val == orig;
          }
       };
    }
 
-   namespace Tests
+   namespace tests
    {
       UtilTestSuite::UtilTestSuite()
-         :Unit::TestSuite("TC::Tests::UtilTestSuite")
+         :unit::TestSuite("tc::tests::UtilTestSuite")
       {
-         AddTest(Unit::Test::Ptr(new UtilAbs));
-         AddTest(Unit::Test::Ptr(new UtilMinMax));
-         AddTest(Unit::Test::Ptr(new UtilStlContainer));
-         AddTest(Unit::Test::Ptr(new UtilSafeRelease));
-         AddTest(Unit::Test::Ptr(new UtilSwap));
+         AddTest(unit::Test::Ptr(new UtilAbs));
+         AddTest(unit::Test::Ptr(new UtilMinMax));
+         AddTest(unit::Test::Ptr(new UtilStlContainer));
+         AddTest(unit::Test::Ptr(new UtilSafeRelease));
+         AddTest(unit::Test::Ptr(new UtilSwap));
       }
    }
 }

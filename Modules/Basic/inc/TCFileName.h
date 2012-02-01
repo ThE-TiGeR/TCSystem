@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -41,7 +41,7 @@
 #include <string>
 #include <vector>
 
-namespace TC
+namespace tc
 {
    /**
     * @addtogroup TC_BASE
@@ -50,7 +50,7 @@ namespace TC
 
    /**
     * @file
-    * @brief This file provides the definition of TC::FileName
+    * @brief This file provides the definition of tc::file_name
     *
     * @author Thomas Goessler
     */
@@ -58,7 +58,7 @@ namespace TC
    /**
     * @brief This namespace provided functions for manipulating file names or file paths
     */
-   namespace FileName
+   namespace file_name
    {
       /** @brief Get the path seperator string */
       TCBASE_API const char* GetPathSeparator();
@@ -171,12 +171,12 @@ namespace TC
           std::vector<std::string>& directories);
       TCBASE_API void GetDirectoriesOfPath(const std::string& path, 
           std::vector<std::string>& directories);
-   } // namespace FileName
+   } // namespace file_name
 
    /**
     * @}
     */
 
-} // namespace TC
+} // namespace tc
 
 #endif // _TC_FILE_NAME_H_

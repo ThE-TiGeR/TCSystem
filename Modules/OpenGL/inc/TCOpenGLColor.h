@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -44,9 +44,9 @@
 #include <vector>
 #include <string>
 
-namespace TC
+namespace tc
 {
-   namespace OpenGL
+   namespace open_gl
    {
       /**
       * The Color class is used encapsulate colors in the RGB color 
@@ -55,8 +55,8 @@ namespace TC
       * "For the versions of glCOlor()* that accept floating-point data types,
       *  the values should typically range between 0.0 and 1.0, the minimum and 
       *  maximum values that can be stored in the framebuffer."
-      *  pg 168 of OpenGL Programming Guide, 3rd Ed, The Official Guide to 
-      *  Learning OpenGL, Version 1.2
+      *  pg 168 of open_gl Programming Guide, 3rd Ed, The Official Guide to 
+      *  Learning open_gl, Version 1.2
       *
       * The alpha value is 1.0 by default unless one is provided in the 
       * constructor. The alpha value defines the transparency of a color 
@@ -143,10 +143,10 @@ namespace TC
          *                   [0.0 - 1.0]
          */
          Color(float red, float green, float blue, float alpha)
-            :m_red(Util::Min(red, static_cast<float>(MAX_COLOR_COMPONENT))),
-            m_green(Util::Min(green, static_cast<float>(MAX_COLOR_COMPONENT))),
-            m_blue(Util::Min(blue, static_cast<float>(MAX_COLOR_COMPONENT))),
-            m_alpha(Util::Min(alpha, static_cast<float>(MAX_COLOR_COMPONENT))) {}
+            :m_red(util::Min(red, static_cast<float>(MAX_COLOR_COMPONENT))),
+            m_green(util::Min(green, static_cast<float>(MAX_COLOR_COMPONENT))),
+            m_blue(util::Min(blue, static_cast<float>(MAX_COLOR_COMPONENT))),
+            m_alpha(util::Min(alpha, static_cast<float>(MAX_COLOR_COMPONENT))) {}
 
          /**
          * constructor -using the default alpha value of 1.0
@@ -159,9 +159,9 @@ namespace TC
          *                   0.0 - 1.0
          */
          Color(float red, float green, float blue)
-            :m_red(Util::Min(red, static_cast<float>(MAX_COLOR_COMPONENT))),
-            m_green(Util::Min(green, static_cast<float>(MAX_COLOR_COMPONENT))),
-            m_blue(Util::Min(blue, static_cast<float>(MAX_COLOR_COMPONENT))),
+            :m_red(util::Min(red, static_cast<float>(MAX_COLOR_COMPONENT))),
+            m_green(util::Min(green, static_cast<float>(MAX_COLOR_COMPONENT))),
+            m_blue(util::Min(blue, static_cast<float>(MAX_COLOR_COMPONENT))),
             m_alpha(DEFAULT_ALPHA)
          {
          }
@@ -173,9 +173,9 @@ namespace TC
          *               the range from [0.0 - 1.0]
          */
          explicit Color(float value)
-            :m_red(Util::Min(value, static_cast<float>(MAX_COLOR_COMPONENT))),
-            m_green(Util::Min(value, static_cast<float>(MAX_COLOR_COMPONENT))),
-            m_blue(Util::Min(value, static_cast<float>(MAX_COLOR_COMPONENT))),
+            :m_red(util::Min(value, static_cast<float>(MAX_COLOR_COMPONENT))),
+            m_green(util::Min(value, static_cast<float>(MAX_COLOR_COMPONENT))),
+            m_blue(util::Min(value, static_cast<float>(MAX_COLOR_COMPONENT))),
             m_alpha(DEFAULT_ALPHA)
          {
          }
@@ -211,7 +211,7 @@ namespace TC
          */
          void SetRed(float red) 
          {
-            m_red = Util::Min(red, static_cast<float>(MAX_COLOR_COMPONENT));
+            m_red = util::Min(red, static_cast<float>(MAX_COLOR_COMPONENT));
          }
 
          /** 
@@ -220,7 +220,7 @@ namespace TC
          */
          void SetGreen(float green)
          {
-            m_green = Util::Min(green, static_cast<float>(MAX_COLOR_COMPONENT));
+            m_green = util::Min(green, static_cast<float>(MAX_COLOR_COMPONENT));
          }
 
          /** 
@@ -229,7 +229,7 @@ namespace TC
          */
          void SetBlue(float blue)
          {
-            m_blue = Util::Min(blue, static_cast<float>(MAX_COLOR_COMPONENT));
+            m_blue = util::Min(blue, static_cast<float>(MAX_COLOR_COMPONENT));
          }
 
          /** 
@@ -238,7 +238,7 @@ namespace TC
          */
          void SetAlpha(float alpha)
          {
-            m_alpha = Util::Min(alpha, static_cast<float>(MAX_COLOR_COMPONENT));
+            m_alpha = util::Min(alpha, static_cast<float>(MAX_COLOR_COMPONENT));
          }
 
          /**

@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -38,9 +38,9 @@
 
 #include "TCAudioStreamingThread.h"
 
-namespace TC
+namespace tc
 {
-   namespace Audio
+   namespace audio
    {
       /**
       * @brief Implements a task for changing the volume of an sound object
@@ -77,7 +77,7 @@ namespace TC
          static const Time CHANGE_VALUE_TIMEOUT;
       };
 
-   } // end namespace Audio
-} // end namespace TC
+   } // end namespace audio
+} // end namespace tc
 
 #endif // _TC_AUDIO_CHANGE_SOUND_VALUE_TASK_H_

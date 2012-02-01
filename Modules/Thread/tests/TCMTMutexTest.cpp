@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -44,31 +44,31 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-    namespace MT
+    namespace multi_threading
     {
-        namespace Tests
+        namespace tests
         {
-            class MutexLockUnlockTest : public Unit::TestCase
+            class MutexLockUnlockTest : public unit::TestCase
             {
             public:
                 MutexLockUnlockTest()
-                    :Unit::TestCase("TC::MT::Tests::MutexLockUnlockTest")
+                    :unit::TestCase("tc::multi_threading::tests::MutexLockUnlockTest")
                 {
                 }
 
                 virtual void Execute()
                 {
                     {
-                        MutexPtr m = Factory::CreateMutex(false);
+                        MutexPtr m = factory::CreateMutex(false);
                         TCUNIT_ASSERT(m);
                         TCUNIT_ASSERT(m->Lock());
                         TCUNIT_ASSERT(m->UnLock());
                     }
 
                     {
-                        MutexPtr m = Factory::CreateMutex(true);
+                        MutexPtr m = factory::CreateMutex(true);
                         TCUNIT_ASSERT(m);
                         TCUNIT_ASSERT(m->UnLock());
                         TCUNIT_ASSERT(m->Lock());
@@ -76,14 +76,14 @@ namespace TC
                     }
 
                     {
-                        MutexPtr m = Factory::CreateMutex(false);
+                        MutexPtr m = factory::CreateMutex(false);
                         TCUNIT_ASSERT(m);
                         TCUNIT_ASSERT(m->TryLock());
                         TCUNIT_ASSERT(m->UnLock());
                     }
 
                     {
-                        MutexPtr m = Factory::CreateMutex(false);
+                        MutexPtr m = factory::CreateMutex(false);
                         TCUNIT_ASSERT(m);
                         TCUNIT_ASSERT(m->TryLock(Time::FromMilliSeconds(100)));
                         TCUNIT_ASSERT(m->UnLock());
@@ -91,75 +91,75 @@ namespace TC
                 }
             };
 
-            class MutexSharedCreateTest : public Unit::TestCase
+            class MutexSharedCreateTest : public unit::TestCase
             {
             public:
                 MutexSharedCreateTest()
-                    :Unit::TestCase("TC::MT::Tests::MutexSharedCreateTest")
+                    :unit::TestCase("tc::multi_threading::tests::MutexSharedCreateTest")
                 {
                 }
 
                 virtual void Execute()
                 {
                     {
-                        MutexPtr m = Factory::CreateMutex("MutexSharedCreateTest",
-                            false, Factory::CRM_ALWAYS);
+                        MutexPtr m = factory::CreateMutex("MutexSharedCreateTest",
+                            false, factory::CRM_ALWAYS);
                         TCUNIT_ASSERT(m);
                     }
 
                     {
-                        MutexPtr m = Factory::CreateMutex("MutexSharedCreateTest",
-                            false, Factory::CRM_WHEN_NOT_EXISTS);
+                        MutexPtr m = factory::CreateMutex("MutexSharedCreateTest",
+                            false, factory::CRM_WHEN_NOT_EXISTS);
                         TCUNIT_ASSERT(m);
                     }
 
                     {
-                        MutexPtr m = Factory::CreateMutex("MutexSharedCreateTest",
-                            false, Factory::CRM_WHEN_EXISTS);
+                        MutexPtr m = factory::CreateMutex("MutexSharedCreateTest",
+                            false, factory::CRM_WHEN_EXISTS);
                         TCUNIT_ASSERT(!m);
                     }
 
                     {
-                        MutexPtr m1 = Factory::CreateMutex("MutexSharedCreateTest",
-                            false, Factory::CRM_ALWAYS);
+                        MutexPtr m1 = factory::CreateMutex("MutexSharedCreateTest",
+                            false, factory::CRM_ALWAYS);
                         TCUNIT_ASSERT(m1);
-                        MutexPtr m2 = Factory::CreateMutex("MutexSharedCreateTest",
-                            false, Factory::CRM_WHEN_EXISTS);
+                        MutexPtr m2 = factory::CreateMutex("MutexSharedCreateTest",
+                            false, factory::CRM_WHEN_EXISTS);
                         TCUNIT_ASSERT(m2);
                     }
 
                     {
-                        MutexPtr m1 = Factory::CreateMutex("MutexSharedCreateTest",
-                            false, Factory::CRM_ALWAYS);
+                        MutexPtr m1 = factory::CreateMutex("MutexSharedCreateTest",
+                            false, factory::CRM_ALWAYS);
                         TCUNIT_ASSERT(m1);
-                        MutexPtr m2 = Factory::CreateMutex("MutexSharedCreateTest",
-                            false, Factory::CRM_WHEN_NOT_EXISTS);
+                        MutexPtr m2 = factory::CreateMutex("MutexSharedCreateTest",
+                            false, factory::CRM_WHEN_NOT_EXISTS);
                         TCUNIT_ASSERT(!m2);
                     }
                 }
             };
 
-            class MutexSharedLockUnlockTest : public Unit::TestCase
+            class MutexSharedLockUnlockTest : public unit::TestCase
             {
             public:
                 MutexSharedLockUnlockTest()
-                    :Unit::TestCase("TC::MT::Tests::MutexSharedLockUnlockTest")
+                    :unit::TestCase("tc::multi_threading::tests::MutexSharedLockUnlockTest")
                 {
                 }
 
                 virtual void Execute()
                 {
                     {
-                        MutexPtr m = Factory::CreateMutex("MutexSharedLockUnlockTest",
-                            false, Factory::CRM_ALWAYS);
+                        MutexPtr m = factory::CreateMutex("MutexSharedLockUnlockTest",
+                            false, factory::CRM_ALWAYS);
                         TCUNIT_ASSERT(m);
                         TCUNIT_ASSERT(m->Lock());
                         TCUNIT_ASSERT(m->UnLock());
                     }
 
                     {
-                        MutexPtr m = Factory::CreateMutex("MutexSharedLockUnlockTest",
-                            true, Factory::CRM_ALWAYS);
+                        MutexPtr m = factory::CreateMutex("MutexSharedLockUnlockTest",
+                            true, factory::CRM_ALWAYS);
                         TCUNIT_ASSERT(m);
                         TCUNIT_ASSERT(m->UnLock());
                         TCUNIT_ASSERT(m->Lock());
@@ -167,16 +167,16 @@ namespace TC
                     }
 
                     {
-                        MutexPtr m = Factory::CreateMutex("MutexSharedLockUnlockTest",
-                            false, Factory::CRM_ALWAYS);
+                        MutexPtr m = factory::CreateMutex("MutexSharedLockUnlockTest",
+                            false, factory::CRM_ALWAYS);
                         TCUNIT_ASSERT(m);
                         TCUNIT_ASSERT(m->TryLock());
                         TCUNIT_ASSERT(m->UnLock());
                     }
 
                     {
-                        MutexPtr m = Factory::CreateMutex("MutexSharedLockUnlockTest",
-                            false, Factory::CRM_ALWAYS);
+                        MutexPtr m = factory::CreateMutex("MutexSharedLockUnlockTest",
+                            false, factory::CRM_ALWAYS);
                         TCUNIT_ASSERT(m);
                         TCUNIT_ASSERT(m->TryLock(Time::FromMilliSeconds(100)));
                         TCUNIT_ASSERT(m->UnLock());
@@ -185,11 +185,11 @@ namespace TC
             };
 
             MutexSuite::MutexSuite()
-                : Unit::TestSuite("TC::MT::Tests::MutexSuite")
+                : unit::TestSuite("tc::multi_threading::tests::MutexSuite")
             {
-                AddTest(Unit::Test::Ptr(new MutexLockUnlockTest));
-                AddTest(Unit::Test::Ptr(new MutexSharedCreateTest));
-                AddTest(Unit::Test::Ptr(new MutexSharedLockUnlockTest));
+                AddTest(unit::Test::Ptr(new MutexLockUnlockTest));
+                AddTest(unit::Test::Ptr(new MutexSharedCreateTest));
+                AddTest(unit::Test::Ptr(new MutexSharedLockUnlockTest));
             }
 
         }

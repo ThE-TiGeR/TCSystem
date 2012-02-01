@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -39,7 +39,7 @@
 #include "TCNonCopyable.h"
 #include "TCStreamAble.h"
 
-namespace TC
+namespace tc
 {
    /**
     * @addtogroup TC_BASE
@@ -191,6 +191,6 @@ namespace TC
    /**
     * @}
     */
-} // namespace TC
+} // namespace tc
 
 #endif // _TCSETTINGS_H_

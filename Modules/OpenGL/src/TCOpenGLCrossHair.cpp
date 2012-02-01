@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -42,9 +42,9 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-   namespace OpenGL
+   namespace open_gl
    {
 
       CrossHair::CrossHair(const std::string& name)
@@ -79,8 +79,8 @@ namespace TC
          glBegin(GL_LINE_LOOP);
          for (uint32 i=0;i<32;i++)
          {
-            float cosine = cos (i*2*Math::PI/32.0) * 0.33;
-            float sine = sin(i*2*Math::PI / 32.0) * 0.33 * aspect;
+            float cosine = cos (i*2*math::PI/32.0) * 0.33;
+            float sine = sin(i*2*math::PI / 32.0) * 0.33 * aspect;
             glVertex2f(cosine,sine);
          }
          glEnd();
@@ -99,15 +99,15 @@ namespace TC
             TextRenderer::GetInstance().SetFont(viewer.getApp()->getNormalFont());
 
             char text[128];
-            String::Snprintf(text, 128, "Diameter: %8.6g", size);
+            string::Snprintf(text, 128, "Diameter: %8.6g", size);
             TextRenderer::GetInstance().Render3DText(text, 
                Vertex3D(-0.60f, -0.23f, 0.0f), Color(255, 255, 255));
 
-            String::Snprintf(text, 128, "Point : %8.6g %8.6g %8.6g", eyepos[0], eyepos[1], eyepos[2]);
+            string::Snprintf(text, 128, "Point : %8.6g %8.6g %8.6g", eyepos[0], eyepos[1], eyepos[2]);
             TextRenderer::GetInstance().Render3DText(text, 
                Vertex3D(0.33f, -0.23f, 0.0f), Color(255, 255, 255));
 
-            String::Snprintf(text, 128, "Vector: %8.6g %8.6g %8.6g", eyevec[0],eyevec[1],eyevec[2]);
+            string::Snprintf(text, 128, "Vector: %8.6g %8.6g %8.6g", eyevec[0],eyevec[1],eyevec[2]);
             TextRenderer::GetInstance().Render3DText(text, 
                Vertex3D(0.33f, -0.28f, 0.0f), Color(255, 255, 255));
          }     

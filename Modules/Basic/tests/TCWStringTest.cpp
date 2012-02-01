@@ -55,14 +55,14 @@
 #endif
 
 
-namespace TC
+namespace tc
 {
    namespace
    {
-      class ConvertToUpperLower: public Unit::TestCase
+      class ConvertToUpperLower: public unit::TestCase
       {
       public:
-         ConvertToUpperLower() : Unit::TestCase("TC::Tests::ConvertToUpperLower") {}
+         ConvertToUpperLower() : unit::TestCase("tc::tests::ConvertToUpperLower") {}
          virtual void Execute();
       };
 
@@ -72,48 +72,48 @@ namespace TC
 
          // test conversion to upper case
          text = L"ConvertToUpper";
-         text = WString::ToUpper(text);
+         text = wstring::ToUpper(text);
          TCUNIT_ASSERT(text == L"CONVERTTOUPPER");
 
          // test conversion to lower case
-         text = WString::ToLower(text);
+         text = wstring::ToLower(text);
          TCUNIT_ASSERT(text == L"converttoupper");
 
          text = L"ConvertToLower";
-         text = WString::ToLower(text);
+         text = wstring::ToLower(text);
          TCUNIT_ASSERT(text == L"converttolower");
       }
 
-      class ConvertToNumber: public Unit::TestCase
+      class ConvertToNumber: public unit::TestCase
       {
       public:
-         ConvertToNumber() : Unit::TestCase("TC::Tests::ConvertToNumber") {}
+         ConvertToNumber() : unit::TestCase("tc::tests::ConvertToNumber") {}
          virtual void Execute();
       };
 
       void ConvertToNumber::Execute()
       {
          // test conversion to uint32
-         TCUNIT_ASSERT(WString::ToUint32(L"123456.789") == 123456);
-         TCUNIT_ASSERT(WString::ToUint32(L"0")          == 0);               // min value
-         TCUNIT_ASSERT(WString::ToUint32(L"4294967295") == 4294967295ul);      // max value
-         TCUNIT_ASSERT(WString::ToUint32(L"-1")         == 4294967295ul);
+         TCUNIT_ASSERT(wstring::ToUint32(L"123456.789") == 123456);
+         TCUNIT_ASSERT(wstring::ToUint32(L"0")          == 0);               // min value
+         TCUNIT_ASSERT(wstring::ToUint32(L"4294967295") == 4294967295ul);      // max value
+         TCUNIT_ASSERT(wstring::ToUint32(L"-1")         == 4294967295ul);
 
          // test conversion to sint32
-         TCUNIT_ASSERT(WString::ToSint32(L"123456.789") == 123456);
-         TCUNIT_ASSERT(WString::ToSint32(L"0") == 0);
-         TCUNIT_ASSERT(WString::ToSint32(L"-123") == -123);
-         TCUNIT_ASSERT(WString::ToSint32(L"-2147483647") == -2147483647);    // min value
-         TCUNIT_ASSERT(WString::ToSint32(L"2147483647") == 2147483647);      // max value
+         TCUNIT_ASSERT(wstring::ToSint32(L"123456.789") == 123456);
+         TCUNIT_ASSERT(wstring::ToSint32(L"0") == 0);
+         TCUNIT_ASSERT(wstring::ToSint32(L"-123") == -123);
+         TCUNIT_ASSERT(wstring::ToSint32(L"-2147483647") == -2147483647);    // min value
+         TCUNIT_ASSERT(wstring::ToSint32(L"2147483647") == 2147483647);      // max value
 
-         TCUNIT_ASSERT(fabs(WString::ToFlt32(L"123456.789") - 123456.789f) < 0.1f);
-         TCUNIT_ASSERT(WString::ToFlt64(L"123456.789") == 123456.789);
+         TCUNIT_ASSERT(fabs(wstring::ToFlt32(L"123456.789") - 123456.789f) < 0.1f);
+         TCUNIT_ASSERT(wstring::ToFlt64(L"123456.789") == 123456.789);
       }
 
-      class ConvertToString: public Unit::TestCase
+      class ConvertToString: public unit::TestCase
       {
       public:
-         ConvertToString() : Unit::TestCase("TC::Tests::ConvertToString") {}
+         ConvertToString() : unit::TestCase("tc::tests::ConvertToString") {}
          virtual void Execute();
       };
 
@@ -121,105 +121,105 @@ namespace TC
       {
          // convert from ascii to wide character
          {
-            TCUNIT_ASSERT(WString::ToString("testing ToString( const char* string )")
+            TCUNIT_ASSERT(wstring::ToString("testing ToString( const char* string )")
                == L"testing ToString( const char* string )");
-            TCUNIT_ASSERT(WString::ToString("") == L"");
-            TCUNIT_ASSERT(WString::ToString(static_cast<char *>(0)).empty());
+            TCUNIT_ASSERT(wstring::ToString("") == L"");
+            TCUNIT_ASSERT(wstring::ToString(static_cast<char *>(0)).empty());
          }
 
 
          // convert from wide character to ascii
          {
-            TCUNIT_ASSERT(WString::ToString(L"testing ToString( const char* string )")
+            TCUNIT_ASSERT(wstring::ToString(L"testing ToString( const char* string )")
                == "testing ToString( const char* string )");
-            TCUNIT_ASSERT(WString::ToString(L"") == "");
-            TCUNIT_ASSERT(WString::ToString(static_cast<wchar_t *>(0)).empty());
+            TCUNIT_ASSERT(wstring::ToString(L"") == "");
+            TCUNIT_ASSERT(wstring::ToString(static_cast<wchar_t *>(0)).empty());
          }
 
          // convert from uint64
          {
             uint64 uint64_number = 123456789;
-            TCUNIT_ASSERT(WString::ToString(uint64_number)      == L"123456789");
+            TCUNIT_ASSERT(wstring::ToString(uint64_number)      == L"123456789");
             uint64_number = TC_UINT64_VAL(18446744073709551615);
-            TCUNIT_ASSERT(WString::ToString(uint64_number)      == L"18446744073709551615");
+            TCUNIT_ASSERT(wstring::ToString(uint64_number)      == L"18446744073709551615");
             uint64_number = 0;
-            TCUNIT_ASSERT(WString::ToString(uint64_number)      == L"0");
+            TCUNIT_ASSERT(wstring::ToString(uint64_number)      == L"0");
          }
 
          // convert from uint32
          {
             uint32 uint32_number = 123456789;
-            TCUNIT_ASSERT(WString::ToString(uint32_number)      == L"123456789");
+            TCUNIT_ASSERT(wstring::ToString(uint32_number)      == L"123456789");
             uint32_number = 4294967295ul;
-            TCUNIT_ASSERT(WString::ToString(uint32_number)      == L"4294967295");
+            TCUNIT_ASSERT(wstring::ToString(uint32_number)      == L"4294967295");
             uint32_number = 0;
-            TCUNIT_ASSERT(WString::ToString(uint32_number)      == L"0");
+            TCUNIT_ASSERT(wstring::ToString(uint32_number)      == L"0");
          }
 
          // convert from uint16
          {
             uint16 uint16_number = 12345;
-            TCUNIT_ASSERT(WString::ToString(uint16_number)      == L"12345");
+            TCUNIT_ASSERT(wstring::ToString(uint16_number)      == L"12345");
             uint16_number = 65535;
-            TCUNIT_ASSERT(WString::ToString(uint16_number)      == L"65535");
+            TCUNIT_ASSERT(wstring::ToString(uint16_number)      == L"65535");
             uint16_number = 0;
-            TCUNIT_ASSERT(WString::ToString(uint16_number)      == L"0");
+            TCUNIT_ASSERT(wstring::ToString(uint16_number)      == L"0");
          }
 
 
          // convert from sint64
          {
             sint64 sint64_number = 123456789;
-            TCUNIT_ASSERT(WString::ToString(sint64_number)      == L"123456789");
+            TCUNIT_ASSERT(wstring::ToString(sint64_number)      == L"123456789");
             sint64_number = -123456789;
-            TCUNIT_ASSERT(WString::ToString(sint64_number)      == L"-123456789");
+            TCUNIT_ASSERT(wstring::ToString(sint64_number)      == L"-123456789");
             sint64_number = static_cast<sint64>(TC_SINT64_VAL(9223372036854775807));
-            TCUNIT_ASSERT(WString::ToString(sint64_number)      == L"9223372036854775807");
+            TCUNIT_ASSERT(wstring::ToString(sint64_number)      == L"9223372036854775807");
             sint64_number = TC_SINT64_VAL(-9223372036854775807);
-            TCUNIT_ASSERT(WString::ToString(sint64_number)      == L"-9223372036854775807");
+            TCUNIT_ASSERT(wstring::ToString(sint64_number)      == L"-9223372036854775807");
             sint64_number = 0;
-            TCUNIT_ASSERT(WString::ToString(sint64_number)      == L"0");
+            TCUNIT_ASSERT(wstring::ToString(sint64_number)      == L"0");
          }
 
          // convert from sint32
          {
             sint32 sint32_number = 123456789;
-            TCUNIT_ASSERT(WString::ToString(sint32_number)      == L"123456789");
+            TCUNIT_ASSERT(wstring::ToString(sint32_number)      == L"123456789");
             sint32_number = -123456789;
-            TCUNIT_ASSERT(WString::ToString(sint32_number)      == L"-123456789");
+            TCUNIT_ASSERT(wstring::ToString(sint32_number)      == L"-123456789");
             sint32_number = 2147483647;
-            TCUNIT_ASSERT(WString::ToString(sint32_number)      == L"2147483647");
+            TCUNIT_ASSERT(wstring::ToString(sint32_number)      == L"2147483647");
             sint32_number = -2147483647;
-            TCUNIT_ASSERT(WString::ToString(sint32_number)      == L"-2147483647");
+            TCUNIT_ASSERT(wstring::ToString(sint32_number)      == L"-2147483647");
             sint32_number = 0;
-            TCUNIT_ASSERT(WString::ToString(sint32_number)      == L"0");
+            TCUNIT_ASSERT(wstring::ToString(sint32_number)      == L"0");
          }
 
          // convert from sint16
          {
             sint16 sint16_number = 12345;
-            TCUNIT_ASSERT(WString::ToString(sint16_number)      == L"12345");
+            TCUNIT_ASSERT(wstring::ToString(sint16_number)      == L"12345");
             sint16_number = -12345;
-            TCUNIT_ASSERT(WString::ToString(sint16_number)      == L"-12345");
+            TCUNIT_ASSERT(wstring::ToString(sint16_number)      == L"-12345");
             sint16_number = 32767;
-            TCUNIT_ASSERT(WString::ToString(sint16_number)      == L"32767");
+            TCUNIT_ASSERT(wstring::ToString(sint16_number)      == L"32767");
             sint16_number = -32768;
-            TCUNIT_ASSERT(WString::ToString(sint16_number)      == L"-32768");
+            TCUNIT_ASSERT(wstring::ToString(sint16_number)      == L"-32768");
             sint16_number = 0;
-            TCUNIT_ASSERT(WString::ToString(sint16_number)      == L"0");
+            TCUNIT_ASSERT(wstring::ToString(sint16_number)      == L"0");
          }
 
          // convert from float
          {
             wchar_t tmp_string[100];
             snwprintf(tmp_string, 100, L"%f", 0.123456f);
-            TCUNIT_ASSERT(WString::ToString(0.123456f)    == tmp_string);
+            TCUNIT_ASSERT(wstring::ToString(0.123456f)    == tmp_string);
             snwprintf(tmp_string, 100, L"%f", -0.123456f);
-            TCUNIT_ASSERT(WString::ToString(-0.123456f)   == tmp_string);
+            TCUNIT_ASSERT(wstring::ToString(-0.123456f)   == tmp_string);
             snwprintf(tmp_string, 100, L"%f", 123.456f);
-            TCUNIT_ASSERT(WString::ToString(123.456f)     == tmp_string);
+            TCUNIT_ASSERT(wstring::ToString(123.456f)     == tmp_string);
             snwprintf(tmp_string, 100, L"%f", -123.456f);
-            TCUNIT_ASSERT(WString::ToString(-123.456f)    == tmp_string);
+            TCUNIT_ASSERT(wstring::ToString(-123.456f)    == tmp_string);
          }
 
 
@@ -227,158 +227,158 @@ namespace TC
          {
             wchar_t tmp_string[100];
             snwprintf(tmp_string, 100, L"%lf", 0.123456);
-            TCUNIT_ASSERT(WString::ToString(0.123456)    == tmp_string);
+            TCUNIT_ASSERT(wstring::ToString(0.123456)    == tmp_string);
             snwprintf(tmp_string, 100, L"%lf", -0.123456);
-            TCUNIT_ASSERT(WString::ToString(-0.123456)   == tmp_string);
+            TCUNIT_ASSERT(wstring::ToString(-0.123456)   == tmp_string);
             snwprintf(tmp_string, 100, L"%lf", 123.456);
-            TCUNIT_ASSERT(WString::ToString(123.456)     == tmp_string);
+            TCUNIT_ASSERT(wstring::ToString(123.456)     == tmp_string);
             snwprintf(tmp_string, 100, L"%lf", -123.456);
-            TCUNIT_ASSERT(WString::ToString(-123.456)    == tmp_string);
+            TCUNIT_ASSERT(wstring::ToString(-123.456)    == tmp_string);
          }
       }
 
-      class StringManipulation: public Unit::TestCase
+      class StringManipulation: public unit::TestCase
       {
       public:
-         StringManipulation() : Unit::TestCase("TC::Tests::StringManipulation") {}
+         StringManipulation() : unit::TestCase("tc::tests::StringManipulation") {}
          virtual void Execute()
          {
             // test trim spaces
             {
                std::wstring test_string = L"   test string   ";
-               test_string = WString::TrimmSpaces(test_string);
+               test_string = wstring::TrimmSpaces(test_string);
                TCUNIT_ASSERT(test_string == L"test string");
 
                test_string = L"test string   ";
-               test_string = WString::TrimmSpaces(test_string);
+               test_string = wstring::TrimmSpaces(test_string);
                TCUNIT_ASSERT(test_string == L"test string");
 
                test_string = L"    test string";
-               test_string = WString::TrimmSpaces(test_string);
+               test_string = wstring::TrimmSpaces(test_string);
                TCUNIT_ASSERT(test_string == L"test string");
             }
 
             // test trim leading spaces
             {
                std::wstring test_string = L"   test string   ";
-               test_string = WString::TrimmLeadingSpaces(test_string);
+               test_string = wstring::TrimmLeadingSpaces(test_string);
                TCUNIT_ASSERT(test_string == L"test string   ");
 
                test_string = L"test string   ";
-               test_string = WString::TrimmLeadingSpaces(test_string);
+               test_string = wstring::TrimmLeadingSpaces(test_string);
                TCUNIT_ASSERT(test_string == L"test string   ");
 
                test_string = L"    test string";
-               test_string = WString::TrimmLeadingSpaces(test_string);
+               test_string = wstring::TrimmLeadingSpaces(test_string);
                TCUNIT_ASSERT(test_string == L"test string");
             }
 
             // test trim trailing spaces
             {
                std::wstring test_string = L"   test string   ";
-               test_string = WString::TrimmTrailingSpaces(test_string);
+               test_string = wstring::TrimmTrailingSpaces(test_string);
                TCUNIT_ASSERT(test_string == L"   test string");
 
                test_string = L"test string   ";
-               test_string = WString::TrimmTrailingSpaces(test_string);
+               test_string = wstring::TrimmTrailingSpaces(test_string);
                TCUNIT_ASSERT(test_string == L"test string");
 
                test_string = L"    test string";
-               test_string = WString::TrimmTrailingSpaces(test_string);
+               test_string = wstring::TrimmTrailingSpaces(test_string);
                TCUNIT_ASSERT(test_string == L"    test string");
             }
 
             // test replace string
             {
                std::wstring test_string = L"test string";
-               test_string = WString::Replace(test_string, L"test", L"123");
+               test_string = wstring::Replace(test_string, L"test", L"123");
                TCUNIT_ASSERT(test_string == L"123 string");
 
                test_string = L"test string test testtest";
-               test_string = WString::Replace(test_string, L"test", L"123");
+               test_string = wstring::Replace(test_string, L"test", L"123");
                TCUNIT_ASSERT(test_string == L"123 string 123 123123");
 
                //             test_string = L"test string test testtest";
-               //             WString::Replace(test_string, L"test", 2, L"123", 3);
+               //             wstring::Replace(test_string, L"test", 2, L"123", 3);
                //             TCUNIT_ASSERT(test_string == L"123st string 123st 123st123st");
                // 
                //             test_string = L"test string test testtest";
-               //             WString::Replace(test_string, L"test", 3, L"123", 2);
+               //             wstring::Replace(test_string, L"test", 3, L"123", 2);
                //             TCUNIT_ASSERT(test_string == L"12t string 12t 12t12t");
             }
          }
       };
 
-      class Split: public Unit::TestCase
+      class Split: public unit::TestCase
       {
       public:
-         Split() : Unit::TestCase("TC::Tests::Split") {}
+         Split() : unit::TestCase("tc::tests::Split") {}
 
          virtual void Execute()
          {
             {
                std::vector<std::wstring> values;
-               //             WString::Split(L"1 2 3", L' ', values, false);
+               //             wstring::Split(L"1 2 3", L' ', values, false);
                //             TCUNIT_ASSERT(values.size()==3 && values[0]==L"1" && values[1]==L"2" && values[2]==L"3");
 
-               WString::Split(L"1 2 3", L" ", values/*, false*/);
+               wstring::Split(L"1 2 3", L" ", values/*, false*/);
                TCUNIT_ASSERT(values.size()==3 && values[0]==L"1" && values[1]==L"2" && values[2]==L"3");
 
-               //             WString::Split(L"1 2 3", L" ", values, true);
+               //             wstring::Split(L"1 2 3", L" ", values, true);
                //             TCUNIT_ASSERT(values.size()==6 && values[0]==L"1" && values[1]==L"2" && values[2]==L"3"
                //                && values[3]==L"1" && values[4]==L"2" && values[5]==L"3");
             }
             // 
             //          {
             //             std::vector<uint32> values;
-            //             WString::Split(L"1 2 3", L' ', values, false);
+            //             wstring::Split(L"1 2 3", L' ', values, false);
             //             TCUNIT_ASSERT(values.size()==3 && values[0]==1 && values[1]==2 && values[2]==3);
             // 
-            //             WString::Split(L"1 2 3", L" ", values, false);
+            //             wstring::Split(L"1 2 3", L" ", values, false);
             //             TCUNIT_ASSERT(values.size()==3 && values[0]==1 && values[1]==2 && values[2]==3);
             // 
-            //             WString::Split(L"1 2 3", L" ", values, true);
+            //             wstring::Split(L"1 2 3", L" ", values, true);
             //             TCUNIT_ASSERT(values.size()==6 && values[0]==1 && values[1]==2 && values[2]==3
             //                && values[3]==1 && values[4]==2 && values[5]==3);
             //          }
             // 
             //          {
             //             std::vector<sint32> values;
-            //             WString::Split(L"1 -2 3", L' ', values, false);
+            //             wstring::Split(L"1 -2 3", L' ', values, false);
             //             TCUNIT_ASSERT(values.size()==3 && values[0]==1 && values[1]==-2 && values[2]==3);
             // 
-            //             WString::Split(L"1 -2 3", L" ", values, false);
+            //             wstring::Split(L"1 -2 3", L" ", values, false);
             //             TCUNIT_ASSERT(values.size()==3 && values[0]==1 && values[1]==-2 && values[2]==3);
             // 
-            //             WString::Split(L"1 -2 3", L" ", values, true);
+            //             wstring::Split(L"1 -2 3", L" ", values, true);
             //             TCUNIT_ASSERT(values.size()==6 && values[0]==1 && values[1]==-2 && values[2]==3
             //                && values[3]==1 && values[4]==-2 && values[5]==3);
             //          }
             // 
             //          {
             //             std::vector<double> values;
-            //             WString::Split(L"1.1 -2.2 3.3", L' ', values, false);
+            //             wstring::Split(L"1.1 -2.2 3.3", L' ', values, false);
             //             TCUNIT_ASSERT(values.size()==3 && values[0]==1.1 && values[1]==-2.2 && values[2]==3.3);
             // 
-            //             WString::Split(L"1.1 -2.2 3.3", L" ", values, false);
+            //             wstring::Split(L"1.1 -2.2 3.3", L" ", values, false);
             //             TCUNIT_ASSERT(values.size()==3 && values[0]==1.1 && values[1]==-2.2 && values[2]==3.3);
             // 
-            //             WString::Split(L"1.1 -2.2 3.3", L" ", values, true);
+            //             wstring::Split(L"1.1 -2.2 3.3", L" ", values, true);
             //             TCUNIT_ASSERT(values.size()==6 && values[0]==1.1 && values[1]==-2.2 && values[2]==3.3
             //                && values[3]==1.1 && values[4]==-2.2 && values[5]==3.3);
             //          }
          }
       };
 
-      class Print: public Unit::TestCase
+      class Print: public unit::TestCase
       {
       public:
-         Print() : Unit::TestCase("TC::Tests::Print") {}
+         Print() : unit::TestCase("tc::tests::Print") {}
          virtual void Execute()
          {
             {
                wchar_t buffer[100];
-               sint32 l = WString::Snprintf(buffer, TC::Util::ArraySize(buffer),
+               sint32 l = wstring::Snprintf(buffer, tc::util::ArraySize(buffer),
                   L"%d, %g, %ls", 1, 1.0, L"test");
                TCUNIT_ASSERT(l != -1);
                TCUNIT_ASSERT(wcscmp(L"1, 1, test", buffer) == 0);
@@ -387,7 +387,7 @@ namespace TC
 
             {
                wchar_t buffer[5];
-               sint32 l = WString::Snprintf(buffer, TC::Util::ArraySize(buffer),
+               sint32 l = wstring::Snprintf(buffer, tc::util::ArraySize(buffer),
                   L"%d, %g, %ls", 1, 1.0, L"test");
                TCUNIT_ASSERT(l == -1);
                TCUNIT_ASSERT(wcscmp(L"1, 1", buffer) == 0);
@@ -395,12 +395,12 @@ namespace TC
             }
 
             {
-               std::wstring s = WString::Print(L"%d, %g, %ls", 1, 1.0, L"test");
+               std::wstring s = wstring::Print(L"%d, %g, %ls", 1, 1.0, L"test");
                TCUNIT_ASSERT(s == L"1, 1, test");
             }
 
             {
-               std::wstring s = WString::Print(L"%d, %g, %ls", 1, 1.0,
+               std::wstring s = wstring::Print(L"%d, %g, %ls", 1, 1.0,
                   L"12345678901234567890123456789012345678901234567890123456789012345678901234567890");
                TCUNIT_ASSERT(s == L"1, 1, 12345678901234567890123456789012345678901234567890123456789012345678901234567890");
             }
@@ -408,17 +408,17 @@ namespace TC
       };
    }
 
-   namespace Tests
+   namespace tests
    {
       WStringTestSuite::WStringTestSuite()
-         :Unit::TestSuite("TC::WStringTestSuite")
+         :unit::TestSuite("tc::WStringTestSuite")
       {
-         AddTest(Unit::Test::Ptr(new ConvertToUpperLower));
-         AddTest(Unit::Test::Ptr(new ConvertToNumber));
-         AddTest(Unit::Test::Ptr(new ConvertToString));
-         AddTest(Unit::Test::Ptr(new StringManipulation));
-         AddTest(Unit::Test::Ptr(new Split));
-         AddTest(Unit::Test::Ptr(new Print));
+         AddTest(unit::Test::Ptr(new ConvertToUpperLower));
+         AddTest(unit::Test::Ptr(new ConvertToNumber));
+         AddTest(unit::Test::Ptr(new ConvertToString));
+         AddTest(unit::Test::Ptr(new StringManipulation));
+         AddTest(unit::Test::Ptr(new Split));
+         AddTest(unit::Test::Ptr(new Print));
       }
    }
 }

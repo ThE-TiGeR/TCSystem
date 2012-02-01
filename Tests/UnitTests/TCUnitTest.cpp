@@ -10,18 +10,18 @@
 
 int RunUnitTests()
 {
-   TC::Unit::TestSuite::Ptr suite(new TC::Unit::TestSuite("TC::Suite"));
-   suite->AddTest(TC::Unit::Test::Ptr(new TC::Tests::BasicSuite));
-   suite->AddTest(TC::Unit::Test::Ptr(new TC::MT::Tests::Suite));
-   suite->AddTest(TC::Unit::Test::Ptr(new TC::Net::Tests::Suite));
-   suite->AddTest(TC::Unit::Test::Ptr(new TC::Math::Tests::Suite));
+   tc::unit::TestSuite::Ptr suite(new tc::unit::TestSuite("tc::Suite"));
+   suite->AddTest(tc::unit::Test::Ptr(new tc::tests::BasicSuite));
+   suite->AddTest(tc::unit::Test::Ptr(new tc::multi_threading::tests::Suite));
+   suite->AddTest(tc::unit::Test::Ptr(new tc::net::tests::Suite));
+   suite->AddTest(tc::unit::Test::Ptr(new tc::math::tests::Suite));
 
-   TC::Unit::TreeTestRunner runner;
-   return runner.Run(suite, TC::Unit::CleanlinessCheck::Ptr())? 0: 1;
+   tc::unit::TreeTestRunner runner;
+   return runner.Run(suite, tc::unit::CleanlinessCheck::Ptr())? 0: 1;
 }
 #endif
 
-class NullPrintTarget: public TC::Output::PrintTarget
+class NullPrintTarget: public tc::output::PrintTarget
 {
 public:
     virtual void Print(const char*)
@@ -33,8 +33,8 @@ int main(int, char**)
 {
    int status = 0;
    {
-      TC::Output::PrintTargetPtr print_target(new NullPrintTarget);
-      TC::Output::SetOuputTarget(print_target);
+      tc::output::PrintTargetPtr print_target(new NullPrintTarget);
+      tc::output::SetOuputTarget(print_target);
 
 #ifdef HAVE_UNIT_TESTS
       status = RunUnitTests();
@@ -43,7 +43,7 @@ int main(int, char**)
       status = 1;
 #endif
 
-      TC::Output::SetOuputTarget(TC::Output::PrintTargetPtr());
+      tc::output::SetOuputTarget(tc::output::PrintTargetPtr());
    }
 
    return status;

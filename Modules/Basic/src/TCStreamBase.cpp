@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -40,9 +40,9 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-namespace Impl
+namespace imp
 {
 
 StreamBase::StreamBase(CodecPtr codec)
@@ -79,9 +79,9 @@ void StreamBase::setStatus(sint32 err) const
    if (m_display_error_messages)
    {
       displayErrorMessage();
-      if (GetStatus() != error_none && System::GetLastError() !=0)
+      if (GetStatus() != error_none && system::GetLastError() !=0)
       {
-         TCERROR("TCBASE", System::GetLastErrorMessage().c_str());
+         TCERROR("TCBASE", system::GetLastErrorMessage().c_str());
       }
    }
 }

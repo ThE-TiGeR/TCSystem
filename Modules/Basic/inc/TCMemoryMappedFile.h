@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -39,7 +39,7 @@
 
 #include <string>
 
-namespace TC
+namespace tc
 {
    /**
    * @addtogroup TC_BASE
@@ -48,7 +48,7 @@ namespace TC
 
    /**
    * @file
-   * This header file provides the definition of the class TC::MemoryMappedFile.
+   * This header file provides the definition of the class tc::MemoryMappedFile.
    *
    * @author Thomas Goessler
    */
@@ -57,7 +57,7 @@ namespace TC
    typedef SharedPtr<MemoryMappedFile> MemoryMappedFilePtr;
 
    /**
-   * The class TC::MemoryMappedFile is a simple file opener by mapping the file
+   * The class tc::MemoryMappedFile is a simple file opener by mapping the file
    * into the memory.
    *
    * @author Thomas Goessler

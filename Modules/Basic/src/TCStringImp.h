@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -46,7 +46,7 @@
 #define va_copy(a, b) (a=b)
 #endif
 
-namespace TC
+namespace tc
 {
    template <class STRING_CLASS, class TRAITS>
    class StringImpTmpl

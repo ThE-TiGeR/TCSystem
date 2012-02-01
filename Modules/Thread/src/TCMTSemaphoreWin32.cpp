@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -42,11 +42,11 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-   namespace MT
+   namespace multi_threading
    {
-      namespace Impl
+      namespace imp
       {
 
          SemaphoreWin32::SemaphoreWin32() 
@@ -65,7 +65,7 @@ namespace TC
             return true;
          }
 
-         bool SemaphoreWin32::Init(const std::string& shared_name, uint32 initial, Factory::CreationMode mode) 
+         bool SemaphoreWin32::Init(const std::string& shared_name, uint32 initial, factory::CreationMode mode) 
          {
             m_handle = ::CreateSemaphoreA(0, initial, 0xffffff, shared_name.c_str());
             DWORD error = ::GetLastError();
@@ -76,11 +76,11 @@ namespace TC
 
             switch(mode)
             {
-            case Factory::CRM_ALWAYS:
+            case factory::CRM_ALWAYS:
                return true;
-            case Factory::CRM_WHEN_EXISTS:
+            case factory::CRM_WHEN_EXISTS:
                return error == ERROR_ALREADY_EXISTS;
-            case Factory::CRM_WHEN_NOT_EXISTS:
+            case factory::CRM_WHEN_NOT_EXISTS:
                return error != ERROR_ALREADY_EXISTS;
             }
 
@@ -116,8 +116,8 @@ namespace TC
             return ::ReleaseSemaphore(m_handle, 1, 0) == TRUE;
          }
 
-      } // namespace Impl
-   } // namespace MT
-} // namespace TC
+      } // namespace imp
+   } // namespace multi_threading
+} // namespace tc
 
 #endif // TCOS_WINDOWS

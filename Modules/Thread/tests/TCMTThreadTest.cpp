@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -44,33 +44,33 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-    namespace MT
+    namespace multi_threading
     {
-        namespace Tests
+        namespace tests
         {
 
-            class ThreadTest : public Unit::TestCase, 
+            class ThreadTest : public unit::TestCase, 
                 public ThreadObject
             {
             public:
                 ThreadTest()
-                    :Unit::TestCase("TC::MT::Tests::ThreadTest"),
+                    :unit::TestCase("tc::multi_threading::tests::ThreadTest"),
                     m_exeption(0)
                 {
                 }
 
                 ~ThreadTest()
                 {
-                    Util::SafeRelease(m_exeption);
+                    util::SafeRelease(m_exeption);
                 }
 
                 virtual void Execute()
                 {
-                    m_thread_start_event = Factory::CreateEvent();
-                    m_thread_started_event = Factory::CreateEvent();
-                    m_thread_handle = Factory::CreateThread("TC::MT::Tests::ThreadTest");
+                    m_thread_start_event = factory::CreateEvent();
+                    m_thread_started_event = factory::CreateEvent();
+                    m_thread_handle = factory::CreateThread("tc::multi_threading::tests::ThreadTest");
 
                     TCUNIT_ASSERT(m_thread_handle);
                     TCUNIT_ASSERT(m_thread_handle->Start(ThreadObjectPtr(this, NoDelete())));
@@ -101,12 +101,12 @@ namespace TC
                         m_thread_start_event->Wait();
                         m_thread_started_event->Set();
 
-                        TCUNIT_ASSERT(m_thread_handle == Factory::GetCurrentThread());
+                        TCUNIT_ASSERT(m_thread_handle == factory::GetCurrentThread());
                     }
 
-                    catch (const Unit::Failure& ex)
+                    catch (const unit::Failure& ex)
                     {
-                        m_exeption = new Unit::Failure(ex);
+                        m_exeption = new unit::Failure(ex);
                     }
 
                     return true;
@@ -115,15 +115,15 @@ namespace TC
                 ThreadPtr m_thread_handle;
                 EventPtr m_thread_start_event;
                 EventPtr m_thread_started_event;
-                Unit::Failure* m_exeption;
+                unit::Failure* m_exeption;
           };
 
 
-            class ThreadMessageTest : public Unit::TestCase
+            class ThreadMessageTest : public unit::TestCase
             {
             public:
                 ThreadMessageTest()
-                    :Unit::TestCase("TC::MT::Tests::ThreadMessageTest"),
+                    :unit::TestCase("tc::multi_threading::tests::ThreadMessageTest"),
                     m_exeption(0)
                 {
                 }
@@ -145,7 +145,7 @@ namespace TC
                 virtual void Execute()
                 {
                     /*
-                    ThreadPtr h = Factory::CreateThread("TC::MT::Tests::ThreadMessageTest");
+                    ThreadPtr h = factory::CreateThread("tc::multi_threading::tests::ThreadMessageTest");
                     TCUNIT_ASSERT(h);
                     TCUNIT_ASSERT(h->Start(ThreadObjectPtr(this, NoDelete())));
 
@@ -184,7 +184,7 @@ namespace TC
 //                         void* msg = 0x0;
 //                         uint32 msg_id = 0;
 //                         const uint32 all_ids[] = {TEST_MESSAGE_ID1, TEST_MESSAGE_ID2, TEST_MESSAGE_ID3, TEST_MESSAGE_ID4};
-//                         uint32 num_all_ids = Util::ArraySize(all_ids);
+//                         uint32 num_all_ids = util::ArraySize(all_ids);
 // 
 //                         {
 //                             TCUNIT_ASSERT(Message::Get(TEST_MESSAGE_ID1, &msg) == Message::MSG_RECEIVED);
@@ -247,23 +247,23 @@ namespace TC
 //                         }
 //                     }
 // 
-//                     catch (const Unit::Failure& ex)
+//                     catch (const unit::Failure& ex)
 //                     {
-//                         m_exeption = new Unit::Failure(ex);
+//                         m_exeption = new unit::Failure(ex);
 //                     }
 // 
 //                     return 0;
                    return false;
                 }
 
-                Unit::Failure* m_exeption;
+                unit::Failure* m_exeption;
             };
 
             ThreadSuite::ThreadSuite()
-                : Unit::TestSuite("TC::MT::Tests::ThreadSuite")
+                : unit::TestSuite("tc::multi_threading::tests::ThreadSuite")
             {
-                AddTest(Unit::Test::Ptr(new ThreadTest));
-                AddTest(Unit::Test::Ptr(new ThreadMessageTest));
+                AddTest(unit::Test::Ptr(new ThreadTest));
+                AddTest(unit::Test::Ptr(new ThreadMessageTest));
             }
 
         }

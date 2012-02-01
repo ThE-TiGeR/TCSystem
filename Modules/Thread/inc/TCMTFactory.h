@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -43,9 +43,9 @@
 #include "TCMTThread.h"
 #include "TCMTMessageDispatcher.h"
 
-namespace TC
+namespace tc
 {
-namespace MT
+namespace multi_threading
 {
    /**
     * @addtogroup TC_MT
@@ -54,14 +54,14 @@ namespace MT
 
    /**
     * @file
-    * @brief This file provides the definition of TC::MT::Factory
+    * @brief This file provides the definition of tc::multi_threading::factory
     * @author Thomas Goessler
     */
 
    /**
-    * @brief Factory for creating TC::MT objects
+    * @brief factory for creating tc::multi_threading objects
     */
-   namespace Factory
+   namespace factory
    {
        /** Creation mode for shared objects */
        enum CreationMode
@@ -86,7 +86,7 @@ namespace MT
       /**
        * @brief Create a command execution thread object
        *
-       * Creates a thread which accepts only messages of type TC::MT::CommandMessage 
+       * Creates a thread which accepts only messages of type tc::multi_threading::CommandMessage 
        * and calls then the method Execute of the message
        * @param thread_name Name of the thread
        * @param stack_size Stack size of the thread 0 = system default stack size
@@ -98,7 +98,7 @@ namespace MT
 
       /**
        * @brief Create a message dispatcher object
-       * @see TC::MT::MessageDispatcher
+       * @see tc::multi_threading::MessageDispatcher
        */
       TCMT_API MessageDispatcherPtr CreateMessageDispatcher();
 
@@ -165,8 +165,8 @@ namespace MT
     * @}
     */
 
-} // namespace MT
-} // namespace TC
+} // namespace multi_threading
+} // namespace tc
 
 
 #endif //_TC_MT_FACTORY_H_

@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -38,11 +38,11 @@
 
 #include "TCOpenGLObject.h"
 
-namespace TC
+namespace tc
 {
-    namespace OpenGL
+    namespace open_gl
     {
-        namespace Factory
+        namespace factory
         {
             TCOGL_API ObjectPtr CreateCoordinateCross();
 

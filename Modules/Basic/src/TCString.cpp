@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -44,109 +44,109 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
    typedef StringImpTmpl<std::string, StringTraits> StringImp;
 
-   std::string String::ToString(char val)
+   std::string string::ToString(char val)
    {
       char string[2] = {val, 0};
 
       return string;
    }
 
-   std::string String::ToString(bool val)
+   std::string string::ToString(bool val)
    {
       return val ? "1" : "0";
    }
 
-   std::string String::ToString(uint16 val)
+   std::string string::ToString(uint16 val)
    {
       char string[32];
-      Snprintf(string, Util::ArraySize(string), "%hu", val);
+      Snprintf(string, util::ArraySize(string), "%hu", val);
 
       return string;
    }
 
-   std::string String::ToString(sint16 val)
+   std::string string::ToString(sint16 val)
    {
       char string[32];
-      Snprintf(string, Util::ArraySize(string), "%hd", val);
+      Snprintf(string, util::ArraySize(string), "%hd", val);
 
       return string;
    }
 
-   std::string String::ToString(uint32 val)
+   std::string string::ToString(uint32 val)
    {
       char string[32];
-      Snprintf(string, Util::ArraySize(string), "%u", val);
+      Snprintf(string, util::ArraySize(string), "%u", val);
 
       return string;
    }
 
-   std::string String::ToString(sint32 val)
+   std::string string::ToString(sint32 val)
    {
       char string[32];
-      Snprintf(string, Util::ArraySize(string), "%d", val);
+      Snprintf(string, util::ArraySize(string), "%d", val);
 
       return string;
    }
 
-   std::string String::ToString(uint64 val)
+   std::string string::ToString(uint64 val)
    {
       char string[32];
-      Snprintf(string, Util::ArraySize(string), "%" TC_UINT64_FORMAT, val);
+      Snprintf(string, util::ArraySize(string), "%" TC_UINT64_FORMAT, val);
 
       return string;
    }
 
-   std::string String::ToString(sint64 val)
+   std::string string::ToString(sint64 val)
    {
       char string[32];
-      Snprintf(string, Util::ArraySize(string), "%" TC_SINT64_FORMAT, val);
+      Snprintf(string, util::ArraySize(string), "%" TC_SINT64_FORMAT, val);
 
       return string;
    }
 
-   std::string String::ToString(float val)
+   std::string string::ToString(float val)
    {
       char string[32];
-      Snprintf(string, Util::ArraySize(string), "%f", val);
+      Snprintf(string, util::ArraySize(string), "%f", val);
 
       return string;
    }
 
-   std::string String::ToString(double val)
+   std::string string::ToString(double val)
    {
       char string[32];
-      Snprintf(string, Util::ArraySize(string), "%lf", val);
+      Snprintf(string, util::ArraySize(string), "%lf", val);
 
       return string;
    }
 
-   std::string String::ToString(const char* val)
+   std::string string::ToString(const char* val)
    {
       return val ? val : "";
    }
 
-   bool String::IsIntValue(const std::string& val)
+   bool string::IsIntValue(const std::string& val)
    {
       sint32 tmp;
       return std::sscanf(val.c_str(), "%d", &tmp) == 1;
    }
 
-   bool String::IsFltValue(const std::string& val)
+   bool string::IsFltValue(const std::string& val)
    {
       double tmp;
       return std::sscanf(val.c_str(), "%lf", &tmp) == 1;
    }
 
-   bool String::IsValue(const std::string& val)
+   bool string::IsValue(const std::string& val)
    {
       return (IsIntValue(val) || IsFltValue(val));
    }
 
-   double String::ToDouble(const std::string& val)
+   double string::ToDouble(const std::string& val)
    {
       double v;
       if (std::sscanf(val.c_str(), "%lf", &v) != 1)
@@ -157,7 +157,7 @@ namespace TC
       return v;
    }
 
-   float String::ToFloat(const std::string& val)
+   float string::ToFloat(const std::string& val)
    {
       float v;
       if (std::sscanf(val.c_str(), "%f", &v) != 1)
@@ -168,7 +168,7 @@ namespace TC
       return v;
    }
 
-   sint8 String::ToSint8(const std::string& val)
+   sint8 string::ToSint8(const std::string& val)
    {
       sint8 v;
       if (std::sscanf(val.c_str(), "%c", &v) != 1)
@@ -179,7 +179,7 @@ namespace TC
       return v;
    }
 
-   uint8 String::ToUint8(const std::string& val)
+   uint8 string::ToUint8(const std::string& val)
    {
       uint8 v;
       if (std::sscanf(val.c_str(), "%c", &v) != 1)
@@ -190,7 +190,7 @@ namespace TC
       return v;
    }
 
-   sint16 String::ToSint16(const std::string& val)
+   sint16 string::ToSint16(const std::string& val)
    {
       sint16 v;
       if (std::sscanf(val.c_str(), "%hd", &v) != 1)
@@ -201,7 +201,7 @@ namespace TC
       return v;
    }
 
-   uint16 String::ToUint16(const std::string& val)
+   uint16 string::ToUint16(const std::string& val)
    {
       uint16 v;
       if (std::sscanf(val.c_str(), "%hu", &v) != 1)
@@ -212,7 +212,7 @@ namespace TC
       return v;
    }
 
-   sint32 String::ToSint32(const std::string& val)
+   sint32 string::ToSint32(const std::string& val)
    {
       sint32 v;
       if (std::sscanf(val.c_str(), "%d", &v) != 1)
@@ -223,7 +223,7 @@ namespace TC
       return v;
    }
 
-   uint32 String::ToUint32(const std::string& val)
+   uint32 string::ToUint32(const std::string& val)
    {
       uint32 v;
       if (std::sscanf(val.c_str(), "%u", &v) != 1)
@@ -234,7 +234,7 @@ namespace TC
       return v;
    }
 
-   sint64 String::ToSint64(const std::string& val)
+   sint64 string::ToSint64(const std::string& val)
    {
       sint64 v;
       if (std::sscanf(val.c_str(), "%" TC_SINT64_FORMAT, &v) != 1)
@@ -245,7 +245,7 @@ namespace TC
       return v;
    }
 
-   uint64 String::ToUint64(const std::string& val)
+   uint64 string::ToUint64(const std::string& val)
    {
       uint64 v;
       if (std::sscanf(val.c_str(), "%" TC_UINT64_FORMAT, &v) != 1)
@@ -256,7 +256,7 @@ namespace TC
       return v;
    }
 
-   bool String::ToBool(const std::string& val)
+   bool string::ToBool(const std::string& val)
    {
       char v;
       if (std::sscanf(val.c_str(), "%c", &v) != 1)
@@ -267,72 +267,72 @@ namespace TC
       return v != 0;
    }
 
-   std::string String::ToUpper(const std::string& text_in)
+   std::string string::ToUpper(const std::string& text_in)
    {
       return StringImp::ToUpper(text_in);
    }
 
-   std::string String::ToLower(const std::string& text_in)
+   std::string string::ToLower(const std::string& text_in)
    {
       return StringImp::ToLower(text_in);
    }
 
-   bool String::Split(const std::string& text, const std::string& split,
+   bool string::Split(const std::string& text, const std::string& split,
       std::string& part1, std::string& part2)
    {
       return StringImp::Split(text, split, part1, part2);
    }
 
-   bool String::Split(const std::string& text, uint32 pos,
+   bool string::Split(const std::string& text, uint32 pos,
       std::string& part1, std::string& part2)
    {
       return StringImp::Split(text, pos, part1, part2);
    }
 
-   bool String::Split(const std::string& text, const std::string& limiter,
+   bool string::Split(const std::string& text, const std::string& limiter,
       std::vector< std::string >& data)
    {
       return StringImp::Split(text, limiter, data);
    }
 
-   void String::Join(const std::vector<std::string>& texts, const std::string& limiter, std::string& text)
+   void string::Join(const std::vector<std::string>& texts, const std::string& limiter, std::string& text)
    {
       StringImp::Join(texts, limiter, text);
    }
 
-   std::string String::TrimmSpaces(const std::string& text)
+   std::string string::TrimmSpaces(const std::string& text)
    {
       return StringImp::TrimmSpaces(text);
    }
 
-   std::string String::TrimmLeadingSpaces(const std::string& text)
+   std::string string::TrimmLeadingSpaces(const std::string& text)
    {
       return StringImp::TrimmLeadingSpaces(text);
    }
 
-   std::string String::TrimmTrailingSpaces(const std::string& text)
+   std::string string::TrimmTrailingSpaces(const std::string& text)
    {
       return StringImp::TrimmTrailingSpaces(text);
    }
 
-   std::string String::DeleteBlanksAndTabs(const std::string& text_in)
+   std::string string::DeleteBlanksAndTabs(const std::string& text_in)
    {
       std::string text = Replace(text_in, " ", "");
       return Replace(text, "\t", "");
    }
 
-   std::string String::Replace(const std::string& text_in, char r1, char r2)
+   std::string string::Replace(const std::string& text_in, char r1, char r2)
    {
       return StringImp::Replace(text_in, r1, r2);
    }
 
-   std::string String::Replace(const std::string& text_in,
+   std::string string::Replace(const std::string& text_in,
       const std::string& r1, const std::string& r2)
    {
       return StringImp::Replace(text_in, r1, r2);
    }
 
-   sint32 String::Snprintf(char* buf, uint32 size_of_buf, const char* fmt, ...)
+   sint32 string::Snprintf(char* buf, uint32 size_of_buf, const char* fmt, ...)
    {
       va_list arguments;
       va_start(arguments, fmt);
@@ -342,7 +342,7 @@ namespace TC
       return len;
    }
 
-   sint32 String::VSnprintf(char* buf, uint32 size_of_buf, const char *fmt, va_list arguments)
+   sint32 string::VSnprintf(char* buf, uint32 size_of_buf, const char *fmt, va_list arguments)
    {
       return StringTraits::VsnPrintf(buf, size_of_buf, fmt, arguments);
    }
@@ -357,7 +357,7 @@ namespace TC
        return StringImp::StringICompare(s1, s2, len_to_compare);
    }
 
-   std::string String::Print(const char *fmt, ...)
+   std::string string::Print(const char *fmt, ...)
    {
       va_list arguments;
       va_start(arguments, fmt);
@@ -367,7 +367,7 @@ namespace TC
       return buf;
    }
 
-   std::string String::VPrint(const char *fmt, va_list arguments)
+   std::string string::VPrint(const char *fmt, va_list arguments)
    {
       return StringImp::VPrint(fmt , arguments);
    }

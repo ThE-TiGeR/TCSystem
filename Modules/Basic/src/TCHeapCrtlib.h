@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -41,11 +41,11 @@
 //@{
 /**
  * @file
- * This header file provides the definition of the class TC::HeapCrtlib.
+ * This header file provides the definition of the class tc::HeapCrtlib.
  */
 //@}
 
-namespace TC
+namespace tc
 {
     /**
      * @addtogroup TC_BASE_DEBUG

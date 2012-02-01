@@ -39,11 +39,11 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-   namespace Math
+   namespace math
    {
-      namespace Tests
+      namespace tests
       {
          typedef MatrixN<int, 5> MatrixType;
          static MatrixType GetDefaultMatrix()
@@ -60,11 +60,11 @@ namespace TC
             return val;
          }
 
-         class MatrixNConstructTest: public Unit::TestCase
+         class MatrixNConstructTest: public unit::TestCase
          {
          public:
             MatrixNConstructTest()
-               :Unit::TestCase("TC::Math::Tests::MatrixNCunstructTest")
+               :unit::TestCase("tc::math::tests::MatrixNCunstructTest")
             {
             }
 
@@ -134,11 +134,11 @@ namespace TC
             }
          };
 
-         class MatrixNAssignTest: public Unit::TestCase
+         class MatrixNAssignTest: public unit::TestCase
          {
          public:
             MatrixNAssignTest()
-               :Unit::TestCase("TC::Math::Tests::MatrixNAssignTest")
+               :unit::TestCase("tc::math::tests::MatrixNAssignTest")
             {
             }
 
@@ -181,11 +181,11 @@ namespace TC
             }
          };
 
-         class MatrixNAddAssignTest: public Unit::TestCase
+         class MatrixNAddAssignTest: public unit::TestCase
          {
          public:
             MatrixNAddAssignTest()
-               :Unit::TestCase("TC::Math::Tests::MatrixNAddAssignTest")
+               :unit::TestCase("tc::math::tests::MatrixNAddAssignTest")
             {
             }
 
@@ -218,11 +218,11 @@ namespace TC
             }
          };
 
-         class MatrixNSubtractAssignTest: public Unit::TestCase
+         class MatrixNSubtractAssignTest: public unit::TestCase
          {
          public:
             MatrixNSubtractAssignTest()
-               :Unit::TestCase("TC::Math::Tests::MatrixNSubtractAssignTest")
+               :unit::TestCase("tc::math::tests::MatrixNSubtractAssignTest")
             {
             }
 
@@ -255,11 +255,11 @@ namespace TC
             }
          };
 
-         class MatrixNMultiplyAssignTest: public Unit::TestCase
+         class MatrixNMultiplyAssignTest: public unit::TestCase
          {
          public:
             MatrixNMultiplyAssignTest()
-               :Unit::TestCase("TC::Math::Tests::MatrixNMultiplyAssignTest")
+               :unit::TestCase("tc::math::tests::MatrixNMultiplyAssignTest")
             {
             }
 
@@ -300,11 +300,11 @@ namespace TC
             }
          };
          
-         class MatrixNDivideAssignTest: public Unit::TestCase
+         class MatrixNDivideAssignTest: public unit::TestCase
          {
          public:
             MatrixNDivideAssignTest()
-               :Unit::TestCase("TC::Math::Tests::MatrixNDivideAssignTest")
+               :unit::TestCase("tc::math::tests::MatrixNDivideAssignTest")
             {
             }
 
@@ -335,11 +335,11 @@ namespace TC
             }
          };
          
-         class MatrixNEqualTest: public Unit::TestCase
+         class MatrixNEqualTest: public unit::TestCase
          {
          public:
             MatrixNEqualTest()
-               :Unit::TestCase("TC::Math::Tests::MatrixNEqualTest")
+               :unit::TestCase("tc::math::tests::MatrixNEqualTest")
             {
             }
 
@@ -365,11 +365,11 @@ namespace TC
             }
          };
          
-         class MatrixNLessTest: public Unit::TestCase
+         class MatrixNLessTest: public unit::TestCase
          {
          public:
             MatrixNLessTest()
-               :Unit::TestCase("TC::Math::Tests::MatrixNLessTest")
+               :unit::TestCase("tc::math::tests::MatrixNLessTest")
             {
             }
 
@@ -432,16 +432,16 @@ namespace TC
          };
 
          MatrixNSuite::MatrixNSuite()
-            :Unit::TestSuite("TC::Math::Tests::MatrixNSuite")
+            :unit::TestSuite("tc::math::tests::MatrixNSuite")
          {
-            AddTest(Unit::Test::Ptr(new MatrixNConstructTest));
-            AddTest(Unit::Test::Ptr(new MatrixNAssignTest));
-            AddTest(Unit::Test::Ptr(new MatrixNAddAssignTest));
-            AddTest(Unit::Test::Ptr(new MatrixNSubtractAssignTest));
-            AddTest(Unit::Test::Ptr(new MatrixNMultiplyAssignTest));
-            AddTest(Unit::Test::Ptr(new MatrixNDivideAssignTest));
-            AddTest(Unit::Test::Ptr(new MatrixNEqualTest));
-            AddTest(Unit::Test::Ptr(new MatrixNLessTest));
+            AddTest(unit::Test::Ptr(new MatrixNConstructTest));
+            AddTest(unit::Test::Ptr(new MatrixNAssignTest));
+            AddTest(unit::Test::Ptr(new MatrixNAddAssignTest));
+            AddTest(unit::Test::Ptr(new MatrixNSubtractAssignTest));
+            AddTest(unit::Test::Ptr(new MatrixNMultiplyAssignTest));
+            AddTest(unit::Test::Ptr(new MatrixNDivideAssignTest));
+            AddTest(unit::Test::Ptr(new MatrixNEqualTest));
+            AddTest(unit::Test::Ptr(new MatrixNLessTest));
          }
       }
    }

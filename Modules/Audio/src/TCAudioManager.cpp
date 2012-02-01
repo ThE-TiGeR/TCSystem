@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -53,9 +53,9 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-   namespace Audio
+   namespace audio
    {
       class ExceptionInitError: public Exception
       {
@@ -80,7 +80,7 @@ namespace TC
          virtual void DeleteSound(SoundCompoundPtr& sound);
 
       private:
-         MT::ThreadPtr m_streaming_thread;
+         multi_threading::ThreadPtr m_streaming_thread;
          StreamingThreadPtr m_streaming_thread_object;
          SoundDataMapperPtr m_sound_data_mapper;
       };
@@ -92,13 +92,13 @@ namespace TC
          m_streaming_thread_object = StreamingThreadPtr(new StreamingThread);
          if (!m_streaming_thread_object)
          {
-            throw ExceptionInitError("ManagerImp::ManagerImp, new TC::Audio::StreamingThread failed");
+            throw ExceptionInitError("ManagerImp::ManagerImp, new tc::audio::StreamingThread failed");
          }
 
-         m_streaming_thread = MT::Factory::CreateThread("TCAudioStreamingThread", 0 , MT::Thread::PRIORITY_HIGH);
+         m_streaming_thread = multi_threading::factory::CreateThread("TCAudioStreamingThread", 0 , multi_threading::Thread::PRIORITY_HIGH);
          if (!m_streaming_thread)
          {
-            throw ExceptionInitError("ManagerImp::ManagerImp, TC::MT::Factory::CreateThread(TCAudioStreamingThread) failed");
+            throw ExceptionInitError("ManagerImp::ManagerImp, tc::multi_threading::factory::CreateThread(TCAudioStreamingThread) failed");
          }
 
          if (!m_streaming_thread->Start(m_streaming_thread_object))
@@ -114,7 +114,7 @@ namespace TC
          m_sound_data_mapper = SoundDataMapperPtr(new SoundDataMapper);
          if (!m_sound_data_mapper)
          {
-            throw ExceptionInitError("ManagerImp::ManagerImp, new TC::Audio::SoundDataMapper failed");
+            throw ExceptionInitError("ManagerImp::ManagerImp, new tc::audio::SoundDataMapper failed");
          }
       }
 
@@ -122,7 +122,7 @@ namespace TC
       {
          m_streaming_thread_object->Stop();
          m_streaming_thread->Join();
-         m_streaming_thread = MT::ThreadPtr();
+         m_streaming_thread = multi_threading::ThreadPtr();
 
          OpenALHandler::DestroyInstance();
       }
@@ -131,15 +131,15 @@ namespace TC
       {
          try
          {
-            CodecPtr codec = Factory::CreateLittleEndianBinaryCodec();
-            StreamPtr file = Factory::CreateFileStream(file_name, Stream::stream_read, codec);
+            CodecPtr codec = factory::CreateLittleEndianBinaryCodec();
+            StreamPtr file = factory::CreateFileStream(file_name, Stream::stream_read, codec);
             if (!file)
             {
                TCERROR1("TCAUDIO", "ManagerImp::CreateSound open file %s failed.", file_name.c_str());
                return SoundPtr();
             }
 
-            return CreateSound(FileName::GetName(file_name), file);
+            return CreateSound(file_name::GetName(file_name), file);
          }
 
          catch (std::exception& e)
@@ -153,7 +153,7 @@ namespace TC
       {
          try
          {
-            SharedPtr<SoundDataMp3> sound_data(new TC::Audio::SoundDataMp3(stream));
+            SharedPtr<SoundDataMp3> sound_data(new tc::audio::SoundDataMp3(stream));
             SoundPtr sound (new SoundImp(sound_data, m_streaming_thread_object));
             m_sound_data_mapper->Add(sound, sound_data);
 
@@ -236,7 +236,7 @@ namespace TC
          sound_c = SoundCompoundPtr();
       }
 
-      TC::Audio::ManagerPtr Manager::Create()
+      tc::audio::ManagerPtr Manager::Create()
       {
          try
          {

@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -141,9 +141,9 @@ using namespace FX;
 
 /*******************************************************************************/
 
-namespace TC
+namespace tc
 {
-   namespace OpenGL
+   namespace open_gl
    {
       // Map
       FXDEFMAP(Viewer) FXGLViewerMap[]=
@@ -403,7 +403,7 @@ namespace TC
          // Create Window
          FXGLCanvas::create();
 
-         // Set up OpenGL environment
+         // Set up open_gl environment
          glsetup();
 
          // Register drag type for color
@@ -534,7 +534,7 @@ namespace TC
             ::glFinish();
             ::glFlush();
             Time total_time = Time::Now() - draw_start_time;
-            TCTRACE1("OpenGL", 0, "Current fps = %f", 1000.0f/(total_time.ToMilliSeconds()+1));
+            TCTRACE1("open_gl", 0, "Current fps = %f", 1000.0f/(total_time.ToMilliSeconds()+1));
 
             makeNonCurrent();
          }
@@ -1262,7 +1262,7 @@ namespace TC
             point=eyeToWorld(screenToEye(sx,sy,0.0f));
          else
             point=eyeToWorld(Vertex3D(0.0f,0.0f,0.0f));
-         dir=Math::Normalize(p-point);
+         dir=math::Normalize(p-point);
          return true;
       }
 
@@ -1366,7 +1366,7 @@ namespace TC
          else{
             v[2]=0.0f;
          }
-         return Math::Normalize(v);
+         return math::Normalize(v);
       }
 
 
@@ -1383,7 +1383,7 @@ namespace TC
 
          FXGLVisual *vis=(FXGLVisual*)getVisual();
 
-         // With OpenGL, first change back to 1:1 projection mode
+         // With open_gl, first change back to 1:1 projection mode
          if(makeCurrent()){
 
             // Save state
@@ -1431,14 +1431,14 @@ namespace TC
 #else
 #if !defined(GL_VERSION_1_1) || !defined(GL_VERSION_1_2)
 
-            // If you don't have OpenGL 1.1 or better, blending
+            // If you don't have open_gl 1.1 or better, blending
             // to invert the lasso is your only choice...
             glBlendFunc(GL_ONE_MINUS_DST_COLOR,GL_ZERO);
             glEnable(GL_BLEND);
 
 #else
 
-            // You have OpenGL 1.1 or better, but chances are it
+            // You have open_gl 1.1 or better, but chances are it
             // still doesn't work, because you may have an incomplete
             // implementation [DEC], or perhaps broken hardware.
 
@@ -2035,7 +2035,7 @@ namespace TC
          break;
       case TRUCKING:            // Trucking camera forward or backward
          tmp=(float)(worldpx*(event->win_y-event->last_y));
-         vec=Math::Normalize(getEyeVector());
+         vec=math::Normalize(getEyeVector());
          translate(tmp*vec);
          changed=1;
          break;

@@ -37,7 +37,7 @@
 
 #include "TCFactory.h"
 
-namespace TC
+namespace tc
 {
    /**
     * @addtogroup TC_BASE_DEBUG
@@ -46,7 +46,7 @@ namespace TC
 
    /**
     * @file
-    * @brief This file provides the definition of TC::Output and Macros for 
+    * @brief This file provides the definition of tc::output and Macros for 
     *        writing traces, infos warnings and errors
     *
     * @author Thomas Goessler
@@ -55,7 +55,7 @@ namespace TC
    /**
     * class used for debug output
     */
-   namespace Output
+   namespace output
    {
       /** Pure virtual base class for printing trace output */
       class PrintTarget
@@ -73,7 +73,7 @@ namespace TC
       /**
        * Method for setting the trace level
        * @param level is the level number
-       * @see TC::Debug::m_trace_level
+       * @see tc::Debug::m_trace_level
        */
       TCBASE_API void SetTraceLevel(sint32 level);
       /**
@@ -125,7 +125,7 @@ namespace TC
          uint32 line_number, const char* format, ...);
       /**
       * Write output to the current active trace print target
-      * when the level is lower then the global trace level TC::Debug::m_trace_level
+      * when the level is lower then the global trace level tc::Debug::m_trace_level
       * @param module Name of the module to which this trace belongs to
       * @param level trace level of this output
       * @param function Name of the function, to which this trace belongs to
@@ -136,13 +136,13 @@ namespace TC
       TCBASE_API void Trace(const char* module, sint32 level, const char* function, 
          uint32 line_number, const char* format, ...);
 
-   }// namespace Debug
+   }// namespace output
 
    /**
     * @}
     */
 
-} // namespace TC
+} // namespace tc
 
 /**
  * @addtogroup TC_BASE_DEBUG
@@ -162,18 +162,18 @@ namespace TC
 #endif
 
 #ifdef TCTRACE_ENABLE
-#   define TCTRACE(MODULE, LEVEL, FORMAT)                          TC::Output::Trace(MODULE, LEVEL, _TC_FUNCTION_, __LINE__, FORMAT)
-#   define TCTRACE1(MODULE, LEVEL, FORMAT, ARG1)                   TC::Output::Trace(MODULE, LEVEL, _TC_FUNCTION_, __LINE__, FORMAT, ARG1)
-#   define TCTRACE2(MODULE, LEVEL, FORMAT, ARG1, ARG2)             TC::Output::Trace(MODULE, LEVEL, _TC_FUNCTION_, __LINE__, FORMAT, ARG1, ARG2)
-#   define TCTRACE3(MODULE, LEVEL, FORMAT, ARG1, ARG2, ARG3)       TC::Output::Trace(MODULE, LEVEL, _TC_FUNCTION_, __LINE__, FORMAT, ARG1, ARG2, ARG3)
-#   define TCTRACE4(MODULE, LEVEL, FORMAT, ARG1, ARG2, ARG3, ARG4) TC::Output::Trace(MODULE, LEVEL, _TC_FUNCTION_, __LINE__, FORMAT, ARG1, ARG2, ARG3, ARG4)
-#   define TCTRACEF(MODULE, LEVEL)                                 TC::Output::Trace(MODULE, LEVEL, _TC_FUNCTION_, __LINE__, "")
+#   define TCTRACE(MODULE, LEVEL, FORMAT)                          tc::output::Trace(MODULE, LEVEL, _TC_FUNCTION_, __LINE__, FORMAT)
+#   define TCTRACE1(MODULE, LEVEL, FORMAT, ARG1)                   tc::output::Trace(MODULE, LEVEL, _TC_FUNCTION_, __LINE__, FORMAT, ARG1)
+#   define TCTRACE2(MODULE, LEVEL, FORMAT, ARG1, ARG2)             tc::output::Trace(MODULE, LEVEL, _TC_FUNCTION_, __LINE__, FORMAT, ARG1, ARG2)
+#   define TCTRACE3(MODULE, LEVEL, FORMAT, ARG1, ARG2, ARG3)       tc::output::Trace(MODULE, LEVEL, _TC_FUNCTION_, __LINE__, FORMAT, ARG1, ARG2, ARG3)
+#   define TCTRACE4(MODULE, LEVEL, FORMAT, ARG1, ARG2, ARG3, ARG4) tc::output::Trace(MODULE, LEVEL, _TC_FUNCTION_, __LINE__, FORMAT, ARG1, ARG2, ARG3, ARG4)
+#   define TCTRACEF(MODULE, LEVEL)                                 tc::output::Trace(MODULE, LEVEL, _TC_FUNCTION_, __LINE__, "")
 #   define TCTRACES(MODULE, LEVEL, STREAM) \
     { \
         std::string val; \
-        TC::StreamPtr stream(TC::Factory::CreateStringStream(val)); \
+        tc::StreamPtr stream(tc::factory::CreateStringStream(val)); \
         stream << STREAM; \
-        TC::Output::Trace(MODULE, LEVEL, _TC_FUNCTION_, __LINE__, "%s", val.c_str()); \
+        tc::output::Trace(MODULE, LEVEL, _TC_FUNCTION_, __LINE__, "%s", val.c_str()); \
     }
 
 #else
@@ -186,43 +186,43 @@ namespace TC
 #   define TCTRACES(MODULE, LEVEL, STREAM) ((void)0)
 #endif
 
-#define TCINFO(MODULE, FORMAT)                          TC::Output::Info(MODULE, _TC_FUNCTION_, __LINE__, FORMAT)
-#define TCINFO1(MODULE, FORMAT, ARG1)                   TC::Output::Info(MODULE, _TC_FUNCTION_, __LINE__, FORMAT, ARG1)
-#define TCINFO2(MODULE, FORMAT, ARG1, ARG2)             TC::Output::Info(MODULE, _TC_FUNCTION_, __LINE__, FORMAT, ARG1, ARG2)
-#define TCINFO3(MODULE, FORMAT, ARG1, ARG2, ARG3)       TC::Output::Info(MODULE, _TC_FUNCTION_, __LINE__, FORMAT, ARG1, ARG2, ARG3)
-#define TCINFO4(MODULE, FORMAT, ARG1, ARG2, ARG3, ARG4) TC::Output::Info(MODULE, _TC_FUNCTION_, __LINE__, FORMAT, ARG1, ARG2, ARG3, ARG4)
+#define TCINFO(MODULE, FORMAT)                          tc::output::Info(MODULE, _TC_FUNCTION_, __LINE__, FORMAT)
+#define TCINFO1(MODULE, FORMAT, ARG1)                   tc::output::Info(MODULE, _TC_FUNCTION_, __LINE__, FORMAT, ARG1)
+#define TCINFO2(MODULE, FORMAT, ARG1, ARG2)             tc::output::Info(MODULE, _TC_FUNCTION_, __LINE__, FORMAT, ARG1, ARG2)
+#define TCINFO3(MODULE, FORMAT, ARG1, ARG2, ARG3)       tc::output::Info(MODULE, _TC_FUNCTION_, __LINE__, FORMAT, ARG1, ARG2, ARG3)
+#define TCINFO4(MODULE, FORMAT, ARG1, ARG2, ARG3, ARG4) tc::output::Info(MODULE, _TC_FUNCTION_, __LINE__, FORMAT, ARG1, ARG2, ARG3, ARG4)
 #define TCINFOS(MODULE, STREAM) \
     { \
        std::string _tc_tmp_stream_val; \
-       TC::StreamPtr stream(TC::Factory::CreateStringStream(_tc_tmp_stream_val)); \
+       tc::StreamPtr stream(tc::factory::CreateStringStream(_tc_tmp_stream_val)); \
        stream << STREAM; \
-       TC::Output::Info(MODULE, _TC_FUNCTION_, __LINE__, "%s", _tc_tmp_stream_val.c_str()); \
+       tc::output::Info(MODULE, _TC_FUNCTION_, __LINE__, "%s", _tc_tmp_stream_val.c_str()); \
    }
 
-#define TCWARNING(MODULE, FORMAT)                          TC::Output::Warning(MODULE, _TC_FUNCTION_, __LINE__, FORMAT)
-#define TCWARNING1(MODULE, FORMAT, ARG1)                   TC::Output::Warning(MODULE, _TC_FUNCTION_, __LINE__, FORMAT, ARG1)
-#define TCWARNING2(MODULE, FORMAT, ARG1, ARG2)             TC::Output::Warning(MODULE, _TC_FUNCTION_, __LINE__, FORMAT, ARG1, ARG2)
-#define TCWARNING3(MODULE, FORMAT, ARG1, ARG2, ARG3)       TC::Output::Warning(MODULE, _TC_FUNCTION_, __LINE__, FORMAT, ARG1, ARG2, ARG3)
-#define TCWARNING4(MODULE, FORMAT, ARG1, ARG2, ARG3, ARG4) TC::Output::Warning(MODULE, _TC_FUNCTION_, __LINE__, FORMAT, ARG1, ARG2, ARG3, ARG4)
+#define TCWARNING(MODULE, FORMAT)                          tc::output::Warning(MODULE, _TC_FUNCTION_, __LINE__, FORMAT)
+#define TCWARNING1(MODULE, FORMAT, ARG1)                   tc::output::Warning(MODULE, _TC_FUNCTION_, __LINE__, FORMAT, ARG1)
+#define TCWARNING2(MODULE, FORMAT, ARG1, ARG2)             tc::output::Warning(MODULE, _TC_FUNCTION_, __LINE__, FORMAT, ARG1, ARG2)
+#define TCWARNING3(MODULE, FORMAT, ARG1, ARG2, ARG3)       tc::output::Warning(MODULE, _TC_FUNCTION_, __LINE__, FORMAT, ARG1, ARG2, ARG3)
+#define TCWARNING4(MODULE, FORMAT, ARG1, ARG2, ARG3, ARG4) tc::output::Warning(MODULE, _TC_FUNCTION_, __LINE__, FORMAT, ARG1, ARG2, ARG3, ARG4)
 #define TCWARNINGS(MODULE, STREAM) \
     { \
        std::string _tc_tmp_stream_val; \
-       TC::StreamPtr stream(TC::Factory::CreateStringStream(_tc_tmp_stream_val)); \
+       tc::StreamPtr stream(tc::factory::CreateStringStream(_tc_tmp_stream_val)); \
        stream << STREAM; \
-       TC::Output::Warning(MODULE, _TC_FUNCTION_, __LINE__, "%s", _tc_tmp_stream_val.c_str()); \
+       tc::output::Warning(MODULE, _TC_FUNCTION_, __LINE__, "%s", _tc_tmp_stream_val.c_str()); \
    }
 
-#define TCERROR(MODULE, FORMAT)                          TC::Output::Error(MODULE, _TC_FUNCTION_, __LINE__, FORMAT)
-#define TCERROR1(MODULE, FORMAT, ARG1)                   TC::Output::Error(MODULE, _TC_FUNCTION_, __LINE__, FORMAT, ARG1)
-#define TCERROR2(MODULE, FORMAT, ARG1, ARG2)             TC::Output::Error(MODULE, _TC_FUNCTION_, __LINE__, FORMAT, ARG1, ARG2)
-#define TCERROR3(MODULE, FORMAT, ARG1, ARG2, ARG3)       TC::Output::Error(MODULE, _TC_FUNCTION_, __LINE__, FORMAT, ARG1, ARG2, ARG3)
-#define TCERROR4(MODULE, FORMAT, ARG1, ARG2, ARG3, ARG4) TC::Output::Error(MODULE, _TC_FUNCTION_, __LINE__, FORMAT, ARG1, ARG2, ARG3, ARG4)
+#define TCERROR(MODULE, FORMAT)                          tc::output::Error(MODULE, _TC_FUNCTION_, __LINE__, FORMAT)
+#define TCERROR1(MODULE, FORMAT, ARG1)                   tc::output::Error(MODULE, _TC_FUNCTION_, __LINE__, FORMAT, ARG1)
+#define TCERROR2(MODULE, FORMAT, ARG1, ARG2)             tc::output::Error(MODULE, _TC_FUNCTION_, __LINE__, FORMAT, ARG1, ARG2)
+#define TCERROR3(MODULE, FORMAT, ARG1, ARG2, ARG3)       tc::output::Error(MODULE, _TC_FUNCTION_, __LINE__, FORMAT, ARG1, ARG2, ARG3)
+#define TCERROR4(MODULE, FORMAT, ARG1, ARG2, ARG3, ARG4) tc::output::Error(MODULE, _TC_FUNCTION_, __LINE__, FORMAT, ARG1, ARG2, ARG3, ARG4)
 #define TCERRORS(MODULE, STREAM) \
     { \
        std::string _tc_tmp_stream_val; \
-       TC::StreamPtr stream(TC::Factory::CreateStringStream(_tc_tmp_stream_val)); \
+       tc::StreamPtr stream(tc::factory::CreateStringStream(_tc_tmp_stream_val)); \
        stream << STREAM; \
-       TC::Output::Error(MODULE, _TC_FUNCTION_, __LINE__, "%s", _tc_tmp_stream_val.c_str()); \
+       tc::output::Error(MODULE, _TC_FUNCTION_, __LINE__, "%s", _tc_tmp_stream_val.c_str()); \
    }
 
 /**

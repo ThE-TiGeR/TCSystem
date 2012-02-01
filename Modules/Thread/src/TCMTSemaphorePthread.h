@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -43,11 +43,11 @@
 
 #include <string>
 
-namespace TC
+namespace tc
 {
-   namespace MT
+   namespace multi_threading
    {
-      namespace Impl
+      namespace imp
       {
 
          /**
@@ -62,7 +62,7 @@ namespace TC
             ~SemaphorePthread();
 
             bool Init(uint32 initial);
-            bool Init(const std::string& shared_name, uint32 initial, Factory::CreationMode mode);
+            bool Init(const std::string& shared_name, uint32 initial, factory::CreationMode mode);
 
             bool Wait();
             bool Try();
@@ -79,8 +79,8 @@ namespace TC
          * @}
          */
 
-      } // namespace Impl
-   } // namespace MT
-} // namespace TC
+      } // namespace imp
+   } // namespace multi_threading
+} // namespace tc
 
 #endif // _TC_MT_SEMAPHORE_PTHREAD_H_

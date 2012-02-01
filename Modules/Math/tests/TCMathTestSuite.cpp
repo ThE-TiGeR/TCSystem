@@ -41,70 +41,70 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-   namespace Math
+   namespace math
    {
-      namespace Tests
+      namespace tests
       {
-         class PowTest : public Unit::TestCase
+         class PowTest : public unit::TestCase
          {
          public:
-            PowTest() : Unit::TestCase("TC::Math::Tests::PowTest") {}
+            PowTest() : unit::TestCase("tc::math::tests::PowTest") {}
             virtual void Execute();
          };
 
          void PowTest::Execute()
          {
-            TCUNIT_ASSERT(TC::Math::Pow(2, 2) == 4);
-            TCUNIT_ASSERT(TC::Math::Pow(2, 3) == 8);
+            TCUNIT_ASSERT(tc::math::Pow(2, 2) == 4);
+            TCUNIT_ASSERT(tc::math::Pow(2, 3) == 8);
 
-            TCUNIT_ASSERT(TC::Math::Pow(7, 6) == 117649);
+            TCUNIT_ASSERT(tc::math::Pow(7, 6) == 117649);
          }
 
-         class AlignTest : public Unit::TestCase
+         class AlignTest : public unit::TestCase
          {
          public:
-            AlignTest() : Unit::TestCase("TC::Math::Tests::AlignTest") {}
+            AlignTest() : unit::TestCase("tc::math::tests::AlignTest") {}
             virtual void Execute();
          };
 
          void AlignTest::Execute()
          {
-            TCUNIT_ASSERT(TC::Math::Align32(0) == 0);
-            TCUNIT_ASSERT(TC::Math::Align32(4) == 32);
-            TCUNIT_ASSERT(TC::Math::Align32(31) == 32);
-            TCUNIT_ASSERT(TC::Math::Align32(32) == 32);
-            TCUNIT_ASSERT(TC::Math::Align32(33) == 64);
+            TCUNIT_ASSERT(tc::math::Align32(0) == 0);
+            TCUNIT_ASSERT(tc::math::Align32(4) == 32);
+            TCUNIT_ASSERT(tc::math::Align32(31) == 32);
+            TCUNIT_ASSERT(tc::math::Align32(32) == 32);
+            TCUNIT_ASSERT(tc::math::Align32(33) == 64);
 
-            TCUNIT_ASSERT(TC::Math::Align16(0) == 0);
-            TCUNIT_ASSERT(TC::Math::Align16(4) == 16);
-            TCUNIT_ASSERT(TC::Math::Align16(15) == 16);
-            TCUNIT_ASSERT(TC::Math::Align16(32) == 32);
-            TCUNIT_ASSERT(TC::Math::Align16(33) == 48);
+            TCUNIT_ASSERT(tc::math::Align16(0) == 0);
+            TCUNIT_ASSERT(tc::math::Align16(4) == 16);
+            TCUNIT_ASSERT(tc::math::Align16(15) == 16);
+            TCUNIT_ASSERT(tc::math::Align16(32) == 32);
+            TCUNIT_ASSERT(tc::math::Align16(33) == 48);
          }
 
-         class CompareTests : public Unit::TestCase
+         class CompareTests : public unit::TestCase
          {
          public:
-            CompareTests() : Unit::TestCase("TC::Math::Tests::CompareTests") {}
+            CompareTests() : unit::TestCase("tc::math::tests::CompareTests") {}
             virtual void Execute();
          };
 
          void CompareTests::Execute()
          {
-            TCUNIT_ASSERT(TC::Math::Compare(2.0001, 2.0001));
-            TCUNIT_ASSERT(!TC::Math::Compare(-2.0001, 2.0001));
-            TCUNIT_ASSERT(!TC::Math::Compare(2.0001, 2.0001001));
+            TCUNIT_ASSERT(tc::math::Compare(2.0001, 2.0001));
+            TCUNIT_ASSERT(!tc::math::Compare(-2.0001, 2.0001));
+            TCUNIT_ASSERT(!tc::math::Compare(2.0001, 2.0001001));
          }
 
 
          Suite::Suite()
-            :Unit::TestSuite("TC::Math::Tests::Suite")
+            :unit::TestSuite("tc::math::tests::Suite")
          {
-            AddTest(Unit::Test::Ptr(new CoordNSuite));
-            AddTest(Unit::Test::Ptr(new MatrixNSuite));
-            AddTest(Unit::Test::Ptr(new PowTest));
+            AddTest(unit::Test::Ptr(new CoordNSuite));
+            AddTest(unit::Test::Ptr(new MatrixNSuite));
+            AddTest(unit::Test::Ptr(new PowTest));
          }
       }
    }

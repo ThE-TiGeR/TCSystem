@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -44,11 +44,11 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-   namespace MT
+   namespace multi_threading
    {
-      namespace Impl
+      namespace imp
       {
          /** Array of created threads */
          std::vector<ThreadPtr> ThreadBase::m_threads;
@@ -98,7 +98,7 @@ namespace TC
 
             InitStruct init_data;
             init_data.thread = this;
-            init_data.event = Factory::CreateEvent();
+            init_data.event = factory::CreateEvent();
 
             if (!CreateOSThread(&init_data))
             {
@@ -167,7 +167,7 @@ namespace TC
             // remove me from the list of created threads
             m_threads_mutex->Lock();
             std::vector<ThreadPtr>::iterator thread_it;
-            thread_it = std::find(m_threads.begin(), m_threads.end(), Factory::GetCurrentThread());
+            thread_it = std::find(m_threads.begin(), m_threads.end(), factory::GetCurrentThread());
             m_threads.erase(thread_it);
 
             // if the last thread we free the array
@@ -201,7 +201,7 @@ namespace TC
          {
             TCTRACE1("TCMT", 5,"%s", m_name.c_str());
 
-            if (Factory::GetCurrentThread() == this)
+            if (factory::GetCurrentThread() == this)
             {
                return false;
             }
@@ -342,6 +342,6 @@ namespace TC
             return SendThreadMessage(message);
          }
 
-      } // namespace Impl
-   } // namespace MT
-} // namespace TC
+      } // namespace imp
+   } // namespace multi_threading
+} // namespace tc

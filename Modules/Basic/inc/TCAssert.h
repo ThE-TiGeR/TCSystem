@@ -66,9 +66,9 @@
 #  define TC_VERIFY(EX) EX
 #endif
 
-namespace TC
+namespace tc
 {
-   namespace Impl
+   namespace imp
    {
       /** @brief Internal class for implementing compile time assert */
       template <bool val> struct CompileTimeAssertFailure;
@@ -88,8 +88,8 @@ namespace TC
  * @brief Macro for asserting errors  at compile time.
  */
 #define TC_CT_ASSERT(VAL)                                                                    \
-   typedef TC::Impl::CompileTimeAssertTest<                                                  \
-               sizeof(TC::Impl::CompileTimeAssertFailure<(bool)(VAL)>)                       \
+   typedef tc::imp::CompileTimeAssertTest<                                                  \
+               sizeof(tc::imp::CompileTimeAssertFailure<(bool)(VAL)>)                       \
                                           > TC_IMPL_JOIN(__tc_static_assert_type_, __LINE__)
 
 /**

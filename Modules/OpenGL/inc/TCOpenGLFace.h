@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -40,9 +40,9 @@
 #include "TCOpenGLMaterial.h"
 #include "TCOpenGLPatchRenderer.h"
 
-namespace TC
+namespace tc
 {
-   namespace OpenGL
+   namespace open_gl
    {
       class TCOGL_API Face: public Object3D
       {
@@ -108,8 +108,8 @@ namespace TC
 
       protected:
          Face();
-         virtual void DrawSelf(OpenGL::Viewer& viewer);
-         virtual void DrawForHitSelf(OpenGL::Viewer& viewer);
+         virtual void DrawSelf(open_gl::Viewer& viewer);
+         virtual void DrawForHitSelf(open_gl::Viewer& viewer);
 
          PatchRenderer& GetRenderer();
       private:

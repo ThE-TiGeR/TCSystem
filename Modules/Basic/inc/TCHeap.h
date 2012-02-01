@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -38,7 +38,7 @@
 #include "TCNonCopyable.h"
 #include "TCException.h"
 
-namespace TC
+namespace tc
 {
    /**
    * @addtogroup TC_BASE_DEBUG
@@ -47,7 +47,7 @@ namespace TC
 
    /**
    * @file
-   * @brief This file provides the definition of the interface TC::Heap
+   * @brief This file provides the definition of the interface tc::Heap
    *
    * @author Thomas Goessler
    */

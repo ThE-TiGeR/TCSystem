@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -39,7 +39,7 @@
 
 #include <string>
 
-namespace TC
+namespace tc
 {
    /**
    * @addtogroup TC_BASE
@@ -48,8 +48,8 @@ namespace TC
 
    /**
    * @file
-   * @brief This file provides the definition of TC::MLS::Handler,
-   *        TC::MLS::Text and TC::MLS::Texts
+   * @brief This file provides the definition of tc::mls::Handler,
+   *        tc::mls::Text and tc::mls::Texts
    *
    * @author Thomas Goessler
    */
@@ -59,7 +59,7 @@ namespace TC
    * method fro encoding and decoding standard types
    * and prepares methods for decoding and encoding
    */
-   namespace MLS
+   namespace mls
    {
       /** Handles getting the text for an specified mls id */
       class TCBASE_API Handler
@@ -104,6 +104,6 @@ namespace TC
    * @}
    */
 
-} // namespace TC
+} // namespace tc
 
 #endif // _TC_MLS_HANDLER_H_

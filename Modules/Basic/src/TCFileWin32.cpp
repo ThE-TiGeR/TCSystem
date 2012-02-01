@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -54,9 +54,9 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-   bool File::ChangeDirectory(const std::string& directory)
+   bool file::ChangeDirectory(const std::string& directory)
    {
       if (directory.empty())
       {
@@ -65,10 +65,10 @@ namespace TC
       return ::SetCurrentDirectoryA(directory.c_str()) == TRUE;
    }
 
-   std::string File::GetDirectory()
+   std::string file::GetDirectory()
    {
       char buffer[512] = "";
-      if (!::GetCurrentDirectoryA(static_cast<DWORD>(Util::ArraySize(buffer)), buffer))
+      if (!::GetCurrentDirectoryA(static_cast<DWORD>(util::ArraySize(buffer)), buffer))
       {
          return "";
       }
@@ -76,7 +76,7 @@ namespace TC
       return buffer;
    }
 
-   bool File::Exists(const std::string & file)
+   bool file::Exists(const std::string & file)
    {
       DWORD atts = ::GetFileAttributesA(file.c_str());
 
@@ -84,7 +84,7 @@ namespace TC
    }
 
    // Check whether its a directory
-   bool File::IsDirectory(const std::string & file)
+   bool file::IsDirectory(const std::string & file)
    {
       DWORD atts = ::GetFileAttributesA(file.c_str());
 
@@ -92,7 +92,7 @@ namespace TC
    }
 
    // Check whether its a file
-   bool File::IsFile(const std::string & file)
+   bool file::IsFile(const std::string & file)
    {
       DWORD atts = ::GetFileAttributesA(file.c_str());
 
@@ -100,7 +100,7 @@ namespace TC
    }
 
    // Return 1 if file is readable
-   bool File::IsReadable(const std::string &file)
+   bool file::IsReadable(const std::string &file)
    {
       DWORD atts = ::GetFileAttributesA(file.c_str());
 
@@ -108,7 +108,7 @@ namespace TC
    }
 
    // Return 1 if file is writeable
-   bool File::IsWriteable(const std::string &file)
+   bool file::IsWriteable(const std::string &file)
    {
       DWORD atts = ::GetFileAttributesA(file.c_str());
 
@@ -116,7 +116,7 @@ namespace TC
    }
 
    // Return 1 if file is executable
-   bool File::IsExecutable(const std::string &file)
+   bool file::IsExecutable(const std::string &file)
    {
       DWORD atts = ::GetFileAttributesA(file.c_str());
 
@@ -124,13 +124,13 @@ namespace TC
    }
 
    // Change the mode flags for this file
-   bool File::SetFileAttr(const std::string &file, uint32 attr)
+   bool file::SetFileAttr(const std::string &file, uint32 attr)
    {
       attr &= (FILEATTR_READONLY | FILEATTR_ARCHIVE | FILEATTR_SYSTEM | FILEATTR_HIDDEN) ;
       return SetFileAttributesA(file.c_str(), attr) == TRUE ? true : false;
    }
 
-   bool File::Remove(const std::string & file)
+   bool file::Remove(const std::string & file)
    {
       if (!Exists(file))
       {
@@ -159,7 +159,7 @@ namespace TC
       LPVOID lpData
       )
    {
-      SharedPtr<File::Progress> progress(*(SharedPtr<File::Progress>*)lpData);
+      SharedPtr<file::Progress> progress(*(SharedPtr<file::Progress>*)lpData);
       double val = (double)(TotalFileSize.QuadPart/TotalBytesTransferred.QuadPart) * 100;
 
       progress->OnCurrentStatus(uint32(val));
@@ -167,7 +167,7 @@ namespace TC
       return 0;
    }
 
-   bool File::Copy(const std::string& source, const std::string& dest,
+   bool file::Copy(const std::string& source, const std::string& dest,
       SharedPtr<Progress> progress)
    {
       if (!IsFile(source))
@@ -195,7 +195,7 @@ namespace TC
       }
    }
 
-   bool File::Move(const std::string& source, const std::string& dest)
+   bool file::Move(const std::string& source, const std::string& dest)
    {
       if (!IsFile(source))
       {
@@ -206,14 +206,14 @@ namespace TC
          MOVEFILE_COPY_ALLOWED|MOVEFILE_REPLACE_EXISTING|MOVEFILE_WRITE_THROUGH) == TRUE;
    }
 
-   bool File::CreateDir(const std::string& path)
+   bool file::CreateDir(const std::string& path)
    {
       if (path.empty()) return false;
 
       return ::CreateDirectoryA(path.c_str(), 0) == TRUE;
    }
 
-   bool File::RemoveDir(const std::string& path)
+   bool file::RemoveDir(const std::string& path)
    {
       if (path.empty()) return false;
 
@@ -221,7 +221,7 @@ namespace TC
    }
 
    // Return time file was last modified
-   uint64 File::GetModificationTime(const std::string &file)
+   uint64 file::GetModificationTime(const std::string &file)
    {
       HANDLE f = ::CreateFileA(file.c_str(),
          FILE_READ_ATTRIBUTES,
@@ -250,7 +250,7 @@ namespace TC
    }
 
    // Return time file was last accessed
-   uint64 File::GetLastAccessTime(const std::string &file)
+   uint64 file::GetLastAccessTime(const std::string &file)
    {
       HANDLE f = ::CreateFileA(file.c_str(),
          FILE_READ_ATTRIBUTES,
@@ -279,7 +279,7 @@ namespace TC
    }
 
    // Return time when created
-   uint64 File::GetCreationTime(const std::string &file)
+   uint64 file::GetCreationTime(const std::string &file)
    {
       HANDLE f = ::CreateFileA(file.c_str(),
          FILE_READ_ATTRIBUTES,
@@ -308,7 +308,7 @@ namespace TC
    }
 
    // Get file size
-   uint64 File::GetFileSize(const std::string &file)
+   uint64 file::GetFileSize(const std::string &file)
    {
       HANDLE f = ::CreateFileA(file.c_str(),
          FILE_READ_ATTRIBUTES,
@@ -350,7 +350,7 @@ namespace TC
       // Check GetLastError for CreateFile error code.
       if (hFile == INVALID_HANDLE_VALUE)
       {
-         TCERROR("TCBASE", System::GetLastErrorMessage().c_str());
+         TCERROR("TCBASE", system::GetLastErrorMessage().c_str());
          return "";
       }
 
@@ -366,7 +366,7 @@ namespace TC
       if (GetSecurityInfo(hFile, SE_FILE_OBJECT, info_type,
          &pSidOwner, 0, 0, 0, &pSD) != ERROR_SUCCESS)
       {
-         TCERROR("TCBASE", System::GetLastErrorMessage().c_str());
+         TCERROR("TCBASE", system::GetLastErrorMessage().c_str());
          return "";
       }
       ::CloseHandle(hFile);
@@ -376,8 +376,8 @@ namespace TC
       SID_NAME_USE eUse = SidTypeUnknown;
       char AcctName[256];
       char DomainName[256];
-      DWORD dwAcctName = static_cast<DWORD>(Util::ArraySize(AcctName));
-      DWORD dwDomainName = static_cast<DWORD>(Util::ArraySize(DomainName));
+      DWORD dwAcctName = static_cast<DWORD>(util::ArraySize(AcctName));
+      DWORD dwDomainName = static_cast<DWORD>(util::ArraySize(DomainName));
       // call to LookupAccountSid to get the account name.
       if (!LookupAccountSidA(
          0,                          // name of local or remote computer
@@ -388,7 +388,7 @@ namespace TC
          &dwDomainName,                 // size of domain name buffer
          &eUse))                        // SID type
       {
-         TCERROR("TCBASE", System::GetLastErrorMessage().c_str());
+         TCERROR("TCBASE", system::GetLastErrorMessage().c_str());
          return "";
       }
       ::GlobalFree(pSidOwner);
@@ -397,19 +397,19 @@ namespace TC
    }
 
    // get name of file user
-   std::string File::GetFileUser(const std::string &file)
+   std::string file::GetFileUser(const std::string &file)
    {
       return Win32FileInformation(file, OWNER_SECURITY_INFORMATION);
    }
 
    // get name of file group
-   std::string File::GetFileGroup(const std::string &file)
+   std::string file::GetFileGroup(const std::string &file)
    {
       return Win32FileInformation(file, GROUP_SECURITY_INFORMATION);
    }
 
    std::vector < std::string >
-   File::GetFileListOfDirectory(const std::string & searchDirectory,
+   file::GetFileListOfDirectory(const std::string & searchDirectory,
                                 const std::string & searchExtension)
    {
       std::vector < std::string > fileList;
@@ -420,11 +420,11 @@ namespace TC
       std::string search_dir;
       if (searchExtension.empty())
       {
-         search_dir = FileName::AddFileNameAndPath("*", searchDirectory);
+         search_dir = file_name::AddFileNameAndPath("*", searchDirectory);
       }
       else
       {
-         search_dir = FileName::AddFileNameAndPath("*." + searchExtension, searchDirectory);
+         search_dir = file_name::AddFileNameAndPath("*." + searchExtension, searchDirectory);
       }
       findFile = ::FindFirstFileA(search_dir.c_str(), &findData);
       if (findFile == INVALID_HANDLE_VALUE) return fileList;
@@ -432,7 +432,7 @@ namespace TC
       do
       {
          file = findData.cFileName;
-         if (FileName::GetName(file) == "." || FileName::GetName(file) == "..")
+         if (file_name::GetName(file) == "." || file_name::GetName(file) == "..")
          {
             continue;
          }
@@ -446,7 +446,7 @@ namespace TC
    }
 
    
-   void File::GetFileInfosOfDirectory(std::vector < FileInfo >& file_infos,
+   void file::GetFileInfosOfDirectory(std::vector < FileInfo >& file_infos,
       const std::string & searchDirectory,
       const std::string& searchExtension)
    {
@@ -455,11 +455,11 @@ namespace TC
       std::string search_dir;
       if (searchExtension.empty())
       {
-         search_dir = FileName::AddFileNameAndPath("*", searchDirectory);
+         search_dir = file_name::AddFileNameAndPath("*", searchDirectory);
       }
       else
       {
-         search_dir = FileName::AddFileNameAndPath("*." + searchExtension, searchDirectory);
+         search_dir = file_name::AddFileNameAndPath("*." + searchExtension, searchDirectory);
       }
       findFile = ::FindFirstFileA(search_dir.c_str(), &findData);
       if (findFile == INVALID_HANDLE_VALUE) return;
@@ -468,8 +468,8 @@ namespace TC
       {
          FileInfo file_info;
          file_info.name = findData.cFileName;
-         if (FileName::GetName(file_info.name) == "." || 
-             FileName::GetName(file_info.name) == "..")
+         if (file_name::GetName(file_info.name) == "." || 
+             file_name::GetName(file_info.name) == "..")
          {
             continue;
          }

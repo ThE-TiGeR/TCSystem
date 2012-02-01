@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -49,34 +49,34 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-namespace Net
+namespace net
 {
-namespace Impl
+namespace imp
 {
 
-class StartMessage: public MT::Message
+class StartMessage: public multi_threading::Message
 {
 public:
-   enum { MESSAGE_ID = MT::Message::MSG_ID_USER_START+1 };
-   StartMessage():MT::Message(MESSAGE_ID) {}
+   enum { MESSAGE_ID = multi_threading::Message::MSG_ID_USER_START+1 };
+   StartMessage():multi_threading::Message(MESSAGE_ID) {}
 };
 
-class StopMessage: public MT::Message
+class StopMessage: public multi_threading::Message
 {
 public:
-   enum { MESSAGE_ID = MT::Message::MSG_ID_USER_START+2 };
-   StopMessage():MT::Message(MESSAGE_ID) {}
+   enum { MESSAGE_ID = multi_threading::Message::MSG_ID_USER_START+2 };
+   StopMessage():multi_threading::Message(MESSAGE_ID) {}
 };
 
-class AddSocketMessage: public MT::Message
+class AddSocketMessage: public multi_threading::Message
 {
 public:
-   enum { MESSAGE_ID = MT::Message::MSG_ID_USER_START+3 };
+   enum { MESSAGE_ID = multi_threading::Message::MSG_ID_USER_START+3 };
    AddSocketMessage(SocketPtr socket_to_add,
       SocketServerImp::DataReceiverPtr receiver_to_add)
-      :MT::Message(MESSAGE_ID),
+      :multi_threading::Message(MESSAGE_ID),
       m_socket_to_add(socket_to_add),
       m_receiver_to_add(receiver_to_add)
    {
@@ -85,19 +85,19 @@ public:
    SocketServerImp::DataReceiverPtr m_receiver_to_add;
 };
 
-class RemoveSocketMessage: public MT::Message
+class RemoveSocketMessage: public multi_threading::Message
 {
 public:
    enum { MESSAGE_ID = 4 };
    RemoveSocketMessage(SocketPtr socket_to_remove)
-      :MT::Message(MESSAGE_ID),
+      :multi_threading::Message(MESSAGE_ID),
       m_socket_to_remove(socket_to_remove)
    {
    }
    SocketPtr m_socket_to_remove;
 };
 
-class ThreadObject: public MT::ThreadObject
+class ThreadObject: public multi_threading::ThreadObject
 {
 public:
    ThreadObject(SocketServerImp* server)
@@ -117,8 +117,8 @@ SocketServerImp::SocketServerImp()
 {
    TCTRACEF("TCNET", 10);
 
-   m_server_thread = MT::Factory::CreateThread("SocketServerImp");
-   m_server_thread->Start(MT::ThreadObjectPtr(new ThreadObject(this)));
+   m_server_thread = multi_threading::factory::CreateThread("SocketServerImp");
+   m_server_thread->Start(multi_threading::ThreadObjectPtr(new ThreadObject(this)));
 }
 
 SocketServerImp::~SocketServerImp()
@@ -128,7 +128,7 @@ SocketServerImp::~SocketServerImp()
    Stop(true);
 }
 
-bool SocketServerImp::HandleMessage(MT::MessagePtr message)
+bool SocketServerImp::HandleMessage(multi_threading::MessagePtr message)
 {
    TCTRACE1("TCNET", 50, "(%d)", message->GetMessageId());
 
@@ -185,11 +185,11 @@ bool SocketServerImp::Run()
    m_running = true;
    m_current_timeout = Time::Infinite();
 
-   MT::MessagePtr message;
+   multi_threading::MessagePtr message;
    while (m_running)
    {
       if (m_server_thread->WaitThreadMessage(message, m_current_timeout) !=
-         MT::Message::MSG_RECEIVE_FAILED)
+         multi_threading::Message::MSG_RECEIVE_FAILED)
       {
          if (!HandleMessage(message))
          {
@@ -212,7 +212,7 @@ void SocketServerImp::Start(bool wait_started)
 
    if (m_server_thread->IsRunning())
    {
-      m_server_thread->SendThreadMessage(MT::MessagePtr(new StartMessage));
+      m_server_thread->SendThreadMessage(multi_threading::MessagePtr(new StartMessage));
 
       if (wait_started)
       {
@@ -226,7 +226,7 @@ void SocketServerImp::Stop(bool wait_stopped)
    
    if (m_server_thread->IsRunning())
    {
-      m_server_thread->SendThreadMessage(MT::MessagePtr(new StopMessage));
+      m_server_thread->SendThreadMessage(multi_threading::MessagePtr(new StopMessage));
 
       if (wait_stopped)
       {
@@ -243,7 +243,7 @@ bool SocketServerImp::AddSocket(SocketPtr socket,
       return false;
    }
 
-   return m_server_thread->SendThreadMessage(MT::MessagePtr(new AddSocketMessage(socket, data_receiver)));
+   return m_server_thread->SendThreadMessage(multi_threading::MessagePtr(new AddSocketMessage(socket, data_receiver)));
 }
 
 bool SocketServerImp::RemoveSocket(SocketPtr socket)
@@ -253,7 +253,7 @@ bool SocketServerImp::RemoveSocket(SocketPtr socket)
       return false;
    }
 
-   return m_server_thread->SendThreadMessage(MT::MessagePtr(new RemoveSocketMessage(socket)));
+   return m_server_thread->SendThreadMessage(multi_threading::MessagePtr(new RemoveSocketMessage(socket)));
 }
 
 bool SocketServerImp::Accept()
@@ -280,7 +280,7 @@ bool SocketServerImp::Accept()
 #endif
 
          FD_SET(m_sockets[i]->GetSocket(), &read_set);
-         max_id = TC::Util::Max(max_id, m_sockets[i]->GetSocket());
+         max_id = tc::util::Max(max_id, m_sockets[i]->GetSocket());
       }
    }
 
@@ -311,10 +311,10 @@ bool SocketServerImp::Accept()
       {
 #ifdef TCOS_WINDOWS
          int error = ::WSAGetLastError();
-         std::string error_str = System::GetLastErrorMessage();
+         std::string error_str = system::GetLastErrorMessage();
 #else
-         int error = System::GetLastError();
-         std::string error_str = System::GetLastErrorMessage();
+         int error = system::GetLastError();
+         std::string error_str = system::GetLastErrorMessage();
 #endif
          if (error != 0)
          {
@@ -324,13 +324,13 @@ bool SocketServerImp::Accept()
       else if (s < 0)
       {
          TCERROR1("TCNET", "select error %s", 
-                  System::GetLastErrorMessage().c_str());
+                  system::GetLastErrorMessage().c_str());
          return false;
       }
    }
    else
    {
-      System::Sleep(SELECT_TIMEOUT);
+      system::Sleep(SELECT_TIMEOUT);
    }
 
    return true;

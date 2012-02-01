@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -41,9 +41,9 @@
 struct in_addr;
 struct sockaddr_in;
 
-namespace TC
+namespace tc
 {
-   namespace Net
+   namespace net
    {
       /**
       * @addtogroup TC_NET
@@ -52,7 +52,7 @@ namespace TC
 
       /**
       * @file
-      * @brief This file provides the definition of data types needed for TC::Net classes
+      * @brief This file provides the definition of data types needed for tc::net classes
       * @author Thomas Goessler
       */
 
@@ -80,8 +80,8 @@ namespace TC
       * @}
       */
 
-   } // namespace Net
-} // namespace TC
+   } // namespace net
+} // namespace tc
 
 
 #endif // _TC_NET_TYPES_H_

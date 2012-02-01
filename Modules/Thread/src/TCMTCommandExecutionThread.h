@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -38,32 +38,32 @@
 #include "TCMTCommandMessage.h"
 #include "TCMTThreadObject.h"
 
-namespace TC
+namespace tc
 {
-    namespace MT
+    namespace multi_threading
     {
         class CommandExecutionThreadObject: public ThreadObject
         {
         public:
             virtual bool Run()
             {
-                MT::ThreadPtr thread = MT::Factory::GetCurrentThread();
+                multi_threading::ThreadPtr thread = multi_threading::factory::GetCurrentThread();
                 bool running(true);
                 while (running)
                 {
-                    MT::MessagePtr message;
+                    multi_threading::MessagePtr message;
                     switch (thread->WaitThreadMessage(message))
                     {
-                    case MT::Message::MSG_RECEIVED:
+                    case multi_threading::Message::MSG_RECEIVED:
                         {
                             CommandMessage::Ptr c_message(CommandMessage::Ptr::StaticCast(message));
                             c_message->Execute();
                         }
                         break;
 
-                    case MT::Message::MSG_RECEIVE_FAILED:
-                    case MT::Message::MSG_RECEIVE_TIMEOUT:
-                    case MT::Message::MSG_QUIT_RECEIVED:
+                    case multi_threading::Message::MSG_RECEIVE_FAILED:
+                    case multi_threading::Message::MSG_RECEIVE_TIMEOUT:
+                    case multi_threading::Message::MSG_QUIT_RECEIVED:
                         running = false;
                         break;
                     }

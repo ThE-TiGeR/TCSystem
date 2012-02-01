@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -37,7 +37,7 @@
 
 #include "TCTypes.h"
 
-namespace TC
+namespace tc
 {
    /**
     * @addtogroup TC_BASE
@@ -46,7 +46,7 @@ namespace TC
 
    /**
     * @file
-    * Defines the namespace TC::Interlocked
+    * Defines the namespace tc::interlocked
     *
     * @author Thomas Goessler
     */
@@ -55,7 +55,7 @@ namespace TC
     * Methods for interlocked modifying of integer values
     * @author Thomas Goessler
     */
-   namespace Interlocked
+   namespace interlocked
    {
       /** Data type for interlockee operations */
       typedef long Type;
@@ -99,12 +99,12 @@ namespace TC
        */
       TCBASE_API Type Add(Type& target, sint32 value_to_add);
 
-   } // namespace Interlocked
+   } // namespace interlocked
 
    /**
     *  @}
     */
 
-} // namespace TC
+} // namespace tc
 
 #endif // _TC_INTERLOCKED_H_

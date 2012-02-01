@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -37,9 +37,9 @@
 
 #include "TCCodec.h"
 
-namespace TC
+namespace tc
 {
-namespace Impl
+namespace imp
 {
    /**
     * @addtogroup TC_BASE_IO_IMPL
@@ -49,9 +49,9 @@ namespace Impl
    /**
     * @file
     * @brief This file provides the definition of 
-    *        TC::Impl::CreateBinaryCodec
-    *        TC::Impl::CreateBinaryCodec
-    *        TC::Impl::CreateBinaryCodec
+    *        tc::imp::CreateBinaryCodec
+    *        tc::imp::CreateBinaryCodec
+    *        tc::imp::CreateBinaryCodec
     *
     * @author Thomas Goessler
     */

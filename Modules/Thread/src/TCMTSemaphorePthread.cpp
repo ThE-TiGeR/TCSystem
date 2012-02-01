@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -47,11 +47,11 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-   namespace MT
+   namespace multi_threading
    {
-      namespace Impl
+      namespace imp
       {
 
          SemaphorePthread::SemaphorePthread() 
@@ -97,15 +97,15 @@ namespace TC
             return true;
          }
 
-         bool SemaphorePthread::Init(const std::string& shared_name, uint32 initial, Factory::CreationMode mode)
+         bool SemaphorePthread::Init(const std::string& shared_name, uint32 initial, factory::CreationMode mode)
          {
             switch(mode)
             {
-            case Factory::CRM_ALWAYS:
+            case factory::CRM_ALWAYS:
                m_semaphore = ::sem_open(shared_name.c_str(), O_CREAT, S_IRWXU, initial);
                m_name = shared_name;
                break;
-            case Factory::CRM_WHEN_EXISTS:
+            case factory::CRM_WHEN_EXISTS:
                m_semaphore = ::sem_open(shared_name.c_str(), O_CREAT|O_EXCL, S_IRWXU, initial);
                // if unable to open it allready exists so it is ok
                if (m_semaphore == SEM_FAILED)
@@ -118,7 +118,7 @@ namespace TC
                   m_semaphore = SEM_FAILED;
                }
                break;
-            case Factory::CRM_WHEN_NOT_EXISTS:
+            case factory::CRM_WHEN_NOT_EXISTS:
                m_semaphore = ::sem_open(shared_name.c_str(), O_CREAT|O_EXCL, S_IRWXU, initial);
                m_name = shared_name;
                break;
@@ -183,8 +183,8 @@ namespace TC
             return true;
          }
 
-      } // namespace Impl
-   } // namespace MT
-} // namespace TC
+      } // namespace imp
+   } // namespace multi_threading
+} // namespace tc
 
 #endif // TCOS_POSIX

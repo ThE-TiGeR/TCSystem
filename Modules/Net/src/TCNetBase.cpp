@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -39,11 +39,11 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-   namespace Net
+   namespace net
    {
-      namespace Impl
+      namespace imp
       {
 
          sint32 Base::m_num_created_net_objects = 0;
@@ -51,14 +51,14 @@ namespace TC
          Base::Base()
          {
             m_num_created_net_objects++;
-            Util::InitSocket();
+            util::InitSocket();
          }
 
          Base::~Base()
          {
             if (--m_num_created_net_objects == 0)
             {
-               Util::DeInitSocket();
+               util::DeInitSocket();
             }
          }
 

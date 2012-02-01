@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -40,9 +40,9 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-   namespace OpenGL
+   namespace open_gl
    {
 
       static bool s_vbo_supported = true;
@@ -239,22 +239,22 @@ namespace TC
             if (m_vertex_array.size())
             {
                glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, m_vertex_offset,  m_num_vertex * VERTEX3D_SIZE, &m_vertex_array.front());
-               Util::FreeMemoryOfStlContainer(m_vertex_array);
+               util::FreeMemoryOfStlContainer(m_vertex_array);
             }
             if (m_normal_array.size())
             {
                glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, m_normal_offset,  m_num_vertex * NORMAL3D_SIZE, &m_normal_array.front());
-               Util::FreeMemoryOfStlContainer(m_normal_array);
+               util::FreeMemoryOfStlContainer(m_normal_array);
             }
             if (m_color_array.size())
             {
                glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, m_color_offset,   m_num_vertex * COLOR_SIZE, &m_color_array.front());
-               Util::FreeMemoryOfStlContainer(m_color_array);
+               util::FreeMemoryOfStlContainer(m_color_array);
             }
             if (m_texture_array.size())
             {
                glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, m_texture_offset, m_num_vertex * VERTEX3D_SIZE, &m_texture_array.front());
-               Util::FreeMemoryOfStlContainer(m_texture_array);
+               util::FreeMemoryOfStlContainer(m_texture_array);
             }
          }
       }
@@ -329,7 +329,7 @@ namespace TC
 
          for (uint32 i=0; i<m_num_vertex; i+=step)
          {
-            ::glDrawArrays(m_patch_type, i, Util::Min(m_num_vertex-i, step));
+            ::glDrawArrays(m_patch_type, i, util::Min(m_num_vertex-i, step));
          }
 
          ::glDisableClientState(GL_VERTEX_ARRAY);
@@ -403,12 +403,12 @@ namespace TC
                pglMapBufferARB && pglUnmapBufferARB && pglDeleteBuffersARB && pglGetBufferParameterivARB)
             {
                s_vbo_supported = true;
-               TCINFO("OpenGL", "Video card supports GL_ARB_vertex_buffer_object.");
+               TCINFO("open_gl", "Video card supports GL_ARB_vertex_buffer_object.");
             }
             else
             {
                s_vbo_supported = false;
-               TCINFO("OpenGL", "Video card does NOT support GL_ARB_vertex_buffer_object.");
+               TCINFO("open_gl", "Video card does NOT support GL_ARB_vertex_buffer_object.");
             }
          }
 #endif
@@ -418,10 +418,10 @@ namespace TC
       {
          m_num_vertex = 0;
 
-         Util::FreeMemoryOfStlContainer(m_vertex_array);
-         Util::FreeMemoryOfStlContainer(m_texture_array);
-         Util::FreeMemoryOfStlContainer(m_color_array);
-         Util::FreeMemoryOfStlContainer(m_normal_array);
+         util::FreeMemoryOfStlContainer(m_vertex_array);
+         util::FreeMemoryOfStlContainer(m_texture_array);
+         util::FreeMemoryOfStlContainer(m_color_array);
+         util::FreeMemoryOfStlContainer(m_normal_array);
 
          if (m_vertex_buffer_id)
          {

@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -46,13 +46,13 @@
 
 static bool s_is_initialised;
 
-namespace TC
+namespace tc
 {
-   namespace Net
+   namespace net
    {
-      namespace Impl
+      namespace imp
       {
-         namespace Util
+         namespace util
          {
 
             bool InitSocket()
@@ -87,7 +87,7 @@ namespace TC
 
             PortNumber FindFreePort()
             {
-               RngPtr rng = TC::Factory::Create69069Rng();
+               RngPtr rng = tc::factory::Create69069Rng();
 
                PortNumber port = 0;
                while(port == 0)
@@ -240,7 +240,7 @@ namespace TC
 #endif
                if (::setsockopt(sd, SOL_SOCKET, SO_REUSEADDR, p, sizeof(para)) == SOCKET_ERROR)
                {
-                  PrintSocketError("TC::Net::Util::CreateSocketDescriptor failed create socket",
+                  PrintSocketError("tc::net::util::CreateSocketDescriptor failed create socket",
                      true);
                   return false;
                }
@@ -255,7 +255,7 @@ namespace TC
 #else
                int error = errno;
 #endif
-               std::string error_str = System::GetErrorMessage(error);
+               std::string error_str = system::GetErrorMessage(error);
                if (is_error)
                {
                   TCERROR3("NET", "%s(%d, %s)", error_message, error, error_str.c_str());

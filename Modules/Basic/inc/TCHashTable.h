@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -42,7 +42,7 @@
 #include <string>
 #include <functional>
 
-namespace TC
+namespace tc
 {
    /**
     * @addtogroup TC_BASE
@@ -51,7 +51,7 @@ namespace TC
 
    /**
     * @file
-    * @brief This header file provides the definition of the class TC::HashTable
+    * @brief This header file provides the definition of the class tc::HashTable
     *
     * @author Thomas Goessler
     */
@@ -376,6 +376,6 @@ namespace TC
    /**
     * @}
     */
-} // namespace TC
+} // namespace tc
 
 #endif // TC_HASHTABLE_H

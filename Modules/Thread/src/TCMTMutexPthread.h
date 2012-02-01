@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -43,11 +43,11 @@
 
 #include <string>
 
-namespace TC
+namespace tc
 {
-namespace MT
+namespace multi_threading
 {
-namespace Impl
+namespace imp
 {
 
    /**
@@ -83,7 +83,7 @@ namespace Impl
       MutexSharedPthread();
       ~MutexSharedPthread();
 
-      bool Init(const std::string& shared_name, bool locked, Factory::CreationMode mode);
+      bool Init(const std::string& shared_name, bool locked, factory::CreationMode mode);
 
       bool Lock();
       bool TryLock();
@@ -105,8 +105,8 @@ namespace Impl
     * @}
     */
 
-} // namespace Impl
-} // namespace MT
-} // namespace TC
+} // namespace imp
+} // namespace multi_threading
+} // namespace tc
 
 #endif // _TC_MT_MUTEX_IMP_H_

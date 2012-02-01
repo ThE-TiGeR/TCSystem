@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -37,9 +37,9 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-   namespace OpenGL
+   namespace open_gl
    {
       void LineRenderer::EnableAntiAliasing()
       {
@@ -129,7 +129,7 @@ namespace TC
          }
       }
 
-      void LineRenderer::RenderBox(const Math::Box< Vertex3D >& box,     
+      void LineRenderer::RenderBox(const math::Box< Vertex3D >& box,     
          const Color& color, uint32 num_pixels/*=DEFAULT_WIDTH*/) 
       {
          ::glColor4fv(color);
@@ -163,7 +163,7 @@ namespace TC
          glLineWidth(DEFAULT_WIDTH);
       }
 
-      void LineRenderer::RenderBox(const Math::Box< Vertex2D >& box,     
+      void LineRenderer::RenderBox(const math::Box< Vertex2D >& box,     
          const Color& color, uint32 num_pixels/*=DEFAULT_WIDTH*/) 
       {
          ::glColor4fv(color);

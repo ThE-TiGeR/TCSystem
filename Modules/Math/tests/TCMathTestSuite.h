@@ -38,13 +38,13 @@
 #include "TCMathApi.h"
 #include "TCUnitTestSuite.h"
 
-namespace TC
+namespace tc
 {
-   namespace Math
+   namespace math
    {
-      namespace Tests
+      namespace tests
       {
-         class TCMATH_API Suite : public Unit::TestSuite
+         class TCMATH_API Suite : public unit::TestSuite
          {
          public:
             Suite();

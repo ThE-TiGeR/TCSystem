@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -41,11 +41,11 @@
 
 #include <string>
 
-namespace TC
+namespace tc
 {
-namespace Net
+namespace net
 {
-namespace Impl
+namespace imp
 {
 
    /**
@@ -62,7 +62,7 @@ namespace Impl
    public:
       /**
       * Constructs an TCNet object and initialices sockets
-      * @see TC::Net::Impl::Util::InitSocket()
+      * @see tc::net::imp::Util::InitSocket()
       */
       Base();
       /**
@@ -81,8 +81,8 @@ namespace Impl
     * @}
     */
 
-} // namespace Impl
-} // namespace Net
-} // namespace TC
+} // namespace imp
+} // namespace net
+} // namespace tc
 
 #endif // _TC_NET_BASE_H_

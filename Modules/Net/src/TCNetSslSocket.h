@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -44,11 +44,11 @@
 typedef struct ssl_st SSL;
 typedef struct ssl_ctx_st SSL_CTX;
 
-namespace TC
+namespace tc
 {
-   namespace Net
+   namespace net
    {
-      namespace Impl
+      namespace imp
       {
 
          /**
@@ -88,9 +88,9 @@ namespace TC
          * @}
          */
 
-      } // namespace Impl
-   } // namespace Net
-} // namespace TC
+      } // namespace imp
+   } // namespace net
+} // namespace tc
 
 #endif // TCNET_NO_OPENSSL
 

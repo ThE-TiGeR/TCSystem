@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -43,7 +43,7 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
     class WFileNameTraits
     {
@@ -54,7 +54,7 @@ namespace TC
 
         static void ReplaceString(std::wstring& data, const std::wstring& token, const std::wstring& replace)
         {
-            data = WString::Replace(data, token, replace);
+            data = wstring::Replace(data, token, replace);
         }
     };
 
@@ -64,67 +64,67 @@ namespace TC
 
     typedef FileNameImpTmpl<std::wstring, WFileNameTraits, WStringTraits> WFileNameImp;
 
-    std::wstring WFileName::GetExtension(const std::wstring& file_name)
+    std::wstring wfile_name::GetExtension(const std::wstring& file_name)
     {
         return WFileNameImp::GetExtension(file_name);
     }
 
-    std::wstring WFileName::GetExtensionIfExtension(const std::wstring& file_name, const std::wstring& additional_ext)
+    std::wstring wfile_name::GetExtensionIfExtension(const std::wstring& file_name, const std::wstring& additional_ext)
     {
        return WFileNameImp::GetExtensionIfExtension(file_name, additional_ext);
     }
 
-    std::wstring WFileName::GetName(const std::wstring& file_name)
+    std::wstring wfile_name::GetName(const std::wstring& file_name)
     {
         return WFileNameImp::GetName(file_name);
     }
 
-    std::wstring WFileName::GetPath(const std::wstring& file_name)
+    std::wstring wfile_name::GetPath(const std::wstring& file_name)
     {
         return WFileNameImp::GetPath(file_name);
     }
 
-    std::wstring WFileName::RemoveExtension(const std::wstring& file_name)
+    std::wstring wfile_name::RemoveExtension(const std::wstring& file_name)
     {
         return WFileNameImp::RemoveExtension(file_name);
     }
 
-    std::wstring WFileName::AddPaths(const std::wstring& path1,
+    std::wstring wfile_name::AddPaths(const std::wstring& path1,
         const std::wstring& path2)
     {
         return WFileNameImp::AddPaths(path1, path2);
     }
 
-    std::wstring WFileName::AddFileNameAndPath(const std::wstring& file_name,
+    std::wstring wfile_name::AddFileNameAndPath(const std::wstring& file_name,
         const std::wstring& path)
     {
         return WFileNameImp::AddFileNameAndPath(file_name, path);
     }
 
-    std::wstring WFileName::AddFileNameAndExtension(const std::wstring& file_name,
+    std::wstring wfile_name::AddFileNameAndExtension(const std::wstring& file_name,
         const std::wstring& ext)
     {
         return WFileNameImp::AddFileNameAndExtension(file_name, ext);
     }
 
-    std::wstring WFileName::Simplify(const std::wstring& file)
+    std::wstring wfile_name::Simplify(const std::wstring& file)
     {
         return WFileNameImp::Simplify(file);
     }
 
-    void WFileName::GetDirectoriesOfFileName(const std::wstring& file_name,
+    void wfile_name::GetDirectoriesOfFileName(const std::wstring& file_name,
         std::vector<std::wstring>& directories)
     {
-        WString::Split(GetPath(file_name).c_str(), WFileNameTraits::PATH_SEPERATOR, directories);
+        wstring::Split(GetPath(file_name).c_str(), WFileNameTraits::PATH_SEPERATOR, directories);
     }
 
-    void WFileName::GetDirectoriesOfPath(const std::wstring& path,
+    void wfile_name::GetDirectoriesOfPath(const std::wstring& path,
         std::vector<std::wstring>& directories)
     {
-        WString::Split(Simplify(path).c_str(), WFileNameTraits::PATH_SEPERATOR, directories);
+        wstring::Split(Simplify(path).c_str(), WFileNameTraits::PATH_SEPERATOR, directories);
     }
 
-    const wchar_t* WFileName::GetPathSeparator()
+    const wchar_t* wfile_name::GetPathSeparator()
     {
         return WFileNameTraits::PATH_SEPERATOR;
     }

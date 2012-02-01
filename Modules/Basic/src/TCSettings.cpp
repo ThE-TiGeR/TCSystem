@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -39,7 +39,7 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
 const uint32 NOT_FOUND = 0xffffffff;
 
@@ -56,22 +56,22 @@ Settings::~Settings()
 
 bool Settings::GetBoolEntry(const std::string &section, const std::string &key, bool defaultValue)  const
 {
-   return String::ToBool(GetStringEntry(section, key, String::ToString(defaultValue)));
+   return string::ToBool(GetStringEntry(section, key, string::ToString(defaultValue)));
 }
 
 sint32 Settings::GetIntEntry(const std::string &section, const std::string &key, sint32 defaultValue) const
 {
-   return String::ToSint32(GetStringEntry(section, key, String::ToString(defaultValue)));
+   return string::ToSint32(GetStringEntry(section, key, string::ToString(defaultValue)));
 }
 
 float Settings::GetFloatEntry(const std::string &section, const std::string &key, float defaultValue) const
 {
-   return String::ToFloat(GetStringEntry(section, key, String::ToString(defaultValue)));
+   return string::ToFloat(GetStringEntry(section, key, string::ToString(defaultValue)));
 }
 
 double Settings::GetDoubleEntry(const std::string &section, const std::string &key, double defaultValue) const
 {
-   return String::ToDouble(GetStringEntry(section, key, String::ToString(defaultValue)));
+   return string::ToDouble(GetStringEntry(section, key, string::ToString(defaultValue)));
 }
 
 std::string Settings::GetStringEntry(const std::string &section, const std::string &key, const std::string &defaultValue) const
@@ -92,22 +92,22 @@ std::string Settings::GetStringEntry(const std::string &section, const std::stri
 
 void Settings::SetBoolEntry(const std::string &section, const std::string &key, bool value)
 {
-   SetStringEntry(section, key, String::ToString(value));
+   SetStringEntry(section, key, string::ToString(value));
 }
 
 void Settings::SetIntEntry(const std::string &section, const std::string &key, sint32 value)
 {
-   SetStringEntry(section, key, String::ToString(value));
+   SetStringEntry(section, key, string::ToString(value));
 }
 
 void Settings::SetFloatEntry(const std::string &section, const std::string &key, float value)
 {
-   SetStringEntry(section, key, String::ToString(value));
+   SetStringEntry(section, key, string::ToString(value));
 }
 
 void Settings::SetDoubleEntry(const std::string &section, const std::string &key, double value)
 {
-   SetStringEntry(section, key, String::ToString(value));
+   SetStringEntry(section, key, string::ToString(value));
 }
 
 void Settings::SetStringEntry(const std::string &section, const std::string &key, const std::string &value)

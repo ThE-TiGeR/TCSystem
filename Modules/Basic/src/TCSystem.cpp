@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -141,10 +141,10 @@ extern "C" int uname(struct utsname *);
 
 #define SYS_CHAR_LEN 512
 
-namespace TC
+namespace tc
 {
 
-   std::string System::GetHostName()
+   std::string system::GetHostName()
    {
 #ifdef TCOS_WINCE_40
       /** @todo find lib for methode gethostnam on wince */
@@ -166,7 +166,7 @@ namespace TC
       return "";
    }
 
-   std::string System::GetUserName()
+   std::string system::GetUserName()
    {
 #ifdef TCOS_WINCE_40
       return "";
@@ -189,7 +189,7 @@ namespace TC
       return "";
    }
 
-   std::string System::GetOSName()
+   std::string system::GetOSName()
    {
 #if TCOS_WINDOWS || TCOS_WINCE_40
       OSVERSIONINFO info;
@@ -226,7 +226,7 @@ namespace TC
       return "unknown";
    }
 
-   std::string System::GetOSVersion()
+   std::string system::GetOSVersion()
    {
       char ver[SYS_CHAR_LEN];
 
@@ -237,7 +237,7 @@ namespace TC
       info.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
       GetVersionEx(&info);
 
-      String::Snprintf(ver, Util::ArraySize(ver), "%d.%.d.%d (%s)", info.dwMajorVersion,
+      string::Snprintf(ver, util::ArraySize(ver), "%d.%.d.%d (%s)", info.dwMajorVersion,
          info.dwMinorVersion,
          info.dwBuildNumber,
          info.szCSDVersion);
@@ -249,17 +249,17 @@ namespace TC
          return "";
 
 #ifdef TCOS_IBM
-      String::Snprintf(ver, Util::ArraySize(ver), "%s.%s", unamedata.version, unamedata.release);
+      string::Snprintf(ver, util::ArraySize(ver), "%s.%s", unamedata.version, unamedata.release);
 #elif TCOS_LINUX
-      String::Snprintf(ver, Util::ArraySize(ver), "%s", unamedata.release);
+      string::Snprintf(ver, util::ArraySize(ver), "%s", unamedata.release);
 #else
-      String::Snprintf(ver, Util::ArraySize(ver), "%s %s", unamedata.release, unamedata.version);
+      string::Snprintf(ver, util::ArraySize(ver), "%s %s", unamedata.release, unamedata.version);
 #endif
 #endif
       return ver;
    }
 
-   std::string System::GetOSCompany()
+   std::string system::GetOSCompany()
    {
 #if TCOS_WINDOWS || TCOS_WINCE_40
       return "Microsoft";
@@ -280,9 +280,9 @@ namespace TC
 #elif TCOS_CYGWIN
       return "Gnu";
 #elif TCOS_LINUX
-      if (File::IsFile("/etc/SuSE-release"))
+      if (file::IsFile("/etc/SuSE-release"))
          return "SuSE";
-      else if (File::IsFile("/etc/redhat-release"))
+      else if (file::IsFile("/etc/redhat-release"))
          return "RedHat";
       else
          return "unknown";
@@ -293,7 +293,7 @@ namespace TC
 #endif
    }
 
-   std::string System::GetCpuModel()
+   std::string system::GetCpuModel()
    {
 #if TCOS_WINDOWS || TCOS_WINCE_40
       SYSTEM_INFO sinfo;
@@ -301,7 +301,7 @@ namespace TC
       ::GetSystemInfo(&sinfo);
 
       char ver[SYS_CHAR_LEN];
-      String::Snprintf(ver, Util::ArraySize(ver), "Processor %d Level %d", sinfo.dwProcessorType,
+      string::Snprintf(ver, util::ArraySize(ver), "Processor %d Level %d", sinfo.dwProcessorType,
          sinfo.wProcessorLevel);
       return ver;
 #else
@@ -315,7 +315,7 @@ namespace TC
 #endif
    }
 
-   std::string System::GetDate()
+   std::string system::GetDate()
    {
       char date[SYS_CHAR_LEN];
 
@@ -327,7 +327,7 @@ namespace TC
       return date;
    }
 
-   std::string System::GetEnvironment(const std::string& ename)
+   std::string system::GetEnvironment(const std::string& ename)
    {
 #if defined TCOS_WINCE_40 || defined TCOS_WINDOWS
       DWORD size = ::GetEnvironmentVariableA(ename.c_str(), 0, 0);
@@ -345,7 +345,7 @@ namespace TC
       return evalue;
    }
 
-   uint32 System::GetProcessID()
+   uint32 system::GetProcessID()
    {
 #if TCOS_WINDOWS || TCOS_WINCE_40
       return GetCurrentProcessId();
@@ -354,7 +354,7 @@ namespace TC
 #endif
    }
 
-   void System::Sleep(uint64 millisec)
+   void system::Sleep(uint64 millisec)
    {
 #if TCOS_WINDOWS || TCOS_WINCE_40
 #define MAX_SLEEP_MILLI_SECONDS 0xffffffe   // 2**32-2
@@ -387,7 +387,7 @@ namespace TC
 #endif
    }
 
-   sint32 System::GetLastError()
+   sint32 system::GetLastError()
    {
 #if TCOS_WINDOWS || TCOS_WINCE_40
       return ::GetLastError();
@@ -396,12 +396,12 @@ namespace TC
 #endif
    }
 
-   std::string System::GetLastErrorMessage()
+   std::string system::GetLastErrorMessage()
    {
       return GetErrorMessage(GetLastError());
    }
 
-   std::string System::GetErrorMessage(sint32 error_code)
+   std::string system::GetErrorMessage(sint32 error_code)
    {
 #if TCOS_WINDOWS || TCOS_WINCE_40
       LPSTR lpMsgBuf;
@@ -416,8 +416,8 @@ namespace TC
          0, 0 );
 
       std::string message = lpMsgBuf;
-      message = String::Replace(message, '\r', ' ');
-      message = String::Replace(message, '\n', ' ');
+      message = string::Replace(message, '\r', ' ');
+      message = string::Replace(message, '\n', ' ');
 
       LocalFree(lpMsgBuf);
       return message;
@@ -429,7 +429,7 @@ namespace TC
    }
 
 
-   sint32 System::GetNumCPUs()
+   sint32 system::GetNumCPUs()
    {
       sint32 nCPU = 0;
 #ifdef TCOS_LINUX
@@ -484,10 +484,10 @@ namespace TC
 #elif TCOS_CRAY
       nCPU = sysconf(_SC_CRAY_NCPU);
 #endif
-      return Util::Max(1, nCPU);
+      return util::Max(1, nCPU);
    }
 
-   uint64 System::GetCpuTime(uint64 timeIn)
+   uint64 system::GetCpuTime(uint64 timeIn)
    {
       uint64 dt;
 #if defined(TCOS_WINDOWS) || defined(TCOS_WINCE_40)
@@ -507,7 +507,7 @@ namespace TC
       return dt;
    }
 
-   uint32 System::GetCurrentThreadID()
+   uint32 system::GetCurrentThreadID()
    {
 #if TCOS_WINDOWS
       return static_cast<uint32>(::GetCurrentThreadId());
@@ -516,7 +516,7 @@ namespace TC
 #endif
    }
 
-   bool System::GetNetworkDeviceInfos(std::vector<NetworkDeviceInfo>& infos)
+   bool system::GetNetworkDeviceInfos(std::vector<NetworkDeviceInfo>& infos)
    {
 #if TCOS_WINDOWS
       ULONG size = 0;
@@ -533,7 +533,7 @@ namespace TC
          std::string mac_address;
          for (uint32 i = 0; i < current_adapter->AddressLength ; i++)
          {
-            mac_address += String::Print("%.2X", current_adapter->Address[i]);
+            mac_address += string::Print("%.2X", current_adapter->Address[i]);
             if (i != current_adapter->AddressLength - 1)
             {
                mac_address += "-";
@@ -550,7 +550,7 @@ namespace TC
 #else
       for (int ed=0; ed<10; ed++)
       {
-         std::string dev_name = String::Print("eth%d", ed);
+         std::string dev_name = string::Print("eth%d", ed);
          int s = ::socket(PF_INET, SOCK_DGRAM, 0);
 
          struct ifreq buffer;
@@ -562,7 +562,7 @@ namespace TC
             std::string mac_address;
             for(int i = 0; i<6; i++)
             {
-               mac_address += String::Print("%.2X", (unsigned char)buffer.ifr_hwaddr.sa_data[i]);
+               mac_address += string::Print("%.2X", (unsigned char)buffer.ifr_hwaddr.sa_data[i]);
                if (i != 6 - 1)
                {
                   mac_address += "-";
@@ -585,7 +585,7 @@ namespace TC
       return true;
    }
 
-   static System::ConsoleStopHandlerPtr s_stop_handler;
+   static system::ConsoleStopHandlerPtr s_stop_handler;
    static void ConsoleSignalHandler(int type)
    {
       ::signal(type, SIG_DFL);
@@ -595,7 +595,7 @@ namespace TC
       }
    }
 
-   System::ConsoleStopHandlerPtr System::SetConsoleStopHandler(System::ConsoleStopHandlerPtr handler)
+   system::ConsoleStopHandlerPtr system::SetConsoleStopHandler(system::ConsoleStopHandlerPtr handler)
    {
       std::swap(s_stop_handler, handler);
       if (s_stop_handler)
@@ -621,7 +621,7 @@ namespace TC
       return handler;
    }
 
-   std::string System::GetTmpDir()
+   std::string system::GetTmpDir()
    {
       std::string dir = GetEnvironment("TEMP");
       if (dir.length() == 0)
@@ -634,11 +634,11 @@ namespace TC
 #if TCOS_POSIX
          dir = "/tmp";
 #else
-         dir = FileName::AddPaths(GetEnvironment("SystemRoot"), "TEMP");
+         dir = file_name::AddPaths(GetEnvironment("SystemRoot"), "TEMP");
 #endif
       }
 
-      if (!File::IsDirectory(dir))
+      if (!file::IsDirectory(dir))
       {
          throw Exception("Unable to determine temp directory");
       }
@@ -646,15 +646,15 @@ namespace TC
       return dir;
    }
 
-   std::string System::GetTmpFileName()
+   std::string system::GetTmpFileName()
    {
-      static Interlocked::Type s_tmp_file_count;
-      Interlocked::Type current = Interlocked::Increment(s_tmp_file_count);
+      static interlocked::Type s_tmp_file_count;
+      interlocked::Type current = interlocked::Increment(s_tmp_file_count);
 
-      std::string id = String::Print("%d_%d", GetProcessID(), current);
+      std::string id = string::Print("%d_%d", GetProcessID(), current);
       std::string dir = GetTmpDir();
-      std::string file_name = FileName::AddFileNameAndPath("tcs_temp_file_" + id, dir);
-      file_name = FileName::AddFileNameAndExtension(file_name, "tmp");
+      std::string file_name = file_name::AddFileNameAndPath("tcs_temp_file_" + id, dir);
+      file_name = file_name::AddFileNameAndExtension(file_name, "tmp");
 
       return file_name;
    }

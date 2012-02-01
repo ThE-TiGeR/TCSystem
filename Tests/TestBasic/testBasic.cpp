@@ -23,8 +23,8 @@ std::string make_base64_string(const std::string& str)
    const char *base64_table = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
    /* make base64 string */
-   TC::uint32 src_len = static_cast<TC::uint32>(str.length());
-   TC::uint32 dst_len = (src_len+2)/3*4;
+   tc::uint32 src_len = static_cast<tc::uint32>(str.length());
+   tc::uint32 dst_len = (src_len+2)/3*4;
    char* buf = new char[dst_len+1];
 
    int bits = 0;
@@ -73,16 +73,16 @@ public:
    std::string m_content;
 };
 
-class HttpPageReceiver: public TC::Net::SocketServer::DataReceiver
+class HttpPageReceiver: public tc::net::SocketServer::DataReceiver
 {
 public:
-   HttpPageReceiver(TC::Net::ReadWriteSocketPtr socket)
+   HttpPageReceiver(tc::net::ReadWriteSocketPtr socket)
       :m_socket(socket),
       m_header_finished(false),
       m_current_frame(),
       m_data_received_event()
    {
-      m_data_received_event = TC::MT::Factory::CreateEvent(false, false);
+      m_data_received_event = tc::multi_threading::factory::CreateEvent(false, false);
    }
    bool GetReceivedData(std::string& data)
    {
@@ -120,10 +120,10 @@ protected:
    }
 
 private:
-   bool Receive(TC::Net::ReadWriteSocketPtr socket, std::string& data_received)
+   bool Receive(tc::net::ReadWriteSocketPtr socket, std::string& data_received)
    {
       char data[100];
-      TC::uint64 data_len = socket->ReadBytes(data, sizeof(data)-1);
+      tc::uint64 data_len = socket->ReadBytes(data, sizeof(data)-1);
       if (!socket->IsOpened())
       {
          m_data_received_event->Set();
@@ -142,7 +142,7 @@ private:
       return true;
    }
 
-   bool ReceiveHeader(TC::Net::ReadWriteSocketPtr socket)
+   bool ReceiveHeader(tc::net::ReadWriteSocketPtr socket)
    {
       std::string header_data;
       while(true)
@@ -159,8 +159,8 @@ private:
          {
             std::string header;
             std::string content;
-            TC::String::Split(header_data, header_end, header, content);
-            TC::String::Split(header, "\r\n", m_current_frame.m_header_lines);
+            tc::string::Split(header_data, header_end, header, content);
+            tc::string::Split(header, "\r\n", m_current_frame.m_header_lines);
             m_current_frame.m_content = content;
             m_header_finished = true;
             TCTRACES("TestBasic", 5,header);
@@ -169,7 +169,7 @@ private:
       }
    }
 
-   bool ReceiveContent(TC::Net::ReadWriteSocketPtr socket)
+   bool ReceiveContent(tc::net::ReadWriteSocketPtr socket)
    {
       while(true)
       {
@@ -245,20 +245,20 @@ private:
       m_data_received_event->Set();
    }
 
-   TC::Net::ReadWriteSocketPtr m_socket;
+   tc::net::ReadWriteSocketPtr m_socket;
    // if header of frame is finished
    bool m_header_finished;
    // frame which is currently received
    HttpFrame m_current_frame;
    // data of last page + event when received
-   TC::MT::EventPtr m_data_received_event;
+   tc::multi_threading::EventPtr m_data_received_event;
 };
 
 //
-class UDPReceiver: public TC::Net::SocketServer::DataReceiver
+class UDPReceiver: public tc::net::SocketServer::DataReceiver
 {
 public:
-   UDPReceiver(TC::Net::BroadcastReadSocketPtr socket)
+   UDPReceiver(tc::net::BroadcastReadSocketPtr socket)
       :m_socket(socket)
    {
    }
@@ -266,8 +266,8 @@ public:
    virtual bool OnNewData()
    {
       char buffer[200];
-      TC::Net::Address address;
-      TC::uint64 len = m_socket->ReadBytesFrom(buffer, TC::Util::ArraySize(buffer)-1, address);
+      tc::net::Address address;
+      tc::uint64 len = m_socket->ReadBytesFrom(buffer, tc::util::ArraySize(buffer)-1, address);
       if (len == 0)
       {
          return false;
@@ -279,29 +279,29 @@ public:
       return true;
    }
 private:
-   TC::Net::BroadcastReadSocketPtr m_socket;
+   tc::net::BroadcastReadSocketPtr m_socket;
 };
 
-class MTTraceTarget: public TC::Output::PrintTarget,
-   public TC::MT::ObjectLevelLockable<MTTraceTarget>
+class MTTraceTarget: public tc::output::PrintTarget,
+   public tc::multi_threading::ObjectLevelLockable<MTTraceTarget>
 {
 public:
    MTTraceTarget()
    {
-      m_stream = TC::Factory::CreateStdOutStream();
+      m_stream = tc::factory::CreateStdOutStream();
    }
    virtual void Print(const char* text)
    {
       Locker lock(this);
-      m_stream << text << TC::endl;
+      m_stream << text << tc::endl;
    }
 private:
-   TC::StreamPtr m_stream;
+   tc::StreamPtr m_stream;
 };
 
 static void RunSocketTest(int narg, char** argv)
 {
-   TC::Time time = TC::Time::Since(TC::Time::Now());
+   tc::Time time = tc::Time::Since(tc::Time::Now());
 
    bool use_proxy = false;
    std::string user_name = "gg\\g017421";
@@ -312,7 +312,7 @@ static void RunSocketTest(int narg, char** argv)
       use_proxy = true;
    }
 
-   TC::Net::PortNumber port[] ={ 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80};
+   tc::net::PortNumber port[] ={ 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80, 80};
    std::string host_name[] = {
       "tcsystem.sourceforge.net",
       "tcsystem.sourceforge.net",
@@ -353,22 +353,22 @@ static void RunSocketTest(int narg, char** argv)
    };
 
    // create a server and wait until it has started
-   TC::Net::SocketServerPtr server = TC::Net::Factory::CreateSocketServer();
+   tc::net::SocketServerPtr server = tc::net::factory::CreateSocketServer();
    server->Start(true);
 
-   TC::RngPtr rng = TC::Factory::Create69069Rng();
-   TC::MT::EventPtr event = TC::MT::Factory::CreateEvent(false, false);
-   TC::Time next_access;
+   tc::RngPtr rng = tc::factory::Create69069Rng();
+   tc::multi_threading::EventPtr event = tc::multi_threading::factory::CreateEvent(false, false);
+   tc::Time next_access;
    while (event->TryWait(next_access) == false)
    {
-      TC::uint64 idx = rng->GetRandomNumber(0, TC::Util::ArraySize(port)-1);
+      tc::uint64 idx = rng->GetRandomNumber(0, tc::util::ArraySize(port)-1);
 
-      TC::Net::ReadWriteSocketPtr socket;
+      tc::net::ReadWriteSocketPtr socket;
 
       TCTRACES("TestBasic", 5,"connecting ... ");
       if (use_proxy)
       {
-         socket = TC::Net::Factory::Connect(TC::Net::Address("BSISAP05"), 3128, TC::Net::TCP);
+         socket = tc::net::factory::Connect(tc::net::Address("BSISAP05"), 3128, tc::net::TCP);
          if (!socket)
          {
             TCTRACES("TestBasic", 5,"failed connecting");
@@ -378,7 +378,7 @@ static void RunSocketTest(int narg, char** argv)
       }
       else
       {
-         socket = TC::Net::Factory::Connect(TC::Net::Address(host_name[idx]), port[idx], TC::Net::TCP);
+         socket = tc::net::factory::Connect(tc::net::Address(host_name[idx]), port[idx], tc::net::TCP);
          if (!socket)
          {
             TCTRACES("TestBasic", 5,"failed connecting");
@@ -387,7 +387,7 @@ static void RunSocketTest(int narg, char** argv)
       }
       TCTRACES("TestBasic", 5,"done.");
 
-      TC::SharedPtr<HttpPageReceiver> receiver(new HttpPageReceiver(socket));
+      tc::SharedPtr<HttpPageReceiver> receiver(new HttpPageReceiver(socket));
       server->AddSocket(socket, receiver);
 
       std::string command;
@@ -396,12 +396,12 @@ static void RunSocketTest(int narg, char** argv)
       {
          command += "Proxy-Authorization: Basic " + make_base64_string(user_name + ":" + passwd) + "\r\n";
       }
-      command += "Host: " + host_name[idx] + ":" + TC::String::ToString(port[idx]) + "\r\n";
+      command += "Host: " + host_name[idx] + ":" + tc::string::ToString(port[idx]) + "\r\n";
       command += "Connection: Close Connection\r\n";
       command += "\r\n";
 
       TCTRACES("TestBasic", 5,"Loading page http://" << host_name[idx] << file_name[idx] << " ");
-      if (socket->WriteBytes(command.c_str(), static_cast<TC::uint32>(command.length())) != command.length())
+      if (socket->WriteBytes(command.c_str(), static_cast<tc::uint32>(command.length())) != command.length())
       {
          TCTRACES("TestBasic", 5,"failed sending command");
          continue;
@@ -415,30 +415,30 @@ static void RunSocketTest(int narg, char** argv)
          continue;
       }
       TCTRACES("TestBasic", 5,"done.");
-      TCTRACES("TestBasic", 5,"  received page size was " << static_cast<TC::uint32>(data.length()));
+      TCTRACES("TestBasic", 5,"  received page size was " << static_cast<tc::uint32>(data.length()));
 
       server->RemoveSocket(socket);
 
-      next_access = TC::Time::FromMilliSeconds(rng->GetRandomNumber(500, 5000));
+      next_access = tc::Time::FromMilliSeconds(rng->GetRandomNumber(500, 5000));
       TCTRACES("TestBasic", 5,"next page access in " << next_access.ToMilliSeconds() << " milli seconds");
    }
 }
 
 static void RunUDPTest()
 {
-   TC::Net::BroadcastReadSocketPtr socket = TC::Net::Factory::CreateUdpListenSocket(8042, 10);
-   TC::SharedPtr<UDPReceiver> receiver(new UDPReceiver(socket));
+   tc::net::BroadcastReadSocketPtr socket = tc::net::factory::CreateUdpListenSocket(8042, 10);
+   tc::SharedPtr<UDPReceiver> receiver(new UDPReceiver(socket));
 
-   TC::Net::SocketServerPtr server = TC::Net::Factory::CreateSocketServer();
+   tc::net::SocketServerPtr server = tc::net::factory::CreateSocketServer();
    server->AddSocket(socket, receiver);
    server->Start(true);
 
-   TC::Net::BroadcastWriteSocketPtr bs = TC::Net::Factory::CreateUdpBroadcastSocket();
-   for (TC::uint32 i=0; i<100, bs->IsOpened(); i++)
+   tc::net::BroadcastWriteSocketPtr bs = tc::net::factory::CreateUdpBroadcastSocket();
+   for (tc::uint32 i=0; i<100, bs->IsOpened(); i++)
    {
       std::string test("hello world");
-      bs->WriteBytesTo(test.c_str(), test.length()+1, TC::Net::Address::GetAnyAddress(), 8042);
-      TC::System::Sleep(1000);
+      bs->WriteBytesTo(test.c_str(), test.length()+1, tc::net::Address::GetAnyAddress(), 8042);
+      tc::system::Sleep(1000);
    }
 
    server->RemoveSocket(socket);
@@ -446,11 +446,11 @@ static void RunUDPTest()
 }
 
 static char s_charset[] = "0123456789.";
-static TC::uint32 s_num_chars = sizeof(s_charset) - 1;
+static tc::uint32 s_num_chars = sizeof(s_charset) - 1;
 class PassWordFinder
 {
 public:
-   PassWordFinder(TC::uint32 min_pwd_len, TC::uint32 max_pwd_len)
+   PassWordFinder(tc::uint32 min_pwd_len, tc::uint32 max_pwd_len)
       :m_min_pwd_len(min_pwd_len),
       m_max_pwd_len(max_pwd_len),
       m_current_pwd_len(0),
@@ -487,7 +487,7 @@ public:
 private:
    bool NextCharacter()
    {
-      for (TC::uint32 i=0; i<m_current_pwd_len; i++)
+      for (tc::uint32 i=0; i<m_current_pwd_len; i++)
       {
          if (m_current_char[i] == s_num_chars-1)
          {
@@ -505,7 +505,7 @@ private:
 
    void InitCurrentChar()
    {
-      for (TC::uint32 i=0; i<m_current_pwd_len; i++)
+      for (tc::uint32 i=0; i<m_current_pwd_len; i++)
       {
          m_current_char[i] = 0;
       }
@@ -513,7 +513,7 @@ private:
 
    void SetPassword(char* password)
    {
-      for (TC::uint32 i=0; i<m_current_pwd_len; i++)
+      for (tc::uint32 i=0; i<m_current_pwd_len; i++)
       {
          password[i] = s_charset[m_current_char[i]];
       }
@@ -522,27 +522,27 @@ private:
    }
 
 private:
-   TC::uint32 m_min_pwd_len;
-   TC::uint32 m_max_pwd_len;
-   TC::uint32 m_current_pwd_len;
-   std::vector<TC::uint32> m_current_char;
+   tc::uint32 m_min_pwd_len;
+   tc::uint32 m_max_pwd_len;
+   tc::uint32 m_current_pwd_len;
+   std::vector<tc::uint32> m_current_char;
 };
 
 static void TestFindPassword()
 {
-   TC::uint64 num = 0;
+   tc::uint64 num = 0;
    char pwd[10];
    PassWordFinder pwd_finder(1, 8);
-   TC::Time start(TC::Time::Now());
+   tc::Time start(tc::Time::Now());
    while (pwd_finder.NextPassword(pwd))
    {
       num++;
    }
 
-   TCINFOS("TestBasic", pwd << " " << num << " " << TC::Time::Since(start));
+   TCINFOS("TestBasic", pwd << " " << num << " " << tc::Time::Since(start));
 }
 
-static void ProcessBuchungsText(const std::string& buchungs_text, TC::StreamPtr file_out)
+static void ProcessBuchungsText(const std::string& buchungs_text, tc::StreamPtr file_out)
 {
    std::string auftraggeber;
    std::string verwendung;
@@ -555,13 +555,13 @@ static void ProcessBuchungsText(const std::string& buchungs_text, TC::StreamPtr 
 
       pos = part1.rfind(' ');
       verwendung = part1.substr(0, pos);
-      verwendung = TC::String::TrimmSpaces(verwendung);
+      verwendung = tc::string::TrimmSpaces(verwendung);
 
       pos = part2.find_first_not_of(" 1234567890|");
       if (pos != std::string::npos)
       {
          auftraggeber = part2.substr(pos);
-         auftraggeber = TC::String::TrimmSpaces(auftraggeber);
+         auftraggeber = tc::string::TrimmSpaces(auftraggeber);
 
          verwendung = auftraggeber + ", " + verwendung;
 
@@ -575,23 +575,23 @@ static void ProcessBuchungsText(const std::string& buchungs_text, TC::StreamPtr 
    }
    else
    {
-      throw TC::Exception("Buchungs Text parsing error");
+      throw tc::Exception("Buchungs Text parsing error");
    }
 
    file_out << auftraggeber << ";" << verwendung << ";";
 }
 
-static void ProcessCsvLine(const std::string& line, TC::StreamPtr file_out)
+static void ProcessCsvLine(const std::string& line, tc::StreamPtr file_out)
 {
    // [Kontonummer];[Buchungstext];[Buchungsdatum];[Valutadatum];[Betrag mit Vorzeichen];[Kontowährung]
    std::vector<std::string> parts;
-   TC::String::Split(line, ";", parts);
+   tc::string::Split(line, ";", parts);
 
    std::string konto_nummer    = parts[0];
    std::string buchungs_text   = parts[1];
    std::string buchungs_datum  = parts[2];
    std::string valuta_datum    = parts[3];
-   std::string betrag          = TC::String::Replace(parts[4], ".", "");
+   std::string betrag          = tc::string::Replace(parts[4], ".", "");
    std::string waehrung        = parts[5];
 
    file_out << konto_nummer << ";" << buchungs_datum << ";" << betrag << ";";
@@ -606,8 +606,8 @@ static void ConvertPSKCvsToHaushaltsbuchCvs()
    std::string file_name_in("D:/Thomas/Dokumente/Finanzen/PSK Import/PSK_Umsatzliste.csv");
    std::string file_name_out("D:/Thomas/Dokumente/Finanzen/PSK Import/test.csv");
 
-   TC::StreamPtr file_in = TC::Factory::CreateFileStream(file_name_in, TC::Stream::stream_read, TC::Factory::CreateAsciiCodec());
-   TC::StreamPtr file_out = TC::Factory::CreateFileStream(file_name_out, TC::Stream::stream_write, TC::Factory::CreateAsciiCodec());
+   tc::StreamPtr file_in = tc::factory::CreateFileStream(file_name_in, tc::Stream::stream_read, tc::factory::CreateAsciiCodec());
+   tc::StreamPtr file_out = tc::factory::CreateFileStream(file_name_out, tc::Stream::stream_write, tc::factory::CreateAsciiCodec());
 
    file_out << "konto_nummer;buchungs_datum;betrag;auftraggeber;verwendung;\r\n";
 
@@ -617,7 +617,7 @@ static void ConvertPSKCvsToHaushaltsbuchCvs()
       file_in >> line;
       if (line.length())
       {
-         //ProcessCsvLine(TC::String::ToString(line), file_out);
+         //ProcessCsvLine(tc::string::ToString(line), file_out);
          ProcessCsvLine(line, file_out);
       }
    }
@@ -625,30 +625,30 @@ static void ConvertPSKCvsToHaushaltsbuchCvs()
 
 static void GzStreamTest()
 {
-    TC::StreamPtr stream =TC::Factory::CreateGzFileStream("test.txt.gz", TC::Stream::stream_write, 
-        TC::Factory::CreateAsciiCodec());
-    stream << "Hallo" << TC::endl;
-    stream << "This is a gz test" << TC::endl;
-    stream << 1 << " " << 127 << TC::endl;
+    tc::StreamPtr stream =tc::factory::CreateGzFileStream("test.txt.gz", tc::Stream::stream_write, 
+        tc::factory::CreateAsciiCodec());
+    stream << "Hallo" << tc::endl;
+    stream << "This is a gz test" << tc::endl;
+    stream << 1 << " " << 127 << tc::endl;
 }
 
 static void Bz2StreamTest()
 {
-    TC::StreamPtr stream =TC::Factory::CreateBz2FileStream("test.txt.bz2", TC::Stream::stream_write, 
-        TC::Factory::CreateAsciiCodec());
-    stream << "Hallo" << TC::endl;
-    stream << "This is a bz2 test" << TC::endl;
-    stream << 1 << " " << 127 << TC::endl;
+    tc::StreamPtr stream =tc::factory::CreateBz2FileStream("test.txt.bz2", tc::Stream::stream_write, 
+        tc::factory::CreateAsciiCodec());
+    stream << "Hallo" << tc::endl;
+    stream << "This is a bz2 test" << tc::endl;
+    stream << 1 << " " << 127 << tc::endl;
 }
 
 int main(int narg, char** argv)
 {
-   TC::Output::PrintTargetPtr trace_target(new MTTraceTarget);
-   TC::Output::SetErrorTarget(trace_target);
-   TC::Output::SetWarningTarget(trace_target);
-   TC::Output::SetInfoTarget(trace_target);
-   TC::Output::SetTraceTarget(trace_target);
-   TC::Output::SetTraceLevel(50);
+   tc::output::PrintTargetPtr trace_target(new MTTraceTarget);
+   tc::output::SetErrorTarget(trace_target);
+   tc::output::SetWarningTarget(trace_target);
+   tc::output::SetInfoTarget(trace_target);
+   tc::output::SetTraceTarget(trace_target);
+   tc::output::SetTraceLevel(50);
 
    try
    {
@@ -663,17 +663,17 @@ int main(int narg, char** argv)
       TCINFO("TestBasic", "End");
    }
 
-   catch (TC::Exception& e)
+   catch (tc::Exception& e)
    {
       TCERRORS("TestBasic", "Unhandled Exception: ");
       TCERRORS("TestBasic", "\t" << e.what());
    }
 
 
-   TC::Output::SetErrorTarget(TC::Output::PrintTargetPtr());
-   TC::Output::SetWarningTarget(TC::Output::PrintTargetPtr());
-   TC::Output::SetInfoTarget(TC::Output::PrintTargetPtr());
-   TC::Output::SetTraceTarget(TC::Output::PrintTargetPtr());
+   tc::output::SetErrorTarget(tc::output::PrintTargetPtr());
+   tc::output::SetWarningTarget(tc::output::PrintTargetPtr());
+   tc::output::SetInfoTarget(tc::output::PrintTargetPtr());
+   tc::output::SetTraceTarget(tc::output::PrintTargetPtr());
 
    return 0;
 }

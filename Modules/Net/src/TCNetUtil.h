@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -38,18 +38,18 @@
 
 #include "TCNetBase.h"
 
-namespace TC
+namespace tc
 {
-namespace Net
+namespace net
 {
-namespace Impl
+namespace imp
 {
 
    /**
     * @addtogroup TC_NET_IMP
     * @{
     */
-   namespace Util
+   namespace util
    {
       /**
       * returns port free port number between 1 and 65536
@@ -112,8 +112,8 @@ namespace Impl
     * @}
     */
 
-} // namespace Impl
-} // namespace Net
-} // namespace TC
+} // namespace imp
+} // namespace net
+} // namespace tc
 
 #endif // _TC_NET_UTIL_H_

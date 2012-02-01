@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -41,9 +41,9 @@
 #include "TCMathBox.h"
 #include "TCOpenGLColor.h"
 
-namespace TC
+namespace tc
 {
-   namespace OpenGL
+   namespace open_gl
    {
       class TCOGL_API Object3D: public Object
       {

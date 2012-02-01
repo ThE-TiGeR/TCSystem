@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -39,12 +39,12 @@
 #include "TCOpenGLColor.h"
 #include "TCOpenGLTypes.h"
 
-namespace TC
+namespace tc
 {
-   namespace OpenGL
+   namespace open_gl
    {
       /*
-       * OpenGL Light Source
+       * open_gl Light Source
        */
       class Light 
       {
@@ -62,7 +62,7 @@ namespace TC
       };
 
       /** 
-       * class holds the OpenGL Material Description
+       * class holds the open_gl Material Description
        */
       class TCOGL_API Material
       {

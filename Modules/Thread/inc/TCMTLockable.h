@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -39,9 +39,9 @@
 #include "TCNonCopyable.h"
 #include "TCMTFactory.h"
 
-namespace TC
+namespace tc
 {
-namespace MT
+namespace multi_threading
 {
    /**
     * @addtogroup TC_MT
@@ -50,7 +50,7 @@ namespace MT
 
    /**
     * @file
-    * @brief This file provides the definition of TC::MT::ObjectLevelLockable and TC::MT::ClassLevelLockable
+    * @brief This file provides the definition of tc::multi_threading::ObjectLevelLockable and tc::multi_threading::ClassLevelLockable
     * @author Thomas Goessler
     */
 
@@ -63,7 +63,7 @@ namespace MT
    public:
       ObjectLevelLockable()
       {
-         m_mutex = Factory::CreateMutex();
+         m_mutex = factory::CreateMutex();
       }
       ~ObjectLevelLockable()
       {
@@ -134,12 +134,12 @@ namespace MT
    };
 
    template<class CLASS_TO_LOCK>
-   MutexPtr ClassLevelLockable<CLASS_TO_LOCK>::m_mutex = Factory::CreateMutex();
+   MutexPtr ClassLevelLockable<CLASS_TO_LOCK>::m_mutex = factory::CreateMutex();
 
    /**
     * @}
     */
-} // namespace MT
-} // namespace TC
+} // namespace multi_threading
+} // namespace tc
 
 #endif // _TC_MT_LOCKABLE_H_

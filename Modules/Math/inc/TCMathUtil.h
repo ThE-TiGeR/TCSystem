@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -44,17 +44,17 @@
 
 #undef PI
 
-namespace TC
+namespace tc
 {
 /**
- * @brief TC::Math is intended to provide methods to perform common math operations.
+ * @brief tc::math is intended to provide methods to perform common math operations.
  *
  * These include providing constants such as Pi; conversion 
  * from degrees to radians; vector operations such as dot and cross products
  * matrix determinant for 2x2 and 3x3 matrices; and random 
  * number generation.  Note that these are not all implemented yet.
  */
-namespace Math
+namespace math
 {
    /**
     * @addtogroup TC_MATH
@@ -63,7 +63,7 @@ namespace Math
 
    /**
     * @file
-    * @brief This file provides the definition of Math utilities in the namespace TC::Math
+    * @brief This file provides the definition of math utilities in the namespace tc::math
     * @author Thomas Goessler
     */
 
@@ -250,7 +250,7 @@ namespace Math
     * @}
     */
 
-} // namespace Math
-} // namespace TC
+} // namespace math
+} // namespace tc
 
 #endif // _TC_MATH_UTIL_H_

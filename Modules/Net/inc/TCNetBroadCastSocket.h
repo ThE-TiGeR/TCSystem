@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -39,9 +39,9 @@
 #include "TCNetSocket.h"
 #include "TCNetAddress.h"
 
-namespace TC
+namespace tc
 {
-   namespace Net
+   namespace net
    {
       /**
       * @addtogroup TC_NET
@@ -50,7 +50,7 @@ namespace TC
 
       /**
       * @file
-      * @brief This file provides the definition of TC::Net::BroadcastReadSocket
+      * @brief This file provides the definition of tc::net::BroadcastReadSocket
       * @author Thomas Goessler
       */
 
@@ -92,7 +92,7 @@ namespace TC
       * @}
       */
 
-   } // namespace Net
-} // namespace TC
+   } // namespace net
+} // namespace tc
 
 #endif // _TCNET_BROADCAST_SOCKET_H

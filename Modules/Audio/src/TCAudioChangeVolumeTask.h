@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -38,9 +38,9 @@
 
 #include "TCAudioChangeSoundValueTask.h"
 
-namespace TC
+namespace tc
 {
-   namespace Audio
+   namespace audio
    {
       /**
       * @brief Implements a task for changing the volume of an sound object
@@ -61,7 +61,7 @@ namespace TC
          virtual void ApplyNewValueOnSoundData(SoundDataPtr, double new_value);
       };
 
-   } // end namespace Audio
-} // end namespace TC
+   } // end namespace audio
+} // end namespace tc
 
 #endif // _TC_AUDIO_CHANGE_VOLUME_TASK_H_

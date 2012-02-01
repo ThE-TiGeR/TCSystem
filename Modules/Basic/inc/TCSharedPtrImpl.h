@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -42,7 +42,7 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
    class WeakPtrCount;
    class SharedPtrCount;
@@ -54,17 +54,17 @@ namespace TC
 
    /**
     * @file
-    * This header file provides the definition internal classes used by TC::SharedPtr.
+    * This header file provides the definition internal classes used by tc::SharedPtr.
     *
     * These classes are:
-    *  - TC::Impl::SharedPtrCountBase
-    *  - TC::Impl::SharedPtrCountType
-    *  - TC::SharedPtrCount
-    *  - TC::WeakPtrCount
+    *  - tc::imp::SharedPtrCountBase
+    *  - tc::imp::SharedPtrCountType
+    *  - tc::SharedPtrCount
+    *  - tc::WeakPtrCount
     */
 
-   /** @brief Includes implementation classes from the namespace TC */
-   namespace Impl
+   /** @brief Includes implementation classes from the namespace tc */
+   namespace imp
    {
       /** Base class of an shared counter implementation used by SharedPtrCount */
       class SharedPtrCountBase
@@ -84,7 +84,7 @@ namespace TC
          /** @brief Add a new reference to this counter */
          inline void AddReference()
          {
-            Interlocked::Increment(m_count);
+            interlocked::Increment(m_count);
          }
          /**
           * @brief Release the reference of this counter
@@ -92,7 +92,7 @@ namespace TC
           */
          inline void ReleaseReference()
          {
-            if (Interlocked::Decrement(m_count) == 0)
+            if (interlocked::Decrement(m_count) == 0)
             {
                DeletePtr();
                ReleaseWeakReference();
@@ -104,7 +104,7 @@ namespace TC
          /** @brief Add a new weak reference to this counter */
          inline void AddWeakReference()
          {
-            Interlocked::Increment(m_weak_count);
+            interlocked::Increment(m_weak_count);
          }
          /**
           * @brief Release the weak reference of this counter
@@ -112,7 +112,7 @@ namespace TC
           */
          inline void ReleaseWeakReference()
          {
-            if (Interlocked::Decrement(m_weak_count) == 0)
+            if (interlocked::Decrement(m_weak_count) == 0)
             {
                Destroy();
             }
@@ -126,12 +126,12 @@ namespace TC
 
       private:
          /** @brief The counting variable */
-         Interlocked::Type m_count;
+         interlocked::Type m_count;
          /** @brief The weak pointer counting variable */
-         Interlocked::Type m_weak_count;
+         interlocked::Type m_weak_count;
 
-         friend class TC::SharedPtrCount;
-         friend class TC::WeakPtrCount;
+         friend class tc::SharedPtrCount;
+         friend class tc::WeakPtrCount;
       };
 
       /**
@@ -159,12 +159,12 @@ namespace TC
          /** @brief  The delete function for deleting the pointer */
          DELETER m_deleter;
 
-         friend class TC::SharedPtrCount;
+         friend class tc::SharedPtrCount;
       };
 
-   } // namespace Impl
+   } // namespace imp
 
-   /** Reference counter class for TC::SharedPtr */
+   /** Reference counter class for tc::SharedPtr */
    class SharedPtrCount
    {
    public:
@@ -175,14 +175,14 @@ namespace TC
       template <class PTR_TYPE, class DELETER>
       SharedPtrCount(PTR_TYPE* ptr, DELETER deleter)
       {
-         m_count = new Impl::SharedPtrCountType<PTR_TYPE, DELETER>(ptr, deleter);
+         m_count = new imp::SharedPtrCountType<PTR_TYPE, DELETER>(ptr, deleter);
       }
 
       /** Construct with auto pointer and creates an pointer specific counter */
       template <class PTR_TYPE, class DELETER>
       SharedPtrCount(std::auto_ptr<PTR_TYPE>& ptr, DELETER deleter)
       {
-         m_count = new Impl::SharedPtrCountType<PTR_TYPE, DELETER>(ptr.get(), deleter);
+         m_count = new imp::SharedPtrCountType<PTR_TYPE, DELETER>(ptr.get(), deleter);
          ptr.release();
       }
 
@@ -248,8 +248,8 @@ namespace TC
 
    private:
       /** @brief Pointer to the counting object */
-      Impl::SharedPtrCountBase* m_count;
-      friend class TC::WeakPtrCount;
+      imp::SharedPtrCountBase* m_count;
+      friend class tc::WeakPtrCount;
    };
 
    /** Reference counter class for TCWeakPtr */
@@ -326,8 +326,8 @@ namespace TC
 
    private:
       /** @brief Pointer to the counting object */
-      Impl::SharedPtrCountBase* m_count;
-      friend class TC::SharedPtrCount;
+      imp::SharedPtrCountBase* m_count;
+      friend class tc::SharedPtrCount;
    };
 
 
@@ -341,7 +341,7 @@ namespace TC
       if (m_count) m_count->AddReference();
    }
 
-} // namespace TC
+} // namespace tc
 
 #include "TCNewDisable.h"
 

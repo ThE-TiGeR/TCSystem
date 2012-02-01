@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -43,47 +43,47 @@
 
 void *operator new(size_t size) TC_NEW_THROW
 {
-   return TC::New::GetInstance()->Alloc(static_cast<TC::uint32>(size), "unknown new", 0);
+   return tc::system::GetInstance()->Alloc(static_cast<tc::uint32>(size), "unknown new", 0);
 }
 void *operator new[](size_t size) TC_NEW_THROW
 {
-   return TC::New::GetInstance()->Alloc(static_cast<TC::uint32>(size), "unknown new[]", 1);
+   return tc::system::GetInstance()->Alloc(static_cast<tc::uint32>(size), "unknown new[]", 1);
 }
 void *operator new(size_t size, const char *fileName, int line) TC_NEW_THROW
 {
-   return TC::New::GetInstance()->Alloc(static_cast<TC::uint32>(size), fileName, line);
+   return tc::system::GetInstance()->Alloc(static_cast<tc::uint32>(size), fileName, line);
 }
 void *operator new[](size_t size, const char *fileName, int line) TC_NEW_THROW
 {
-   return TC::New::GetInstance()->Alloc(static_cast<TC::uint32>(size), fileName, line);
+   return tc::system::GetInstance()->Alloc(static_cast<tc::uint32>(size), fileName, line);
 }
 
 void operator delete(void *p) TC_DEL_THROW
 {
-   if (TC::New::GetInstance())
-      TC::New::GetInstance()->Free(p);
+   if (tc::system::GetInstance())
+      tc::system::GetInstance()->Free(p);
    else
        std::free(p);
 }
 
 void operator delete[](void *p) TC_DEL_THROW
 {
-   if (TC::New::GetInstance())
-      TC::New::GetInstance()->Free(p);
+   if (tc::system::GetInstance())
+      tc::system::GetInstance()->Free(p);
    else
       std::free(p);
 }
 void operator delete(void *p, const char *, int) TC_DEL_THROW
 {
-   if (TC::New::GetInstance())
-      TC::New::GetInstance()->Free(p);
+   if (tc::system::GetInstance())
+      tc::system::GetInstance()->Free(p);
    else
       std::free(p);
 }
 void operator delete[](void *p, const char *, int) TC_DEL_THROW
 {
-   if (TC::New::GetInstance())
-      TC::New::GetInstance()->Free(p);
+   if (tc::system::GetInstance())
+      tc::system::GetInstance()->Free(p);
    else
       std::free(p);
 }

@@ -5,9 +5,9 @@
 
 #include "TCDebugNew.h"
 
-namespace TC
+namespace tc
 {
-   namespace MathSheet
+   namespace math_sheet
    {
       class MathCalculation
       {
@@ -22,7 +22,7 @@ namespace TC
       public:
          Addition(uint32 max_value)
             :m_max_value(max_value),
-            m_rng(Factory::Create69069Rng())
+            m_rng(factory::Create69069Rng())
          {
          }
 
@@ -31,8 +31,8 @@ namespace TC
             uint32 value1 = m_rng->GetRandomNumber(1, m_max_value);
             uint32 value2 = m_rng->GetRandomNumber(1, m_max_value - value1);
 
-            return String::ToString(value1) + 
-               sep + "+" + sep + String::ToString(value2);
+            return string::ToString(value1) + 
+               sep + "+" + sep + string::ToString(value2);
          }
 
       private:
@@ -45,7 +45,7 @@ namespace TC
       public:
          Subtraction(uint32 max_value)
             :m_max_value(max_value),
-            m_rng(Factory::Create69069Rng())
+            m_rng(factory::Create69069Rng())
          {
          }
 
@@ -54,8 +54,8 @@ namespace TC
             uint32 value1 = m_rng->GetRandomNumber(1, m_max_value-1);
             uint32 value2 = m_rng->GetRandomNumber(1, value1);
 
-            return String::ToString(value1) + 
-               sep + "-" + sep + String::ToString(value2);
+            return string::ToString(value1) + 
+               sep + "-" + sep + string::ToString(value2);
          }
 
       private:
@@ -69,7 +69,7 @@ namespace TC
          Multiplication(uint32 max_multiplayer1, uint32 max_multiplayer2)
             :m_max_multiplayer1(max_multiplayer1),
             m_max_multiplayer2(max_multiplayer2),
-            m_rng(Factory::Create69069Rng())
+            m_rng(factory::Create69069Rng())
          {
          }
 
@@ -78,8 +78,8 @@ namespace TC
             uint32 value1 = m_rng->GetRandomNumber(1, m_max_multiplayer1);
             uint32 value2 = m_rng->GetRandomNumber(1, m_max_multiplayer2);
 
-            return String::ToString(value1) +
-               sep + "*" + sep + String::ToString(value2);
+            return string::ToString(value1) +
+               sep + "*" + sep + string::ToString(value2);
          }
 
       private:
@@ -108,7 +108,7 @@ namespace TC
          Division(uint32 max_divider1, uint32 max_divider2)
             :m_max_divider1(max_divider1),
             m_max_divider2(max_divider2),
-            m_rng(Factory::Create69069Rng())
+            m_rng(factory::Create69069Rng())
          {
          }
 
@@ -117,8 +117,8 @@ namespace TC
             uint32 value1 = m_rng->GetRandomNumber(1, m_max_divider1);
             uint32 value2 = m_rng->GetRandomNumber(1, m_max_divider2);
 
-            return String::ToString(value1 * value2) + 
-               sep + ":" + sep + String::ToString(value2);
+            return string::ToString(value1 * value2) + 
+               sep + ":" + sep + string::ToString(value2);
          }
 
       private:
@@ -175,14 +175,14 @@ namespace TC
             "     --max_mult_div_value1  maximum first multiplication value\n"
             "     --max_mult_div_value2  maximum second multiplication value\n";
 
-            std::printf("MathSheet Usage:\n%s\n", message);
+            std::printf("math_sheet Usage:\n%s\n", message);
       }
 
       bool ParseCommandLine(int narg, const char** argv, Settings& settings)
       {
          if (narg < 3 || ((narg-1) % 2) != 0)
          {
-            TCERROR("MathSheet", "Wrong command line arguments");
+            TCERROR("math_sheet", "Wrong command line arguments");
             DisplayUsage();
             return false;
          }
@@ -196,39 +196,39 @@ namespace TC
             }
             else if (current_arg == "-a" || current_arg == "--addition")
             {
-               settings.m_create_addition = String::ToBool(argv[++i]);
+               settings.m_create_addition = string::ToBool(argv[++i]);
             }
             else if (current_arg == "-s" || current_arg == "--subtraction")
             {
-               settings.m_create_subtraction = String::ToBool(argv[++i]);
+               settings.m_create_subtraction = string::ToBool(argv[++i]);
             }
             else if (current_arg == "-m" || current_arg == "--multiplication")
             {
-               settings.m_create_multiplication = String::ToBool(argv[++i]);
+               settings.m_create_multiplication = string::ToBool(argv[++i]);
             }
             else if (current_arg == "-d" || current_arg == "--division")
             {
-               settings.m_create_division = String::ToBool(argv[++i]);
+               settings.m_create_division = string::ToBool(argv[++i]);
             }
             else if (current_arg == "-n" || current_arg == "--num_calculations")
             {
-               settings.m_num_calculations = String::ToUint32(argv[++i]);
+               settings.m_num_calculations = string::ToUint32(argv[++i]);
             }
             else if (current_arg == "--max_add_sub_value")
             {
-               settings.m_max_add_sub_value = String::ToUint32(argv[++i]);
+               settings.m_max_add_sub_value = string::ToUint32(argv[++i]);
             }
             else if (current_arg == "--max_mult_div_value1")
             {
-               settings.m_max_mult_div_value1 = String::ToUint32(argv[++i]);
+               settings.m_max_mult_div_value1 = string::ToUint32(argv[++i]);
             }
             else if (current_arg == "--max_mult_div_value2")
             {
-               settings.m_max_mult_div_value2 = String::ToUint32(argv[++i]);
+               settings.m_max_mult_div_value2 = string::ToUint32(argv[++i]);
             }
             else
             {
-               TCERROR("MathSheet", "Wrong command line arguments");
+               TCERROR("math_sheet", "Wrong command line arguments");
                DisplayUsage();
                return false;
             }
@@ -239,9 +239,9 @@ namespace TC
 
       void Create(const Settings& settings)
       {
-         StreamPtr out = Factory::CreateFileStream(settings.m_file_name,
-            Stream::stream_write, Factory::CreateAsciiCodec());
-         RngPtr rng = Factory::Create69069Rng();
+         StreamPtr out = factory::CreateFileStream(settings.m_file_name,
+            Stream::stream_write, factory::CreateAsciiCodec());
+         RngPtr rng = factory::Create69069Rng();
 
          std::vector< SharedPtr<MathCalculation> > calculations;
          if (settings.m_create_division)
@@ -261,7 +261,7 @@ namespace TC
          if (settings.m_create_multiplication10)
          {
             calculations.push_back(SharedPtr<MathCalculation>(
-               new Multiplication10(Util::Min(settings.m_max_mult_div_value1, settings.m_max_mult_div_value2))));
+               new Multiplication10(util::Min(settings.m_max_mult_div_value1, settings.m_max_mult_div_value2))));
          }
          if (settings.m_create_subtraction)
          {
@@ -281,13 +281,13 @@ namespace TC
 
 int main(int narg, const char** argv)
 {
-   TC::MathSheet::Settings settings;
-   if (!TC::MathSheet::ParseCommandLine(narg, argv, settings))
+   tc::math_sheet::Settings settings;
+   if (!tc::math_sheet::ParseCommandLine(narg, argv, settings))
    {
       return false;
    }
 
-   TC::MathSheet::Create(settings);
+   tc::math_sheet::Create(settings);
 
    return 0;
 }

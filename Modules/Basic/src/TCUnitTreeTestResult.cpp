@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -62,8 +62,8 @@ static std::ostream& operator<<(std::ostream& o, const indent& i)
 
 }
 
-namespace TC {
-namespace Unit {
+namespace tc {
+namespace unit {
 
 void TreeTestResult::Report::print(std::ostream& o) const
 {

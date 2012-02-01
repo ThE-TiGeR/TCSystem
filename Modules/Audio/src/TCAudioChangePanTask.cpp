@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -37,9 +37,9 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-   namespace Audio
+   namespace audio
    {
       ChangePanTask::ChangePanTask(SoundDataPtr sound_data, 
          double start_pan, double end_pan, const Time& duration)
@@ -52,5 +52,5 @@ namespace TC
       {
          sound_data->SetPan(new_pan);
       }
-   } // end namespace Audio
-} // end namespace TC
+   } // end namespace audio
+} // end namespace tc

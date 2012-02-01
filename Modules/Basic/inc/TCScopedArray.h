@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -38,7 +38,7 @@
 #include "TCTypes.h"
 #include "TCDelete.h"
 
-namespace TC
+namespace tc
 {
    /**
     * @addtogroup TC_BASE
@@ -47,17 +47,17 @@ namespace TC
 
    /**
     * @file
-    * This header file provides the definition of the class TC::ScopedArray.
+    * This header file provides the definition of the class tc::ScopedArray.
     */
 
    /**
     * A class whose instances act like arrays and delete the data when the instance
     * goes out of scope.
     *
-    * TC::ScopedArray mimics a built-in pointer except that it guarantees deletion
-    * of the object pointed to on destruction of the TC::ScopedArray
-    * TC::ScopedArray is a simple solution for simple needs;
-    * use TC::SharedPtr or std::auto_ptr if your needs are more complex.
+    * tc::ScopedArray mimics a built-in pointer except that it guarantees deletion
+    * of the object pointed to on destruction of the tc::ScopedArray
+    * tc::ScopedArray is a simple solution for simple needs;
+    * use tc::SharedPtr or std::auto_ptr if your needs are more complex.
     */
    template < class DATA_TYPE, class DELETER=CheckedArrayDelete >
    class ScopedArray
@@ -100,6 +100,6 @@ namespace TC
     *  @}
     */
 
-} // namespace TC
+} // namespace tc
 
 #endif // _TC_SCOPED_ARRAY_H_

@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -44,7 +44,7 @@
 
 #include "TCNewDisable.h"
 
-namespace TC
+namespace tc
 {
    class DebugHeap::AllocList
    {
@@ -73,7 +73,7 @@ namespace TC
             m_line   = line;
             m_user   = this + 1;
             m_size   = size;
-            m_thread = System::GetCurrentThreadID();
+            m_thread = system::GetCurrentThreadID();
          }
 
          void*        m_user;
@@ -452,7 +452,7 @@ namespace TC
          }
          else
          {
-            stream  << String::Print("%40s, line=%5lu, bytes=%8lu, ntime=%6lu, thread_id=%2lu",
+            stream  << string::Print("%40s, line=%5lu, bytes=%8lu, ntime=%6lu, thread_id=%2lu",
                                      prev->m_file, prev->m_line, prev_num_bytes, prev_num_times, prev->m_thread)
                     << std::endl;
 
@@ -468,13 +468,13 @@ namespace TC
 
       if (prev)
       {
-         stream  << String::Print("%40s, line=%5lu, bytes=%8lu, ntime=%6lu, thread_id=%2lu",
+         stream  << string::Print("%40s, line=%5lu, bytes=%8lu, ntime=%6lu, thread_id=%2lu",
             prev->m_file, prev->m_line, prev_num_bytes, prev_num_times, prev->m_thread)
             << std::endl;
       }
 
       stream << "-------------------------------------------------------------------------------------" << std::endl;
-      stream << String::Print("%40s              bytes=%8lu, ntime=%6lu\n", "Total leaked",total_bytes, total_allocs) << std::endl;
+      stream << string::Print("%40s              bytes=%8lu, ntime=%6lu\n", "Total leaked",total_bytes, total_allocs) << std::endl;
 
       return true;
    }

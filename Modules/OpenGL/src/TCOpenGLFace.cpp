@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -39,9 +39,9 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-   namespace OpenGL
+   namespace open_gl
    {
       Face::Face(const std::string& name, GLenum patch_type)
          :Object3D(name)
@@ -90,7 +90,7 @@ namespace TC
          }
       }
 
-      void Face::DrawSelf(OpenGL::Viewer&) 
+      void Face::DrawSelf(open_gl::Viewer&) 
       {
          SetMaterials();
 
@@ -110,7 +110,7 @@ namespace TC
 
       }
 
-      void Face::DrawForHitSelf(OpenGL::Viewer&)
+      void Face::DrawForHitSelf(open_gl::Viewer&)
       {
          m_renderer.DrawArraysFilled();
       }
@@ -125,7 +125,7 @@ namespace TC
             }
             else
             {
-               glColor3fv(OpenGL::Color(0, 0, 0));
+               glColor3fv(open_gl::Color(0, 0, 0));
             }
 
             m_renderer.DrawArraysOutlined();
@@ -142,7 +142,7 @@ namespace TC
             }
             else
             {
-               glColor3fv(OpenGL::Color(0, 0, 0));
+               glColor3fv(open_gl::Color(0, 0, 0));
             }
 
             m_renderer.DrawArraysPoints();
@@ -184,7 +184,7 @@ namespace TC
             {
                if (!GetOption(OP_SURFACE_COLORED))
                {
-                  glColor3fv(OpenGL::Color(100, 100, 100));
+                  glColor3fv(open_gl::Color(100, 100, 100));
                }
             }
 
@@ -213,7 +213,7 @@ namespace TC
          FXMAPFUNCS(FX::SEL_COMMAND, Face::FXID_SURFACE, Face::FXID_POINTS_COLORED, Face::OnCmdBoundingBox),
          FXMAPFUNCS(FX::SEL_UPDATE, Face::FXID_SURFACE, Face::FXID_POINTS_COLORED, Face::OnUpdDrawingStyle)
       };
-      FXIMPLEMENT_ABSTRACT(Face, Object3D, s_face_map, Util::ArraySize(s_face_map))
+      FXIMPLEMENT_ABSTRACT(Face, Object3D, s_face_map, util::ArraySize(s_face_map))
 
       long Face::OnDNDDrop(FX::FXObject* sender,FX::FXSelector,void*)
       {

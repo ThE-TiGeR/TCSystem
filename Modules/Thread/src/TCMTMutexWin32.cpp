@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -43,11 +43,11 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-   namespace MT
+   namespace multi_threading
    {
-      namespace Impl
+      namespace imp
       {
 
          MutexWin32::MutexWin32()
@@ -72,7 +72,7 @@ namespace TC
             return true;
          }
 
-         bool MutexWin32::Init(const std::string& shared_name, bool locked, Factory::CreationMode mode)
+         bool MutexWin32::Init(const std::string& shared_name, bool locked, factory::CreationMode mode)
          {
             bool status = false;
             m_handle = ::CreateMutexA(0, FALSE, shared_name.c_str());
@@ -84,13 +84,13 @@ namespace TC
 
             switch(mode)
             {
-            case Factory::CRM_ALWAYS:
+            case factory::CRM_ALWAYS:
                status = true;
                break;
-            case Factory::CRM_WHEN_EXISTS:
+            case factory::CRM_WHEN_EXISTS:
                status = error == ERROR_ALREADY_EXISTS;
                break;
-            case Factory::CRM_WHEN_NOT_EXISTS:
+            case factory::CRM_WHEN_NOT_EXISTS:
                status = error != ERROR_ALREADY_EXISTS;
                break;
             }
@@ -133,8 +133,8 @@ namespace TC
             return ::ReleaseMutex(m_handle) != FALSE;
          }
 
-      } // namespace Impl
-   } // namespace MT
-} // namespace TC
+      } // namespace imp
+   } // namespace multi_threading
+} // namespace tc
 
 #endif // TCOS_WINDOWS

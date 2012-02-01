@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -39,12 +39,12 @@
 #include "TCMTLockable.h"
 #include "TCStream.h"
 
-namespace TC
+namespace tc
 {
-   namespace Audio
+   namespace audio
    {
       class TC_DLL_LOCAL SoundDataWav: public SoundData,
-                                       protected MT::ObjectLevelLockable<SoundDataWav>
+                                       protected multi_threading::ObjectLevelLockable<SoundDataWav>
       {
       public:
          SoundDataWav(StreamPtr stream);
@@ -64,8 +64,8 @@ namespace TC
          StreamPtr m_stream;
          uint64 m_start_of_sound_data;
 
-         typedef MT::LockerPtr<const SoundDataWav*> Locker;
-         friend class MT::LockerPtr<const SoundDataWav*>;
+         typedef multi_threading::LockerPtr<const SoundDataWav*> Locker;
+         friend class multi_threading::LockerPtr<const SoundDataWav*>;
       };
    }
 }

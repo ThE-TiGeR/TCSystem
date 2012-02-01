@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -43,11 +43,11 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-   namespace MT
+   namespace multi_threading
    {
-      namespace Impl
+      namespace imp
       {
 
          MutexPthread::MutexPthread()
@@ -160,9 +160,9 @@ namespace TC
          {
          }
 
-         bool MutexSharedPthread::Init(const std::string& shared_name, bool locked, Factory::CreationMode mode)
+         bool MutexSharedPthread::Init(const std::string& shared_name, bool locked, factory::CreationMode mode)
          {
-            m_semaphore = MT::Factory::CreateSemaphore(shared_name, locked ? 0 : 1, mode);
+            m_semaphore = multi_threading::factory::CreateSemaphore(shared_name, locked ? 0 : 1, mode);
             if (locked)
             {
                SetOwnerShip();
@@ -265,8 +265,8 @@ namespace TC
             return m_nesting_level == 0;
          }
 
-      } // namespace Impl
-   } // namespace MT
-} // namespace TC
+      } // namespace imp
+   } // namespace multi_threading
+} // namespace tc
 
 #endif // TCOS_POSIX

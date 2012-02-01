@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -38,7 +38,7 @@
 
 #include "TCStream.h"
 
-namespace TC
+namespace tc
 {
    /**
     * @addtogroup TC_BASE_IO
@@ -47,7 +47,7 @@ namespace TC
 
    /**
     * @file
-    * @brief This file provides the definition of TC::StreamAble
+    * @brief This file provides the definition of tc::StreamAble
     *
     * @author Thomas Goessler
     */
@@ -96,6 +96,6 @@ namespace TC
     * @}
     */
 
-} // namspace TC
+} // namespace tc
 
 #endif // _TC_STREAM_ABLE_H_

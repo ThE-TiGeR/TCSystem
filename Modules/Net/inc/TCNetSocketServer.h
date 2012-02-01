@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -38,9 +38,9 @@
 
 #include "TCNetReadWriteSocket.h"
 
-namespace TC
+namespace tc
 {
-namespace Net
+namespace net
 {
    /**
     * @addtogroup TC_NET
@@ -49,7 +49,7 @@ namespace Net
 
    /**
     * @file
-    * @brief This file provides the definition of TC::Net::SocketServer
+    * @brief This file provides the definition of tc::net::SocketServer
     * @author Thomas Goessler
     */
 
@@ -74,7 +74,7 @@ namespace Net
    public:
       /**
       * deletes the object and stops the server
-      * @see TC::Net::SocketServer::Stop()
+      * @see tc::net::SocketServer::Stop()
       */
       virtual ~SocketServer() {}
 
@@ -111,8 +111,8 @@ namespace Net
     * @}
     */
 
-} // namespace Net
-} // namespace TC
+} // namespace net
+} // namespace tc
 
 
 #endif // _TCNET_SOCKET_SERVER_H_

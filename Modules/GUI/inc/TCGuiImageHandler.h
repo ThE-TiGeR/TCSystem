@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -39,9 +39,9 @@
 
 #include <string>
 
-namespace TC
+namespace tc
 {
-   namespace Gui
+   namespace gui
    {
 
       /**
@@ -51,8 +51,8 @@ namespace TC
 
       /**
       * @file
-      * @brief This file provides the definition of TC::GUI::ImageHandler,
-      *        TC::GUI::ImageHandler::Image and TC::GUI::ImageHandler::Images
+      * @brief This file provides the definition of tc::GUI::ImageHandler,
+      *        tc::GUI::ImageHandler::Image and tc::GUI::ImageHandler::Images
       *
       * @author Thomas Goessler
       */
@@ -109,8 +109,8 @@ namespace TC
       /**
       * @}
       */
-   } // namespace GUI
+   } // namespace gui
 
-} // namespace TC
+} // namespace tc
 
 #endif // _TC_GUI_IMAGE_HANDLER_H_

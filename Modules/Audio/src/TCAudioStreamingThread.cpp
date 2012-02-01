@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -50,16 +50,16 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-   namespace Audio
+   namespace audio
    {
       const Time STREAMING_TIMEOUT(0, 50 * Time::ONE_MILLI_SECOND_AS_NANO_SECONDS);
       const Time RESPONSE_TIMEOUT(0, 200 * Time::ONE_MILLI_SECOND_AS_NANO_SECONDS);
 
       enum MessageIds
       {
-         PLAY_MESSAGE = MT::Message::MSG_ID_USER_START,
+         PLAY_MESSAGE = multi_threading::Message::MSG_ID_USER_START,
          PAUSE_MESSAGE,
          STOP_MESSAGE,
 
@@ -74,8 +74,8 @@ namespace TC
          m_tasks(),
          m_streaming_task()
       {
-         m_running            = MT::Factory::CreateEvent(true, false);
-         m_message_dispatcher = MT::Factory::CreateMessageDispatcher();
+         m_running            = multi_threading::factory::CreateEvent(true, false);
+         m_message_dispatcher = multi_threading::factory::CreateMessageDispatcher();
          m_streaming_task     = SharedPtr<StreamingTask>(new StreamingTask);
 
          m_message_dispatcher->RegisterMessageCallback<SoundDataMessage>(PLAY_MESSAGE,
@@ -96,7 +96,7 @@ namespace TC
 
       bool StreamingThread::Run()
       {
-         m_thread = MT::Factory::GetCurrentThread();
+         m_thread = multi_threading::factory::GetCurrentThread();
          m_running->Set();
 
          try
@@ -106,8 +106,8 @@ namespace TC
             {
                Time next_time_out;
                TaskPtr next_task = GetNextTask(next_time_out);
-               MT::MessagePtr message;
-               MT::Message::ReturnValue ret_val = MT::Message::MSG_RECEIVE_TIMEOUT;
+               multi_threading::MessagePtr message;
+               multi_threading::Message::ReturnValue ret_val = multi_threading::Message::MSG_RECEIVE_TIMEOUT;
                if (next_time_out > Time::Zero())
                {
                   ret_val = m_thread->WaitThreadMessage(message, next_time_out);
@@ -115,7 +115,7 @@ namespace TC
 
                switch(ret_val)
                {
-               case MT::Message::MSG_RECEIVE_TIMEOUT:
+               case multi_threading::Message::MSG_RECEIVE_TIMEOUT:
                   {
                      if (next_task->Execute() == Task::TASK_FINISHED)
                      {
@@ -126,26 +126,26 @@ namespace TC
                   }
                   break;
 
-               case MT::Message::MSG_RECEIVED:
+               case multi_threading::Message::MSG_RECEIVED:
                   if (!m_message_dispatcher->DispatchMessage(message))
                   {
                      message->GetSenderThread()->SendThreadMessage(
-                        MT::MessagePtr(new MT::Message(RESPONSE_FAILED)));
+                        multi_threading::MessagePtr(new multi_threading::Message(RESPONSE_FAILED)));
                   }
                   else
                   {
                      message->GetSenderThread()->SendThreadMessage(
-                        MT::MessagePtr(new MT::Message(RESPONSE_OK)));
+                        multi_threading::MessagePtr(new multi_threading::Message(RESPONSE_OK)));
                   }
 
-                  message = MT::MessagePtr();
+                  message = multi_threading::MessagePtr();
                   break;
 
-               case MT::Message::MSG_QUIT_RECEIVED:
+               case multi_threading::Message::MSG_QUIT_RECEIVED:
                   run = false;
                   break;
 
-               case MT::Message::MSG_RECEIVE_FAILED:
+               case multi_threading::Message::MSG_RECEIVE_FAILED:
                   throw Exception("WaitThreadMessage failed");
 
                }
@@ -215,30 +215,30 @@ namespace TC
 
       bool StreamingThread::PlaySoundData(SoundDataPtr sound_data)
       {
-         MT::MessagePtr smessage(new SoundDataMessage(PLAY_MESSAGE, sound_data));
+         multi_threading::MessagePtr smessage(new SoundDataMessage(PLAY_MESSAGE, sound_data));
          m_thread->SendThreadMessage(smessage);
 
-         MT::MessagePtr rmessage;
+         multi_threading::MessagePtr rmessage;
          smessage->GetSenderThread()->WaitThreadMessage(rmessage, RESPONSE_TIMEOUT);
          return rmessage && rmessage->GetMessageId() == RESPONSE_OK;
       }
 
       bool StreamingThread::PauseSoundData(SoundDataPtr sound_data)
       {
-         MT::MessagePtr smessage(new SoundDataMessage(PAUSE_MESSAGE, sound_data));
+         multi_threading::MessagePtr smessage(new SoundDataMessage(PAUSE_MESSAGE, sound_data));
          m_thread->SendThreadMessage(smessage);
 
-         MT::MessagePtr rmessage;
+         multi_threading::MessagePtr rmessage;
          smessage->GetSenderThread()->WaitThreadMessage(rmessage, RESPONSE_TIMEOUT);
          return rmessage && rmessage->GetMessageId() == RESPONSE_OK;
       }
 
       bool StreamingThread::StopSoundData(SoundDataPtr sound_data)
       {
-         MT::MessagePtr smessage(new SoundDataMessage(STOP_MESSAGE, sound_data));
+         multi_threading::MessagePtr smessage(new SoundDataMessage(STOP_MESSAGE, sound_data));
          m_thread->SendThreadMessage(smessage);
 
-         MT::MessagePtr rmessage;
+         multi_threading::MessagePtr rmessage;
          smessage->GetSenderThread()->WaitThreadMessage(rmessage, RESPONSE_TIMEOUT);
          return rmessage && rmessage->GetMessageId() == RESPONSE_OK;
       }
@@ -247,7 +247,7 @@ namespace TC
       {
          if (m_thread)
          {
-            MT::MessagePtr msg(new MT::Message(MT::Message::MSG_ID_QUIT));
+            multi_threading::MessagePtr msg(new multi_threading::Message(multi_threading::Message::MSG_ID_QUIT));
             m_thread->SendThreadMessage(msg);
          }
       }

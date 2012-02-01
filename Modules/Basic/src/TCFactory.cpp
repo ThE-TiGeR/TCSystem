@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -52,35 +52,35 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-   namespace Factory
+   namespace factory
    {
       CodecPtr CreateBinaryCodec()
       {
-         return Impl::CreateBinaryCodec();
+         return imp::CreateBinaryCodec();
       }
 
       CodecPtr CreateLittleEndianBinaryCodec()
       {
-         return Impl::CreateLittleEndianBinaryCodec();
+         return imp::CreateLittleEndianBinaryCodec();
       }
 
       CodecPtr CreateBigEndianBinaryCodec()
       {
-         return Impl::CreateBigEndianBinaryCodec();
+         return imp::CreateBigEndianBinaryCodec();
       }
 
       CodecPtr CreateAsciiCodec()
       {
-         return CodecPtr(new Impl::AsciiCodec);
+         return CodecPtr(new imp::AsciiCodec);
       }
 
       StreamPtr CreateFileStream(const std::string &fileName, 
                                  Stream::StreamDirection direction,
                                  CodecPtr codec)
       {
-         StreamPtr stream(new Impl::FileStream(fileName, direction, codec));
+         StreamPtr stream(new imp::FileStream(fileName, direction, codec));
          if (!stream->IsOk())
          {
             return StreamPtr();
@@ -93,12 +93,12 @@ namespace TC
                                  Stream::StreamDirection direction, 
                                  CodecPtr codec)
       {
-         return StreamPtr(new Impl::FileStream(stream, direction, codec));
+         return StreamPtr(new imp::FileStream(stream, direction, codec));
       }
 
       StreamPtr CreateGzFileStream(const std::string &fileName, Stream::StreamDirection direction, CodecPtr codec)
       {
-          StreamPtr stream(new Impl::GzFileStream(fileName, direction, codec));
+          StreamPtr stream(new imp::GzFileStream(fileName, direction, codec));
           if (!stream->IsOk())
           {
               return StreamPtr();
@@ -109,7 +109,7 @@ namespace TC
 
       StreamPtr CreateBz2FileStream(const std::string &fileName, Stream::StreamDirection direction, CodecPtr codec)
       {
-          StreamPtr stream(new Impl::Bz2FileStream(fileName, direction, codec));
+          StreamPtr stream(new imp::Bz2FileStream(fileName, direction, codec));
           if (!stream->IsOk())
           {
               return StreamPtr();
@@ -120,13 +120,13 @@ namespace TC
 
       StreamPtr CreateMemoryStream(CodecPtr codec, ByteVector& memory)
       {
-         return StreamPtr(new Impl::MemoryStream(codec, memory));
+         return StreamPtr(new imp::MemoryStream(codec, memory));
       }
 
       StreamPtr CreateStringStream(std::string& memory)
       {
          CodecPtr codec(CreateAsciiCodec());
-         return StreamPtr(new Impl::StringStream(codec, memory));
+         return StreamPtr(new imp::StringStream(codec, memory));
       }
 
       StreamPtr CreateStdOutStream()
@@ -141,11 +141,11 @@ namespace TC
          return CreateFileStream(stderr, Stream::stream_write, codec);
       }
 
-      static Impl::Rng69069 s_internal_rng(static_cast<uint32>(Time::Now().ToMilliSeconds()));
+      static imp::Rng69069 s_internal_rng(static_cast<uint32>(Time::Now().ToMilliSeconds()));
 
       RngPtr Create69069Rng()
       {
-         RngPtr rng(new Impl::Rng69069(s_internal_rng.GetRandomNumber()));
+         RngPtr rng(new imp::Rng69069(s_internal_rng.GetRandomNumber()));
          return rng;
       }
 

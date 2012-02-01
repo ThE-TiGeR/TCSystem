@@ -40,62 +40,62 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
    namespace
    {
-      class AddFileNameAndExtension: public Unit::TestCase
+      class AddFileNameAndExtension: public unit::TestCase
       {
       public:
          AddFileNameAndExtension()
-            :Unit::TestCase("TC::Tests::AddFileNameAndExtension")
+            :unit::TestCase("tc::tests::AddFileNameAndExtension")
          {
          }
          virtual void Execute()
          {
-            TCUNIT_ASSERT(FileName::AddFileNameAndExtension("hallo", "txt") == "hallo.txt");
-            TCUNIT_ASSERT(FileName::AddFileNameAndExtension("hallo", "") == "hallo");
-            TCUNIT_ASSERT(FileName::AddFileNameAndExtension("", "") == "");
-            TCUNIT_ASSERT(FileName::AddFileNameAndExtension("", "txt") == ".txt");
+            TCUNIT_ASSERT(file_name::AddFileNameAndExtension("hallo", "txt") == "hallo.txt");
+            TCUNIT_ASSERT(file_name::AddFileNameAndExtension("hallo", "") == "hallo");
+            TCUNIT_ASSERT(file_name::AddFileNameAndExtension("", "") == "");
+            TCUNIT_ASSERT(file_name::AddFileNameAndExtension("", "txt") == ".txt");
          }
       };
 
-      class AddFileNameAndPath: public Unit::TestCase
+      class AddFileNameAndPath: public unit::TestCase
       {
       public:
          AddFileNameAndPath()
-            :Unit::TestCase("TC::Tests::AddFileNameAndPath")
+            :unit::TestCase("tc::tests::AddFileNameAndPath")
          {
          }
 
          virtual void Execute()
          {
-            TCUNIT_ASSERT(FileName::AddFileNameAndPath("hallo.txt", "test") == "test/hallo.txt");
-            TCUNIT_ASSERT(FileName::AddFileNameAndPath("hallo.txt", "") == "hallo.txt");
-            TCUNIT_ASSERT(FileName::AddFileNameAndPath("hallo.txt", ".") == "./hallo.txt");
-            TCUNIT_ASSERT(FileName::AddFileNameAndPath("", "test") == "test/");
+            TCUNIT_ASSERT(file_name::AddFileNameAndPath("hallo.txt", "test") == "test/hallo.txt");
+            TCUNIT_ASSERT(file_name::AddFileNameAndPath("hallo.txt", "") == "hallo.txt");
+            TCUNIT_ASSERT(file_name::AddFileNameAndPath("hallo.txt", ".") == "./hallo.txt");
+            TCUNIT_ASSERT(file_name::AddFileNameAndPath("", "test") == "test/");
          }
       };
 
-      class AddPaths: public Unit::TestCase
+      class AddPaths: public unit::TestCase
       {
       public:
          AddPaths()
-            :Unit::TestCase("TC::Tests::AddPaths")
+            :unit::TestCase("tc::tests::AddPaths")
          {
          }
 
          virtual void Execute()
          {
-            TCUNIT_ASSERT(FileName::AddPaths("test1", "test2") == "test1/test2");
+            TCUNIT_ASSERT(file_name::AddPaths("test1", "test2") == "test1/test2");
          }
       };
 
-      class GetDirectories: public Unit::TestCase
+      class GetDirectories: public unit::TestCase
       {
       public:
          GetDirectories()
-            :Unit::TestCase("TC::Tests::GetDirectories")
+            :unit::TestCase("tc::tests::GetDirectories")
          {
          }
 
@@ -103,7 +103,7 @@ namespace TC
          {
             {
                std::vector<std::string> dirs;
-               FileName::GetDirectoriesOfFileName("test1/test2/test3/text.txt", dirs);
+               file_name::GetDirectoriesOfFileName("test1/test2/test3/text.txt", dirs);
                TCUNIT_ASSERT(dirs.size() == 3);
                TCUNIT_ASSERT(dirs[0] == "test1");
                TCUNIT_ASSERT(dirs[1] == "test2");
@@ -112,7 +112,7 @@ namespace TC
 
             {
                std::vector<std::string> dirs;
-               FileName::GetDirectoriesOfPath("test1/test2/test3/text.txt", dirs);
+               file_name::GetDirectoriesOfPath("test1/test2/test3/text.txt", dirs);
                TCUNIT_ASSERT(dirs.size() == 4);
                TCUNIT_ASSERT(dirs[0] == "test1");
                TCUNIT_ASSERT(dirs[1] == "test2");
@@ -122,147 +122,147 @@ namespace TC
          }
       };
 
-      class GetExtension: public Unit::TestCase
+      class GetExtension: public unit::TestCase
       {
       public:
          GetExtension()
-            :Unit::TestCase("TC::Tests::GetExtension")
+            :unit::TestCase("tc::tests::GetExtension")
          {
          }
 
          virtual void Execute()
          {
-            TCUNIT_ASSERT(FileName::GetExtension("test.txt") == "txt");
-            TCUNIT_ASSERT(FileName::GetExtension("hallo/test.txt") == "txt");
-            TCUNIT_ASSERT(FileName::GetExtension("hallo.exe/test.txt") == "txt");
-            TCUNIT_ASSERT(FileName::GetExtension("hallo.exe/test") == "");
-            TCUNIT_ASSERT(FileName::GetExtension("hallo/test") == "");
+            TCUNIT_ASSERT(file_name::GetExtension("test.txt") == "txt");
+            TCUNIT_ASSERT(file_name::GetExtension("hallo/test.txt") == "txt");
+            TCUNIT_ASSERT(file_name::GetExtension("hallo.exe/test.txt") == "txt");
+            TCUNIT_ASSERT(file_name::GetExtension("hallo.exe/test") == "");
+            TCUNIT_ASSERT(file_name::GetExtension("hallo/test") == "");
          }
       };
 
-      class GetExtensionIfExtension: public Unit::TestCase
+      class GetExtensionIfExtension: public unit::TestCase
       {
       public:
          GetExtensionIfExtension()
-            :Unit::TestCase("TC::Tests::GetExtensionIfExtension")
+            :unit::TestCase("tc::tests::GetExtensionIfExtension")
          {
          }
 
          virtual void Execute()
          {
-            TCUNIT_ASSERT(FileName::GetExtensionIfExtension("test.txt", "gz") == "");
-            TCUNIT_ASSERT(FileName::GetExtensionIfExtension("hallo/test.txt", "gz") == "");
-            TCUNIT_ASSERT(FileName::GetExtensionIfExtension("hallo.exe/test.txt", "gz") == "");
-            TCUNIT_ASSERT(FileName::GetExtensionIfExtension("hallo.exe/test", "gz") == "");
-            TCUNIT_ASSERT(FileName::GetExtensionIfExtension("hallo/test", "gz") == "");
+            TCUNIT_ASSERT(file_name::GetExtensionIfExtension("test.txt", "gz") == "");
+            TCUNIT_ASSERT(file_name::GetExtensionIfExtension("hallo/test.txt", "gz") == "");
+            TCUNIT_ASSERT(file_name::GetExtensionIfExtension("hallo.exe/test.txt", "gz") == "");
+            TCUNIT_ASSERT(file_name::GetExtensionIfExtension("hallo.exe/test", "gz") == "");
+            TCUNIT_ASSERT(file_name::GetExtensionIfExtension("hallo/test", "gz") == "");
 
-            TCUNIT_ASSERT(FileName::GetExtensionIfExtension("test.txt.gz", "gz") == "txt");
-            TCUNIT_ASSERT(FileName::GetExtensionIfExtension("hallo/test.txt.gz", "gz") == "txt");
-            TCUNIT_ASSERT(FileName::GetExtensionIfExtension("hallo.exe/test.txt.gz", "gz") == "txt");
-            TCUNIT_ASSERT(FileName::GetExtensionIfExtension("hallo.exe/test.gz", "gz") == "");
-            TCUNIT_ASSERT(FileName::GetExtensionIfExtension("hallo/test.gz", "gz") == "");
+            TCUNIT_ASSERT(file_name::GetExtensionIfExtension("test.txt.gz", "gz") == "txt");
+            TCUNIT_ASSERT(file_name::GetExtensionIfExtension("hallo/test.txt.gz", "gz") == "txt");
+            TCUNIT_ASSERT(file_name::GetExtensionIfExtension("hallo.exe/test.txt.gz", "gz") == "txt");
+            TCUNIT_ASSERT(file_name::GetExtensionIfExtension("hallo.exe/test.gz", "gz") == "");
+            TCUNIT_ASSERT(file_name::GetExtensionIfExtension("hallo/test.gz", "gz") == "");
          }
       };
 
-      class GetName: public Unit::TestCase
+      class GetName: public unit::TestCase
       {
       public:
          GetName()
-            :Unit::TestCase("TC::Tests::GetName")
+            :unit::TestCase("tc::tests::GetName")
          {
          }
 
          virtual void Execute()
          {
-            TCUNIT_ASSERT(FileName::GetName("test.txt") == "test.txt");
-            TCUNIT_ASSERT(FileName::GetName("hallo/test.txt") == "test.txt");
-            TCUNIT_ASSERT(FileName::GetName("/1/2/3/test.txt") == "test.txt");
-            TCUNIT_ASSERT(FileName::GetName("/1/2/3/test.txt/") == "");
-            TCUNIT_ASSERT(FileName::GetName("1/2/3/") == "");
+            TCUNIT_ASSERT(file_name::GetName("test.txt") == "test.txt");
+            TCUNIT_ASSERT(file_name::GetName("hallo/test.txt") == "test.txt");
+            TCUNIT_ASSERT(file_name::GetName("/1/2/3/test.txt") == "test.txt");
+            TCUNIT_ASSERT(file_name::GetName("/1/2/3/test.txt/") == "");
+            TCUNIT_ASSERT(file_name::GetName("1/2/3/") == "");
          }
       };
-      class GetPath: public Unit::TestCase
+      class GetPath: public unit::TestCase
       {
       public:
          GetPath()
-            :Unit::TestCase("TC::Tests::GetPath")
+            :unit::TestCase("tc::tests::GetPath")
          {
          }
 
          virtual void Execute()
          {
-            TCUNIT_ASSERT(FileName::GetPath("test.txt") == "");
-            TCUNIT_ASSERT(FileName::GetPath("hallo/test.txt") == "hallo/");
-            TCUNIT_ASSERT(FileName::GetPath("/1/2/3/test.txt") == "/1/2/3/");
-            TCUNIT_ASSERT(FileName::GetPath("/1/2/3/test.txt/") == "/1/2/3/test.txt/");
-            TCUNIT_ASSERT(FileName::GetPath("1/2/3/") == "1/2/3/");
+            TCUNIT_ASSERT(file_name::GetPath("test.txt") == "");
+            TCUNIT_ASSERT(file_name::GetPath("hallo/test.txt") == "hallo/");
+            TCUNIT_ASSERT(file_name::GetPath("/1/2/3/test.txt") == "/1/2/3/");
+            TCUNIT_ASSERT(file_name::GetPath("/1/2/3/test.txt/") == "/1/2/3/test.txt/");
+            TCUNIT_ASSERT(file_name::GetPath("1/2/3/") == "1/2/3/");
          }
       };
 
-      class RemoveExtension: public Unit::TestCase
+      class RemoveExtension: public unit::TestCase
       {
       public:
          RemoveExtension()
-            :Unit::TestCase("TC::Tests::RemoveExtension")
+            :unit::TestCase("tc::tests::RemoveExtension")
          {
          }
 
          virtual void Execute()
          {
-            TCUNIT_ASSERT(FileName::RemoveExtension("test.txt") == "test");
-            TCUNIT_ASSERT(FileName::RemoveExtension("hallo/test.txt") == "hallo/test");
-            TCUNIT_ASSERT(FileName::RemoveExtension("hallo/test.txt/") == "hallo/test.txt/");
+            TCUNIT_ASSERT(file_name::RemoveExtension("test.txt") == "test");
+            TCUNIT_ASSERT(file_name::RemoveExtension("hallo/test.txt") == "hallo/test");
+            TCUNIT_ASSERT(file_name::RemoveExtension("hallo/test.txt/") == "hallo/test.txt/");
          }
       };
 
-      class Simplify: public Unit::TestCase
+      class Simplify: public unit::TestCase
       {
       public:
          Simplify()
-            :Unit::TestCase("TC::Tests::Simplify")
+            :unit::TestCase("tc::tests::Simplify")
          {
          }
 
          virtual void Execute()
          {
-            TCUNIT_ASSERT(FileName::Simplify("/aa/bb/../cc") == "/aa/cc");
-            TCUNIT_ASSERT(FileName::Simplify("/aa/bb/../cc/") == "/aa/cc/");
-            TCUNIT_ASSERT(FileName::Simplify("/aa/bb/../..") == "/");
-            TCUNIT_ASSERT(FileName::Simplify("../../bb") == "../../bb");
-            TCUNIT_ASSERT(FileName::Simplify("../../bb/") == "../../bb/");
-            TCUNIT_ASSERT(FileName::Simplify("/../") == "/");
-            TCUNIT_ASSERT(FileName::Simplify("./aa/bb/../../") == "./");
-            TCUNIT_ASSERT(FileName::Simplify("a/..") == ".");
-            TCUNIT_ASSERT(FileName::Simplify("a/../") == "./");
-            TCUNIT_ASSERT(FileName::Simplify("./a") == "./a");
+            TCUNIT_ASSERT(file_name::Simplify("/aa/bb/../cc") == "/aa/cc");
+            TCUNIT_ASSERT(file_name::Simplify("/aa/bb/../cc/") == "/aa/cc/");
+            TCUNIT_ASSERT(file_name::Simplify("/aa/bb/../..") == "/");
+            TCUNIT_ASSERT(file_name::Simplify("../../bb") == "../../bb");
+            TCUNIT_ASSERT(file_name::Simplify("../../bb/") == "../../bb/");
+            TCUNIT_ASSERT(file_name::Simplify("/../") == "/");
+            TCUNIT_ASSERT(file_name::Simplify("./aa/bb/../../") == "./");
+            TCUNIT_ASSERT(file_name::Simplify("a/..") == ".");
+            TCUNIT_ASSERT(file_name::Simplify("a/../") == "./");
+            TCUNIT_ASSERT(file_name::Simplify("./a") == "./a");
 #ifdef TCOS_WINDOWS
-            TCUNIT_ASSERT(FileName::Simplify("/////./././") == "//");
-            TCUNIT_ASSERT(FileName::Simplify("c:/../") == "c:/");
-            TCUNIT_ASSERT(FileName::Simplify("c:a/..") == "c:");
+            TCUNIT_ASSERT(file_name::Simplify("/////./././") == "//");
+            TCUNIT_ASSERT(file_name::Simplify("c:/../") == "c:/");
+            TCUNIT_ASSERT(file_name::Simplify("c:a/..") == "c:");
 #else
-            TCUNIT_ASSERT(FileName::Simplify("/////./././") == "/");
+            TCUNIT_ASSERT(file_name::Simplify("/////./././") == "/");
 #endif
-            TCUNIT_ASSERT(FileName::Simplify("/.") == "/");
+            TCUNIT_ASSERT(file_name::Simplify("/.") == "/");
          }
       };
    }
 
-   namespace Tests
+   namespace tests
    {
 
       FileNameTestSuite::FileNameTestSuite()
-         :Unit::TestSuite("TC::Tests::FileNameTestSuite")
+         :unit::TestSuite("tc::tests::FileNameTestSuite")
       {
-         AddTest(Unit::Test::Ptr(new AddFileNameAndExtension));
-         AddTest(Unit::Test::Ptr(new AddFileNameAndPath));
-         AddTest(Unit::Test::Ptr(new AddPaths));
-         AddTest(Unit::Test::Ptr(new GetDirectories));
-         AddTest(Unit::Test::Ptr(new GetExtension));
-         AddTest(Unit::Test::Ptr(new GetExtensionIfExtension));
-         AddTest(Unit::Test::Ptr(new GetName));
-         AddTest(Unit::Test::Ptr(new GetPath));
-         AddTest(Unit::Test::Ptr(new RemoveExtension));
-         AddTest(Unit::Test::Ptr(new Simplify));
+         AddTest(unit::Test::Ptr(new AddFileNameAndExtension));
+         AddTest(unit::Test::Ptr(new AddFileNameAndPath));
+         AddTest(unit::Test::Ptr(new AddPaths));
+         AddTest(unit::Test::Ptr(new GetDirectories));
+         AddTest(unit::Test::Ptr(new GetExtension));
+         AddTest(unit::Test::Ptr(new GetExtensionIfExtension));
+         AddTest(unit::Test::Ptr(new GetName));
+         AddTest(unit::Test::Ptr(new GetPath));
+         AddTest(unit::Test::Ptr(new RemoveExtension));
+         AddTest(unit::Test::Ptr(new Simplify));
       }
    }
 }

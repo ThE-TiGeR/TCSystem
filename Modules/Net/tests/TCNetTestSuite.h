@@ -39,13 +39,13 @@
 
 #include "TCUnitTestSuite.h"
 
-namespace TC
+namespace tc
 {
-   namespace Net
+   namespace net
    {
-      namespace Tests
+      namespace tests
       {
-         class TCNET_API Suite : public Unit::TestSuite
+         class TCNET_API Suite : public unit::TestSuite
          {
          public:
             Suite();

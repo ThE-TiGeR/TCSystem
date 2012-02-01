@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -40,7 +40,7 @@
 
 #include <string>
 
-namespace TC
+namespace tc
 {
     class Stream;
 
@@ -51,7 +51,7 @@ namespace TC
 
     /**
      * @file
-     * @brief This file provides the definition of TC::Codec
+     * @brief This file provides the definition of tc::Codec
      *
      * @author Thomas Goessler
      */
@@ -266,6 +266,6 @@ namespace TC
      * @}
      */
 
-} // namespace TC
+} // namespace tc
 
 #endif // _TCCODEC_H_

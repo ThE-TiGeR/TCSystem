@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -39,9 +39,9 @@
 #include "TCOpenGL.h"
 #include "TCOpenGLTypes.h"
 
-namespace TC
+namespace tc
 {
-   namespace OpenGL
+   namespace open_gl
    {
       class TCOGL_API LineRenderer
       {
@@ -105,7 +105,7 @@ namespace TC
          * wide stippled lines.
          * <P>
          * This method will eventually be part of a more object-oriented design of
-         * the OpenGL viewer.  The design cannot be implemented until
+         * the open_gl viewer.  The design cannot be implemented until
          * I can check out the OglViewer shared library.  I've been
          * waiting for 2 weeks now (19 Sep 2001) to add new objects and new 
          * files to this library, but it is always checked out (by someone else).
@@ -164,7 +164,7 @@ namespace TC
           * @param colors     The color of the line vertex including alpha value
           * @param num_pixels The thickness of the line in pixel (default = 1)
           */
-         void RenderBox(const Math::Box< Vertex3D >& box,
+         void RenderBox(const math::Box< Vertex3D >& box,
                         const Color& color, uint32 num_pixels=DEFAULT_WIDTH);
 
          /**
@@ -174,7 +174,7 @@ namespace TC
           * @param colors     The color of the line vertex including alpha value
           * @param num_pixels The thickness of the line in pixel (default = 1)
           */
-         void RenderBox(const Math::Box< Vertex2D >& box,
+         void RenderBox(const math::Box< Vertex2D >& box,
                         const Color& color, uint32 num_pixels=DEFAULT_WIDTH);
       };
    }

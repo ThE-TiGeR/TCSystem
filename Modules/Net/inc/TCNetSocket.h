@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -39,9 +39,9 @@
 #include "TCNetTypes.h"
 #include "TCNonCopyable.h"
 
-namespace TC
+namespace tc
 {
-   namespace Net
+   namespace net
    {
       /**
       * @addtogroup TC_NET
@@ -50,7 +50,7 @@ namespace TC
 
       /**
       * @file
-      * @brief This file provides the definition of TC::Net::Socket
+      * @brief This file provides the definition of tc::net::Socket
       * @author Thomas Goessler
       */
       class Socket
@@ -80,7 +80,7 @@ namespace TC
       * @}
       */
 
-   } // namespace Net
-} // namespace TC
+   } // namespace net
+} // namespace tc
 
 #endif // _TCNET_SOCKET_H

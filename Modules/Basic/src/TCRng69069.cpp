@@ -36,9 +36,9 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-   namespace Impl
+   namespace imp
    {
       Rng69069::Rng69069(uint32 seed)
          :m_rng(seed)

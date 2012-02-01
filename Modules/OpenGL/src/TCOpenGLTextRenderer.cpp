@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -39,9 +39,9 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-   namespace OpenGL
+   namespace open_gl
    {
       class FXFontCompareFXFontDesc
       {
@@ -106,7 +106,7 @@ namespace TC
             FX::FXFont *font = new FX::FXFont(FX::FXApp::instance(), fontdesc);
             font->create();
             uint32 first = font->getMinChar();
-            uint32 last  = Util::Min(uint32(font->getMaxChar()), uint32(255)); // in the moment only ascii character are supported
+            uint32 last  = util::Min(uint32(font->getMaxChar()), uint32(255)); // in the moment only ascii character are supported
 
             // generate list for all characters   
             uint32 fontList = glGenLists(last + 1);
@@ -142,7 +142,7 @@ namespace TC
       }
 
       void TextRenderer::Render2DText(const std::string &text,
-         Math::CoordN<sint32,2> xyco,
+         math::CoordN<sint32,2> xyco,
          const Color &color,
          bool clip)
       {

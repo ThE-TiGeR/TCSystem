@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -42,24 +42,24 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-   namespace File
+   namespace file
    {
       bool CreateDirRecursive(const std::string& path)
       {
          if (path.empty()) return false;
 
          std::vector< std::string > directories;
-         FileName::GetDirectoriesOfPath(path, directories);
+         file_name::GetDirectoriesOfPath(path, directories);
 
          std::string current_dir;
-         if (path[0] == FileName::GetPathSeparator()[0]) current_dir = FileName::GetPathSeparator();
+         if (path[0] == file_name::GetPathSeparator()[0]) current_dir = file_name::GetPathSeparator();
 
          std::vector< std::string >::const_iterator dir;
          for (dir=directories.begin(); dir != directories.end(); dir++)
          {
-            current_dir = FileName::AddPaths(current_dir, *dir);
+            current_dir = file_name::AddPaths(current_dir, *dir);
             if (!IsDirectory(current_dir))
             {
                if (Exists(current_dir))
@@ -88,7 +88,7 @@ namespace TC
          {
             if (it->is_directory)
             {
-               std::string dir = FileName::AddPaths(path, it->name);
+               std::string dir = file_name::AddPaths(path, it->name);
                if (!RemoveDirRecursive(dir))
                {
                   return false;
@@ -96,7 +96,7 @@ namespace TC
             }
             else
             {
-               std::string file = FileName::AddFileNameAndPath(it->name, path);
+               std::string file = file_name::AddFileNameAndPath(it->name, path);
                if (!Remove(file))
                {
                   return false;
@@ -109,7 +109,7 @@ namespace TC
       // Return time when touched
       uint64 GetTouchedTime(const std::string &file)
       {
-         return Util::Max(GetModificationTime(file), 
+         return util::Max(GetModificationTime(file), 
             GetLastAccessTime(file),
             GetCreationTime(file));
       }
@@ -145,14 +145,14 @@ namespace TC
          for (file=file_infos_of_dir.begin(); file!=file_infos_of_dir.end(); file++)
          {
             FileInfo file_info(*file);
-            file_info.name = FileName::AddFileNameAndPath(file->name, search_dir);
+            file_info.name = file_name::AddFileNameAndPath(file->name, search_dir);
             if (file_info.is_directory)
             {
                FindFilesRecursive(files, file_info.name, search_ext);
             }
             else if (!search_ext.empty())
             {
-               std::string ext = FileName::GetExtension(file_info.name);
+               std::string ext = file_name::GetExtension(file_info.name);
                if (ext == search_ext)
                {
                   files.push_back(file_info);

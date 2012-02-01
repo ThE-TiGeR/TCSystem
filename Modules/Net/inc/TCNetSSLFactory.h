@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -48,7 +48,7 @@
 
 /**
 * @file
-* @brief This file provides the definition of TC::Net::SSFactory
+* @brief This file provides the definition of tc::net::SSFactory
 * @author Thomas Goessler
 */
 
@@ -56,14 +56,14 @@
 * @}
 */
 
-namespace TC
+namespace tc
 {
-   namespace Net
+   namespace net
    {
       /**
-      * @brief Factory for creating TC::Net SSL objects
+      * @brief Factory for creating tc::net SSL objects
       */
-      namespace SSLFactory
+      namespace ssl_factory
       {
          /**
          * @addtogroup TC_NET
@@ -86,8 +86,8 @@ namespace TC
 
 
 
-   } // namespace Net
-} // namespace TC
+   } // namespace net
+} // namespace tc
 
 
 #endif // _TCNET_SSL_FACTORY_H_

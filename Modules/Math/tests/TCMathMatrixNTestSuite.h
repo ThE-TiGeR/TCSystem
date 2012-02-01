@@ -37,13 +37,13 @@
 
 #include "TCUnitTestSuite.h"
 
-namespace TC
+namespace tc
 {
-   namespace Math
+   namespace math
    {
-      namespace Tests
+      namespace tests
       {
-         class MatrixNSuite : public Unit::TestSuite
+         class MatrixNSuite : public unit::TestSuite
          {
          public:
             MatrixNSuite();

@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -43,9 +43,9 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-   namespace Impl 
+   namespace imp 
    {
       template < template<class T> class VALUE_CONV >
       class BinaryCodec: public Codec
@@ -170,7 +170,7 @@ namespace TC
          {
             std::string tmp;
             uint64 len = Decode(stream, tmp);
-            val = WString::ToString(tmp);
+            val = wstring::ToString(tmp);
 
             return len;
          }
@@ -258,7 +258,7 @@ namespace TC
 
          uint64 Encode(const std::wstring& val, Stream& stream)
          {
-            std::string tmp = WString::ToString(val);
+            std::string tmp = wstring::ToString(val);
             return Encode(tmp, stream);
          }
 

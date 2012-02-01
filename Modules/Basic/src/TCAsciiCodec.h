@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -37,9 +37,9 @@
 
 #include "TCCodec.h"
 
-namespace TC
+namespace tc
 {
-namespace Impl
+namespace imp
 {
    /**
     * @addtogroup TC_BASE_IO_IMPL
@@ -48,7 +48,7 @@ namespace Impl
 
    /**
     * @file
-    * @brief This file provides the definition of TC::Impl::AsciiCodec
+    * @brief This file provides the definition of tc::imp::AsciiCodec
     * @author Thomas Goessler
     */
 
@@ -96,7 +96,7 @@ namespace Impl
     * @}
     */
 
-} // namespace Impl
-} // namespace TC
+} // namespace imp
+} // namespace tc
 
 #endif // _TCASCII_CODEC_H_

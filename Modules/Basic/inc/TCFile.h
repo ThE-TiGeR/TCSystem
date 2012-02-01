@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -42,7 +42,7 @@
 #include <string>
 #include <vector>
 
-namespace TC
+namespace tc
 {
    /**
     * @addtogroup TC_BASE_IO
@@ -51,7 +51,7 @@ namespace TC
 
    /**
     * @file
-    * @brief This file provides the definition of TC::File
+    * @brief This file provides the definition of tc::file
     *
     * @author Thomas Goessler
     */
@@ -59,7 +59,7 @@ namespace TC
    /**
     * @brief Provides functions to get/create/set file information
     */
-   namespace File
+   namespace file
    {
       enum FileAttributes
       {
@@ -164,12 +164,12 @@ namespace TC
       /// @brief  remove a directory also if not empty
       TCBASE_API bool RemoveDirRecursive(const std::string &path);
 
-   } // namespace File
+   } // namespace file
 
    /**
     * @}
     */
 
-} // namespace TC
+} // namespace tc
 
 #endif // _TC_FILE_H_

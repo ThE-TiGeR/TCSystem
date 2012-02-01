@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -43,9 +43,9 @@
 
 using namespace std;
 
-namespace TC
+namespace tc
 {
-   namespace Output
+   namespace output
    {
       static sint32 s_trace_level = 10;
       static PrintTargetPtr s_error_target;
@@ -92,12 +92,12 @@ namespace TC
       void Error(const char* module, const char* function, 
          uint32 line_number, const char* format, ...)
       {
-         std::string s = String::Print("%%E(%s, %6s), %s(%u): ", 
-            System::GetDate().c_str(), module, function, line_number);
+         std::string s = string::Print("%%E(%s, %6s), %s(%u): ", 
+            system::GetDate().c_str(), module, function, line_number);
 
          va_list arguments;
          va_start(arguments, format);
-         s += String::VPrint(format, arguments);
+         s += string::VPrint(format, arguments);
          va_end(arguments);
 
          if (s_error_target)
@@ -114,12 +114,12 @@ namespace TC
       void Warning(const char* module, const char* function, 
          uint32 line_number, const char* format, ...)
       {
-         std::string s = String::Print("%%W(%s, %6s), %s(%u): ", 
-            System::GetDate().c_str(), module, function, line_number);
+         std::string s = string::Print("%%W(%s, %6s), %s(%u): ", 
+            system::GetDate().c_str(), module, function, line_number);
 
          va_list arguments;
          va_start(arguments, format);
-         s += String::VPrint(format, arguments);
+         s += string::VPrint(format, arguments);
          va_end(arguments);
 
          if (s_warning_target)
@@ -136,12 +136,12 @@ namespace TC
       void Info(const char* module, const char* function, 
          uint32 line_number, const char* format, ...)
       {
-         std::string s = String::Print("%%I(%s, %6s), %s(%u): ", 
-            System::GetDate().c_str(), module, function, line_number);
+         std::string s = string::Print("%%I(%s, %6s), %s(%u): ", 
+            system::GetDate().c_str(), module, function, line_number);
 
          va_list arguments;
          va_start(arguments, format);
-         s += String::VPrint(format, arguments);
+         s += string::VPrint(format, arguments);
          va_end(arguments);
 
          if (s_info_target)
@@ -160,12 +160,12 @@ namespace TC
       {
          if (level < s_trace_level)
          {
-            std::string s = String::Print("%%T(%s, %6s[% 4d]), %s(%u): ", 
-               System::GetDate().c_str(), module, level, function, line_number);
+            std::string s = string::Print("%%T(%s, %6s[% 4d]), %s(%u): ", 
+               system::GetDate().c_str(), module, level, function, line_number);
 
             va_list arguments;
             va_start(arguments, format);
-            s += String::VPrint(format, arguments);
+            s += string::VPrint(format, arguments);
             va_end(arguments);
 
             if (s_trace_target)

@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -43,18 +43,18 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-   namespace MT
+   namespace multi_threading
    {
-      namespace Impl
+      namespace imp
       {
 
          EventPthread::EventPthread(bool manual_reset, bool initial_state)
          {
             m_event.manual_reset = manual_reset;
             m_event.state        = initial_state;
-            m_event.condition    = Factory::CreateCondition();
+            m_event.condition    = factory::CreateCondition();
          }
 
          EventPthread::~EventPthread()
@@ -151,8 +151,8 @@ namespace TC
             return true;
          }
 
-      } // namespace Impl
-   } // namespace MT
-} // namespace TC
+      } // namespace imp
+   } // namespace multi_threading
+} // namespace tc
 
 #endif // TCOS_POSIX

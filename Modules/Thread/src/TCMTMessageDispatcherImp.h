@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -40,11 +40,11 @@
 
 #include <map>
 
-namespace TC
+namespace tc
 {
-   namespace MT
+   namespace multi_threading
    {
-      namespace Impl
+      namespace imp
       {
          /**
          * @addtogroup TC_MT_IMP
@@ -53,7 +53,7 @@ namespace TC
 
          /**
          * @file
-         * @brief This file provides the definition of TC::MT::Impl::MessageDispatcherImp
+         * @brief This file provides the definition of tc::multi_threading::imp::MessageDispatcherImp
          * @author Thomas Goessler
          */
 
@@ -91,9 +91,9 @@ namespace TC
          * @}
          */
 
-      } // namespace Impl
-   } // namespace MT
-} // namespace TC
+      } // namespace imp
+   } // namespace multi_threading
+} // namespace tc
 
 
 #endif // _TC_MT_MESSAGE_DISPATCHER_IMP_H_

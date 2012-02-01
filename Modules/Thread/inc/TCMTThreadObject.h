@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -39,9 +39,9 @@
 #include "TCNonCopyable.h"
 #include "TCSharedPtr.h"
 
-namespace TC
+namespace tc
 {
-namespace MT
+namespace multi_threading
 {
    /**
     * @addtogroup TC_MT
@@ -50,7 +50,7 @@ namespace MT
 
    /**
     * @file
-    * @brief This file provides the definition of TC::MT::ThreadObject
+    * @brief This file provides the definition of tc::multi_threading::ThreadObject
     * @author Thomas Goessler
     */
 
@@ -77,8 +77,8 @@ namespace MT
     * @}
     */
 
-} // namespace MT
-} // namespace TC
+} // namespace multi_threading
+} // namespace tc
 
 
 #endif // _TC_MT_THREAD_OBJECT_H_

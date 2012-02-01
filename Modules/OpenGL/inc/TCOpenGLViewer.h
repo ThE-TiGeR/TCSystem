@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -43,10 +43,10 @@
 //  This file is based on the FX::FXGLViewer of FOX 1.6.30
 //*******************************************************************************
 
-namespace TC
+namespace tc
 {
 
-   namespace OpenGL
+   namespace open_gl
    {
       // GL Viewer options
       enum 
@@ -60,7 +60,7 @@ namespace TC
 
       /*******************************  Viewer  Structs  *****************************/
 
-      /// OpenGL Viewer Viewport
+      /// open_gl Viewer Viewport
       struct Viewport 
       {
          sint32   w,h;               // Viewport dimensions
@@ -72,7 +72,7 @@ namespace TC
       // Feedback buffer sort routine
       typedef bool (*ZSortFunc)(float*& buffer,sint32& used,sint32& size);
 
-      /// OpenGL viewer widget
+      /// open_gl viewer widget
       class TCOGL_API Viewer: public FX::FXGLCanvas 
       {
          FXDECLARE(Viewer)

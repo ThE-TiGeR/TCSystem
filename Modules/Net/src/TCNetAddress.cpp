@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -47,9 +47,9 @@
 
 typedef void (*TCSIG_PF)(int);
 
-namespace TC
+namespace tc
 {
-   namespace Net
+   namespace net
    {
 #ifdef TCOS_WINDOWS
       static bool inet_aton(const char *cp, struct in_addr* pin)
@@ -76,42 +76,42 @@ namespace TC
 
       Address::Address()
          :m_address(0)
-         ,m_base(new Impl::Base)
+         ,m_base(new imp::Base)
       {
          initAddress();
       }
 
       Address::Address(const std::string& name)
          :m_address(0)
-         ,m_base(new Impl::Base)
+         ,m_base(new imp::Base)
       {
          SetHostName(name);
       }
 
       Address::Address(const Address& _addr) 
          :m_address(0)
-         ,m_base(new Impl::Base)
+         ,m_base(new imp::Base)
       {
          SetAddress(_addr);
       }
 
       Address::Address(const InternetAddress& _addr)
          :m_address(0)
-         ,m_base(new Impl::Base)
+         ,m_base(new imp::Base)
       {
          SetAddress(_addr);
       }
 
       Address::Address(const SocketAddress& _addr)
          :m_address(0)
-         ,m_base(new Impl::Base)
+         ,m_base(new imp::Base)
       {
          SetAddress(_addr);
       }
 
       Address::Address(uint32 ip_address)
          :m_address(0)
-         ,m_base(new Impl::Base)
+         ,m_base(new imp::Base)
       {
          SetAddress(ip_address);
       }

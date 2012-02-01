@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -48,7 +48,7 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
 
    TC_CT_ASSERT(sizeof(sint64) == 8);
@@ -105,7 +105,7 @@ namespace TC
 
       for (std::vector<std::string>::iterator it=a.begin(); it!=a.end();)
       {
-         std::string currentArg = String::Replace(*it, '/', '-');
+         std::string currentArg = string::Replace(*it, '/', '-');
 
          if (currentArg == "-h" ||
              currentArg == "--help")
@@ -116,14 +116,14 @@ namespace TC
          else if (currentArg == "-v" ||
             currentArg == "--version")
          {
-            Factory::CreateStdOutStream() << m_programm_name << " " <<  version << endl;
+            factory::CreateStdOutStream() << m_programm_name << " " <<  version << endl;
             return false;
          }
          else if (currentArg == "-t" ||
             currentArg == "--trace")
          {
             it = a.erase(it);
-            Output::SetTraceLevel(String::ToSint32(*it));
+            output::SetTraceLevel(string::ToSint32(*it));
             it = a.erase(it);
          }
          else
@@ -137,7 +137,7 @@ namespace TC
 
    void Application::DisplayUsage()
    {
-      StreamPtr stream(Factory::CreateStdOutStream());
+      StreamPtr stream(factory::CreateStdOutStream());
       stream << "Usage: " << GetUsage() << endl;
       stream << "\t\t" << "[-trace number (set the trace number)]" << endl;
    }

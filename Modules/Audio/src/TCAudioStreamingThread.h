@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -42,13 +42,13 @@
 #include "TCMTMessageDispatcher.h"
 #include "TCMTLockable.h"
 
-namespace TC
+namespace tc
 {
-   namespace Audio
+   namespace audio
    {
       class StreamingTask;
 
-      class TC_DLL_LOCAL SoundDataMessage: public MT::Message
+      class TC_DLL_LOCAL SoundDataMessage: public multi_threading::Message
       {
       public:
          SoundDataMessage(uint32 message_id, SoundDataPtr sound_data)
@@ -59,7 +59,7 @@ namespace TC
          SoundDataPtr m_sound_data;
       };
 
-      class TC_DLL_LOCAL StreamingThread: public MT::ThreadObject,
+      class TC_DLL_LOCAL StreamingThread: public multi_threading::ThreadObject,
                                           public SoundPlayer
       {
       public:
@@ -132,9 +132,9 @@ namespace TC
          bool RemoveTask(TaskPtr task);
 
       private:
-         MT::ThreadPtr m_thread;
-         MT::EventPtr m_running;
-         MT::MessageDispatcherPtr m_message_dispatcher;
+         multi_threading::ThreadPtr m_thread;
+         multi_threading::EventPtr m_running;
+         multi_threading::MessageDispatcherPtr m_message_dispatcher;
          std::vector<TaskPtr> m_tasks;
          SharedPtr<StreamingTask> m_streaming_task;
       };

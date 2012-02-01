@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -38,7 +38,7 @@
 
 #include "TCTypes.h"
 
-namespace TC
+namespace tc
 {
    /**
    * @addtogroup TC_BASE
@@ -47,7 +47,7 @@ namespace TC
 
    /**
    * @file 
-   * This header file provides the definition of the namespace TC::Util. 
+   * This header file provides the definition of the namespace tc::util. 
    * 
    * @author Thomas Goessler 
    */
@@ -55,7 +55,7 @@ namespace TC
    /**
    * @brief Defines basic functions like Min, Max, Swap ...
    */
-   namespace Util
+   namespace util
    {
       /** @return the absolute value of the given value */
       template <class T>

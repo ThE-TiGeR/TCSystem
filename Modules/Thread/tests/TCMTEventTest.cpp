@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -44,32 +44,32 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-    namespace MT
+    namespace multi_threading
     {
-        namespace Tests
+        namespace tests
         {
 
-            class EventSetWaitTest : public Unit::TestCase
+            class EventSetWaitTest : public unit::TestCase
             {
             public:
                 EventSetWaitTest()
-                    :Unit::TestCase("TC::MT::Tests::EventSetWaitTest")
+                    :unit::TestCase("tc::multi_threading::tests::EventSetWaitTest")
                 {
                 }
 
                 virtual void Execute()
                 {
                     {
-                        EventPtr m = Factory::CreateEvent(false, false);
+                        EventPtr m = factory::CreateEvent(false, false);
                         TCUNIT_ASSERT(m);
                         TCUNIT_ASSERT(m->Set());
                         TCUNIT_ASSERT(m->Wait());
                     }
 
                     {
-                        EventPtr m = Factory::CreateEvent(false, true);
+                        EventPtr m = factory::CreateEvent(false, true);
                         TCUNIT_ASSERT(m);
                         TCUNIT_ASSERT(m->Wait());
                         TCUNIT_ASSERT(m->Set());
@@ -77,7 +77,7 @@ namespace TC
                     }
 
                     {
-                        EventPtr m = Factory::CreateEvent(true, false);
+                        EventPtr m = factory::CreateEvent(true, false);
                         TCUNIT_ASSERT(m);
                         TCUNIT_ASSERT(m->Set());
                         TCUNIT_ASSERT(m->Wait());
@@ -85,7 +85,7 @@ namespace TC
                     }
 
                     {
-                        EventPtr m = Factory::CreateEvent(true, true);
+                        EventPtr m = factory::CreateEvent(true, true);
                         TCUNIT_ASSERT(m);
                         TCUNIT_ASSERT(m->Wait());
                         TCUNIT_ASSERT(m->Wait());
@@ -96,18 +96,18 @@ namespace TC
                 }
             };
 
-            class EventTryTest : public Unit::TestCase
+            class EventTryTest : public unit::TestCase
             {
             public:
                 EventTryTest()
-                    :Unit::TestCase("TC::MT::Tests::EventTryTest")
+                    :unit::TestCase("tc::multi_threading::tests::EventTryTest")
                 {
                 }
 
                 virtual void Execute()
                 {
                     {
-                        EventPtr m = Factory::CreateEvent(false, false);
+                        EventPtr m = factory::CreateEvent(false, false);
                         TCUNIT_ASSERT(m);
                         TCUNIT_ASSERT(!m->Try());
                         TCUNIT_ASSERT(m->Set());
@@ -115,7 +115,7 @@ namespace TC
                     }
 
                     {
-                        EventPtr m = Factory::CreateEvent(false, true);
+                        EventPtr m = factory::CreateEvent(false, true);
                         TCUNIT_ASSERT(m);
                         TCUNIT_ASSERT(m->Try());
                         TCUNIT_ASSERT(m->Set());
@@ -123,7 +123,7 @@ namespace TC
                     }
 
                     {
-                        EventPtr m = Factory::CreateEvent(true, false);
+                        EventPtr m = factory::CreateEvent(true, false);
                         TCUNIT_ASSERT(m);
                         TCUNIT_ASSERT(!m->Try());
                         TCUNIT_ASSERT(m->Set());
@@ -132,7 +132,7 @@ namespace TC
                     }
 
                     {
-                        EventPtr m = Factory::CreateEvent(true, true);
+                        EventPtr m = factory::CreateEvent(true, true);
                         TCUNIT_ASSERT(m);
                         TCUNIT_ASSERT(m->Try());
                         TCUNIT_ASSERT(m->Try());
@@ -145,18 +145,18 @@ namespace TC
                 }
             };
 
-            class EventWaitTimeTest : public Unit::TestCase
+            class EventWaitTimeTest : public unit::TestCase
             {
             public:
                 EventWaitTimeTest()
-                    :Unit::TestCase("TC::MT::Tests::EventWaitTimeTest")
+                    :unit::TestCase("tc::multi_threading::tests::EventWaitTimeTest")
                 {
                 }
 
                 virtual void Execute()
                 {
                     {
-                        EventPtr m = Factory::CreateEvent(false, false);
+                        EventPtr m = factory::CreateEvent(false, false);
                         TCUNIT_ASSERT(m);
                         Time start_time = Time::NowMonotonic();
                         TCUNIT_ASSERT(!m->TryWait(Time::FromMilliSeconds(100)));
@@ -172,7 +172,7 @@ namespace TC
                     }
 
                     {
-                        EventPtr m = Factory::CreateEvent(false, true);
+                        EventPtr m = factory::CreateEvent(false, true);
                         TCUNIT_ASSERT(m);
                         TCUNIT_ASSERT(m->TryWait(Time::FromMilliSeconds(100)));
                         TCUNIT_ASSERT(m->Set());
@@ -180,7 +180,7 @@ namespace TC
                     }
 
                     {
-                        EventPtr m = Factory::CreateEvent(true, false);
+                        EventPtr m = factory::CreateEvent(true, false);
                         TCUNIT_ASSERT(m);
                         TCUNIT_ASSERT(!m->TryWait(Time::FromMilliSeconds(100)));
                         TCUNIT_ASSERT(m->Set());
@@ -189,7 +189,7 @@ namespace TC
                     }
 
                     {
-                        EventPtr m = Factory::CreateEvent(true, true);
+                        EventPtr m = factory::CreateEvent(true, true);
                         TCUNIT_ASSERT(m);
                         TCUNIT_ASSERT(m->TryWait(Time::FromMilliSeconds(100)));
                         TCUNIT_ASSERT(m->TryWait(Time::FromMilliSeconds(100)));
@@ -207,11 +207,11 @@ namespace TC
             };
 
             EventSuite::EventSuite()
-                : Unit::TestSuite("TC::MT::Tests::EventSuite")
+                : unit::TestSuite("tc::multi_threading::tests::EventSuite")
             {
-                AddTest(Unit::Test::Ptr(new EventSetWaitTest));
-                AddTest(Unit::Test::Ptr(new EventTryTest));
-                AddTest(Unit::Test::Ptr(new EventWaitTimeTest));
+                AddTest(unit::Test::Ptr(new EventSetWaitTest));
+                AddTest(unit::Test::Ptr(new EventTryTest));
+                AddTest(unit::Test::Ptr(new EventWaitTimeTest));
             }
 
         }

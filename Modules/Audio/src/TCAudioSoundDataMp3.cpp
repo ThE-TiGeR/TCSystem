@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -42,15 +42,15 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-   namespace Audio
+   namespace audio
    {
       static void CheckError(int error, const char* methode)
       {
          if (error < MPG123_OK)
          {
-            throw Exception(String::Print("Function call '%s' failed with error '%s'", 
+            throw Exception(string::Print("Function call '%s' failed with error '%s'", 
                methode, ::mpg123_plain_strerror(error)));
          }
       }

@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -39,9 +39,9 @@
 
 #include <cstdio>
 
-namespace TC
+namespace tc
 {
-namespace Impl
+namespace imp
 {
 
    /**
@@ -136,7 +136,7 @@ namespace Impl
     * @}
     */
 
-} // namespace Impl
-} // namespace TC
+} // namespace imp
+} // namespace tc
 
 #endif // _TCFILE_STREAM_H_

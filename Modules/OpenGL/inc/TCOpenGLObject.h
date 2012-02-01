@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -51,7 +51,7 @@
 #include <bitset>
 #include <vector>
 
-namespace TC
+namespace tc
 {
    class TCOGL_API NamedObject
    {
@@ -76,7 +76,7 @@ namespace TC
       std::string m_name;
    };
 
-   namespace OpenGL
+   namespace open_gl
    {
       class Viewer;
       class Object;

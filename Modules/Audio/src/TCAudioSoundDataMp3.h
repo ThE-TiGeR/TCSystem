@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -41,12 +41,12 @@
 
 #include <mpg123.h>
 
-namespace TC
+namespace tc
 {
-   namespace Audio
+   namespace audio
    {
       class TC_DLL_LOCAL SoundDataMp3: public SoundData,
-                                       protected MT::ObjectLevelLockable<SoundDataMp3>
+                                       protected multi_threading::ObjectLevelLockable<SoundDataMp3>
       {
       public:
          SoundDataMp3(StreamPtr stream);
@@ -66,8 +66,8 @@ namespace TC
          StreamPtr m_stream;
          mpg123_handle* m_mp3_handle;
 
-         typedef MT::LockerPtr<const SoundDataMp3*> Locker;
-         friend class MT::LockerPtr<const SoundDataMp3*>;
+         typedef multi_threading::LockerPtr<const SoundDataMp3*> Locker;
+         friend class multi_threading::LockerPtr<const SoundDataMp3*>;
       };
    }
 }

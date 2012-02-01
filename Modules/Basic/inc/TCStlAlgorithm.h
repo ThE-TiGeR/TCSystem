@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -40,7 +40,7 @@
 
 #include <algorithm>
 
-namespace TC
+namespace tc
 {
    /**
    * @addtogroup TC_BASE
@@ -49,7 +49,7 @@ namespace TC
 
    /**
    * @file 
-   * This header file provides the definition of the namespace TC::StlAlgorithm. 
+   * This header file provides the definition of the namespace tc::stl_algorithm. 
    * 
    * @author Thomas Goessler 
    */
@@ -57,7 +57,7 @@ namespace TC
    /**
    * @brief Defines basic algorithm which can be used on stl containers
    */
-   namespace StlAlgorithm
+   namespace stl_algorithm
    {
       /** @return true if c1 contains all elements from c2 */
       template <typename CONTAINER1, typename CONTAINER2>

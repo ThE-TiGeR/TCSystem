@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -59,9 +59,9 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-   bool File::ChangeDirectory(const std::string& directory)
+   bool file::ChangeDirectory(const std::string& directory)
    {
       if (directory.empty()) 
       {
@@ -70,10 +70,10 @@ namespace TC
       return ::chdir(directory.c_str()) == 0;
    }
 
-   std::string File::GetDirectory()
+   std::string file::GetDirectory()
    {
       char buffer[512] = "";
-      if (!::getcwd(buffer, Util::ArraySize(buffer)))
+      if (!::getcwd(buffer, util::ArraySize(buffer)))
       {
          buffer[0] = 0;
       }
@@ -81,46 +81,46 @@ namespace TC
       return buffer;
    }
 
-   bool File::Exists(const std::string & file)
+   bool file::Exists(const std::string & file)
    {
       struct stat buf;
       return stat(file.c_str(), &buf) == 0;
    }
 
    // Check whether its a directory
-   bool File::IsDirectory(const std::string & file)
+   bool file::IsDirectory(const std::string & file)
    {
       struct stat info;
       return stat(file.c_str(), &info) == 0 && S_ISDIR(info.st_mode);
    }
 
    // Check whether its a file
-   bool File::IsFile(const std::string & file)
+   bool file::IsFile(const std::string & file)
    {
       struct stat info;
       return stat(file.c_str(), &info) == 0 && S_ISREG(info.st_mode);
    }
 
    // Return 1 if file is readable
-   bool File::IsReadable(const std::string &file)
+   bool file::IsReadable(const std::string &file)
    {
       return access(file.c_str(), R_OK) == 0;
    }
 
    // Return 1 if file is writeable
-   bool File::IsWriteable(const std::string &file)
+   bool file::IsWriteable(const std::string &file)
    {
       return access(file.c_str(), W_OK) == 0;
    }
 
    // Return 1 if file is executable
-   bool File::IsExecutable(const std::string &file)
+   bool file::IsExecutable(const std::string &file)
    {
       return access(file.c_str(), X_OK) == 0;
    }
 
    // Change the mode flags for this file
-   bool File::SetFileAttr(const std::string &file, uint32 attr)
+   bool file::SetFileAttr(const std::string &file, uint32 attr)
    {
       sint32 a = 0;
       if (attr && FILEATTR_WRITE == FILEATTR_WRITE) {
@@ -147,7 +147,7 @@ namespace TC
       return file!="" && chmod(file.c_str(), a)==0;
    }
 
-   bool File::Remove(const std::string & file)
+   bool file::Remove(const std::string & file)
    {
       if (!Exists(file))
       {
@@ -164,7 +164,7 @@ namespace TC
       }
    }
 
-   bool File::Copy(const std::string& source, const std::string& dest, SharedPtr<Progress> copy_status)
+   bool file::Copy(const std::string& source, const std::string& dest, SharedPtr<Progress> copy_status)
    {
       if (!IsFile(source))
       {
@@ -208,7 +208,7 @@ namespace TC
       return true;
    }
 
-   bool File::Move(const std::string& source, const std::string& dest)
+   bool file::Move(const std::string& source, const std::string& dest)
    {
       if (!IsFile(source))
       {
@@ -218,7 +218,7 @@ namespace TC
       return ::rename(source.c_str(), dest.c_str()) == 0;
    }
 
-   bool File::CreateDir(const std::string& path)
+   bool file::CreateDir(const std::string& path)
    {
       if (path.empty()) 
       {
@@ -228,7 +228,7 @@ namespace TC
       return ::mkdir(path.c_str(), 0777) == 0;
    }
 
-   bool File::RemoveDir(const std::string& path)
+   bool file::RemoveDir(const std::string& path)
    {
       if (path.empty()) return false;
 
@@ -236,63 +236,63 @@ namespace TC
    }
 
    // Return time file was last modified
-   uint64 File::GetModificationTime(const std::string &file)
+   uint64 file::GetModificationTime(const std::string &file)
    {
       struct stat status;
       return stat(file.c_str(), &status) == 0 ? (uint64)status.st_mtime : 0;
    }
 
    // Return time file was last accessed
-   uint64 File::GetLastAccessTime(const std::string &file)
+   uint64 file::GetLastAccessTime(const std::string &file)
    {
       struct stat status;
       return stat(file.c_str(), &status) == 0 ? (uint64)status.st_atime : 0;
    }
 
    // Return time when created
-   uint64 File::GetCreationTime(const std::string &file)
+   uint64 file::GetCreationTime(const std::string &file)
    {
       struct stat status;
       return stat(file.c_str(), &status) == 0 ? (uint64)status.st_ctime : 0;
    }
 
    // Get file size
-   uint64 File::GetFileSize(const std::string &file)
+   uint64 file::GetFileSize(const std::string &file)
    {
       struct stat status;
       return stat(file.c_str(), &status) == 0 ? (uint64)status.st_size : 0;
    }
 
    // get name of file user
-   std::string File::GetFileUser(const std::string &file)
+   std::string file::GetFileUser(const std::string &file)
    {
       struct stat status;
       uint32 user_id = stat(file.c_str(), &status) == 0 ? status.st_uid : 0;
       struct passwd *pwd = ::getpwuid(user_id);
       if (!pwd)
       {
-         TCERROR("TCBASE", System::GetLastErrorMessage().c_str());
+         TCERROR("TCBASE", system::GetLastErrorMessage().c_str());
          return "";
       }      
       return pwd->pw_name;
    }
 
    // get name of file group
-   std::string File::GetFileGroup(const std::string &file)
+   std::string file::GetFileGroup(const std::string &file)
    {
       struct stat status;
       uint32 group_id = stat(file.c_str(), &status) == 0 ? status.st_gid : 0;
       struct group *grp = ::getgrgid(group_id);
       if (!grp)
       {
-         TCERROR("TCBASE", System::GetLastErrorMessage().c_str());
+         TCERROR("TCBASE", system::GetLastErrorMessage().c_str());
          return "";
       }      
       return grp->gr_name;
    }
 
    std::vector < std::string >
-   File::GetFileListOfDirectory(const std::string & searchDirectory,
+   file::GetFileListOfDirectory(const std::string & searchDirectory,
                                 const std::string & searchExtension)
    {
       std::vector < std::string > fileList;
@@ -307,12 +307,12 @@ namespace TC
          file = de->d_name;
 
          // skip subdirname ".":
-         if (FileName::GetName(file) == "." || FileName::GetName(file) == "..")
+         if (file_name::GetName(file) == "." || file_name::GetName(file) == "..")
          {
             continue;
          }
 
-         std::string ext = FileName::GetExtension(file);
+         std::string ext = file_name::GetExtension(file);
          if (searchExtension.size() && ext != searchExtension)
          {
             continue;
@@ -324,7 +324,7 @@ namespace TC
       return fileList;
    }
 
-   void File::GetFileInfosOfDirectory(std::vector < FileInfo >& file_infos,
+   void file::GetFileInfosOfDirectory(std::vector < FileInfo >& file_infos,
       const std::string & searchDirectory,
       const std::string& searchExtension)
    {
@@ -341,18 +341,18 @@ namespace TC
          file_info.name = de->d_name;
 
          // skip subdirname ".":
-         if (FileName::GetName(file_info.name) == "." || FileName::GetName(file_info.name) == "..")
+         if (file_name::GetName(file_info.name) == "." || file_name::GetName(file_info.name) == "..")
          {
             continue;
          }
 
-         std::string ext = FileName::GetExtension(file_info.name);
+         std::string ext = file_name::GetExtension(file_info.name);
          if (searchExtension.size() && ext != searchExtension)
          {
             continue;
          }
 
-         std::string full_file = FileName::AddFileNameAndPath(file_info.name, searchDirectory);
+         std::string full_file = file_name::AddFileNameAndPath(file_info.name, searchDirectory);
 
          struct stat info;
          if (stat(full_file.c_str(), &info) == 0)

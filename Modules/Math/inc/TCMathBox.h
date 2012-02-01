@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -42,9 +42,9 @@
 #include <limits>
 #include <vector>
 
-namespace TC
+namespace tc
 {
-   namespace Math
+   namespace math
    {
       /**
        * @brief Class defining a box with two coordinates
@@ -122,14 +122,14 @@ namespace TC
          DataType GetLongest() const
          {
             COORD_TYPE diag = GetDiagonal();
-            return Util::Max(diag[0], diag[1], diag[2]);
+            return util::Max(diag[0], diag[1], diag[2]);
          }
 
          /// shortest side
          DataType GetShortest() const
          {
             COORD_TYPE diag = GetDiagonal();
-            return Util::Min(diag[0], diag[1], diag[2]);
+            return util::Min(diag[0], diag[1], diag[2]);
          }
 
          double GetDiameter() const 

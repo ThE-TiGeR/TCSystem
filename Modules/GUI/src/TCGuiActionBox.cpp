@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -40,9 +40,9 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-   namespace Gui
+   namespace gui
    {
       FXDEFMAP(ActionBox) TCGuiActionBoxMap[] =
       {
@@ -76,9 +76,9 @@ namespace TC
       {
          FX::FXButton *o = (FX::FXButton*)sender;
          sint32 w = o->getFont()->getTextWidth(o->getText().text(), o->getText().length());
-         if (o->getWidth() != Util::Max(w + 22 + 15, 85))
+         if (o->getWidth() != util::Max(w + 22 + 15, 85))
          {
-            o->setWidth(Util::Max(w + 22 + 15, 85));
+            o->setWidth(util::Max(w + 22 + 15, 85));
          }
 
          return 1;

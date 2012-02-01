@@ -40,15 +40,15 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
    namespace
    {
-      class ConstructTest: public Unit::TestCase
+      class ConstructTest: public unit::TestCase
       {
       public:
          ConstructTest()
-            :Unit::TestCase("TC::Tests::ConstructTest")
+            :unit::TestCase("tc::tests::ConstructTest")
          {
          }
          virtual void Execute()
@@ -62,11 +62,11 @@ namespace TC
          }
       };
 
-      class HashSizeTest: public Unit::TestCase
+      class HashSizeTest: public unit::TestCase
       {
       public:
          HashSizeTest()
-            :Unit::TestCase("TC::Tests::HashSizeTest")
+            :unit::TestCase("tc::tests::HashSizeTest")
          {
          }
          virtual void Execute()
@@ -77,11 +77,11 @@ namespace TC
          }
       };
 
-      class NotFoundValueTest: public Unit::TestCase
+      class NotFoundValueTest: public unit::TestCase
       {
       public:
          NotFoundValueTest()
-            :Unit::TestCase("TC::Tests::NotFoundValueTest")
+            :unit::TestCase("tc::tests::NotFoundValueTest")
          {
          }
          virtual void Execute()
@@ -92,11 +92,11 @@ namespace TC
          }
       };
 
-      class AddKeyTest: public Unit::TestCase
+      class AddKeyTest: public unit::TestCase
       {
       public:
          AddKeyTest()
-            :Unit::TestCase("TC::Tests::AddKeyTest")
+            :unit::TestCase("tc::tests::AddKeyTest")
          {
          }
          virtual void Execute()
@@ -113,11 +113,11 @@ namespace TC
          }
       };
 
-      class RemoveKeyTest: public Unit::TestCase
+      class RemoveKeyTest: public unit::TestCase
       {
       public:
          RemoveKeyTest()
-            :Unit::TestCase("TC::Tests::RemoveKeyTest")
+            :unit::TestCase("tc::tests::RemoveKeyTest")
          {
          }
          virtual void Execute()
@@ -132,11 +132,11 @@ namespace TC
          }
       };
 
-      class ClearTest: public Unit::TestCase
+      class ClearTest: public unit::TestCase
       {
       public:
          ClearTest()
-            :Unit::TestCase("TC::Tests::ClearTest")
+            :unit::TestCase("tc::tests::ClearTest")
          {
          }
          virtual void Execute()
@@ -151,11 +151,11 @@ namespace TC
          }
       };
 
-      class GetAllKeysTest: public Unit::TestCase
+      class GetAllKeysTest: public unit::TestCase
       {
       public:
          GetAllKeysTest()
-            :Unit::TestCase("TC::Tests::GetAllKeysTest")
+            :unit::TestCase("tc::tests::GetAllKeysTest")
          {
          }
          virtual void Execute()
@@ -172,11 +172,11 @@ namespace TC
          }
       };
 
-      class GetAllKeysAndValuesTest: public Unit::TestCase
+      class GetAllKeysAndValuesTest: public unit::TestCase
       {
       public:
          GetAllKeysAndValuesTest()
-            :Unit::TestCase("TC::Tests::GetAllKeysAndValuesTest")
+            :unit::TestCase("tc::tests::GetAllKeysAndValuesTest")
          {
          }
          virtual void Execute()
@@ -198,19 +198,19 @@ namespace TC
       };
    }
 
-   namespace Tests
+   namespace tests
    {
       HashTableTestSuite::HashTableTestSuite()
-         :Unit::TestSuite("TC::Tests::HashTableTestSuite")
+         :unit::TestSuite("tc::tests::HashTableTestSuite")
       {
-         AddTest(Unit::Test::Ptr(new ConstructTest));
-         AddTest(Unit::Test::Ptr(new HashSizeTest));
-         AddTest(Unit::Test::Ptr(new NotFoundValueTest));
-         AddTest(Unit::Test::Ptr(new AddKeyTest));
-         AddTest(Unit::Test::Ptr(new RemoveKeyTest));
-         AddTest(Unit::Test::Ptr(new ClearTest));
-         AddTest(Unit::Test::Ptr(new GetAllKeysTest));
-         AddTest(Unit::Test::Ptr(new GetAllKeysAndValuesTest));
+         AddTest(unit::Test::Ptr(new ConstructTest));
+         AddTest(unit::Test::Ptr(new HashSizeTest));
+         AddTest(unit::Test::Ptr(new NotFoundValueTest));
+         AddTest(unit::Test::Ptr(new AddKeyTest));
+         AddTest(unit::Test::Ptr(new RemoveKeyTest));
+         AddTest(unit::Test::Ptr(new ClearTest));
+         AddTest(unit::Test::Ptr(new GetAllKeysTest));
+         AddTest(unit::Test::Ptr(new GetAllKeysAndValuesTest));
       }
    }
 }

@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -41,7 +41,7 @@
 #include <string>
 #include <vector>
 
-namespace TC
+namespace tc
 {
    /**
    * @addtogroup TC_BASE
@@ -50,7 +50,7 @@ namespace TC
 
    /**
    * @file 
-   * This header file provides the definition of the namespace TC::System. 
+   * This header file provides the definition of the namespace tc::system. 
    * 
    * @author Thomas Goessler 
    */
@@ -58,7 +58,7 @@ namespace TC
    /**
    * @brief Namespace for getting operating system depending information
    */
-   namespace System
+   namespace system
    {
       /** @return The operating system name */
       TCBASE_API std::string GetOSName();

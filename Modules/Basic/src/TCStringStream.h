@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -39,9 +39,9 @@
 
 #include <string>
 
-namespace TC
+namespace tc
 {
-namespace Impl
+namespace imp
 {
 
    /**
@@ -66,10 +66,10 @@ namespace Impl
    {
    public:
       /**
-       * Construct an TC::StringStream object
+       * Construct an tc::StringStream object
        */
       StringStream(CodecPtr codec, std::string& string);
-      /** destruct an TC::StringStream object */
+      /** destruct an tc::StringStream object */
       virtual ~StringStream();
 
       virtual bool SetPosition(sint64, StreamPosition pos);
@@ -89,7 +89,7 @@ namespace Impl
     * @}
     */
 
-   } // namespace Impl
-} // namespace TC
+   } // namespace imp
+} // namespace tc
 
 #endif // _TC_STRING_STREAM_H_

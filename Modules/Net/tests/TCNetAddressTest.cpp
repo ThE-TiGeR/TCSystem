@@ -40,17 +40,17 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-   namespace Net
+   namespace net
    {
       namespace
       {
-         class AddressConstsTest: public Unit::TestCase
+         class AddressConstsTest: public unit::TestCase
          {
          public:
             AddressConstsTest()
-               :Unit::TestCase("TC::Net::Tests::AddressConstsTest")
+               :unit::TestCase("tc::net::tests::AddressConstsTest")
             {
             }
 
@@ -63,12 +63,12 @@ namespace TC
          };
       }
 
-      namespace Tests
+      namespace tests
       {
          AddressTestSuite::AddressTestSuite()
-            :Unit::TestSuite("TC::Net::Tests::AddressTestSuite")
+            :unit::TestSuite("tc::net::tests::AddressTestSuite")
          {
-            AddTest(Unit::Test::Ptr(new AddressConstsTest));
+            AddTest(unit::Test::Ptr(new AddressConstsTest));
          }
       }
    }

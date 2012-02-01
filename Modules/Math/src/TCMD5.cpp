@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -41,11 +41,11 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-namespace Math
+namespace math
 {
-namespace Impl
+namespace imp
 {
 
 struct MD5Context
@@ -317,7 +317,7 @@ std::string MD5::GetHashString() const
    char hash_string[33];
    for(uint32 n = 0; n < 16; n++)
    {
-      String::Snprintf(hash_string + n*2, sizeof(hash_string), "%02x", md5_context->digest[n]);
+      string::Snprintf(hash_string + n*2, sizeof(hash_string), "%02x", md5_context->digest[n]);
    }
 
    return hash_string;
@@ -334,6 +334,6 @@ std::string MD5::GetHashDigets() const
    return hash_string;
 }
 
-} // namespace Impl
-} // namespace Math
-} // namespace TC
+} // namespace imp
+} // namespace math
+} // namespace tc

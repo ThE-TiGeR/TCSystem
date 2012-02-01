@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -44,11 +44,11 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-   namespace Net
+   namespace net
    {
-      namespace Impl
+      namespace imp
       {
          SocketImp::SocketImp(SocketId s)
             :m_socket(s)
@@ -68,7 +68,7 @@ namespace TC
 
          bool SocketImp::Close()
          {
-            return Util::CloseSocket(m_socket);
+            return util::CloseSocket(m_socket);
          }
 
          SocketId SocketImp::GetSocket()
@@ -86,7 +86,7 @@ namespace TC
             int nbytes = ::recv(m_socket, (char*)buffer, int(size), 0);
             if(nbytes == 0 || nbytes == socket_error)
             {
-               Util::PrintSocketError("Net::Impl::SocketImp::ReceiveBytes, recv failed", true);
+               util::PrintSocketError("net::imp::SocketImp::ReceiveBytes, recv failed", true);
                Close();
                return 0;
             }
@@ -124,12 +124,12 @@ namespace TC
                sint32 s = ::select(1 + 1, &read_set, 0, 0, &rx_timeout);
                if (s == socket_error)
                {
-                  Util::PrintSocketError("SocketImp::ReceiveBytes with timeout select failed", true);
+                  util::PrintSocketError("SocketImp::ReceiveBytes with timeout select failed", true);
                   return false;
                }
                else if (s == 0)
                {
-                  Util::PrintSocketError("SocketImp::ReceiveBytes TIMEOUT!!!", true);
+                  util::PrintSocketError("SocketImp::ReceiveBytes TIMEOUT!!!", true);
                   return false;
                }
 
@@ -172,7 +172,7 @@ namespace TC
                 reinterpret_cast<sockaddr*>(&s_address),  &sockaddr_size);
             if(nbytes == 0 || nbytes == socket_error)
             {
-               Util::PrintSocketError("Net::Impl::SocketImp::ReceiveBytesFrom, recvfrom failed", true);
+               util::PrintSocketError("net::imp::SocketImp::ReceiveBytesFrom, recvfrom failed", true);
                Close();
                return 0;
             }
@@ -196,8 +196,8 @@ namespace TC
                int nbytes = ::send(m_socket, buffer, int(size-nbytes_total), 0);
                if(nbytes == 0 || nbytes == socket_error)
                {
-                  Util::PrintSocketError(
-                     "Net::Impl::SocketImp::SendBytes, send failed", true);
+                  util::PrintSocketError(
+                     "net::imp::SocketImp::SendBytes, send failed", true);
                   Close();
                   return 0;
                }
@@ -229,7 +229,7 @@ namespace TC
                    0, reinterpret_cast<sockaddr*>(&address), sizeof(address));
                if(nbytes == 0 || nbytes == socket_error)
                {
-                  Util::PrintSocketError("Net::Impl::SocketImp::SendBytesTo, sendto failed", true);
+                  util::PrintSocketError("net::imp::SocketImp::SendBytesTo, sendto failed", true);
                   Close();
                   return 0;
                }

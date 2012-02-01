@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -39,17 +39,17 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-   namespace MT
+   namespace multi_threading
    {
-      static TC::Interlocked::Type s_unique_reply_id(0);
+      static tc::interlocked::Type s_unique_reply_id(0);
       static uint32 GetReplyIdentifier()
       {
           uint32 reply_id;
           do
           {
-             reply_id = static_cast<uint32>(TC::Interlocked::Increment(s_unique_reply_id));
+             reply_id = static_cast<uint32>(tc::interlocked::Increment(s_unique_reply_id));
           } while (reply_id == 0);
           return reply_id;
       }
@@ -57,7 +57,7 @@ namespace TC
       Message::Message( uint32 message_id )
           :m_message_id(message_id)
           ,m_reply_id(GetReplyIdentifier())
-          ,m_sender_thread(Factory::GetCurrentThread())
+          ,m_sender_thread(factory::GetCurrentThread())
       {
       }
 

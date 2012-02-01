@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -41,21 +41,21 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-   namespace Net
+   namespace net
    {
-      namespace SSLFactory
+      namespace ssl_factory
       {
          ReadWriteSocketPtr Connect(const Address& ip_addr, PortNumber port, Protocol protocol)
          {
-            SocketPtr socket = Factory::Connect(ip_addr, port, protocol);
+            SocketPtr socket = factory::Connect(ip_addr, port, protocol);
             if (!socket)
             {
                return ReadWriteSocketPtr();
             }
 
-            SharedPtr<Impl::SslSocket> ssl_socket(new Impl::SslSocket(socket));
+            SharedPtr<imp::SslSocket> ssl_socket(new imp::SslSocket(socket));
             if (!ssl_socket->Connect())
             {
                return ReadWriteSocketPtr();

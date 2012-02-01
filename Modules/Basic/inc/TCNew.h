@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -37,7 +37,7 @@
 
 #include "TCHeap.h"
 
-namespace TC
+namespace tc
 {
    /**
    * @addtogroup TC_BASE_DEBUG
@@ -46,7 +46,7 @@ namespace TC
 
    /**
    * @file
-   * @brief This file provides the definition of TC::New
+   * @brief This file provides the definition of tc::system
    *
    * @author Thomas Goessler
    */
@@ -55,7 +55,7 @@ namespace TC
    * @brief A class which provides the functionality 
    * to check allocations and deallocations
    */
-   namespace New
+   namespace system
    {
       /**
       * Get the only TCNew object

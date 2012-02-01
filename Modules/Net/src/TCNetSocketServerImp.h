@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -42,11 +42,11 @@
 
 #include <vector>
 
-namespace TC
+namespace tc
 {
-namespace Net
+namespace net
 {
-namespace Impl
+namespace imp
 {
 
    /**
@@ -68,7 +68,7 @@ namespace Impl
    public:
       /**
       * deletes the object and stops the server
-      * @see TC::Net::SocketServer::Stop()
+      * @see tc::net::SocketServer::Stop()
       */
       virtual ~SocketServerImp();
 
@@ -113,7 +113,7 @@ namespace Impl
        * Method can be overloaded to receive his own messages
        * @return false if the server should be stopped
        */
-      virtual bool HandleMessage(MT::MessagePtr message);
+      virtual bool HandleMessage(multi_threading::MessagePtr message);
 
    private:
       /** socket id`s of all connected clients */
@@ -121,7 +121,7 @@ namespace Impl
       /** receiver objects for all sockets */
       std::vector< DataReceiverPtr > m_receivers;
       /** pointer to the thread object of this server */
-      MT::ThreadPtr m_server_thread;
+      multi_threading::ThreadPtr m_server_thread;
 
       enum
       {
@@ -131,7 +131,7 @@ namespace Impl
       Time m_current_timeout;
       bool m_running;
 
-      friend SocketServerPtr Factory::CreateSocketServer();
+      friend SocketServerPtr factory::CreateSocketServer();
       friend class ThreadObject;
    };
 
@@ -139,9 +139,9 @@ namespace Impl
     * @}
     */
 
-} // namespace Impl
-} // namespace Net
-} // namespace TC
+} // namespace imp
+} // namespace net
+} // namespace tc
 
 
 #endif // _TCNET_SOCKET_SERVER_H_

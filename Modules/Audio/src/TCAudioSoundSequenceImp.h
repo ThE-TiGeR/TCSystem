@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -42,9 +42,9 @@
 
 #include <vector>
 
-namespace TC
+namespace tc
 {
-   namespace Audio
+   namespace audio
    {
       /**
       * @addtogroup TC_AUDIO_IMP
@@ -53,7 +53,7 @@ namespace TC
 
       /**
       * @file
-      * @brief This file provides the definition of TC::Audio::SoundSequenceImp
+      * @brief This file provides the definition of tc::audio::SoundSequenceImp
       *
       * @author Thomas Goessler
       */

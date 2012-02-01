@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -37,9 +37,9 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-   namespace OpenGL
+   namespace open_gl
    {
       Object::Object(const std::string& name)
       :NamedObject(name)
@@ -61,7 +61,7 @@ namespace TC
          FXMAPFUNC(FX::SEL_COMMAND, Object::ID_STYLE_BOUNDINGBOX, Object::OnCmdBoundingBox),
          FXMAPFUNC(FX::SEL_UPDATE,  Object::ID_STYLE_BOUNDINGBOX, Object::OnUpdBoundingBox)
       };
-      FXIMPLEMENT_ABSTRACT(Object, FX::FXObject, s_object_map, Util::ArraySize(s_object_map))
+      FXIMPLEMENT_ABSTRACT(Object, FX::FXObject, s_object_map, util::ArraySize(s_object_map))
 
 
          // Drawing style toggles

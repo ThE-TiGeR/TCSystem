@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -40,7 +40,7 @@
 
 #include <memory> // auto ptr
 
-namespace TC
+namespace tc
 {
    /**
     * @addtogroup TC_BASE
@@ -49,17 +49,17 @@ namespace TC
 
    /**
     * @file
-    * This header file provides the definition of the class TC::ScopedPtr.
+    * This header file provides the definition of the class tc::ScopedPtr.
     */
 
    /**
     * A class whose instances act like pointers and delete the pointer when the instance
     * goes out of scope.
     *
-    * TC::ScopedPtr mimics a built-in pointer except that it guarantees deletion
-    * of the object pointed to on destruction of the TC::ScopedPtr
-    * TC::ScopedPtr is a simple solution for simple needs;
-    * use TC::SharedPtr or std::auto_ptr if your needs are more complex.
+    * tc::ScopedPtr mimics a built-in pointer except that it guarantees deletion
+    * of the object pointed to on destruction of the tc::ScopedPtr
+    * tc::ScopedPtr is a simple solution for simple needs;
+    * use tc::SharedPtr or std::auto_ptr if your needs are more complex.
     */
    template < class T, class DELETER=CheckedDelete >
    class ScopedPtr
@@ -101,6 +101,6 @@ namespace TC
     *  @}
     */
 
-} // namespace TC
+} // namespace tc
 
 #endif // _TC_SCOPED_POINTER_H_

@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -37,7 +37,7 @@
 
 #include <cctype>
 
-namespace TC
+namespace tc
 {
    template <typename STRING_TYPE, typename FILE_NAME_TRAITS, typename STRING_TRAITS>
    class FileNameImpTmpl

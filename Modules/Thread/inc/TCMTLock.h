@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -38,9 +38,9 @@
 
 #include "TCNonCopyable.h"
 
-namespace TC
+namespace tc
 {
-namespace MT
+namespace multi_threading
 {
    /**
     * @addtogroup TC_MT
@@ -49,14 +49,14 @@ namespace MT
 
    /**
     * @file
-    * @brief This file provides the definition of TC::MT::LockerRef and TC::MT::LockerPtr
+    * @brief This file provides the definition of tc::multi_threading::LockerRef and tc::multi_threading::LockerPtr
     * @author Thomas Goessler
     */
 
    /**
     * @short Automatic locking class for references
     * Class for automatic locking of a critical objects
-    * (like TC::MT::Mutex,TC::MT::ClassLevelLockable, TC::MT::ObjectLevelLockable...).
+    * (like tc::multi_threading::Mutex,tc::multi_threading::ClassLevelLockable, tc::multi_threading::ObjectLevelLockable...).
     * The class has to provide the methods Lock and UnLock
     *
     * When constructing a Locker it automatically locks the critical object.
@@ -123,7 +123,7 @@ namespace MT
 
    /**
     * @brief Locking object for Pointers
-    * @see TC::MT::LockRef
+    * @see tc::multi_threading::LockRef
     */
    template <class T>
    class LockerPtr: protected NonCopyAble
@@ -159,8 +159,8 @@ namespace MT
     * @}
     */
 
-} // namespace MT
-} // namespace TC
+} // namespace multi_threading
+} // namespace tc
 
 
 #endif // _TC_MT_LOCK_H_

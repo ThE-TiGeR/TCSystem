@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -40,9 +40,9 @@
 #include "TCGuiBase.h"
 #include "TCHashTable.h"
 
-namespace TC
+namespace tc
 {
-   namespace Gui
+   namespace gui
    {
 
       /**
@@ -51,10 +51,10 @@ namespace TC
       */
 
       /**
-      * @brief Gui Application base class
+      * @brief gui Application base class
       * Provides funcions for getting icons, cursurs and texts because of ids
       */
-      class TCGUI_API Application: public TC::Application
+      class TCGUI_API Application: public tc::Application
       {
       public:   
          Application();

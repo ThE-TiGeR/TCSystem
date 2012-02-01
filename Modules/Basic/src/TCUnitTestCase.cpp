@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -48,17 +48,17 @@ namespace
    class FailureException : public std::exception
    {
    public:
-      FailureException(const TC::Unit::Failure& failure) : failure_(failure) {}
-      const TC::Unit::Failure& failure() const { return failure_; }
+      FailureException(const tc::unit::Failure& failure) : failure_(failure) {}
+      const tc::unit::Failure& failure() const { return failure_; }
       /** Inherited from std::exception. Overloaded fatally since nobody
       should get a chance to call it. */
       virtual const char* what() { assert(false); return 0;}
 
    private:
-      TC::Unit::Failure failure_;
+      tc::unit::Failure failure_;
    };
 
-   static void add_failure_description(std::string& msg, const TC::Unit::Failure& f)
+   static void add_failure_description(std::string& msg, const tc::unit::Failure& f)
    {
       msg += f.FailedCondition();
       msg += " (";
@@ -72,9 +72,9 @@ namespace
 
 }
 
-namespace TC 
+namespace tc 
 {
-   namespace Unit 
+   namespace unit 
    {
 
       void TestCase::InternalRun(TestResult::Ptr result, CleanlinessCheck::CPtr cleanliness_check)

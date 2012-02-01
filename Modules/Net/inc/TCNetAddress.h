@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -41,11 +41,11 @@
 
 #include <string>
 
-namespace TC
+namespace tc
 {
-   namespace Net
+   namespace net
    {
-      namespace Impl
+      namespace imp
       {
          class Base;
       }
@@ -63,37 +63,37 @@ namespace TC
       public:
          /**
          * constructs an net address with internet address none
-         * @see TC::Net::Address::initAddress()
+         * @see tc::net::Address::initAddress()
          */
          Address();
          /**
          * constructs an net address with hostname
-         * @see TC::Net::Address::SetHostName(const std::string &name)
+         * @see tc::net::Address::SetHostName(const std::string &name)
          */
          explicit Address(const std::string &name);
          /**
          * constructs an net address with uint32 ip address (no ipv6)
-         * @see TC::Net::Address::SetHostName(uint32 ip_address)
+         * @see tc::net::Address::SetHostName(uint32 ip_address)
          */
          explicit Address(uint32 ip_address);
          /**
          * copy contructor
-         * @see TC::Net::Address::SetAddress(const TC::Net::Address &add)
+         * @see tc::net::Address::SetAddress(const tc::net::Address &add)
          */
          Address(const Address&);
          /**
          * constructs an net address with an internataddress
-         * @see TC::Net::Address::SetAddress(const TC::Net::InternetAddress &add)
+         * @see tc::net::Address::SetAddress(const tc::net::InternetAddress &add)
          */
          explicit Address(const InternetAddress &add);
          /**
          * constructs an net address with an internataddress
-         * @see TC::Net::Address::SetAddress(const TC::Net::SocketAddress &add)
+         * @see tc::net::Address::SetAddress(const tc::net::SocketAddress &add)
          */
          explicit Address(const SocketAddress&);
 
          /**
-         * deletes an TC::Net::Address object
+         * deletes an tc::net::Address object
          */
          virtual ~Address();
 
@@ -115,7 +115,7 @@ namespace TC
          /**
          * inits an net address because of the hostname
          * @param name holds string of the hostname
-         * @see TC::Net::Address::setupInternetAdress(const std::string &name)
+         * @see tc::net::Address::setupInternetAdress(const std::string &name)
          */
          void SetHostName(const std::string &name);
          /**
@@ -131,13 +131,13 @@ namespace TC
          /**
          * inits an net address with an internataddress
          * @param add holds the structure of an internet address
-         * @see TC::Net::InternetAddress
+         * @see tc::net::InternetAddress
          */
          void SetAddress(const InternetAddress &add);
          /**
          * inits an net address with an internataddress
          * @param add holds the structure of an socket address
-         * @see TC::Net::SocketAddress
+         * @see tc::net::SocketAddress
          */
          void SetAddress(const SocketAddress &add);
 
@@ -176,13 +176,13 @@ namespace TC
       private:
          /** structure of internet address */
          InternetAddress* m_address;
-         Impl::Base* m_base;
+         imp::Base* m_base;
       };
 
       /**
       * @}
       */
-   } // namespace Net
-} // namespace TC
+   } // namespace net
+} // namespace tc
 
 #endif

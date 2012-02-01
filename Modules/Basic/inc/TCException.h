@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -40,7 +40,7 @@
 #include <exception>
 #include <string>
 
-namespace TC
+namespace tc
 {
    /**
    * @addtogroup TC_BASE
@@ -49,7 +49,7 @@ namespace TC
 
    /**
    * @file
-   * @brief This file provides the definition of TC::Exception
+   * @brief This file provides the definition of tc::Exception
    *
    * @author Thomas Goessler
    */

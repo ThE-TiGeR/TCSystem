@@ -41,15 +41,15 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
    namespace
    {
-      class TimeFromSeconds: public Unit::TestCase
+      class TimeFromSeconds: public unit::TestCase
       {
       public:
          TimeFromSeconds()
-            :Unit::TestCase("TC::Tests::TimeFromSeconds")
+            :unit::TestCase("tc::tests::TimeFromSeconds")
          {
          }
 
@@ -65,11 +65,11 @@ namespace TC
          }
       };
 
-      class TimeFromMilliSeconds: public Unit::TestCase
+      class TimeFromMilliSeconds: public unit::TestCase
       {
       public:
          TimeFromMilliSeconds()
-            :Unit::TestCase("TC::Tests::TimeFromMilliSeconds")
+            :unit::TestCase("tc::tests::TimeFromMilliSeconds")
          {
          }
 
@@ -97,11 +97,11 @@ namespace TC
          }
       };
 
-      class FromMicroSeconds: public Unit::TestCase
+      class FromMicroSeconds: public unit::TestCase
       {
       public:
          FromMicroSeconds()
-            :Unit::TestCase("TC::Tests::FromMicroSeconds")
+            :unit::TestCase("tc::tests::FromMicroSeconds")
          {
          }
 
@@ -139,11 +139,11 @@ namespace TC
          }
       };
 
-      class FromNanoSeconds: public Unit::TestCase
+      class FromNanoSeconds: public unit::TestCase
       {
       public:
          FromNanoSeconds()
-            :Unit::TestCase("TC::Tests::FromNanoSeconds")
+            :unit::TestCase("tc::tests::FromNanoSeconds")
          {
          }
 
@@ -192,11 +192,11 @@ namespace TC
          }
       };
 
-      class AddTime: public Unit::TestCase
+      class AddTime: public unit::TestCase
       {
       public:
          AddTime()
-            :Unit::TestCase("TC::Tests::AddTime")
+            :unit::TestCase("tc::tests::AddTime")
          {
          }
 
@@ -220,11 +220,11 @@ namespace TC
          }
       };
 
-      class AddAssignTime: public Unit::TestCase
+      class AddAssignTime: public unit::TestCase
       {
       public:
          AddAssignTime()
-            :Unit::TestCase("TC::Tests::AddAssignTime")
+            :unit::TestCase("tc::tests::AddAssignTime")
          {
          }
 
@@ -248,11 +248,11 @@ namespace TC
          }
       };
 
-      class SubTime: public Unit::TestCase
+      class SubTime: public unit::TestCase
       {
       public:
          SubTime()
-            :Unit::TestCase("TC::Tests::SubTime")
+            :unit::TestCase("tc::tests::SubTime")
          {
          }
 
@@ -268,11 +268,11 @@ namespace TC
          }
       };
 
-      class SubAssignTime: public Unit::TestCase
+      class SubAssignTime: public unit::TestCase
       {
       public:
          SubAssignTime()
-            :Unit::TestCase("TC::Tests::SubAssignTime")
+            :unit::TestCase("tc::tests::SubAssignTime")
          {
          }
 
@@ -288,11 +288,11 @@ namespace TC
          }
       };
 
-      class CompareTime: public Unit::TestCase
+      class CompareTime: public unit::TestCase
       {
       public:
          CompareTime()
-            :Unit::TestCase("TC::Tests::CompareTime")
+            :unit::TestCase("tc::tests::CompareTime")
          {
          }
 
@@ -315,20 +315,20 @@ namespace TC
       };
    }
 
-   namespace Tests
+   namespace tests
    {
       TimeTestSuite::TimeTestSuite()
-         :Unit::TestSuite("TC::Tests::TimeTestSuite")
+         :unit::TestSuite("tc::tests::TimeTestSuite")
       {
-         AddTest(Unit::Test::Ptr(new TimeFromSeconds));
-         AddTest(Unit::Test::Ptr(new TimeFromMilliSeconds));
-         AddTest(Unit::Test::Ptr(new FromMicroSeconds));
-         AddTest(Unit::Test::Ptr(new FromNanoSeconds));
-         AddTest(Unit::Test::Ptr(new AddTime));
-         AddTest(Unit::Test::Ptr(new AddAssignTime));
-         AddTest(Unit::Test::Ptr(new SubTime));
-         AddTest(Unit::Test::Ptr(new SubAssignTime));
-         AddTest(Unit::Test::Ptr(new CompareTime));
+         AddTest(unit::Test::Ptr(new TimeFromSeconds));
+         AddTest(unit::Test::Ptr(new TimeFromMilliSeconds));
+         AddTest(unit::Test::Ptr(new FromMicroSeconds));
+         AddTest(unit::Test::Ptr(new FromNanoSeconds));
+         AddTest(unit::Test::Ptr(new AddTime));
+         AddTest(unit::Test::Ptr(new AddAssignTime));
+         AddTest(unit::Test::Ptr(new SubTime));
+         AddTest(unit::Test::Ptr(new SubAssignTime));
+         AddTest(unit::Test::Ptr(new CompareTime));
       }
    }
 }

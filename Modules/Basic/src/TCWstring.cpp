@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -41,103 +41,103 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
    typedef StringImpTmpl<std::wstring, WStringTraits> WStringImp;
 
-   std::wstring WString::ToString(wchar_t val)
+   std::wstring wstring::ToString(wchar_t val)
    {
       wchar_t string[2] = {val, 0};
       return string;
    }
 
-   std::wstring WString::ToString(bool val)
+   std::wstring wstring::ToString(bool val)
    {
       return val ? L"1" : L"0";
    }
 
-   std::wstring WString::ToString(uint16 val)
+   std::wstring wstring::ToString(uint16 val)
    {
       wchar_t string[32];
-      Snprintf(string, Util::ArraySize(string), L"%u", val);
+      Snprintf(string, util::ArraySize(string), L"%u", val);
 
       return string;
    }
 
-   std::wstring WString::ToString(sint16 val)
+   std::wstring wstring::ToString(sint16 val)
    {
       wchar_t string[32];
-      Snprintf(string, Util::ArraySize(string), L"%d", val);
+      Snprintf(string, util::ArraySize(string), L"%d", val);
 
       return string;
    }
 
-   std::wstring WString::ToString(uint32 val)
+   std::wstring wstring::ToString(uint32 val)
    {
       wchar_t string[32];
-      Snprintf(string, Util::ArraySize(string), L"%u", val);
+      Snprintf(string, util::ArraySize(string), L"%u", val);
 
       return string;
    }
 
-   std::wstring WString::ToString(sint32 val)
+   std::wstring wstring::ToString(sint32 val)
    {
       wchar_t string[32];
-      Snprintf(string, Util::ArraySize(string), L"%d", val);
+      Snprintf(string, util::ArraySize(string), L"%d", val);
 
       return string;
    }
 
-   std::wstring WString::ToString(uint64 val)
+   std::wstring wstring::ToString(uint64 val)
    {
       wchar_t string[32];
-      Snprintf(string, Util::ArraySize(string), L"%" TC_UINT64_WFORMAT, val);
+      Snprintf(string, util::ArraySize(string), L"%" TC_UINT64_WFORMAT, val);
 
       return string;
    }
 
-   std::wstring WString::ToString(sint64 val)
+   std::wstring wstring::ToString(sint64 val)
    {
       wchar_t string[32];
-      Snprintf(string, Util::ArraySize(string), L"%" TC_SINT64_WFORMAT, val);
+      Snprintf(string, util::ArraySize(string), L"%" TC_SINT64_WFORMAT, val);
 
       return string;
    }
 
-   std::wstring WString::ToString(float val)
+   std::wstring wstring::ToString(float val)
    {
       wchar_t string[32];
-      Snprintf(string, Util::ArraySize(string), L"%f", val);
+      Snprintf(string, util::ArraySize(string), L"%f", val);
 
       return string;
    }
 
-   std::wstring WString::ToString(double val)
+   std::wstring wstring::ToString(double val)
    {
       wchar_t string[32];
-      Snprintf(string, Util::ArraySize(string), L"%lf", val);
+      Snprintf(string, util::ArraySize(string), L"%lf", val);
 
       return string;
    }
 
-   bool WString::IsIntValue(const std::wstring& val)
+   bool wstring::IsIntValue(const std::wstring& val)
    {
       sint32 tmp;
       return std::swscanf(val.c_str(), L"%d", &tmp) == 1;
    }
 
-   bool WString::IsFltValue(const std::wstring& val)
+   bool wstring::IsFltValue(const std::wstring& val)
    {
       double tmp;
       return std::swscanf(val.c_str(), L"%lf", &tmp) == 1;
    }
 
-   bool WString::IsValue(const std::wstring& val)
+   bool wstring::IsValue(const std::wstring& val)
    {
       return (IsIntValue(val) || IsFltValue(val));
    }
 
-   double WString::ToFlt64(const std::wstring& val)
+   double wstring::ToFlt64(const std::wstring& val)
    {
       double v;
       if (std::swscanf(val.c_str(), L"%lf", &v) != 1)
@@ -148,7 +148,7 @@ namespace TC
       return v;
    }
 
-   float WString::ToFlt32(const std::wstring& val)
+   float wstring::ToFlt32(const std::wstring& val)
    {
       float v;
       if (std::swscanf(val.c_str(), L"%f", &v) != 1)
@@ -159,7 +159,7 @@ namespace TC
       return v;
    }
 
-   sint8 WString::ToSint8(const std::wstring& val)
+   sint8 wstring::ToSint8(const std::wstring& val)
    {
       sint8 v;
       if (std::swscanf(val.c_str(), L"%c", &v) != 1)
@@ -170,7 +170,7 @@ namespace TC
       return v;
    }
 
-   uint8 WString::ToUint8(const std::wstring& val)
+   uint8 wstring::ToUint8(const std::wstring& val)
    {
       uint8 v;
       if (std::swscanf(val.c_str(), L"%c", &v) != 1)
@@ -181,7 +181,7 @@ namespace TC
       return v;
    }
 
-   sint16 WString::ToSint16(const std::wstring& val)
+   sint16 wstring::ToSint16(const std::wstring& val)
    {
       sint16 v;
       if (std::swscanf(val.c_str(), L"%hd", &v) != 1)
@@ -192,7 +192,7 @@ namespace TC
       return v;
    }
 
-   uint16 WString::ToUint16(const std::wstring& val)
+   uint16 wstring::ToUint16(const std::wstring& val)
    {
       uint16 v;
       if (std::swscanf(val.c_str(), L"%hu", &v) != 1)
@@ -203,7 +203,7 @@ namespace TC
       return v;
    }
 
-   sint32 WString::ToSint32(const std::wstring& val)
+   sint32 wstring::ToSint32(const std::wstring& val)
    {
       sint32 v;
       if (std::swscanf(val.c_str(), L"%d", &v) != 1)
@@ -214,7 +214,7 @@ namespace TC
       return v;
    }
 
-   uint32 WString::ToUint32(const std::wstring& val)
+   uint32 wstring::ToUint32(const std::wstring& val)
    {
       uint32 v;
       if (std::swscanf(val.c_str(), L"%u", &v) != 1)
@@ -225,7 +225,7 @@ namespace TC
       return v;
    }
 
-   sint64 WString::ToSint64(const std::wstring& val)
+   sint64 wstring::ToSint64(const std::wstring& val)
    {
       sint64 v;
       if (std::swscanf(val.c_str(), L"%" TC_SINT64_WFORMAT, &v) != 1)
@@ -236,7 +236,7 @@ namespace TC
       return v;
    }
 
-   uint64 WString::ToUint64(const std::wstring& val)
+   uint64 wstring::ToUint64(const std::wstring& val)
    {
       uint64 v;
       if (std::swscanf(val.c_str(), L"%" TC_UINT64_WFORMAT, &v) != 1)
@@ -247,7 +247,7 @@ namespace TC
       return v;
    }
 
-   bool WString::ToBool(const std::wstring& val)
+   bool wstring::ToBool(const std::wstring& val)
    {
       wchar_t v;
       if (std::swscanf(val.c_str(), L"%c", &v) != 1)
@@ -258,71 +258,71 @@ namespace TC
       return v != 0;
    }
 
-   std::wstring WString::ToUpper(const std::wstring& text_in)
+   std::wstring wstring::ToUpper(const std::wstring& text_in)
    {
       return WStringImp::ToUpper(text_in);
    }
 
-   std::wstring WString::ToLower(const std::wstring& text_in)
+   std::wstring wstring::ToLower(const std::wstring& text_in)
    {
       return WStringImp::ToLower(text_in);
    }
 
-   bool WString::Split(const std::wstring& text, const std::wstring& split,
+   bool wstring::Split(const std::wstring& text, const std::wstring& split,
       std::wstring& part1, std::wstring& part2)
    {
       return WStringImp::Split(text, split, part1, part2);
    }
 
-   bool WString::Split(const std::wstring& text, const std::wstring& limiter,
+   bool wstring::Split(const std::wstring& text, const std::wstring& limiter,
       std::vector< std::wstring >& data)
    {
       return WStringImp::Split(text, limiter, data);
    }
 
-   void WString::Join(const std::vector<std::wstring>& texts, const std::wstring& limiter, std::wstring& text)
+   void wstring::Join(const std::vector<std::wstring>& texts, const std::wstring& limiter, std::wstring& text)
    {
       WStringImp::Join(texts, limiter, text);
    }
 
-   std::wstring WString::TrimmSpaces(const std::wstring& text)
+   std::wstring wstring::TrimmSpaces(const std::wstring& text)
    {
       return WStringImp::TrimmSpaces(text);
    }
 
-   std::wstring WString::TrimmLeadingSpaces(const std::wstring& text)
+   std::wstring wstring::TrimmLeadingSpaces(const std::wstring& text)
    {
       return WStringImp::TrimmLeadingSpaces(text);
    }
 
-   std::wstring WString::TrimmTrailingSpaces(const std::wstring& text)
+   std::wstring wstring::TrimmTrailingSpaces(const std::wstring& text)
    {
       return WStringImp::TrimmTrailingSpaces(text);
    }
 
-   std::wstring WString::DeleteBlanksAndTabs(const std::wstring& text_in)
+   std::wstring wstring::DeleteBlanksAndTabs(const std::wstring& text_in)
    {
       std::wstring text = WStringImp::Replace(text_in, L" ", L"");
       return WStringImp::Replace(text, L"\t", L"");
    }
 
-   std::wstring WString::Replace(const std::wstring& text_in, wchar_t r1, wchar_t r2)
+   std::wstring wstring::Replace(const std::wstring& text_in, wchar_t r1, wchar_t r2)
    {
       return WStringImp::Replace(text_in, r1, r2);
    }
 
-   std::wstring WString::Replace(const std::wstring& text_in,
+   std::wstring wstring::Replace(const std::wstring& text_in,
       const std::wstring& r1, const std::wstring& r2)
    {
       return WStringImp::Replace(text_in, r1, r2);
    }
 
-   sint32 WString::VSnprintf(wchar_t* buf, uint32 size_of_buf, const wchar_t* fmt, va_list arguments)
+   sint32 wstring::VSnprintf(wchar_t* buf, uint32 size_of_buf, const wchar_t* fmt, va_list arguments)
    {
       return WStringTraits::VsnPrintf(buf, size_of_buf, fmt, arguments);
    }
 
-   sint32 WString::Snprintf(wchar_t* buf, uint32 size_of_buf, const wchar_t* fmt, ...)
+   sint32 wstring::Snprintf(wchar_t* buf, uint32 size_of_buf, const wchar_t* fmt, ...)
    {
       va_list arguments;
       va_start(arguments, fmt);
@@ -342,7 +342,7 @@ namespace TC
        return WStringImp::StringICompare(s1, s2, len_to_compare);
    }
 
-   std::wstring WString::Print(const wchar_t *fmt, ...)
+   std::wstring wstring::Print(const wchar_t *fmt, ...)
    {
       va_list arguments;
       va_start(arguments, fmt);
@@ -352,12 +352,12 @@ namespace TC
       return buf;
    }
 
-   std::wstring WString::VPrint(const wchar_t *fmt, va_list arguments)
+   std::wstring wstring::VPrint(const wchar_t *fmt, va_list arguments)
    {
       return WStringImp::VPrint(fmt , arguments);
    }
 
-   std::wstring WString::ToString(const char* utf8_string)
+   std::wstring wstring::ToString(const char* utf8_string)
    {
       if (utf8_string)
       {
@@ -367,7 +367,7 @@ namespace TC
       return L"";
    }
 
-   std::wstring WString::ToString(const std::string& utf8_string)
+   std::wstring wstring::ToString(const std::string& utf8_string)
    {
       if (utf8_string.length() > 0)
       {
@@ -407,7 +407,7 @@ namespace TC
       return L"";
    }
 
-   std::string WString::ToString(const wchar_t* string)
+   std::string wstring::ToString(const wchar_t* string)
    {
       if (string)
       {
@@ -417,7 +417,7 @@ namespace TC
       return "";
    }
 
-   std::string WString::ToString(const std::wstring& string)
+   std::string wstring::ToString(const std::wstring& string)
    {
       if (string.length() > 0)
       {

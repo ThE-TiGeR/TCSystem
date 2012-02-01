@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -40,12 +40,12 @@
 
 #include <vector>
 
-namespace TC
+namespace tc
 {
-   namespace Audio
+   namespace audio
    {
       class TC_DLL_LOCAL SoundDataCompound: public SoundData,
-                                            protected MT::ObjectLevelLockable<SoundDataCompound>
+                                            protected multi_threading::ObjectLevelLockable<SoundDataCompound>
       {
       public:
          SoundDataCompound();
@@ -62,8 +62,8 @@ namespace TC
       protected:
          std::vector<SoundDataPtr> m_sound_data;
 
-         typedef MT::LockerPtr<const SoundDataCompound*> Locker;
-         friend class MT::LockerPtr<const SoundDataCompound*>;
+         typedef multi_threading::LockerPtr<const SoundDataCompound*> Locker;
+         friend class multi_threading::LockerPtr<const SoundDataCompound*>;
       };
 
       typedef SharedPtr<SoundDataCompound> SoundDataCompoundPtr;

@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -41,7 +41,7 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
    MemoryMappedFileWin32::MemoryMappedFileWin32()
       :m_size(0),
@@ -82,7 +82,7 @@ namespace TC
 
    bool MemoryMappedFileWin32::MapToMemory(const std::string& fileName, bool readonly, uint32 size)
    {
-      return MapToMemory(WString::ToString(fileName), readonly, size);
+      return MapToMemory(wstring::ToString(fileName), readonly, size);
    }
 
    bool MemoryMappedFileWin32::MapToMemory(const std::wstring& fileName, bool readonly, uint32 size)

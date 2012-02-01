@@ -37,11 +37,11 @@
 
 #include "TCUnitTestSuite.h"
 
-namespace TC
+namespace tc
 {
-   namespace Tests
+   namespace tests
    {
-      class FileNameTestSuite : public Unit::TestSuite
+      class FileNameTestSuite : public unit::TestSuite
       {
       public:
          FileNameTestSuite();

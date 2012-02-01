@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -44,7 +44,7 @@
 #include <vector>
 #include <cstdio>
 
-namespace TC
+namespace tc
 {
    /**
     * @addtogroup TC_BASE
@@ -53,14 +53,14 @@ namespace TC
 
    /**
     * @file
-    * This header file provides the definition of the namespace TC::Factory
+    * This header file provides the definition of the namespace tc::factory
     * @author Thomas Goessler
     */
 
    /**
-    * @brief Factory for creating TC objects
+    * @brief factory for creating tc objects
     */
-   namespace Factory
+   namespace factory
    {
       /**
        * @brief Create an ascii codec
@@ -86,7 +86,7 @@ namespace TC
       /**
        * @brief Create an file stream
        * @param stream    Pointer to an open file
-       * @param direction Direction of the stream see TC::Stream::StreamDirection
+       * @param direction Direction of the stream see tc::Stream::StreamDirection
        * @param codec     Shared pointer to a codec for encoding or decoding the data
        * @return Shared pointer to the stream
        */
@@ -96,7 +96,7 @@ namespace TC
       /**
        * @brief Create an file stream
        * @param fileName  name of the file to open
-       * @param direction Direction of the stream see TC::Stream::StreamDirection
+       * @param direction Direction of the stream see tc::Stream::StreamDirection
        * @param codec     Shared pointer to a codec for encoding or decoding the data
        * @return Shared pointer to the stream
        */
@@ -107,7 +107,7 @@ namespace TC
       /**
        * @brief Create an gz compressed file stream
        * @param fileName  name of the file to open
-       * @param direction Direction of the stream see TC::Stream::StreamDirection
+       * @param direction Direction of the stream see tc::Stream::StreamDirection
        * @param codec     Shared pointer to a codec for encoding or decoding the data
        * @return Shared pointer to the stream
        */
@@ -118,7 +118,7 @@ namespace TC
       /**
        * @brief Create an bz2 compressed file stream
        * @param fileName  name of the file to open
-       * @param direction Direction of the stream see TC::Stream::StreamDirection
+       * @param direction Direction of the stream see tc::Stream::StreamDirection
        * @param codec     Shared pointer to a codec for encoding or decoding the data
        * @return Shared pointer to the stream
        */
@@ -160,12 +160,12 @@ namespace TC
       TCBASE_API RngPtr Create69069Rng();
 
       TCBASE_API MemoryMappedFilePtr CreateMemoryMappedFile(const std::string &file_name, bool read_only, uint32 size=0);
-   } // namespace Factory
+   } // namespace factory
 
    /**
     * @}
     */
 
-} // namespace TC
+} // namespace tc
 
 #endif // _TC_FACTORY_H_

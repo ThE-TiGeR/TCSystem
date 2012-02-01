@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -42,19 +42,19 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-    namespace MT
+    namespace multi_threading
     {
-        namespace Tests
+        namespace tests
         {
             Suite::Suite()
-                : Unit::TestSuite("TC::MT::Tests::Suite")
+                : unit::TestSuite("tc::multi_threading::tests::Suite")
             {
-                AddTest(Unit::Test::Ptr(new MutexSuite));
-                AddTest(Unit::Test::Ptr(new SemaphoreSuite));
-                AddTest(Unit::Test::Ptr(new EventSuite));
-                AddTest(Unit::Test::Ptr(new ThreadSuite));
+                AddTest(unit::Test::Ptr(new MutexSuite));
+                AddTest(unit::Test::Ptr(new SemaphoreSuite));
+                AddTest(unit::Test::Ptr(new EventSuite));
+                AddTest(unit::Test::Ptr(new ThreadSuite));
             }
 
         }

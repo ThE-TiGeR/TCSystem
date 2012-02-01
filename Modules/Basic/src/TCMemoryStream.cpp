@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -41,9 +41,9 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-   namespace Impl
+   namespace imp
    {
 
       MemoryStream::MemoryStream(CodecPtr codec, ByteVector& memory)
@@ -107,7 +107,7 @@ namespace TC
 
       bool MemoryStream::SetPosition(sint64 pos, StreamPosition pos_mode)
       {
-         if (uint64(Util::Abs(pos)) > std::numeric_limits<ByteVector::size_type>::max())
+         if (uint64(util::Abs(pos)) > std::numeric_limits<ByteVector::size_type>::max())
          {
              return false;
          }

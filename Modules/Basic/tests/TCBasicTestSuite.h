@@ -38,11 +38,11 @@
 #include "TCDefines.h"
 #include "TCUnitTestSuite.h"
 
-namespace TC
+namespace tc
 {
-   namespace Tests
+   namespace tests
    {
-      class TCBASE_API BasicSuite : public Unit::TestSuite
+      class TCBASE_API BasicSuite : public unit::TestSuite
       {
       public:
          BasicSuite();

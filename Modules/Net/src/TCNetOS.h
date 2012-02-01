@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -72,11 +72,11 @@
 #  define INVALID_SOCKET (~0)
 #endif
 
-namespace TC
+namespace tc
 {
-namespace Net
+namespace net
 {
-namespace Impl
+namespace imp
 {
    enum
    {
@@ -94,8 +94,8 @@ namespace Impl
    typedef sint32  AddrLength;
 #endif
 
-} // namespace Impl
-} // namespace Net
-} // namespace TC
+} // namespace imp
+} // namespace net
+} // namespace tc
 
 #endif // _TCNET_OS_H_

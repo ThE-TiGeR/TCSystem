@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -56,27 +56,27 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-   namespace MT
+   namespace multi_threading
    {
 
-      ThreadPtr Factory::CreateThread(const std::string& thread_name,
+      ThreadPtr factory::CreateThread(const std::string& thread_name,
          uint32 stack_size/* =0 */, 
          Thread::ThreadPriority priority/* =Thread::PRIORITY_NORMAL */)
       {
 #ifdef TCOS_WINDOWS
-         return Impl::ThreadWin32::Create(thread_name, stack_size, priority);
+         return imp::ThreadWin32::Create(thread_name, stack_size, priority);
 #else
-         return Impl::ThreadPthread::Create(thread_name, stack_size, priority);
+         return imp::ThreadPthread::Create(thread_name, stack_size, priority);
 #endif
       }
 
-      ThreadPtr Factory::CreateCommandExecutionThread(const std::string& thread_name,
+      ThreadPtr factory::CreateCommandExecutionThread(const std::string& thread_name,
          uint32 stack_size/* =0 */, 
          Thread::ThreadPriority priority/* =Thread::PRIORITY_NORMAL */)
       {
-         ThreadPtr thread = Factory::CreateThread(thread_name, stack_size, priority);
+         ThreadPtr thread = factory::CreateThread(thread_name, stack_size, priority);
          if (!thread->Start(ThreadObjectPtr(new CommandExecutionThreadObject)))
          {
             return ThreadPtr();
@@ -85,26 +85,26 @@ namespace TC
          return thread;
       }
 
-      MessageDispatcherPtr Factory::CreateMessageDispatcher()
+      MessageDispatcherPtr factory::CreateMessageDispatcher()
       {
-         return MessageDispatcherPtr(new Impl::MessageDispatcherImp());
+         return MessageDispatcherPtr(new imp::MessageDispatcherImp());
       }
 
-      ThreadPtr Factory::GetCurrentThread()
+      ThreadPtr factory::GetCurrentThread()
       {
 #ifdef TCOS_WINDOWS
-         return Impl::ThreadWin32::Self();
+         return imp::ThreadWin32::Self();
 #else
-         return Impl::ThreadPthread::Self();
+         return imp::ThreadPthread::Self();
 #endif
       }
 
-      MutexPtr Factory::CreateMutex(bool locked /* = false */)
+      MutexPtr factory::CreateMutex(bool locked /* = false */)
       {
 #ifdef TCOS_WINDOWS
-         SharedPtr<Impl::MutexWin32> mutex(new Impl::MutexWin32);
+         SharedPtr<imp::MutexWin32> mutex(new imp::MutexWin32);
 #else
-         SharedPtr<Impl::MutexPthread> mutex(new Impl::MutexPthread);
+         SharedPtr<imp::MutexPthread> mutex(new imp::MutexPthread);
 #endif
          if (!mutex->Init(locked))
          {
@@ -113,13 +113,13 @@ namespace TC
 
          return mutex;
       }
-      MutexPtr Factory::CreateMutex(const std::string& shared_name,
+      MutexPtr factory::CreateMutex(const std::string& shared_name,
           bool locked/* =false */, CreationMode mode /* = CRM_ALWAYS */)
       {
 #ifdef TCOS_WINDOWS
-         SharedPtr<Impl::MutexWin32> mutex(new Impl::MutexWin32);
+         SharedPtr<imp::MutexWin32> mutex(new imp::MutexWin32);
 #else
-         SharedPtr<Impl::MutexSharedPthread> mutex(new Impl::MutexSharedPthread);
+         SharedPtr<imp::MutexSharedPthread> mutex(new imp::MutexSharedPthread);
 #endif
          if (!mutex->Init(shared_name, locked, mode))
          {
@@ -129,21 +129,21 @@ namespace TC
          return mutex;
       }
 
-      EventPtr Factory::CreateEvent(bool manual_reset, bool initial_state)
+      EventPtr factory::CreateEvent(bool manual_reset, bool initial_state)
       {
 #ifdef TCOS_WINDOWS
-         return EventPtr(new Impl::EventWin32(manual_reset, initial_state));
+         return EventPtr(new imp::EventWin32(manual_reset, initial_state));
 #else
-         return EventPtr(new Impl::EventPthread(manual_reset, initial_state));
+         return EventPtr(new imp::EventPthread(manual_reset, initial_state));
 #endif
       }
 
-      SemaphorePtr Factory::CreateSemaphore(uint32 initial_value /* = 1 */)
+      SemaphorePtr factory::CreateSemaphore(uint32 initial_value /* = 1 */)
       {
 #ifdef TCOS_WINDOWS
-         SharedPtr<Impl::SemaphoreWin32> semaphore(new Impl::SemaphoreWin32);
+         SharedPtr<imp::SemaphoreWin32> semaphore(new imp::SemaphoreWin32);
 #else
-         SharedPtr<Impl::SemaphorePthread> semaphore(new Impl::SemaphorePthread);
+         SharedPtr<imp::SemaphorePthread> semaphore(new imp::SemaphorePthread);
 #endif
          if (!semaphore->Init(initial_value))
          {
@@ -153,13 +153,13 @@ namespace TC
          return semaphore;
       }
 
-      SemaphorePtr Factory::CreateSemaphore(const std::string& shared_name,
+      SemaphorePtr factory::CreateSemaphore(const std::string& shared_name,
           uint32 initial_value, CreationMode mode /* = CRM_ALWAYS */)
       {
 #ifdef TCOS_WINDOWS
-         SharedPtr<Impl::SemaphoreWin32> semaphore(new Impl::SemaphoreWin32);
+         SharedPtr<imp::SemaphoreWin32> semaphore(new imp::SemaphoreWin32);
 #else
-         SharedPtr<Impl::SemaphorePthread> semaphore(new Impl::SemaphorePthread);
+         SharedPtr<imp::SemaphorePthread> semaphore(new imp::SemaphorePthread);
 #endif
          if (!semaphore->Init(shared_name, initial_value, mode))
          {
@@ -169,23 +169,23 @@ namespace TC
          return semaphore;
       }
 
-      ConditionPtr Factory::CreateCondition()
+      ConditionPtr factory::CreateCondition()
       {
 #ifdef TCOS_WINDOWS
-         return ConditionPtr(new Impl::ConditionWin32);
+         return ConditionPtr(new imp::ConditionWin32);
 #else
-         return ConditionPtr(new Impl::ConditionPthread);
+         return ConditionPtr(new imp::ConditionPthread);
 #endif
       }
 
-      ConditionPtr Factory::CreateCondition(MutexPtr mutex)
+      ConditionPtr factory::CreateCondition(MutexPtr mutex)
       {
 #ifdef TCOS_WINDOWS
-         return ConditionPtr(new Impl::ConditionWin32(mutex));
+         return ConditionPtr(new imp::ConditionWin32(mutex));
 #else
-         return ConditionPtr(new Impl::ConditionPthread(mutex));
+         return ConditionPtr(new imp::ConditionPthread(mutex));
 #endif
       }
 
-   } // namespace MT
-} // namespace TC
+   } // namespace multi_threading
+} // namespace tc

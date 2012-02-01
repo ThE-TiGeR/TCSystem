@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -39,9 +39,9 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-   namespace Gui
+   namespace gui
    {
 
       TCGUIBASE_IMPLEMENT(Label, FX::FXLabel, 0, 0)
@@ -49,7 +49,7 @@ namespace TC
       Label::Label(FX::FXComposite * p, const std::string &text_id, FX::FXIcon* ic,
                    uint32 opts, sint32 x, sint32 y, sint32 w, sint32 h,
                    sint32 pl, sint32 pr, sint32 pt, sint32 pb)
-         :FX::FXLabel(p, MLS::Handler::GetText(text_id).c_str(), ic, opts, x, y,w, h,pl,pr,pt,pb)
+         :FX::FXLabel(p, mls::Handler::GetText(text_id).c_str(), ic, opts, x, y,w, h,pl,pr,pt,pb)
          ,Widget(text_id)
       {
       }
@@ -57,7 +57,7 @@ namespace TC
       Label::Label(FX::FXComposite * p, const std::string &text_id, FX::FXIcon* ic, FX::FXObject * tgt, FX::FXSelector sel,
          uint32 opts, sint32 x, sint32 y, sint32 w, sint32 h,
          sint32 pl, sint32 pr, sint32 pt, sint32 pb)
-         :FX::FXLabel(p, MLS::Handler::GetText(text_id).c_str(), ic, opts, x, y,w, h,pl,pr,pt,pb)
+         :FX::FXLabel(p, mls::Handler::GetText(text_id).c_str(), ic, opts, x, y,w, h,pl,pr,pt,pb)
          ,Widget(text_id)
       {
          setTarget(tgt); 

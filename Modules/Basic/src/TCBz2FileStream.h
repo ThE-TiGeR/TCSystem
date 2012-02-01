@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -40,9 +40,9 @@
 #include <cstdio>
 #include <bzlib.h>
 
-namespace TC
+namespace tc
 {
-    namespace Impl
+    namespace imp
     {
 
         /**
@@ -52,7 +52,7 @@ namespace TC
 
         /**
         * @file
-        * @brief This file provides the definition of TC::Bz2FileStream
+        * @brief This file provides the definition of tc::Bz2FileStream
         *
         * @author Thomas Goessler
         */
@@ -86,7 +86,7 @@ namespace TC
         * @}
         */
 
-    } // namespace Impl
-} // namespace TC
+    } // namespace imp
+} // namespace tc
 
 #endif // _TC_BZ2_FILE_STREAM_H_

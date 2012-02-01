@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -45,14 +45,14 @@
 
 #include "TCNewEnable.h"
 
-namespace TC
+namespace tc
 {
-   namespace MT
+   namespace multi_threading
    {
-      namespace Impl
+      namespace imp
       {
          static ThreadWin32 s_main_thread("main", ::GetCurrentThread(), ::GetCurrentThreadId());
-         static ThreadPtr s_main_thread_ptr(&s_main_thread, TC::NoDelete());
+         static ThreadPtr s_main_thread_ptr(&s_main_thread, tc::NoDelete());
 
          ThreadPtr ThreadWin32::Create(const std::string& thread_name,
             uint32 stack_size,
@@ -71,7 +71,7 @@ namespace TC
             // add me to the list of created threads
             if (!m_threads_mutex)
             {
-               m_threads_mutex = Factory::CreateMutex();
+               m_threads_mutex = factory::CreateMutex();
             }
 
             m_threads_mutex->Lock();
@@ -213,8 +213,8 @@ namespace TC
             }
          }
 
-      } // namespace Impl
-   } // namespace MT
-} // namespace TC
+      } // namespace imp
+   } // namespace multi_threading
+} // namespace tc
 
 #endif // TCOS_WINDOWS

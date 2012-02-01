@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -40,9 +40,9 @@
 
 #include <string>
 
-namespace TC
+namespace tc
 {
-namespace Math
+namespace math
 {
    /**
     * @addtogroup TC_MATH
@@ -51,7 +51,7 @@ namespace Math
 
    /**
     * @file
-    * @brief This file provides the definition of TC::Math::Checksum
+    * @brief This file provides the definition of tc::math::Checksum
     * @author Thomas Goessler
     */
 
@@ -85,8 +85,8 @@ namespace Math
     * @}
     */
 
-} // namespace Math
-} // namespace TC
+} // namespace math
+} // namespace tc
 
 
 #endif //_TC_MATH_CHECKSUM_H_

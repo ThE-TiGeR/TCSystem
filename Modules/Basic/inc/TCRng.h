@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2010 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -38,7 +38,7 @@
 
 #include "TCSharedPtr.h"
 
-namespace TC
+namespace tc
 {
    /**
     * @addtogroup TC_BASE
@@ -47,7 +47,7 @@ namespace TC
 
    /**
     * @file
-    * @brief This file provides the definition of TC::Rng
+    * @brief This file provides the definition of tc::Rng
     *
     * @author Thomas Goessler
     */
@@ -86,6 +86,6 @@ namespace TC
     * @}
     */
 
-} // namespace TC
+} // namespace tc
 
 #endif // _TC_RNG_H_
