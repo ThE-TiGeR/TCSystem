@@ -1,6 +1,6 @@
-include (FindFOX)
-include (FindOpenGL)
-include (FindGLext)
+find_package(FOX)
+find_package(OpenGL)
+find_package(GLext)
 
 set (TC_OPENGL_PUBLIC_HEADER
     inc/TCOpenGL.h

@@ -1,5 +1,5 @@
-include(FindBZip2)
-include(FindZLIB)
+find_package(BZip2)
+find_package(ZLIB)
 
 include_directories (
    inc

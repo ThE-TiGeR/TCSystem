@@ -1,4 +1,4 @@
-include (FindThreads)
+find_package(Threads)
 
 include_directories (
    inc

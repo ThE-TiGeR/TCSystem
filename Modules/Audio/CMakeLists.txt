@@ -1,5 +1,5 @@
-include(FindOpenAL)
-include(FindMPG123)
+find_package(OpenAL)
+find_Package(MPG123)
 
 include_directories (
    inc

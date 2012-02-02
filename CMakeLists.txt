@@ -50,7 +50,7 @@ install(FILES "${PROJECT_BINARY_DIR}/TCSystemNet.pc" DESTINATION "lib/pkgconfig"
 install(FILES "${PROJECT_BINARY_DIR}/TCSystemGui.pc" DESTINATION "lib/pkgconfig" COMPONENT dev)
 install(FILES "${PROJECT_BINARY_DIR}/TCSystemAudio.pc" DESTINATION "lib/pkgconfig" COMPONENT dev)
 
-include(FindBoost)
+find_package(Boost)
 include_directories(${Boost_INCLUDE_DIRS})
 
 # set our compiler flags

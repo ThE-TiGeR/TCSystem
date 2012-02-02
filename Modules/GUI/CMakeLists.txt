@@ -1,4 +1,4 @@
-include (FindFOX)
+find_package(FOX)
 
 include_directories (
    inc

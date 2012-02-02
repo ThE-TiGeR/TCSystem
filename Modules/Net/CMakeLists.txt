@@ -1,4 +1,4 @@
-include (FindOpenSSL)
+find_package(OpenSSL)
 
 if (OPENSSL_FOUND)
 	include_directories(

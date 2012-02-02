@@ -1,4 +1,4 @@
-include(FindBoost)
+find_package(Boost)
 
 include_directories(
     inc

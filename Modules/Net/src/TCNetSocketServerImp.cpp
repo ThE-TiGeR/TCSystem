@@ -85,10 +85,10 @@ public:
    SocketServerImp::DataReceiverPtr m_receiver_to_add;
 };
 
-class TC_DLL_LOCAL RemoveSocketMessage: public MT::Message
+class TC_DLL_LOCAL RemoveSocketMessage: public multi_threading::Message
 {
 public:
-   enum { MESSAGE_ID = MT::Message::MSG_ID_USER_START+4 };
+   enum { MESSAGE_ID = multi_threading::Message::MSG_ID_USER_START+4 };
    RemoveSocketMessage(SocketPtr socket_to_remove)
       :multi_threading::Message(MESSAGE_ID),
       m_socket_to_remove(socket_to_remove)
@@ -97,7 +97,7 @@ public:
    SocketPtr m_socket_to_remove;
 };
 
-class TC_DLL_LOCAL ThreadObject: public MT::ThreadObject
+class TC_DLL_LOCAL ThreadObject: public multi_threading::ThreadObject
 {
 public:
    ThreadObject(SocketServerImp* server)
