@@ -110,7 +110,7 @@ namespace multi_threading
       /**
        * @brief Create a Mutex object
        *
-       * For detailed description @see TCMT::Mutex
+       * For detailed description @see tc::multi_threading::Mutex
        * @param locked true if the mutex should be already owned(locked)
        * @return A shared pointer of the created mutex
        */
@@ -118,7 +118,7 @@ namespace multi_threading
       /**
       * @brief Create a shared Mutex object with specified name
       *
-      * For detailed description @see TCMT::Mutex
+      * For detailed description @see tc::multi_threading::Mutex
       * @param shared_name the name of the mutex so that it can be created inside other processes
       * @param locked true if the mutex should be already owned(locked)
       * @param mode How to create the mutex

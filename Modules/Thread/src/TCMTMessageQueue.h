@@ -55,7 +55,7 @@ namespace tc
          */
 
          /**
-         * @brief internal message queue class used by TCMT::Message and TCMT::Thread only
+         * @brief internal message queue class used by tc::multi_threading::Message and tc::multi_threading::Thread only
          * Handles receiving and waiting on messages by setting and waiting on an event object
          * Should only be used from class Message and Thread
          */

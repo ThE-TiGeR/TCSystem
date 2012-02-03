@@ -153,12 +153,12 @@ namespace tc
                     Message::Post(h, TEST_MESSAGE_ID2, (void*)0x1);
                     Message::Post(h, TEST_MESSAGE_ID3, (void*)0x1);
 
-                    System::Sleep(1000);
+                    system::Sleep(1000);
 
                     Message::Post(h, TEST_MESSAGE_ID1, 0);
-                    System::Sleep(1000);
+                    system::Sleep(1000);
                     Message::Post(h, TEST_MESSAGE_ID3, (void*)0x1);
-                    System::Sleep(1000);
+                    system::Sleep(1000);
 
                     Message::Post(h, TEST_MESSAGE_ID1, 0);
                     Message::Post(h, TEST_MESSAGE_ID2, 0);
@@ -215,7 +215,7 @@ namespace tc
 //                             TCUNIT_ASSERT(Message::TryGet(TEST_MESSAGE_ID1, &msg, true) == Message::MSG_RECEIVE_FAILED);
 //                             TCUNIT_ASSERT(Message::TryGet(num_all_ids, all_ids, msg_id, &msg, true)
 //                                 == Message::MSG_RECEIVE_FAILED);
-//                             System::Sleep(2000);
+//                             system::Sleep(2000);
 // 
 //                             TCUNIT_ASSERT(Message::TryGet(TEST_MESSAGE_ID1, &msg, true) == Message::MSG_RECEIVED);
 //                             TCUNIT_ASSERT(Message::TryGet(TEST_MESSAGE_ID2, &msg, false) == Message::MSG_RECEIVED);
