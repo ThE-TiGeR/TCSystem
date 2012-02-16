@@ -37,6 +37,7 @@
 #define _TCNET_SOCKET_SERVER_H_
 
 #include "TCNetReadWriteSocket.h"
+#include "TCWeakPtr.h"
 
 namespace tc
 {
@@ -106,6 +107,7 @@ namespace net
 
    /** Type for an socket server pointer object */
    typedef SharedPtr<SocketServer> SocketServerPtr;
+   typedef WeakPtr<SocketServer> SocketServerWPtr;
 
    /**
     * @}

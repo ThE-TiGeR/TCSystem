@@ -96,7 +96,7 @@ namespace tc
       sint32 MessageBox::Error(FX::FXWindow * owner, const std::string & title, const std::string & message)
       {
          if (owner == 0) owner = FX::FXApp::instance()->getRootWindow();
-         MessageBox box(owner, title, message, ImageHandler::GetIcon("tc_gui_error_big"), BUTTONS_OK);
+         MessageBox box(owner, title, message, ImageHandler::GetInstance()->GetIcon("tc_gui_error_big"), BUTTONS_OK);
 
          return box.execute();
       }
@@ -105,7 +105,7 @@ namespace tc
       sint32 MessageBox::Warning(FX::FXWindow * owner, const std::string & title, const std::string & message)
       {
          if (owner == 0) owner = FX::FXApp::instance()->getRootWindow();
-         MessageBox box(owner, title, message, ImageHandler::GetIcon("tc_gui_warning_big"), BUTTONS_OK);
+         MessageBox box(owner, title, message, ImageHandler::GetInstance()->GetIcon("tc_gui_warning_big"), BUTTONS_OK);
 
          return box.execute();
       }
@@ -114,7 +114,7 @@ namespace tc
       sint32 MessageBox::Question(FX::FXWindow * owner, const std::string & title, const std::string & message)
       {
          if (owner == 0) owner = FX::FXApp::instance()->getRootWindow();
-         MessageBox box(owner, title, message, ImageHandler::GetIcon("tc_gui_question_big"), BUTTONS_OK_CANCEL);
+         MessageBox box(owner, title, message, ImageHandler::GetInstance()->GetIcon("tc_gui_question_big"), BUTTONS_OK_CANCEL);
 
          return box.execute();
       }
@@ -123,7 +123,7 @@ namespace tc
       sint32 MessageBox::Information(FX::FXWindow * owner, const std::string & title, const std::string & message)
       {
          if (owner == 0) owner = FX::FXApp::instance()->getRootWindow();
-         MessageBox box(owner, title, message, ImageHandler::GetIcon("tc_gui_info_big"), BUTTONS_OK);
+         MessageBox box(owner, title, message, ImageHandler::GetInstance()->GetIcon("tc_gui_info_big"), BUTTONS_OK);
 
          return box.execute();
       }

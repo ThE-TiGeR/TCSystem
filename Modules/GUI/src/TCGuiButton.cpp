@@ -72,7 +72,7 @@ namespace tc
          FX::FXSelector sel, uint32 opts,
          sint32 x, sint32 y, sint32 w, sint32 h, sint32 pl,
          sint32 pr, sint32 pt, sint32 pb)
-         :Button(p, "TCGUI_HELP", ImageHandler::GetIcon("tc_gui_help"), tgt, sel,
+         :Button(p, "TCGUI_HELP", ImageHandler::GetInstance()->GetIcon("tc_gui_help"), tgt, sel,
          opts|FX::ICON_BEFORE_TEXT|FX::LAYOUT_FIX_WIDTH|FX::LAYOUT_FIX_HEIGHT|FX::FRAME_RAISED,
          x, y,w, h,pl,pr,pt,pb)
       {
@@ -82,7 +82,7 @@ namespace tc
          FX::FXSelector sel, uint32 opts,
          sint32 x, sint32 y, sint32 w, sint32 h, sint32 pl,
          sint32 pr, sint32 pt, sint32 pb)
-         :Button(p, "TCGUI_APPLY", ImageHandler::GetIcon("tc_gui_apply"), tgt, sel,
+         :Button(p, "TCGUI_APPLY", ImageHandler::GetInstance()->GetIcon("tc_gui_apply"), tgt, sel,
          opts|FX::FRAME_RAISED|FX::JUSTIFY_CENTER_X|FX::JUSTIFY_CENTER_Y|FX::ICON_UNDER_TEXT|FX::LAYOUT_FIX_WIDTH,
          x, y,w, h,pl,pr,pt,pb)
       {
@@ -92,7 +92,7 @@ namespace tc
          FX::FXSelector sel, uint32 opts,
          sint32 x, sint32 y, sint32 w, sint32 h, sint32 pl,
          sint32 pr, sint32 pt, sint32 pb)
-         :Button(p, "", ImageHandler::GetIcon("tc_gui_ok"), tgt, sel,
+         :Button(p, "", ImageHandler::GetInstance()->GetIcon("tc_gui_ok"), tgt, sel,
          opts|FX::FRAME_RAISED|FX::JUSTIFY_CENTER_X|FX::JUSTIFY_CENTER_Y|FX::ICON_UNDER_TEXT|FX::LAYOUT_FIX_WIDTH,
          x, y,w, h,pl,pr,pt,pb)
       {
@@ -102,7 +102,7 @@ namespace tc
          FX::FXSelector sel, uint32 opts,
          sint32 x, sint32 y, sint32 w, sint32 h, sint32 pl,
          sint32 pr, sint32 pt, sint32 pb)
-         :Button(p, "", ImageHandler::GetIcon("tc_gui_cancel"), tgt, sel,
+         :Button(p, "", ImageHandler::GetInstance()->GetIcon("tc_gui_cancel"), tgt, sel,
          opts|FX::FRAME_RAISED|FX::JUSTIFY_CENTER_X|FX::JUSTIFY_CENTER_Y|FX::ICON_UNDER_TEXT|FX::LAYOUT_FIX_WIDTH,
          x, y,w, h,pl,pr,pt,pb)
       {
@@ -112,7 +112,7 @@ namespace tc
          FX::FXSelector sel, uint32 opts,
          sint32 x, sint32 y, sint32 w, sint32 h, sint32 pl,
          sint32 pr, sint32 pt, sint32 pb)
-         :Button(p, "", ImageHandler::GetIcon("tc_gui_yes"), tgt, sel,
+         :Button(p, "", ImageHandler::GetInstance()->GetIcon("tc_gui_yes"), tgt, sel,
          opts|FX::FRAME_RAISED|FX::JUSTIFY_CENTER_X|FX::JUSTIFY_CENTER_Y|FX::ICON_UNDER_TEXT|FX::LAYOUT_FIX_WIDTH,
          x, y,w, h,pl,pr,pt,pb)
       {
@@ -122,7 +122,7 @@ namespace tc
          FX::FXSelector sel, uint32 opts,
          sint32 x, sint32 y, sint32 w, sint32 h, sint32 pl,
          sint32 pr, sint32 pt, sint32 pb)
-         :Button(p, "", ImageHandler::GetIcon("tc_gui_no"), tgt, sel,
+         :Button(p, "", ImageHandler::GetInstance()->GetIcon("tc_gui_no"), tgt, sel,
          opts|FX::FRAME_RAISED|FX::JUSTIFY_CENTER_X|FX::JUSTIFY_CENTER_Y|FX::ICON_UNDER_TEXT|FX::LAYOUT_FIX_WIDTH,
          x, y,w, h,pl,pr,pt,pb)
       {

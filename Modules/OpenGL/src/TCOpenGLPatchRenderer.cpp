@@ -222,12 +222,20 @@ namespace tc
          {
             // generate a new VBO and get the associated ID
             glGenBuffersARB(1, &m_vertex_buffer_id);
+            if (DetectOpenGLerror())
+            {
+               return;
+            }
 
             // bind VBO in order to use
-            glBindBufferARB(GL_ARRAY_BUFFER_ARB, m_vertex_buffer_id);
+            glBindBufferARB(GL_ARRAY_BUFFER, m_vertex_buffer_id);
+            if (DetectOpenGLerror())
+            {
+               return;
+            }
 
             // upload data to VBO
-            glBufferDataARB(GL_ARRAY_BUFFER_ARB, allocation_size, 0, GL_STATIC_DRAW_ARB);
+            glBufferDataARB(GL_ARRAY_BUFFER, allocation_size, 0, GL_STATIC_DRAW_ARB);
             if (DetectOpenGLerror())
             {
                m_is_vbo_enable = false;
@@ -239,23 +247,23 @@ namespace tc
             if (m_vertex_array.size())
             {
                glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, m_vertex_offset,  m_num_vertex * VERTEX3D_SIZE, &m_vertex_array.front());
-               util::FreeMemoryOfStlContainer(m_vertex_array);
             }
             if (m_normal_array.size())
             {
                glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, m_normal_offset,  m_num_vertex * NORMAL3D_SIZE, &m_normal_array.front());
-               util::FreeMemoryOfStlContainer(m_normal_array);
             }
             if (m_color_array.size())
             {
                glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, m_color_offset,   m_num_vertex * COLOR_SIZE, &m_color_array.front());
-               util::FreeMemoryOfStlContainer(m_color_array);
             }
             if (m_texture_array.size())
             {
                glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, m_texture_offset, m_num_vertex * VERTEX3D_SIZE, &m_texture_array.front());
-               util::FreeMemoryOfStlContainer(m_texture_array);
             }
+            util::FreeMemoryOfStlContainer(m_vertex_array);
+            util::FreeMemoryOfStlContainer(m_normal_array);
+            util::FreeMemoryOfStlContainer(m_color_array);
+            util::FreeMemoryOfStlContainer(m_texture_array);
          }
       }
 

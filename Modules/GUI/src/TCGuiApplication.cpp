@@ -52,6 +52,8 @@ namespace tc
 {
    namespace gui
    {
+      bool RegisterImages(ImageHandler::Ptr img_handler);
+
       Application::Application()
       {
          m_main_window = 0;
@@ -72,6 +74,12 @@ namespace tc
          {
             return false;
          }
+
+         if (!ImageHandler::CreatedInstance())
+         {
+            return false;
+         }
+         RegisterImages(ImageHandler::GetInstance());
 
          // Make a tool tip
          new FX::FXToolTip(m_fx_app, 0);
@@ -104,7 +112,7 @@ namespace tc
 
       Application::~Application()
       {
-         ImageHandler::CleanUp();
+         ImageHandler::DestroyInstance();
          delete m_fx_app;
       }
    }

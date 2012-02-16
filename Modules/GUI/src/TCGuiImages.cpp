@@ -3706,24 +3706,24 @@ namespace tc
       };
 
 
-      ImageHandler::Image m_image_array[] =
+      bool RegisterImages(ImageHandler::Ptr img_handler)
       {
-         ImageHandler::Image("tc_gui_yes", "en", yes),
-         ImageHandler::Image("tc_gui_no",  "en", no),
-         ImageHandler::Image("tc_gui_ok",  "en", ok),
-         ImageHandler::Image("tc_gui_apply", "en", yes),
-         ImageHandler::Image("tc_gui_cancel", "en", cancel_48_24),
-         ImageHandler::Image("tc_gui_error_big", "en", error_48),
-         ImageHandler::Image("tc_gui_error_small", "en", error_24),
-         ImageHandler::Image("tc_gui_help", "en", question_24),
-         ImageHandler::Image("tc_gui_info_big", "en", info_48),
-         ImageHandler::Image("tc_gui_info_small", "en", info_24),
-         ImageHandler::Image("tc_gui_question_big", "en", question_48),
-         ImageHandler::Image("tc_gui_question_small", "en", question_24),
-         ImageHandler::Image("tc_gui_warning_big", "en", warning_48),
-         ImageHandler::Image("tc_gui_warning_small", "en", warning_24)
-      };
+         img_handler->AddImageData("tc_gui_yes", "en", yes);
+         img_handler->AddImageData("tc_gui_no",  "en", no);
+         img_handler->AddImageData("tc_gui_ok",  "en", ok);
+         img_handler->AddImageData("tc_gui_apply", "en", yes);
+         img_handler->AddImageData("tc_gui_cancel", "en", cancel_48_24);
+         img_handler->AddImageData("tc_gui_error_big", "en", error_48);
+         img_handler->AddImageData("tc_gui_error_small", "en", error_24);
+         img_handler->AddImageData("tc_gui_help", "en", question_24);
+         img_handler->AddImageData("tc_gui_info_big", "en", info_48);
+         img_handler->AddImageData("tc_gui_info_small", "en", info_24);
+         img_handler->AddImageData("tc_gui_question_big", "en", question_48);
+         img_handler->AddImageData("tc_gui_question_small", "en", question_24);
+         img_handler->AddImageData("tc_gui_warning_big", "en", warning_48);
+         img_handler->AddImageData("tc_gui_warning_small", "en", warning_24);
 
-      ImageHandler::Images m_images(util::ArraySize(m_image_array), m_image_array);
+         return true;
+      }
    }
 }

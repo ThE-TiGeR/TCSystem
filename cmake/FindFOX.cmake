@@ -7,7 +7,7 @@
 #  FOX_LIBRARIES - Link these to use FOX
 
 #=============================================================================
-# Copyright 2006-2010 Thomas Goessler the
+# Copyright 2006-2012 Thomas Goessler
 #=============================================================================
 
 if (UNIX)
@@ -16,8 +16,23 @@ if (UNIX)
 else ()
    FIND_PATH(FOX_INCLUDE_DIRS fx.h )
 
-   FIND_LIBRARY(FOX_LIBRARIES NAMES FOXDLL-1.6)
+   FIND_LIBRARY(FOX_LIB_RELEASE NAMES FOXDLL-1.6)
+   if (FOX_LIB_RELEASE)
+     set(FOX_LIBRARIES
+	   optimized 
+	   ${FOX_LIB_RELEASE}
+	 )
+   endif()
 
+   FIND_LIBRARY(FOX_LIB_DEBUG NAMES FOXDLLD-1.6)
+   if (FOX_LIB_DEBUG)
+     set(FOX_LIBRARIES
+	   ${FOX_LIBRARIES}
+	   debug 
+	   ${FOX_LIB_DEBUG}
+	 )
+   endif()
+   
    # handle the QUIETLY and REQUIRED arguments and set FOX_FOUND to TRUE if 
    # all listed variables are TRUE
    INCLUDE(FindPackageHandleStandardArgs)

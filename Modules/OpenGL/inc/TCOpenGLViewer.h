@@ -273,6 +273,13 @@ namespace tc
             ID_LAST
          };
 
+         enum
+         {
+            SEL_UPDATE_TRANSFORM  = FX::SEL_LAST,
+            SEL_UPDATE_PROJECTION,
+            SEL_LAST
+         };
+
       public:
 
          // Common DND type names

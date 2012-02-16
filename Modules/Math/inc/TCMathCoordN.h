@@ -289,9 +289,9 @@ namespace math
       }
       
       Iterator Begin() {return m_data;}
-      ConstIterator Begin() const {return m_data + SIZE;}
+      ConstIterator Begin() const {return m_data;}
 
-      Iterator End() {return m_data;}
+      Iterator End() {return m_data + SIZE;}
       ConstIterator End() const {return m_data + SIZE;}
 
    private:
@@ -325,7 +325,12 @@ namespace math
    template <class T, uint32 SIZE>
    inline StreamPtr operator>>(StreamPtr stream, CoordN<T, SIZE>&coord)
    {
-      return stream >> coord[0] >> coord[1] >> coord[2];
+      for (T* data=coord.Begin(); data<coord.End(); ++data)
+      {
+         stream >> (*data);
+      }
+
+      return stream;
    }
    /**
     * Write operator for writing the data to a TCStream
@@ -337,7 +342,15 @@ namespace math
    template <class T, uint32 SIZE>
    inline StreamPtr operator<<(StreamPtr stream, const CoordN<T, SIZE>&coord)
    {
-      return stream << coord[0] << space << coord[1] << space << coord[2];
+      for (const T* data=coord.Begin(); data<coord.End(); ++data)
+      {
+         stream << (*data);
+         if (data + 1 < coord.End())
+         {
+            stream << space;
+         }
+      }
+      return stream;
    }
 
    /**

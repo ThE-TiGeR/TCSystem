@@ -35,87 +35,108 @@
 
 #include "TCGuiImageHandler.h"
 
+#include "TCUtil.h"
+
+#include <map>
+
 #include "TCNewEnable.h"
 
 namespace tc
 {
    namespace gui
    {
-      ImageHandler::Images* m_last_image = 0;
-
-      FX::FXIcon* ImageHandler::GetIcon(const std::string& mls_id)
+      class Image
       {
-         const Images* images = m_last_image;
-         while (images)
-         {
-            for (uint32 i=0; i<images->m_num_images; i++)
-            {
-               if (images->m_images[i].id == mls_id)
-               {
-                  if (images->m_images[i].icon == 0)
-                  {
-                     switch(images->m_images[i].type)
-                     {
-                     case Image::BITMAP:
-                        images->m_images[i].icon = 
-                           new FX::FXBMPIcon(FX::FXApp::instance(), images->m_images[i].image_data,
-                           0, FX::IMAGE_NEAREST);
-                        images->m_images[i].icon->blend(FX::FXApp::instance()->getBaseColor());
-                        break;
-                     case Image::GIF:
-                        images->m_images[i].icon = 
-                           new FX::FXGIFIcon(FX::FXApp::instance(), images->m_images[i].image_data,
-                           0, FX::IMAGE_NEAREST);
-                        break;
-
-                     }
-                  }
-                  return images->m_images[i].icon;
-               }
-            }
-            images = images->m_prev;
-         }
-
-         return 0;
-      }
-
-      void ImageHandler::CleanUp()
-      {
-         const Images* images = m_last_image;
-         while (images)
-         {
-            for (uint32 i=0; i<images->m_num_images; i++)
-            {
-               if (images->m_images[i].icon)
-               {
-                  delete images->m_images[i].icon;
-               }
-            }
-            images = images->m_prev;
-         }
-      }
-
-      ImageHandler::Image::Image(const char* _id, const char* _lang_id, 
-                                 const uchar* _image_data, Type _type)
+      public:
+         Image(const char* _id, const char* _lang_id, const uchar* _image_data, ImageHandler::ImageType _type=ImageHandler::BITMAP)
          :id(_id), lang_id(_lang_id), image_data(_image_data), type(_type), icon(0)
-      {
-      }
-
-      ImageHandler::Images::Images(uint32 num_images, Image* images)
-         :m_num_images(num_images),
-         m_images(images),
-         m_prev(0)
-      {
-         m_prev = m_last_image;
-         m_last_image = this;
-      }
-
-      ImageHandler::Images::~Images()
-      {
-         if (m_last_image == this)
          {
-            m_last_image = m_prev;
          }
+         ~Image()
+         {
+            delete icon;
+         }
+
+      private:
+         std::string id;
+         std::string lang_id;
+         const uchar* image_data;
+         ImageHandler::ImageType type;
+         FX::FXIcon* icon;
+
+         friend class ImageHandlerImp;
+      };
+
+      class ImageHandlerImp: public ImageHandler
+      {
+      public:
+         ImageHandlerImp()
+         {
+         }
+
+         ~ImageHandlerImp()
+         {
+            util::FreeMemoryOfStlContainer(m_images);
+         }
+
+         virtual void AddImageData(const char* _id, const char* _lang_id, const uchar* _image_data, ImageType image_type=BITMAP)
+         {
+            SharedPtr<Image> image(new Image(_id, _lang_id, _image_data, image_type));
+            m_images.insert(std::make_pair(std::string(_id), image));
+         }
+
+         virtual FX::FXIcon* GetIcon(const std::string& image_id)
+         {
+            ImageMap::iterator image_it1 = m_images.lower_bound(image_id);
+            ImageMap::iterator image_it2 = m_images.upper_bound(image_id);
+            if (image_it1 == m_images.end() || image_it1 == image_it2)
+            {
+               return 0;
+            }
+
+            ImageMap::iterator image_it = image_it1;
+            if (image_it->second->icon == 0)
+            {
+               switch(image_it->second->type)
+               {
+               case BITMAP:
+                  image_it->second->icon = 
+                     new FX::FXBMPIcon(FX::FXApp::instance(), image_it->second->image_data,
+                     0, FX::IMAGE_NEAREST);
+                  image_it->second->icon->blend(FX::FXApp::instance()->getBaseColor());
+                  break;
+               case GIF:
+                  image_it->second->icon = 
+                     new FX::FXGIFIcon(FX::FXApp::instance(), image_it->second->image_data,
+                     0, FX::IMAGE_NEAREST);
+                  break;
+
+               }
+            }
+
+            return image_it->second->icon;
+         }
+
+      private:
+         typedef std::multimap<std::string, SharedPtr<Image> > ImageMap;
+         ImageMap m_images;
+      };
+
+      static ImageHandler::Ptr s_image_handler;
+      ImageHandler::Ptr ImageHandler::GetInstance()
+      {
+         return s_image_handler;
+      }
+
+      bool ImageHandler::CreatedInstance()
+      {
+         s_image_handler = ImageHandler::Ptr(new ImageHandlerImp);
+         return s_image_handler;
+      }
+
+      void ImageHandler::DestroyInstance()
+      {
+         s_image_handler.Reset();
       }
 
    }

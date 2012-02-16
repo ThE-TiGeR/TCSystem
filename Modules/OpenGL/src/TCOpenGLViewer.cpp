@@ -435,8 +435,8 @@ namespace tc
       void Viewer::glsetup()
       {
          // Make GL context current
-         if(makeCurrent()){
-
+         if(makeCurrent())
+         {
             // Initialize GL context
             glRenderMode(GL_RENDER);
 
@@ -449,7 +449,6 @@ namespace tc
 
             // Z-buffer test on
             glEnable(GL_DEPTH_TEST);
-            //glDepthFunc(GL_LESS);
             glDepthFunc(GL_LEQUAL);
             glDepthRange(0.0,1.0);
             glClearDepth(1.0);
@@ -513,9 +512,10 @@ namespace tc
             // set polygon offset
             glPolygonOffset(0.5f, 0.002f);
 
-            PrintOpenGLExtensions();
-            PrintOpenGLBufferInfo();
-            PrintOpenGLTextureSupport();
+            //PrintOpenGLExtensions();
+            //PrintOpenGLBufferInfo();
+            //PrintOpenGLTextureSupport();
+            DetectOpenGLerror();
 
             makeNonCurrent();
          }
@@ -530,11 +530,17 @@ namespace tc
          {
             Time draw_start_time = Time::Now();
             DrawScene(m_view_port);
-            if(vis->isDoubleBuffer()) swapBuffers();
+            DetectOpenGLerror();
+
+            if (vis->isDoubleBuffer()) 
+            {
+               swapBuffers();
+            }
             ::glFinish();
             ::glFlush();
             Time total_time = Time::Now() - draw_start_time;
             TCTRACE1("open_gl", 0, "Current fps = %f", 1000.0f/(total_time.ToMilliSeconds()+1));
+            DetectOpenGLerror();
 
             makeNonCurrent();
          }
@@ -543,6 +549,7 @@ namespace tc
       // Render all the graphics into a world box
       void Viewer::DrawScene(Viewport& wv)
       {
+         DetectOpenGLerror();
          // Set viewport
          glViewport(0, 0, wv.w, wv.h);
 
@@ -574,7 +581,6 @@ namespace tc
          {
             glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
          }
-
          // Clear to gradient background
          else
          {
@@ -583,7 +589,7 @@ namespace tc
             glDepthMask(GL_FALSE);
             glBegin(GL_TRIANGLE_STRIP);
             Color center_color = m_background[3]*0.25f + m_background[2]*0.25f +
-                                 m_background[1]*0.25f + m_background[0]*0.25f;
+               m_background[1]*0.25f + m_background[0]*0.25f;
             glColor4fv(center_color); glVertex3f(-0.5f,-0.5f,0.0f); 
             glColor4fv(m_background[2]); glVertex3f(-1.0f,-1.0f,0.0f); 
             glColor4fv(m_background[3]); glVertex3f(1.0f,-1.0f,0.0f);
@@ -1068,6 +1074,10 @@ namespace tc
                m_view_port.bottom*=hither_fac;
             }
          }
+         if(target)
+         {
+            target->tryHandle(this, FXSEL(SEL_UPDATE_PROJECTION, message), 0);
+         }
       }
 
 
@@ -1095,6 +1105,10 @@ namespace tc
          //   FXTRACE((150,"       %11.8f %11.8f %11.8f %11.8f\n",check[2][0],check[2][1],check[2][2],check[2][3]));
          //   FXTRACE((150,"       %11.8f %11.8f %11.8f %11.8f\n",check[3][0],check[3][1],check[3][2],check[3][3]));
          //   FXTRACE((150,"\n"));
+         if(target)
+         {
+            target->tryHandle(this, FXSEL(SEL_UPDATE_TRANSFORM ,message), 0);
+         }
       }
 
 
@@ -1134,8 +1148,8 @@ namespace tc
       bool Viewer::fitToBounds(const BoundingBox3D& box_in)
       {
          FX::FXRangef r(std::numeric_limits<float>::max(), -std::numeric_limits<float>::max(), 
-                        std::numeric_limits<float>::max(), -std::numeric_limits<float>::max(), 
-                        std::numeric_limits<float>::max(), -std::numeric_limits<float>::max());
+            std::numeric_limits<float>::max(), -std::numeric_limits<float>::max(), 
+            std::numeric_limits<float>::max(), -std::numeric_limits<float>::max());
          FX::FXRangef box(Vertex2FXVec3f(box_in.GetMin()), Vertex2FXVec3f(box_in.GetMax()));
          FX::FXMat4f m;
 
@@ -1374,7 +1388,7 @@ namespace tc
       FXQuatf Viewer::turn(sint32 fx,sint32 fy,sint32 tx,sint32 ty)
       {
          return FXQuatf(Vertex2FXVec3f(spherePoint(fx,fy)),
-                        Vertex2FXVec3f(spherePoint(tx,ty)));
+            Vertex2FXVec3f(spherePoint(tx,ty)));
       }
 
 
@@ -1569,77 +1583,77 @@ namespace tc
       void Viewer::setOp(uint32 o){
          if(mode!=o){
             switch(o){
-      case HOVERING:
-         setDragCursor(getDefaultCursor());
-         FXTRACE((100,"HOVERING\n"));
-         if(doesturbo) update();
-         doesturbo=false;
-         break;
-      case PICKING:
-         FXTRACE((100,"PICKING\n"));
-         setDragCursor(getDefaultCursor());
-         break;
-      case ROTATING:
-         FXTRACE((100,"ROTATING\n"));
-         doesturbo=turbomode;
-         setDragCursor(getApp()->getDefaultCursor(DEF_ROTATE_CURSOR));
-         break;
-      case POSTING:
-         FXTRACE((100,"POSTING\n"));
-         setDragCursor(getDefaultCursor());
-         break;
-      case TRANSLATING:
-         FXTRACE((100,"TRANSLATING\n"));
-         doesturbo=turbomode;
-         setDragCursor(getApp()->getDefaultCursor(DEF_MOVE_CURSOR));
-         break;
-      case ZOOMING:
-         FXTRACE((100,"ZOOMING\n"));
-         doesturbo=turbomode;
-         setDragCursor(getApp()->getDefaultCursor(DEF_DRAGH_CURSOR));
-         break;
-      case FOVING:
-         FXTRACE((100,"FOVING\n"));
-         doesturbo=turbomode;
-         setDragCursor(getApp()->getDefaultCursor(DEF_DRAGH_CURSOR));
-         break;
-      case DRAGGING:
-         FXTRACE((100,"DRAGGING\n"));
-         doesturbo=turbomode;
-         setDragCursor(getApp()->getDefaultCursor(DEF_MOVE_CURSOR));
-         break;
-      case TRUCKING:
-         FXTRACE((100,"TRUCKING\n"));
-         doesturbo=turbomode;
-         setDragCursor(getApp()->getDefaultCursor(DEF_DRAGH_CURSOR));
-         break;
-      case GYRATING:
-         FXTRACE((100,"GYRATING\n"));
-         doesturbo=turbomode;
-         setDragCursor(getApp()->getDefaultCursor(DEF_ROTATE_CURSOR));
-         break;
-      case DO_LASSOSELECT:
-         if(mode==LASSOSELECT) return;
-         FXTRACE((100,"LASSOSELECT\n"));
-         setDefaultCursor(getApp()->getDefaultCursor(DEF_CORNERNW_CURSOR));
-         /// FIXME grab
-         break;
-      case LASSOSELECT:
-         FXTRACE((100,"LASSOSELECT\n"));
-         setDefaultCursor(getDragCursor());
-         setDragCursor(getApp()->getDefaultCursor(DEF_CORNERNW_CURSOR));
-         break;
-      case DO_LASSOZOOM:
-         if(mode==LASSOZOOM) return;
-         FXTRACE((100,"LASSOZOOM\n"));
-         setDefaultCursor(getApp()->getDefaultCursor(DEF_CORNERNW_CURSOR));
-         /// FIXME grab
-         break;
-      case LASSOZOOM:
-         FXTRACE((100,"LASSOZOOM\n"));
-         setDefaultCursor(getDragCursor());
-         setDragCursor(getApp()->getDefaultCursor(DEF_CORNERNW_CURSOR));
-         break;
+            case HOVERING:
+               setDragCursor(getDefaultCursor());
+               FXTRACE((100,"HOVERING\n"));
+               if(doesturbo) update();
+               doesturbo=false;
+               break;
+            case PICKING:
+               FXTRACE((100,"PICKING\n"));
+               setDragCursor(getDefaultCursor());
+               break;
+            case ROTATING:
+               FXTRACE((100,"ROTATING\n"));
+               doesturbo=turbomode;
+               setDragCursor(getApp()->getDefaultCursor(DEF_ROTATE_CURSOR));
+               break;
+            case POSTING:
+               FXTRACE((100,"POSTING\n"));
+               setDragCursor(getDefaultCursor());
+               break;
+            case TRANSLATING:
+               FXTRACE((100,"TRANSLATING\n"));
+               doesturbo=turbomode;
+               setDragCursor(getApp()->getDefaultCursor(DEF_MOVE_CURSOR));
+               break;
+            case ZOOMING:
+               FXTRACE((100,"ZOOMING\n"));
+               doesturbo=turbomode;
+               setDragCursor(getApp()->getDefaultCursor(DEF_DRAGH_CURSOR));
+               break;
+            case FOVING:
+               FXTRACE((100,"FOVING\n"));
+               doesturbo=turbomode;
+               setDragCursor(getApp()->getDefaultCursor(DEF_DRAGH_CURSOR));
+               break;
+            case DRAGGING:
+               FXTRACE((100,"DRAGGING\n"));
+               doesturbo=turbomode;
+               setDragCursor(getApp()->getDefaultCursor(DEF_MOVE_CURSOR));
+               break;
+            case TRUCKING:
+               FXTRACE((100,"TRUCKING\n"));
+               doesturbo=turbomode;
+               setDragCursor(getApp()->getDefaultCursor(DEF_DRAGH_CURSOR));
+               break;
+            case GYRATING:
+               FXTRACE((100,"GYRATING\n"));
+               doesturbo=turbomode;
+               setDragCursor(getApp()->getDefaultCursor(DEF_ROTATE_CURSOR));
+               break;
+            case DO_LASSOSELECT:
+               if(mode==LASSOSELECT) return;
+               FXTRACE((100,"LASSOSELECT\n"));
+               setDefaultCursor(getApp()->getDefaultCursor(DEF_CORNERNW_CURSOR));
+               /// FIXME grab
+               break;
+            case LASSOSELECT:
+               FXTRACE((100,"LASSOSELECT\n"));
+               setDefaultCursor(getDragCursor());
+               setDragCursor(getApp()->getDefaultCursor(DEF_CORNERNW_CURSOR));
+               break;
+            case DO_LASSOZOOM:
+               if(mode==LASSOZOOM) return;
+               FXTRACE((100,"LASSOZOOM\n"));
+               setDefaultCursor(getApp()->getDefaultCursor(DEF_CORNERNW_CURSOR));
+               /// FIXME grab
+               break;
+            case LASSOZOOM:
+               FXTRACE((100,"LASSOZOOM\n"));
+               setDefaultCursor(getDragCursor());
+               setDragCursor(getApp()->getDefaultCursor(DEF_CORNERNW_CURSOR));
+               break;
             }
             mode=o;
          }
@@ -1986,97 +2000,97 @@ namespace tc
             if(target && target->tryHandle(this,FXSEL(SEL_MOTION,message),ptr)) return 1;
             getApp()->removeTimeout(this,ID_TIPTIMER);
             switch(mode){
-      case HOVERING:            // Reset the timer each time we moved the cursor
-         getApp()->addTimeout(this,ID_TIPTIMER,getApp()->getMenuPause());
-         break;
-      case PICKING:             // Picking
-         if(!event->moved){                              // Keep picking mode for now
-            break;
-         }
-         if(event->state&(SHIFTMASK|CONTROLMASK)){       // Lasso mode if modifier held down
-            drawLasso(event->click_x,event->click_y,event->win_x,event->win_y);
-            setOp(LASSOSELECT);
-            break;
-         }
-         setOp(ROTATING);                                // Go into rotation mode
-      case ROTATING:            // Rotating camera around target
-         q=turn(event->last_x,event->last_y,event->win_x,event->win_y) * getOrientation();
-         setOrientation(q);
-         changed=1;
-         break;
-      case POSTING:             // Posting right-mouse menu; if moving more than delta, we go to translate mode
-         if(!event->moved) break;
-         setOp(TRANSLATING);
-      case TRANSLATING:         // Translating camera
-         vec=worldVector(event->last_x,event->last_y,event->win_x,event->win_y);
-         translate(-vec);
-         changed=1;
-         break;
-      case ZOOMING:             // Zooming camera
-         delta=0.005*(event->win_y-event->last_y);
-         setZoom(getZoom()*pow(2.0,delta));
-         changed=1;
-         break;
-      case FOVING:              // Change FOV
-         setFieldOfView(getFieldOfView()+90.0*(event->win_y-event->last_y)/(double)m_view_port.h);
-         changed=1;
-         break;
-      case DRAGGING:            // Dragging a shape
-         if(m_selected_objects.size())
-         {
-            for (ObjectPtrVector::iterator it=m_selected_objects.begin(); it!=m_selected_objects.end(); ++it)
-            {
-               (*it)->Drag(*this, event->last_x,event->last_y,event->win_x,event->win_y);
-            }
-            //// Perhaps callback here for the target to be notified of the new object position
-            update();
-         }
-         changed=1;
-         break;
-      case TRUCKING:            // Trucking camera forward or backward
-         tmp=(float)(worldpx*(event->win_y-event->last_y));
-         vec=math::Normalize(getEyeVector());
-         translate(tmp*vec);
-         changed=1;
-         break;
-      case GYRATING:            // Rotating camera around eye
-         {
-            FXMat4f mm;
-            FXQuatf qq;
-            qq=turn(event->win_x,event->win_y,event->last_x,event->last_y);
-            mm.eye();
-            mm.trans(0.0f,0.0f,(float)-distance); // FIXME This aint it yet...
-            mm.rot(qq);
-            mm.trans(0.0f,0.0f,(float)distance);
-            center=FXVec3f2Vertex(Vertex2FXVec3f(center)*mm);
-            q=qq * getOrientation();
-            setOrientation(q);
-            update();
-            changed=1;
-         }
-         break;
-      case LASSOSELECT:         // Dragging a lasso
-      case LASSOZOOM:
-         old_x=FXCLAMP(0,event->last_x,(width-1));
-         old_y=FXCLAMP(0,event->last_y,(height-1));
-         new_x=FXCLAMP(0,event->win_x,(width-1));
-         new_y=FXCLAMP(0,event->win_y,(height-1));
-         drawLasso(event->click_x,event->click_y,old_x,old_y);
-         drawLasso(event->click_x,event->click_y,new_x,new_y);
-         if(new_x>event->click_x){
-            if(new_y>event->click_y)
-               setDragCursor(getApp()->getDefaultCursor(DEF_CORNERSE_CURSOR));
-            else
-               setDragCursor(getApp()->getDefaultCursor(DEF_CORNERNE_CURSOR));
-         }
-         else{
-            if(new_y>event->click_y)
-               setDragCursor(getApp()->getDefaultCursor(DEF_CORNERSW_CURSOR));
-            else
-               setDragCursor(getApp()->getDefaultCursor(DEF_CORNERNW_CURSOR));
-         }
-         changed=1;
-         break;
+            case HOVERING:            // Reset the timer each time we moved the cursor
+               getApp()->addTimeout(this,ID_TIPTIMER,getApp()->getMenuPause());
+               break;
+            case PICKING:             // Picking
+               if(!event->moved){                              // Keep picking mode for now
+                  break;
+               }
+               if(event->state&(SHIFTMASK|CONTROLMASK)){       // Lasso mode if modifier held down
+                  drawLasso(event->click_x,event->click_y,event->win_x,event->win_y);
+                  setOp(LASSOSELECT);
+                  break;
+               }
+               setOp(ROTATING);                                // Go into rotation mode
+            case ROTATING:            // Rotating camera around target
+               q=turn(event->last_x,event->last_y,event->win_x,event->win_y) * getOrientation();
+               setOrientation(q);
+               changed=1;
+               break;
+            case POSTING:             // Posting right-mouse menu; if moving more than delta, we go to translate mode
+               if(!event->moved) break;
+               setOp(TRANSLATING);
+            case TRANSLATING:         // Translating camera
+               vec=worldVector(event->last_x,event->last_y,event->win_x,event->win_y);
+               translate(-vec);
+               changed=1;
+               break;
+            case ZOOMING:             // Zooming camera
+               delta=0.005*(event->win_y-event->last_y);
+               setZoom(getZoom()*pow(2.0,delta));
+               changed=1;
+               break;
+            case FOVING:              // Change FOV
+               setFieldOfView(getFieldOfView()+90.0*(event->win_y-event->last_y)/(double)m_view_port.h);
+               changed=1;
+               break;
+            case DRAGGING:            // Dragging a shape
+               if(m_selected_objects.size())
+               {
+                  for (ObjectPtrVector::iterator it=m_selected_objects.begin(); it!=m_selected_objects.end(); ++it)
+                  {
+                     (*it)->Drag(*this, event->last_x,event->last_y,event->win_x,event->win_y);
+                  }
+                  //// Perhaps callback here for the target to be notified of the new object position
+                  update();
+               }
+               changed=1;
+               break;
+            case TRUCKING:            // Trucking camera forward or backward
+               tmp=(float)(worldpx*(event->win_y-event->last_y));
+               vec=math::Normalize(getEyeVector());
+               translate(tmp*vec);
+               changed=1;
+               break;
+            case GYRATING:            // Rotating camera around eye
+               {
+                  FXMat4f mm;
+                  FXQuatf qq;
+                  qq=turn(event->win_x,event->win_y,event->last_x,event->last_y);
+                  mm.eye();
+                  mm.trans(0.0f,0.0f,(float)-distance); // FIXME This aint it yet...
+                  mm.rot(qq);
+                  mm.trans(0.0f,0.0f,(float)distance);
+                  center=FXVec3f2Vertex(Vertex2FXVec3f(center)*mm);
+                  q=qq * getOrientation();
+                  setOrientation(q);
+                  update();
+                  changed=1;
+               }
+               break;
+            case LASSOSELECT:         // Dragging a lasso
+            case LASSOZOOM:
+               old_x=FXCLAMP(0,event->last_x,(width-1));
+               old_y=FXCLAMP(0,event->last_y,(height-1));
+               new_x=FXCLAMP(0,event->win_x,(width-1));
+               new_y=FXCLAMP(0,event->win_y,(height-1));
+               drawLasso(event->click_x,event->click_y,old_x,old_y);
+               drawLasso(event->click_x,event->click_y,new_x,new_y);
+               if(new_x>event->click_x){
+                  if(new_y>event->click_y)
+                     setDragCursor(getApp()->getDefaultCursor(DEF_CORNERSE_CURSOR));
+                  else
+                     setDragCursor(getApp()->getDefaultCursor(DEF_CORNERNE_CURSOR));
+               }
+               else{
+                  if(new_y>event->click_y)
+                     setDragCursor(getApp()->getDefaultCursor(DEF_CORNERSW_CURSOR));
+                  else
+                     setDragCursor(getApp()->getDefaultCursor(DEF_CORNERNW_CURSOR));
+               }
+               changed=1;
+               break;
             }
          }
          return changed;
@@ -2102,29 +2116,29 @@ namespace tc
          if(isEnabled()){
             if(target && target->tryHandle(this,FXSEL(SEL_KEYPRESS,message),ptr)) return 1;
             switch(event->code){
-      case KEY_Shift_L:
-      case KEY_Shift_R:
+            case KEY_Shift_L:
+            case KEY_Shift_R:
 
-         // We do not switch modes unless something was going on already
-         if(mode!=HOVERING){
-            if((event->state&MIDDLEBUTTONMASK) || ((event->state&LEFTBUTTONMASK) && (event->state&RIGHTBUTTONMASK))){
-               setOp(TRUCKING);
-            }
-            else if(event->state&RIGHTBUTTONMASK){
-               setOp(GYRATING);
-            }
-         }
-         return 1;
-      case KEY_Control_L:
-      case KEY_Control_R:
+               // We do not switch modes unless something was going on already
+               if(mode!=HOVERING){
+                  if((event->state&MIDDLEBUTTONMASK) || ((event->state&LEFTBUTTONMASK) && (event->state&RIGHTBUTTONMASK))){
+                     setOp(TRUCKING);
+                  }
+                  else if(event->state&RIGHTBUTTONMASK){
+                     setOp(GYRATING);
+                  }
+               }
+               return 1;
+            case KEY_Control_L:
+            case KEY_Control_R:
 
-         // We do not switch modes unless something was going on already
-         if(mode!=HOVERING){
-            if(event->state&RIGHTBUTTONMASK){
-               setOp(FOVING);
-            }
-         }
-         return 1;
+               // We do not switch modes unless something was going on already
+               if(mode!=HOVERING){
+                  if(event->state&RIGHTBUTTONMASK){
+                     setOp(FOVING);
+                  }
+               }
+               return 1;
             }
          }
          return 0;
@@ -2137,29 +2151,29 @@ namespace tc
          if(isEnabled()){
             if(target && target->tryHandle(this,FXSEL(SEL_KEYRELEASE,message),ptr)) return 1;
             switch(event->code){
-      case KEY_Shift_L:
-      case KEY_Shift_R:
+            case KEY_Shift_L:
+            case KEY_Shift_R:
 
-         // We do not switch modes unless something was going on already
-         if(mode!=HOVERING){
-            if((event->state&MIDDLEBUTTONMASK) || ((event->state&LEFTBUTTONMASK) && (event->state&RIGHTBUTTONMASK))){
-               setOp(ZOOMING);
-            }
-            else if(event->state&RIGHTBUTTONMASK){
-               setOp(TRANSLATING);
-            }
-         }
-         return 1;
-      case KEY_Control_L:
-      case KEY_Control_R:
+               // We do not switch modes unless something was going on already
+               if(mode!=HOVERING){
+                  if((event->state&MIDDLEBUTTONMASK) || ((event->state&LEFTBUTTONMASK) && (event->state&RIGHTBUTTONMASK))){
+                     setOp(ZOOMING);
+                  }
+                  else if(event->state&RIGHTBUTTONMASK){
+                     setOp(TRANSLATING);
+                  }
+               }
+               return 1;
+            case KEY_Control_L:
+            case KEY_Control_R:
 
-         // We do not switch modes unless something was going on already
-         if(mode!=HOVERING){
-            if(event->state&RIGHTBUTTONMASK){
-               setOp(TRANSLATING);
-            }
-         }
-         return 1;
+               // We do not switch modes unless something was going on already
+               if(mode!=HOVERING){
+                  if(event->state&RIGHTBUTTONMASK){
+                     setOp(TRANSLATING);
+                  }
+               }
+               return 1;
             }
          }
          return 0;
@@ -2448,21 +2462,21 @@ namespace tc
             doesturbo=turbomode;
             FXASSERT(ID_DIAL_X<=FXSELID(sel) && FXSELID(sel)<=ID_DIAL_Z);
             switch(FXSELID(sel)){
-      case ID_DIAL_X:
-         ang=(float)(DTOR*(dialnew-dial[0]));
-         q.setAxisAngle(Vertex2FXVec3f(xaxis),-ang);
-         dial[0]=dialnew;
-         break;
-      case ID_DIAL_Y:
-         ang=(float)(DTOR*(dialnew-dial[1]));
-         q.setAxisAngle(Vertex2FXVec3f(yaxis), ang);
-         dial[1]=dialnew;
-         break;
-      case ID_DIAL_Z:
-         ang=(float)(DTOR*(dialnew-dial[2]));
-         q.setAxisAngle(Vertex2FXVec3f(zaxis), ang);
-         dial[2]=dialnew;
-         break;
+            case ID_DIAL_X:
+               ang=(float)(DTOR*(dialnew-dial[0]));
+               q.setAxisAngle(Vertex2FXVec3f(xaxis),-ang);
+               dial[0]=dialnew;
+               break;
+            case ID_DIAL_Y:
+               ang=(float)(DTOR*(dialnew-dial[1]));
+               q.setAxisAngle(Vertex2FXVec3f(yaxis), ang);
+               dial[1]=dialnew;
+               break;
+            case ID_DIAL_Z:
+               ang=(float)(DTOR*(dialnew-dial[2]));
+               q.setAxisAngle(Vertex2FXVec3f(zaxis), ang);
+               dial[2]=dialnew;
+               break;
             }
             setOrientation(q*getOrientation());
          }
@@ -2719,56 +2733,56 @@ namespace tc
             switch(token){
 
                // Point primitive
-      case GL_POINT_TOKEN:
-         pdc.outf("%g %g %g %g %g P\n",buffer[p+0],buffer[p+1],buffer[p+3],buffer[p+4],buffer[p+5]);
-         p+=7;             // Each vertex element in the feedback buffer is 7 floats
-         break;
+            case GL_POINT_TOKEN:
+               pdc.outf("%g %g %g %g %g P\n",buffer[p+0],buffer[p+1],buffer[p+3],buffer[p+4],buffer[p+5]);
+               p+=7;             // Each vertex element in the feedback buffer is 7 floats
+               break;
 
-         // Line primitive
-      case GL_LINE_RESET_TOKEN:
-      case GL_LINE_TOKEN:
-         if(fabs(buffer[p+3]-buffer[p+7+3])<1E-4 || fabs(buffer[p+4]-buffer[p+7+4])<1E-4 || fabs(buffer[p+5]-buffer[p+7+5])<1E-4){
-            pdc.outf("%g %g %g %g %g %g %g %g %g %g SL\n",buffer[p+0],buffer[p+1],buffer[p+3],buffer[p+4],buffer[p+5], buffer[p+7+0],buffer[p+7+1],buffer[p+7+3],buffer[p+7+4],buffer[p+7+5]);
-         }
-         else{
-            pdc.outf("%g %g %g %g %g %g %g L\n",buffer[p+0],buffer[p+1],buffer[p+7+0],buffer[p+7+1],buffer[p+3],buffer[p+4],buffer[p+5]);
-         }
-         p+=14;            // Each vertex element in the feedback buffer is 7 GLfloats
-         break;
+               // Line primitive
+            case GL_LINE_RESET_TOKEN:
+            case GL_LINE_TOKEN:
+               if(fabs(buffer[p+3]-buffer[p+7+3])<1E-4 || fabs(buffer[p+4]-buffer[p+7+4])<1E-4 || fabs(buffer[p+5]-buffer[p+7+5])<1E-4){
+                  pdc.outf("%g %g %g %g %g %g %g %g %g %g SL\n",buffer[p+0],buffer[p+1],buffer[p+3],buffer[p+4],buffer[p+5], buffer[p+7+0],buffer[p+7+1],buffer[p+7+3],buffer[p+7+4],buffer[p+7+5]);
+               }
+               else{
+                  pdc.outf("%g %g %g %g %g %g %g L\n",buffer[p+0],buffer[p+1],buffer[p+7+0],buffer[p+7+1],buffer[p+3],buffer[p+4],buffer[p+5]);
+               }
+               p+=14;            // Each vertex element in the feedback buffer is 7 GLfloats
+               break;
 
-         // Polygon primitive
-      case GL_POLYGON_TOKEN:
-         nvertices = (sint32)buffer[p++];
-         if(nvertices==3){ // We assume polybusting has taken place already!
-            smooth=0;
-            for(i=1; i<nvertices; i++){
-               if(fabs(buffer[p+3]-buffer[p+i*7+3])<1E-4 || fabs(buffer[p+4]-buffer[p+i*7+4])<1E-4 || fabs(buffer[p+5]-buffer[p+i*7+5])<1E-4){ smooth=1; break; }
-            }
-            if(smooth){
-               pdc.outf("%g %g %g %g %g %g %g %g %g %g %g %g %g %g %g ST\n",buffer[p+0],buffer[p+1],buffer[p+3],buffer[p+4],buffer[p+5], buffer[p+7+0],buffer[p+7+1],buffer[p+7+3],buffer[p+7+4],buffer[p+7+5], buffer[p+14+0],buffer[p+14+1],buffer[p+14+3],buffer[p+14+4],buffer[p+14+5]);
-            }
-            else{
-               pdc.outf("%g %g %g %g %g %g %g %g %g T\n",buffer[p+0],buffer[p+1], buffer[p+7+0],buffer[p+7+1], buffer[p+14+0],buffer[p+14+1], buffer[p+3],buffer[p+4],buffer[p+5]);
-            }
-         }
-         p+=nvertices*7;   // Each vertex element in the feedback buffer is 7 GLfloats
-         break;
+               // Polygon primitive
+            case GL_POLYGON_TOKEN:
+               nvertices = (sint32)buffer[p++];
+               if(nvertices==3){ // We assume polybusting has taken place already!
+                  smooth=0;
+                  for(i=1; i<nvertices; i++){
+                     if(fabs(buffer[p+3]-buffer[p+i*7+3])<1E-4 || fabs(buffer[p+4]-buffer[p+i*7+4])<1E-4 || fabs(buffer[p+5]-buffer[p+i*7+5])<1E-4){ smooth=1; break; }
+                  }
+                  if(smooth){
+                     pdc.outf("%g %g %g %g %g %g %g %g %g %g %g %g %g %g %g ST\n",buffer[p+0],buffer[p+1],buffer[p+3],buffer[p+4],buffer[p+5], buffer[p+7+0],buffer[p+7+1],buffer[p+7+3],buffer[p+7+4],buffer[p+7+5], buffer[p+14+0],buffer[p+14+1],buffer[p+14+3],buffer[p+14+4],buffer[p+14+5]);
+                  }
+                  else{
+                     pdc.outf("%g %g %g %g %g %g %g %g %g T\n",buffer[p+0],buffer[p+1], buffer[p+7+0],buffer[p+7+1], buffer[p+14+0],buffer[p+14+1], buffer[p+3],buffer[p+4],buffer[p+5]);
+                  }
+               }
+               p+=nvertices*7;   // Each vertex element in the feedback buffer is 7 GLfloats
+               break;
 
-         // Skip these, don't deal with it here
-      case GL_BITMAP_TOKEN:
-      case GL_DRAW_PIXEL_TOKEN:
-      case GL_COPY_PIXEL_TOKEN:
-         p+=7;
-         break;
+               // Skip these, don't deal with it here
+            case GL_BITMAP_TOKEN:
+            case GL_DRAW_PIXEL_TOKEN:
+            case GL_COPY_PIXEL_TOKEN:
+               p+=7;
+               break;
 
-         // Skip passthrough tokens
-      case GL_PASS_THROUGH_TOKEN:
-         p++;
-         break;
+               // Skip passthrough tokens
+            case GL_PASS_THROUGH_TOKEN:
+               p++;
+               break;
 
-         // Bad token, this is the end
-      default:
-         return;
+               // Bad token, this is the end
+            default:
+               return;
             }
          }
       }

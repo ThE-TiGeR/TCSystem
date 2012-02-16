@@ -59,10 +59,11 @@ namespace tc
          TCINFOS("open_gl", "    GL_RENDERER: " << string);
          string = (const char*)glGetString(GL_VERSION);
          TCINFOS("open_gl", "     GL_VERSION: " << string);
-         //string = glGetString(GL_EXTENSIONS) ? (const char*)glGetString(GL_EXTENSIONS) : "unknown";
-         //TCINFOS("open_gl", "  GL_EXTENSIONS: " << string );
-         string = glGetString(GLU_EXTENSIONS) ? (const char*)glGetString(GLU_EXTENSIONS) : "unknown";
+         string = glGetString(GL_EXTENSIONS) ? (const char*)glGetString(GL_EXTENSIONS) : "unknown";
+         TCINFOS("open_gl", "  GL_EXTENSIONS: " << string );
+         string = gluGetString(GLU_EXTENSIONS) ? (const char*)gluGetString(GLU_EXTENSIONS) : "unknown";
          TCINFOS("open_gl", " GLU_EXTENSIONS: " << string);
+         DetectOpenGLerror();
       }
 
       void PrintOpenGLTextureSupport()
@@ -73,6 +74,7 @@ namespace tc
          TCINFOS("open_gl", " max 2D texture size: ");
          glGetIntegerv(GL_MAX_TEXTURE_SIZE, &val);
          TCINFOS("open_gl", val);
+         DetectOpenGLerror();
       }
 
       void PrintOpenGLBufferInfo()
@@ -115,6 +117,7 @@ namespace tc
          TCINFOS("open_gl", " number of auxiliary buffers present: ");
          glGetIntegerv(GL_AUX_BUFFERS, &val);
          TCINFOS("open_gl", val);
+         DetectOpenGLerror();
       }
 
       bool DetectOpenGLerror()

@@ -36,6 +36,7 @@
 #define _TC_GUI_IMAGE_HANDLER_H_
 
 #include "TCGuiBase.h"
+#include "TCSharedPtr.h"
 
 #include <string>
 
@@ -64,46 +65,24 @@ namespace tc
       */
 
       /** Handles getting the image for an specified id */
-      class TCGUI_API ImageHandler: protected NonCopyAble
+      class ImageHandler
       {
       public:
-         class TCGUI_API Image
+         typedef SharedPtr<ImageHandler> Ptr;
+
+         enum ImageType
          {
-         public:
-            enum Type
-            {
-               BITMAP,
-               GIF
-            };
-
-            Image(const char* _id, const char* _lang_id, const uchar* _image_data, Type image_type=BITMAP);
-
-         private:
-            const char* id;
-            const char* lang_id;
-            const uchar* image_data;
-            Type type;
-            FX::FXIcon* icon;
-
-            friend class ImageHandler;
+            BITMAP,
+            GIF
          };
 
-         class TCGUI_API Images: protected NonCopyAble
-         {
-         public:
-            Images(uint32 num_images, Image* images);
-            ~Images();
+      public:
+         static TCGUI_API bool CreatedInstance();
+         static TCGUI_API void DestroyInstance();
+         static TCGUI_API ImageHandler::Ptr GetInstance();
 
-         private:
-            uint32 m_num_images;
-            Image* m_images;
-            Images* m_prev;
-
-            friend class ImageHandler;
-         };
-
-         static FX::FXIcon* GetIcon(const std::string& mls_id);
-         static void CleanUp();
+         virtual void AddImageData(const char* _id, const char* _lang_id, const uchar* _image_data, ImageType image_type=BITMAP) = 0;
+         virtual FX::FXIcon* GetIcon(const std::string& image_id) = 0;
       };
 
       /**

@@ -98,8 +98,8 @@ namespace tc
             FXMIN(FXGREENVAL(backColor) + 20, 255),
             FXMIN(FXBLUEVAL(backColor)  + 20, 255));
 
-         m_icon_up   = ImageHandler::GetIcon("TC_GUI_DOUBLE_ARROW_UP");
-         m_icon_down = ImageHandler::GetIcon("TC_GUI_DOUBLE_ARROW_DOWN");
+         m_icon_up   = ImageHandler::GetInstance()->GetIcon("TC_GUI_DOUBLE_ARROW_UP");
+         m_icon_down = ImageHandler::GetInstance()->GetIcon("TC_GUI_DOUBLE_ARROW_DOWN");
 
          m_button = new Button(this, text, ic, this, ID_BUTTON, FX::JUSTIFY_LEFT|FX::LAYOUT_FILL_X);
 
