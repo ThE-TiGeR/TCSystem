@@ -66,7 +66,7 @@ namespace net
       {
       public:
          virtual ~DataReceiver() {}
-         virtual bool OnNewData() = 0;
+         virtual bool OnNewData(SocketPtr socket) = 0;
       };
 
       /** typedef for a data receiver pointer */

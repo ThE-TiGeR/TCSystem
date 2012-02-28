@@ -92,7 +92,7 @@ public:
       return data.size() != 0;
    }
 protected:
-   virtual bool OnNewData()
+   virtual bool OnNewData(tc::net::SocketPtr)
    {
       if (!m_header_finished)
       {
@@ -263,7 +263,7 @@ public:
    {
    }
 
-   virtual bool OnNewData()
+   virtual bool OnNewData(tc::net::SocketPtr)
    {
       char buffer[200];
       tc::net::Address address;

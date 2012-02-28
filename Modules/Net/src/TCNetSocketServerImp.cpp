@@ -302,7 +302,7 @@ bool SocketServerImp::Accept()
                   FD_ISSET(m_sockets[i]->GetSocket(), &read_set))
                {
                   //tcdebug << "read set " << m_sockets[i]->GetSocket() << endl;
-                  m_receivers[i]->OnNewData();
+                  m_receivers[i]->OnNewData(m_sockets[i]);
                }
             }
          }
