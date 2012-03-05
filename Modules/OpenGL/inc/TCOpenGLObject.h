@@ -48,7 +48,7 @@
 #pragma warning (disable: 6326)
 #endif
 
-#include <bitset>
+#include <boost/dynamic_bitset.hpp>
 #include <vector>
 
 namespace tc
@@ -99,7 +99,7 @@ namespace tc
          };
 
       public:
-         explicit Object(const std::string& name);
+         explicit Object(const std::string& name, uint32 num_options);
          virtual ~Object();
 
          bool IsActive() const {return m_options[OP_ACTIVE];}
@@ -134,7 +134,7 @@ namespace tc
       protected:
          Object() {}
       private:
-         std::bitset<32> m_options;
+         boost::dynamic_bitset<> m_options;
       };
    }
 }

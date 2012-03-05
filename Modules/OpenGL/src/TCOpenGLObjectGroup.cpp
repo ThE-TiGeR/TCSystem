@@ -46,7 +46,7 @@ namespace tc
       FXIMPLEMENT(ObjectGroup, Object, 0, 0)
 
       ObjectGroup::ObjectGroup(const std::string& name)
-      :Object(name)
+      :Object(name, OP_LAST)
       {
       }
 

@@ -44,7 +44,7 @@ namespace tc
    namespace open_gl
    {
       Face::Face(const std::string& name, GLenum patch_type)
-         :Object3D(name)
+         :Object3D(name, OP_LAST)
          ,m_material()
          ,m_renderer(patch_type)
       {

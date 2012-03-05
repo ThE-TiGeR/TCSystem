@@ -258,7 +258,7 @@ namespace tc
             }
             if (m_texture_array.size())
             {
-               glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, m_texture_offset, m_num_vertex * VERTEX3D_SIZE, &m_texture_array.front());
+               glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, m_texture_offset, m_num_vertex * TEXTURE_COORDINATE_SIZE, &m_texture_array.front());
             }
             util::FreeMemoryOfStlContainer(m_vertex_array);
             util::FreeMemoryOfStlContainer(m_normal_array);
@@ -313,7 +313,7 @@ namespace tc
             ::glVertexPointer(3, GL_FLOAT, 0, (const GLvoid*)m_vertex_offset);
             ::glColorPointer(4, GL_FLOAT, 0, (const GLvoid*)m_color_offset);
             ::glNormalPointer(GL_FLOAT, 0, (const GLvoid*)m_normal_offset);
-            ::glTexCoordPointer(3, GL_FLOAT, 0, (const GLvoid*)m_texture_offset);
+            ::glTexCoordPointer(2, GL_FLOAT, 0, (const GLvoid*)m_texture_offset);
          }
          else
          {

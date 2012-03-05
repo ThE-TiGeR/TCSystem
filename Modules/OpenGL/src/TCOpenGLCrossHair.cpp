@@ -48,7 +48,7 @@ namespace tc
    {
 
       CrossHair::CrossHair(const std::string& name)
-         :Object2D(name)
+         :Object2D(name, OP_LAST)
       {
       }
 

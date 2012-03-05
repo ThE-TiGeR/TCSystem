@@ -50,6 +50,7 @@
 #pragma warning (pop)
 #endif
 #undef SEVERITY_ERROR
+#undef CreateMutex
 
 /**
  * @addtogroup TC_GUI

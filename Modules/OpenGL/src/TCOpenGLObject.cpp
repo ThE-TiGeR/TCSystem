@@ -41,8 +41,9 @@ namespace tc
 {
    namespace open_gl
    {
-      Object::Object(const std::string& name)
-      :NamedObject(name)
+      Object::Object(const std::string& name, uint32 num_options)
+         :NamedObject(name)
+         ,m_options(num_options, 0)
       {
          m_options[OP_ACTIVE] = true;
          m_options[OP_DRAG_ALLOWED] = true;
@@ -61,11 +62,11 @@ namespace tc
          FXMAPFUNC(FX::SEL_COMMAND, Object::ID_STYLE_BOUNDINGBOX, Object::OnCmdBoundingBox),
          FXMAPFUNC(FX::SEL_UPDATE,  Object::ID_STYLE_BOUNDINGBOX, Object::OnUpdBoundingBox)
       };
-      FXIMPLEMENT_ABSTRACT(Object, FX::FXObject, s_object_map, util::ArraySize(s_object_map))
+      FXIMPLEMENT_ABSTRACT(Object, FX::FXObject, s_object_map, util::ArraySize(s_object_map));
 
 
-         // Drawing style toggles
-         long Object::OnCmdBoundingBox(FX::FXObject*, FX::FXSelector, void*)
+      // Drawing style toggles
+      long Object::OnCmdBoundingBox(FX::FXObject*, FX::FXSelector, void*)
       {
          m_options.flip(OP_STYLE_BOUNDBOX);
          return 1;
