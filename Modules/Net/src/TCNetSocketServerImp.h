@@ -76,7 +76,7 @@ namespace imp
       * Starts the server by setting the stop variable to false
       * @param wait_stopped Wait until the server has stopped
       */
-      virtual void Start(bool wait_started);
+      virtual bool Start(bool wait_started);
       /**
        * stops the server by setting the stop variable to false
        * @param wait_stopped Wait until the server has stopped

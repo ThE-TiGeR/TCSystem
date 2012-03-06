@@ -83,7 +83,7 @@ namespace net
       * Starts the server by setting the stop variable to false
       * @param wait_started Wait until the server has started
       */
-      virtual void Start(bool wait_started) = 0;
+      virtual bool Start(bool wait_started) = 0;
       /**
        * stops the server by setting the stop variable to false
        * @param wait_stopped Wait until the server has stopped

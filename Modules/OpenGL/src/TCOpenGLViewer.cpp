@@ -2527,15 +2527,16 @@ namespace tc
 
       // Read back pixels
       // Derived from code contributed by <sancelot@crosswinds.net>
-      bool Viewer::readPixels(FXColor*& buffer,sint32 x,sint32 y,sint32 w,sint32 h){
+      bool Viewer::readPixels(std::vector<FX::FXColor>& buffer,sint32 x,sint32 y,sint32 w,sint32 h){
 
          if(1<=w && 1<=h){
             GLint swapbytes,lsbfirst,rowlength,skiprows,skippixels,alignment,oldbuf;
             register FXColor *p,*q,*pp,*qq,t;
 
             // Try allocate buffer
-            if(FXMALLOC(&buffer,FXColor,w*h)){
-
+            buffer.resize(w*h);
+            if(buffer.size() == w*h)
+            {
                // Make context current
                makeCurrent();
 
@@ -2560,11 +2561,11 @@ namespace tc
                glReadBuffer((GLenum)GL_FRONT);
 
                // Read the pixels
-               glReadPixels(x,y,w,h,GL_RGBA,GL_UNSIGNED_BYTE,(GLvoid*)buffer);
+               glReadPixels(x,y,w,h,GL_RGBA,GL_UNSIGNED_BYTE,(GLvoid*)&buffer.front());
 
                // Flip image upside down
-               pp=buffer;
-               qq=buffer+(h-1)*w;
+               pp=&buffer.front();
+               qq=&buffer.front()+(h-1)*w;
                do{
                   p=pp; pp+=w;
                   q=qq; qq-=w;
@@ -2597,7 +2598,7 @@ namespace tc
 
       // Print the window by grabbing pixels
       long Viewer::OnCmdPrintImage(FXObject*,FXSelector,void*){
-         FXColor *buffer;
+         std::vector<FX::FXColor> buffer;
 
          // First, ensure window is fully painted
          repaint();
@@ -2653,9 +2654,6 @@ namespace tc
                pdc.endPage();
                pdc.endPrint();
             }
-
-            // Free the pixels
-            FXFREE(&buffer);
          }
          return 1;
       }

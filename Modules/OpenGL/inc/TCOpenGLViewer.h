@@ -451,7 +451,7 @@ namespace tc
          * this array can be directly passed to fxsaveBMP and other image
          * output routines.
          */
-         bool readPixels(FX::FXColor*& buffer,sint32 x,sint32 y,sint32 w,sint32 h);
+         bool readPixels(std::vector<FX::FXColor>& buffer,sint32 x,sint32 y,sint32 w,sint32 h);
 
          /**
          * Read the feedback buffer containing the current scene, returning used

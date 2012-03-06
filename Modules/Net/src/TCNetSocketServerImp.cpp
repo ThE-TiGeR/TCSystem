@@ -51,292 +51,306 @@
 
 namespace tc
 {
-namespace net
-{
-namespace imp
-{
-
-class TC_DLL_LOCAL StartMessage: public multi_threading::Message
-{
-public:
-   enum { MESSAGE_ID = multi_threading::Message::MSG_ID_USER_START+1 };
-   StartMessage():multi_threading::Message(MESSAGE_ID) {}
-};
-
-class TC_DLL_LOCAL StopMessage: public multi_threading::Message
-{
-public:
-   enum { MESSAGE_ID = multi_threading::Message::MSG_ID_USER_START+2 };
-   StopMessage():multi_threading::Message(MESSAGE_ID) {}
-};
-
-class TC_DLL_LOCAL AddSocketMessage: public multi_threading::Message
-{
-public:
-   enum { MESSAGE_ID = multi_threading::Message::MSG_ID_USER_START+3 };
-   AddSocketMessage(SocketPtr socket_to_add,
-      SocketServerImp::DataReceiverPtr receiver_to_add)
-      :multi_threading::Message(MESSAGE_ID),
-      m_socket_to_add(socket_to_add),
-      m_receiver_to_add(receiver_to_add)
+   namespace net
    {
-   }
-   SocketPtr m_socket_to_add;
-   SocketServerImp::DataReceiverPtr m_receiver_to_add;
-};
-
-class TC_DLL_LOCAL RemoveSocketMessage: public multi_threading::Message
-{
-public:
-   enum { MESSAGE_ID = multi_threading::Message::MSG_ID_USER_START+4 };
-   RemoveSocketMessage(SocketPtr socket_to_remove)
-      :multi_threading::Message(MESSAGE_ID),
-      m_socket_to_remove(socket_to_remove)
-   {
-   }
-   SocketPtr m_socket_to_remove;
-};
-
-class TC_DLL_LOCAL ThreadObject: public multi_threading::ThreadObject
-{
-public:
-   ThreadObject(SocketServerImp* server)
-      :m_server(server)
-   {
-   }
-protected:
-   bool Run()
-   {
-      return m_server->Run();
-   }
-
-   SocketServerImp* m_server;
-};
-
-SocketServerImp::SocketServerImp()
-{
-   TCTRACEF("TCNET", 10);
-
-   m_server_thread = multi_threading::factory::CreateThread("SocketServerImp");
-   m_server_thread->Start(multi_threading::ThreadObjectPtr(new ThreadObject(this)));
-}
-
-SocketServerImp::~SocketServerImp()
-{
-   TCTRACEF("TCNET", 50);
-
-   Stop(true);
-}
-
-bool SocketServerImp::HandleMessage(multi_threading::MessagePtr message)
-{
-   TCTRACE1("TCNET", 50, "(%d)", message->GetMessageId());
-
-   switch(message->GetMessageId())
-   {
-   case StartMessage::MESSAGE_ID:
+      namespace imp
       {
-         TCTRACE("TCNET", 50, "StartMessage");
-         m_current_timeout = Time::Zero();
-         return true;
-      }
 
-   case StopMessage::MESSAGE_ID:
-      {
-         TCTRACE("TCNET", 50, "StopMessage");
-         m_running = false;
-         return true;
-      }
-
-   case AddSocketMessage::MESSAGE_ID:
-      {
-         SharedPtr<AddSocketMessage> add_message = SharedPtr<AddSocketMessage>::StaticCast(message);
-
-         m_sockets.push_back(add_message->m_socket_to_add);
-         m_receivers.push_back(add_message->m_receiver_to_add);
-
-         return true;
-      }
-
-   case RemoveSocketMessage::MESSAGE_ID:
-      {
-         SharedPtr<RemoveSocketMessage> remove_message = SharedPtr<RemoveSocketMessage>::StaticCast(message);
-
-         std::vector<SocketPtr>::iterator socket_it;
-         socket_it = std::find(m_sockets.begin(), m_sockets.end(),
-            remove_message->m_socket_to_remove);
-         if (socket_it != m_sockets.end())
+         class TC_DLL_LOCAL StartMessage: public multi_threading::Message
          {
-            std::vector<SocketPtr>::size_type pos = socket_it - m_sockets.begin();
-            m_sockets.erase(socket_it);
-            m_receivers.erase(m_receivers.begin() + pos);
-         }
+         public:
+            enum { MESSAGE_ID = multi_threading::Message::MSG_ID_USER_START+1 };
+            StartMessage(bool sync)
+               :multi_threading::Message(MESSAGE_ID)
+               ,m_sync(sync)
+            {}
 
-         return true;
-      }
-   };
-   return false;
-}
+            const bool m_sync;
+         };
 
-bool SocketServerImp::Run()
-{
-   TCTRACEF("TCNET", 50);   
-
-   m_running = true;
-   m_current_timeout = Time::Infinite();
-
-   multi_threading::MessagePtr message;
-   while (m_running)
-   {
-      if (m_server_thread->WaitThreadMessage(message, m_current_timeout) !=
-         multi_threading::Message::MSG_RECEIVE_FAILED)
-      {
-         if (!HandleMessage(message))
+         class TC_DLL_LOCAL StopMessage: public multi_threading::Message
          {
-            TCERROR1("TCNET", "Message not handled id=%d", message->GetMessageId());   
-         }
-      }
-      else
-      {
-         Accept();
-      }
-   };
+         public:
+            enum { MESSAGE_ID = multi_threading::Message::MSG_ID_USER_START+2 };
+            StopMessage():multi_threading::Message(MESSAGE_ID) {}
+         };
 
-   TCTRACE("TCNET", 50, "done.");   
-   return true;
-}
-
-void SocketServerImp::Start(bool wait_started)
-{
-   TCTRACEF("TCNET", 50);
-
-   if (m_server_thread->IsRunning())
-   {
-      m_server_thread->SendThreadMessage(multi_threading::MessagePtr(new StartMessage));
-
-      if (wait_started)
-      {
-      }
-   }
-}
-
-void SocketServerImp::Stop(bool wait_stopped)
-{
-   TCTRACEF("TCNET", 50);
-   
-   if (m_server_thread->IsRunning())
-   {
-      m_server_thread->SendThreadMessage(multi_threading::MessagePtr(new StopMessage));
-
-      if (wait_stopped)
-      {
-         m_server_thread->Join();
-      }
-   }
-}
-
-bool SocketServerImp::AddSocket(SocketPtr socket,
-                                DataReceiverPtr data_receiver)
-{
-   if (!m_server_thread->IsRunning())
-   {
-      return false;
-   }
-
-   return m_server_thread->SendThreadMessage(multi_threading::MessagePtr(new AddSocketMessage(socket, data_receiver)));
-}
-
-bool SocketServerImp::RemoveSocket(SocketPtr socket)
-{
-   if (!m_server_thread->IsRunning())
-   {
-      return false;
-   }
-
-   return m_server_thread->SendThreadMessage(multi_threading::MessagePtr(new RemoveSocketMessage(socket)));
-}
-
-bool SocketServerImp::Accept()
-{
-   TCTRACEF("TCNET", 100);
-
-   // init read set
-   fd_set read_set;
-   FD_ZERO(&read_set);
-
-   // add all existing connections
-   // and get max id
-   SocketId max_id = 0;
-   uint32 i;
-   for (i=0; i<m_sockets.size(); i++)
-   {
-      if (m_sockets[i] &&
-          m_sockets[i]->IsOpened())
-      {
-#ifdef _MSC_VER
-         // disable warning warning C4127: conditional expression is constant
-         // happens for FD_SET
-#   pragma warning (disable: 4127)
-#endif
-
-         FD_SET(m_sockets[i]->GetSocket(), &read_set);
-         max_id = tc::util::Max(max_id, m_sockets[i]->GetSocket());
-      }
-   }
-
-   // check if we found something
-   if (max_id != 0)
-   {
-      struct timeval timeout = {0, SELECT_TIMEOUT * 1000};
-
-      sint32 s = ::select(static_cast<sint32>(max_id + 1),
-         &read_set, 0, 0, &timeout);
-      if (s > 0)
-      {
-         for (i=0; i<m_sockets.size(); i++)
+         class TC_DLL_LOCAL AddSocketMessage: public multi_threading::Message
          {
-            if (m_sockets[i] &&
-               m_sockets[i]->IsOpened())
+         public:
+            enum { MESSAGE_ID = multi_threading::Message::MSG_ID_USER_START+3 };
+            AddSocketMessage(SocketPtr socket_to_add,
+               SocketServerImp::DataReceiverPtr receiver_to_add)
+               :multi_threading::Message(MESSAGE_ID),
+               m_socket_to_add(socket_to_add),
+               m_receiver_to_add(receiver_to_add)
             {
-               if (m_sockets[i] &&
-                  FD_ISSET(m_sockets[i]->GetSocket(), &read_set))
+            }
+            SocketPtr m_socket_to_add;
+            SocketServerImp::DataReceiverPtr m_receiver_to_add;
+         };
+
+         class TC_DLL_LOCAL RemoveSocketMessage: public multi_threading::Message
+         {
+         public:
+            enum { MESSAGE_ID = multi_threading::Message::MSG_ID_USER_START+4 };
+            RemoveSocketMessage(SocketPtr socket_to_remove)
+               :multi_threading::Message(MESSAGE_ID),
+               m_socket_to_remove(socket_to_remove)
+            {
+            }
+            SocketPtr m_socket_to_remove;
+         };
+
+         class TC_DLL_LOCAL ThreadObject: public multi_threading::ThreadObject
+         {
+         public:
+            ThreadObject(SocketServerImp* server)
+               :m_server(server)
+            {
+            }
+         protected:
+            bool Run()
+            {
+               return m_server->Run();
+            }
+
+            SocketServerImp* m_server;
+         };
+
+         SocketServerImp::SocketServerImp()
+         {
+            TCTRACEF("TCNET", 10);
+
+            m_server_thread = multi_threading::factory::CreateThread("SocketServerImp");
+            m_server_thread->Start(multi_threading::ThreadObjectPtr(new ThreadObject(this)));
+         }
+
+         SocketServerImp::~SocketServerImp()
+         {
+            TCTRACEF("TCNET", 50);
+
+            Stop(true);
+         }
+
+         bool SocketServerImp::HandleMessage(multi_threading::MessagePtr message)
+         {
+            TCTRACE1("TCNET", 50, "(%d)", message->GetMessageId());
+
+            switch(message->GetMessageId())
+            {
+            case StartMessage::MESSAGE_ID:
                {
-                  //tcdebug << "read set " << m_sockets[i]->GetSocket() << endl;
-                  m_receivers[i]->OnNewData(m_sockets[i]);
+                  TCTRACE("TCNET", 50, "StartMessage");
+                  m_current_timeout = Time::Zero();
+                  if (SharedPtr<StartMessage>::StaticCast(message)->m_sync)
+                  {
+                     message->GetSenderThread()->SendReplyThreadMessage(message);
+                  }
+                  return true;
+               }
+
+            case StopMessage::MESSAGE_ID:
+               {
+                  TCTRACE("TCNET", 50, "StopMessage");
+                  m_running = false;
+                  return true;
+               }
+
+            case AddSocketMessage::MESSAGE_ID:
+               {
+                  SharedPtr<AddSocketMessage> add_message = SharedPtr<AddSocketMessage>::StaticCast(message);
+
+                  m_sockets.push_back(add_message->m_socket_to_add);
+                  m_receivers.push_back(add_message->m_receiver_to_add);
+
+                  return true;
+               }
+
+            case RemoveSocketMessage::MESSAGE_ID:
+               {
+                  SharedPtr<RemoveSocketMessage> remove_message = SharedPtr<RemoveSocketMessage>::StaticCast(message);
+
+                  std::vector<SocketPtr>::iterator socket_it;
+                  socket_it = std::find(m_sockets.begin(), m_sockets.end(),
+                     remove_message->m_socket_to_remove);
+                  if (socket_it != m_sockets.end())
+                  {
+                     std::vector<SocketPtr>::size_type pos = socket_it - m_sockets.begin();
+                     m_sockets.erase(socket_it);
+                     m_receivers.erase(m_receivers.begin() + pos);
+                  }
+
+                  return true;
+               }
+            };
+            return false;
+         }
+
+         bool SocketServerImp::Run()
+         {
+            TCTRACEF("TCNET", 50);   
+
+            m_running = true;
+            m_current_timeout = Time::Infinite();
+
+            multi_threading::MessagePtr message;
+            while (m_running)
+            {
+               if (m_server_thread->WaitThreadMessage(message, m_current_timeout) !=
+                  multi_threading::Message::MSG_RECEIVE_FAILED)
+               {
+                  if (!HandleMessage(message))
+                  {
+                     TCERROR1("TCNET", "Message not handled id=%d", message->GetMessageId());   
+                  }
+               }
+               else
+               {
+                  Accept();
+               }
+            };
+
+            TCTRACE("TCNET", 50, "done.");   
+            return true;
+         }
+
+         bool SocketServerImp::Start(bool wait_started)
+         {
+            TCTRACEF("TCNET", 50);
+
+            if (m_server_thread->IsRunning())
+            {
+               if (wait_started)
+               {
+                  m_server_thread->SendSyncThreadMessage(multi_threading::MessagePtr(new StartMessage(true)));
+               }
+               else
+               {
+                  m_server_thread->SendThreadMessage(multi_threading::MessagePtr(new StartMessage(false)));
+               }
+            }
+
+            return true;
+         }
+
+         void SocketServerImp::Stop(bool wait_stopped)
+         {
+            TCTRACEF("TCNET", 50);
+
+            if (m_server_thread->IsRunning())
+            {
+               m_server_thread->SendThreadMessage(multi_threading::MessagePtr(new StopMessage));
+
+               if (wait_stopped)
+               {
+                  m_server_thread->Join();
                }
             }
          }
-      }
-      else if (s == 0)
-      {
-#ifdef TCOS_WINDOWS
-         int error = ::WSAGetLastError();
-         std::string error_str = system::GetLastErrorMessage();
-#else
-         int error = system::GetLastError();
-         std::string error_str = system::GetLastErrorMessage();
-#endif
-         if (error != 0)
+
+         bool SocketServerImp::AddSocket(SocketPtr socket,
+            DataReceiverPtr data_receiver)
          {
-            TCERROR1("TCNET", "select error %s", error_str.c_str());
+            if (!m_server_thread->IsRunning())
+            {
+               return false;
+            }
+
+            return m_server_thread->SendThreadMessage(multi_threading::MessagePtr(new AddSocketMessage(socket, data_receiver)));
          }
-      }
-      else if (s < 0)
-      {
-         TCERROR1("TCNET", "select error %s", 
-                  system::GetLastErrorMessage().c_str());
-         return false;
+
+         bool SocketServerImp::RemoveSocket(SocketPtr socket)
+         {
+            if (!m_server_thread->IsRunning())
+            {
+               return false;
+            }
+
+            return m_server_thread->SendThreadMessage(multi_threading::MessagePtr(new RemoveSocketMessage(socket)));
+         }
+
+         bool SocketServerImp::Accept()
+         {
+            TCTRACEF("TCNET", 100);
+
+            // init read set
+            fd_set read_set;
+            FD_ZERO(&read_set);
+
+            // add all existing connections
+            // and get max id
+            SocketId max_id = 0;
+            uint32 i;
+            for (i=0; i<m_sockets.size(); i++)
+            {
+               if (m_sockets[i] &&
+                  m_sockets[i]->IsOpened())
+               {
+#ifdef _MSC_VER
+                  // disable warning warning C4127: conditional expression is constant
+                  // happens for FD_SET
+#   pragma warning (disable: 4127)
+#endif
+
+                  FD_SET(m_sockets[i]->GetSocket(), &read_set);
+                  max_id = tc::util::Max(max_id, m_sockets[i]->GetSocket());
+               }
+            }
+
+            // check if we found something
+            if (max_id != 0)
+            {
+               struct timeval timeout = {0, SELECT_TIMEOUT * 1000};
+
+               sint32 s = ::select(static_cast<sint32>(max_id + 1),
+                  &read_set, 0, 0, &timeout);
+               if (s > 0)
+               {
+                  for (i=0; i<m_sockets.size(); i++)
+                  {
+                     if (m_sockets[i] &&
+                        m_sockets[i]->IsOpened())
+                     {
+                        if (m_sockets[i] &&
+                           FD_ISSET(m_sockets[i]->GetSocket(), &read_set))
+                        {
+                           //tcdebug << "read set " << m_sockets[i]->GetSocket() << endl;
+                           m_receivers[i]->OnNewData(m_sockets[i]);
+                        }
+                     }
+                  }
+               }
+               else if (s == 0)
+               {
+#ifdef TCOS_WINDOWS
+                  int error = ::WSAGetLastError();
+                  std::string error_str = system::GetLastErrorMessage();
+#else
+                  int error = system::GetLastError();
+                  std::string error_str = system::GetLastErrorMessage();
+#endif
+                  if (error != 0)
+                  {
+                     TCERROR1("TCNET", "select error %s", error_str.c_str());
+                  }
+               }
+               else if (s < 0)
+               {
+                  TCERROR1("TCNET", "select error %s", 
+                     system::GetLastErrorMessage().c_str());
+                  return false;
+               }
+            }
+            else
+            {
+               system::Sleep(SELECT_TIMEOUT);
+            }
+
+            return true;
+         }
+
       }
    }
-   else
-   {
-      system::Sleep(SELECT_TIMEOUT);
-   }
-
-   return true;
-}
-
-}
-}
 }
 
