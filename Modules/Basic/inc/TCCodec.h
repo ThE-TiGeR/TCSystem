@@ -148,6 +148,13 @@ namespace tc
         * @return Number of bytes decoded
         */
        virtual uint64 Decode(Stream& stream, uchar &val)  = 0;
+       /**
+        * Method for reading one bool from the stream
+        * @param stream Stream from which to decode the data
+        * @param val the char which should store the bool
+        * @return Number of bytes decoded
+        */
+       virtual uint64 Decode(Stream& stream, bool &val)  = 0;
 
 
        /**
@@ -241,6 +248,14 @@ namespace tc
         * @return Number of bytes encoded
         */
        virtual uint64 Encode(uchar val, Stream& stream) = 0;
+
+       /**
+        * Method for writing one bool to the stream
+        * @param stream Stream to which to encode the data
+        * @param val the bool which to write
+        * @return Number of bytes encoded
+        */
+       virtual uint64 Encode(bool val, Stream& stream) = 0;
 
        /**
         * Writes the end of line characters if needed for the stream

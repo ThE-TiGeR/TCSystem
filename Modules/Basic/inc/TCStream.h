@@ -212,6 +212,11 @@ namespace tc
       * @param val the char which should store the char
       */
       virtual uint64 Read(uchar &val) = 0;
+      /**
+      * Method for reading one bool from the stream
+      * @param val the char which should store the bool
+      */
+      virtual uint64 Read(bool &val) = 0;
 
 
       /**
@@ -279,6 +284,11 @@ namespace tc
       * @param val the char which to write
       */
       virtual uint64 Write(uchar val) = 0;
+      /**
+      * Method for writing one bool to the stream
+      * @param val the bool which to write
+      */
+      virtual uint64 Write(bool val) = 0;
 
       /** Writes the end of line characters if needed for the stream */
       virtual uint64 WriteEndOfLine() = 0;

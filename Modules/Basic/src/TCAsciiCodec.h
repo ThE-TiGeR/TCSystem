@@ -73,7 +73,8 @@ namespace imp
       virtual uint64 Decode(Stream& stream, std::string& val);
       virtual uint64 Decode(Stream& stream, std::wstring& val);
       virtual uint64 Decode(Stream& stream, char &val);
-      virtual uint64 Decode(Stream& stream, uchar &val) ;
+      virtual uint64 Decode(Stream& stream, uchar &val);
+      virtual uint64 Decode(Stream& stream, bool &val);
 
       virtual uint64 Encode(sint16 val, Stream& stream);
       virtual uint64 Encode(uint16 val, Stream& stream);
@@ -88,6 +89,8 @@ namespace imp
       virtual uint64 Encode(const char *val, Stream& stream);
       virtual uint64 Encode(char val, Stream& stream);
       virtual uint64 Encode(uchar val, Stream& stream);
+      virtual uint64 Encode(bool val, Stream& stream);
+
       virtual uint64 EncodeEndOfLine(Stream& stream);
       virtual uint64 EncodeSpace(Stream& stream);
    };

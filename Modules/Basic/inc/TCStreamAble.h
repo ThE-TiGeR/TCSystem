@@ -73,6 +73,7 @@ namespace tc
 
       virtual ~StreamAble() {}
    };
+   typedef SharedPtr<StreamAble> StreamAblePtr;
 
    /**
     * @brief Read operator for reading a StreamAble object reference from a Stream

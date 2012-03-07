@@ -72,6 +72,38 @@ namespace tc
       // Feedback buffer sort routine
       typedef bool (*ZSortFunc)(float*& buffer,sint32& used,sint32& size);
 
+      struct FXQuatf2Coord4f
+      {
+         FXQuatf2Coord4f(const FX::FXQuatf& q)
+            :c((const FX::FXfloat*)q)
+         {
+         }
+
+         operator const math::CoordN<float, 4>& ()
+         {
+            return c;
+         }
+
+      private:
+         math::CoordN<float, 4> c;
+      };
+
+      struct Coord4f2FXQuatf
+      {
+         Coord4f2FXQuatf(const math::CoordN<float, 4>& c)
+            :q((const FX::FXfloat*)c)
+         {
+         }
+
+         operator const FX::FXQuatf& ()
+         {
+            return q;
+         }
+
+      private:
+         FX::FXQuatf q;
+      };
+
       /// open_gl viewer widget
       class TCOGL_API Viewer: public FX::FXGLCanvas 
       {
@@ -384,7 +416,7 @@ namespace tc
          void setOrientation(FX::FXQuatf rot);
 
          /// Return current camera orientation quaternion
-         const FX::FXQuatf& getOrientation() const { return rotation; }
+         math::CoordN<float, 4> getOrientation() const { return FXQuatf2Coord4f(rotation); }
 
          /// Change object center (tranlation)
          void setCenter(Vertex3D cntr);

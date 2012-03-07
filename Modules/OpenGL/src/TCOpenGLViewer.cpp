@@ -2014,7 +2014,7 @@ namespace tc
                }
                setOp(ROTATING);                                // Go into rotation mode
             case ROTATING:            // Rotating camera around target
-               q=turn(event->last_x,event->last_y,event->win_x,event->win_y) * getOrientation();
+               q=turn(event->last_x,event->last_y,event->win_x,event->win_y) * rotation;
                setOrientation(q);
                changed=1;
                break;
@@ -2063,7 +2063,7 @@ namespace tc
                   mm.rot(qq);
                   mm.trans(0.0f,0.0f,(float)distance);
                   center=FXVec3f2Vertex(Vertex2FXVec3f(center)*mm);
-                  q=qq * getOrientation();
+                  q=qq * rotation;
                   setOrientation(q);
                   update();
                   changed=1;
@@ -2478,7 +2478,7 @@ namespace tc
                dial[2]=dialnew;
                break;
             }
-            setOrientation(q*getOrientation());
+            setOrientation(q*rotation);
          }
          else if(doesturbo){
             doesturbo=false;

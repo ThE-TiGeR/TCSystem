@@ -95,6 +95,9 @@ namespace tc
             WriteValue<sint32>(stream, 1); stream << endl;
             WriteValue<sint64>(stream, 1); stream << space;
 
+            WriteValue<bool>(stream, true); stream << space;
+            WriteValue<bool>(stream, false); stream << space;
+
             WriteValue<std::string>(stream, "Hallo"); stream << endl;
             WriteValue<std::wstring>(stream, L"Hallo"); stream << endl;
          }
@@ -112,6 +115,8 @@ namespace tc
             ReadValue<sint16>(stream, 1);
             ReadValue<sint32>(stream, 1);
             ReadValue<sint64>(stream, 1);
+            ReadValue<bool>(stream, true);
+            ReadValue<bool>(stream, false);
 
             ReadValue<std::string>(stream, "Hallo");
             ReadValue<std::wstring>(stream, L"Hallo");

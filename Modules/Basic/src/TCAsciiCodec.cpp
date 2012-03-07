@@ -223,6 +223,14 @@ uint64 AsciiCodec::Decode(Stream& stream, uchar &val)
    return stream.ReadBytes(1, &val);
 }
 
+uint64 AsciiCodec::Decode(Stream& stream, bool &val)
+{
+   std::string strval;
+   uint64 len = ReadNextValueString(stream, strval);
+   val = strval == "1";
+   return len;
+}
+
 
 uint64 AsciiCodec::Encode(sint16 val, Stream& stream)
 {
@@ -309,6 +317,11 @@ uint64 AsciiCodec::Encode(char val, Stream& stream)
 uint64 AsciiCodec::Encode(uchar val, Stream& stream)
 {
    return stream.WriteBytes(1, &val);
+}
+
+uint64 AsciiCodec::Encode(bool val, Stream& stream)
+{
+   return stream.WriteBytes(1, val ? "1" : "0");
 }
 
 uint64 AsciiCodec::EncodeEndOfLine(Stream& stream)

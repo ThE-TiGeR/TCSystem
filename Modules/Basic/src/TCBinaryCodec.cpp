@@ -199,6 +199,13 @@ namespace tc
             return stream.ReadBytes(1, &val);
          }
 
+         uint64 Decode(Stream& stream, bool &val)
+         {
+            uchar cval;
+            uint64 len = stream.ReadBytes(1, &cval);
+            val = cval == 1;
+            return len;
+         }
 
          uint64 Encode(sint16 val, Stream& stream)
          {
@@ -278,6 +285,12 @@ namespace tc
          uint64 Encode(uchar val, Stream& stream)
          {
             return stream.WriteBytes(1, &val);
+         }
+
+         uint64 Encode(bool val, Stream& stream)
+         {
+            uchar cval = val ? 1 : 0;
+            return stream.WriteBytes(1, &cval);
          }
 
          uint64 EncodeEndOfLine(Stream& /*stream*/)

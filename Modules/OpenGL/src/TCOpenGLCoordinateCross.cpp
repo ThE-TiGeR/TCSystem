@@ -78,7 +78,7 @@ namespace tc
 
          FX::FXMat4f transformation;
          transformation.eye();
-         transformation.rot(viewer.getOrientation());
+         transformation.rot(Coord4f2FXQuatf(viewer.getOrientation()));
 
          Viewport viewport;
          viewer.getViewport(viewport);
