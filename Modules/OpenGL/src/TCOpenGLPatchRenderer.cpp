@@ -311,8 +311,8 @@ namespace tc
             // bind VBO in order to use
             glBindBufferARB(GL_ARRAY_BUFFER_ARB, m_vertex_buffer_id);
             ::glVertexPointer(3, GL_FLOAT, 0, (const GLvoid*)m_vertex_offset);
-            ::glColorPointer(4, GL_FLOAT, 0, (const GLvoid*)m_color_offset);
             ::glNormalPointer(GL_FLOAT, 0, (const GLvoid*)m_normal_offset);
+            ::glColorPointer(4, GL_FLOAT, 0, (const GLvoid*)m_color_offset);
             ::glTexCoordPointer(2, GL_FLOAT, 0, (const GLvoid*)m_texture_offset);
          }
          else
@@ -436,10 +436,10 @@ namespace tc
             glDeleteBuffersARB(1, &m_vertex_buffer_id);
             m_vertex_buffer_id = 0;
          }
-         m_vertex_offset = 0;
-         m_texture_offset = 0;
-         m_color_offset = 0;
-         m_normal_offset = 0;
+         m_vertex_offset = std::numeric_limits<uint64>::max();
+         m_texture_offset = std::numeric_limits<uint64>::max();
+         m_color_offset = std::numeric_limits<uint64>::max();
+         m_normal_offset = std::numeric_limits<uint64>::max();
       }
    }
 }

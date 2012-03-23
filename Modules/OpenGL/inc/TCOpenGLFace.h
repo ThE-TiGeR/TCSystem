@@ -112,6 +112,9 @@ namespace tc
          virtual void DrawForHitSelf(open_gl::Viewer& viewer);
 
          PatchRenderer& GetRenderer();
+
+         virtual bool HasColors() = 0;
+         virtual bool HasNormals() = 0;
       private:
          void RenderWireFrame();
          void RenderSurface();

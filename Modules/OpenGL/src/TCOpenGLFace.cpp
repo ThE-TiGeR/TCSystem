@@ -153,7 +153,7 @@ namespace tc
       {
          if (GetOption(OP_SURFACE))
          {
-            if (GetOption(OP_SURFACE_COLORED))
+            if (GetOption(OP_SURFACE_COLORED) && HasColors())
             {
                m_renderer.EnableColorArray();
             }
@@ -171,7 +171,7 @@ namespace tc
 
                m_renderer.EnableNormalArray();
 
-               if (GetOption(OP_SURFACE_COLORED))
+               if (GetOption(OP_SURFACE_COLORED) && HasColors())
                {
                   m_renderer.EnableColoredShading();
                }
