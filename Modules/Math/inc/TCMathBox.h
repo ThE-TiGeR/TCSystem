@@ -38,6 +38,7 @@
 
 #include "TCMathCoordUtil.h"
 #include "TCMathUtil.h"
+#include "TCStream.h"
 
 #include <limits>
 #include <vector>
@@ -225,6 +226,27 @@ namespace tc
          COORD_TYPE m_min;
          COORD_TYPE m_max;
       };
+
+      template <class COORD_TYPE>
+      inline StreamPtr operator<<(StreamPtr stream, const Box<COORD_TYPE>& box)
+      {
+          return stream << box.GetMin() << space << box.GetMax();
+      }
+
+      template <class COORD_TYPE>
+      inline StreamPtr operator>>(StreamPtr stream, Box<COORD_TYPE>& box)
+      {
+          COORD_TYPE min;
+          COORD_TYPE max;
+          stream >> min >> max;
+
+          if (stream->IsOk())
+          {
+              box.SetMin(min);
+              box.SetMax(max);
+          }
+          return stream;
+      }
    }
 }
 #endif

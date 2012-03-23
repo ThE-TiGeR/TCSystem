@@ -37,6 +37,9 @@
 
 #include "TCDefines.h"
 
+#include <cstdint>
+#include <cstddef>
+
 namespace tc
 {
    /**
@@ -52,42 +55,22 @@ namespace tc
     */
 
    /** @brief typedef for 8bit signed int */
-   typedef char                sint8;
+   typedef std::int8_t sint8;
    /** @brief typedef for 16bit signed int */
-   typedef short               sint16;
+   typedef std::int16_t sint16;
    /** @brief typedef for singned int 32bit */
-   typedef int                 sint32;
-#ifdef _MSC_VER
-   /** @brief typedef for 64bit signed int */
-   typedef __int64             sint64;
-#else
-#  ifdef TCOS_64BIT
-     /** typedef for 64bi signed int */
-     typedef long              sint64;
-#  else
-     /** typedef for 64bi signed int */
-     typedef long long         sint64;
-#  endif 
-#endif
+   typedef std::int32_t sint32;
+   /** typedef for 64bi signed int */
+   typedef std::int64_t sint64;
 
    /** @brief typedef for 8bit unsigned int */
-   typedef unsigned char       uint8;
+   typedef std::uint8_t uint8;
    /** @brief typedef for 16bit unsigned int */
-   typedef unsigned short      uint16;
+   typedef std::uint16_t uint16;
    /** @brief typedef for 32bit unsigned int*/
-   typedef unsigned int        uint32;
-#ifdef _MSC_VER
-   /** @brief typedef for 64bit signed int */
-   typedef unsigned __int64       uint64;
-#else
-#  ifdef TCOS_64BIT
-     /** @brief typedef for 64bit unsigned int */
-     typedef unsigned long      uint64;
-#  else
-     /** @brief typedef for 64bit unsigned int */
-     typedef unsigned long long uint64;
-#  endif 
-#endif
+   typedef std::uint32_t uint32;
+   /** @brief typedef for 64bit unsigned int */
+   typedef std::uint64_t uint64;
 
    // typedef for 32bit float does not need to be defined -> is float
    // typedef for 64bit float does not need to be defined -> is double
@@ -96,7 +79,7 @@ namespace tc
    /** @brief typedef for 8bit unsigned char */
    typedef unsigned char uchar;
 
-   typedef unsigned long size_type;
+   typedef std::size_t size_type;
 #ifdef TCOS_64BIT
    typedef sint64 ssize_type;
 #else

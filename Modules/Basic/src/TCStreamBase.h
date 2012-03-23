@@ -87,6 +87,8 @@ namespace imp
       }
       void EnableDisplayErrorMessages(bool displ);
 
+      virtual uint64 Read(sint8 &val) { return m_codec->Decode(*this, val); }
+      virtual uint64 Read(uint8 &val) { return m_codec->Decode(*this, val); }
       virtual uint64 Read(sint16 &val) { return m_codec->Decode(*this, val); }
       virtual uint64 Read(uint16 &val) { return m_codec->Decode(*this, val); }
       virtual uint64 Read(sint32 &val) { return m_codec->Decode(*this, val); }
@@ -98,9 +100,10 @@ namespace imp
       virtual uint64 Read(std::string& val){ return m_codec->Decode(*this, val); }
       virtual uint64 Read(std::wstring& val){ return m_codec->Decode(*this, val); }
       virtual uint64 Read(char &val)   { return m_codec->Decode(*this, val); }
-      virtual uint64 Read(uchar &val)  { return m_codec->Decode(*this, val); }
       virtual uint64 Read(bool &val)  { return m_codec->Decode(*this, val); }
 
+      virtual uint64 Write(sint8 val) { return m_codec->Encode(val, *this); }
+      virtual uint64 Write(uint8 val) { return m_codec->Encode(val, *this); }
       virtual uint64 Write(sint16 val) { return m_codec->Encode(val, *this); }
       virtual uint64 Write(uint16 val) { return m_codec->Encode(val, *this); }
       virtual uint64 Write(sint32 val) { return m_codec->Encode(val, *this); }
@@ -113,7 +116,6 @@ namespace imp
       virtual uint64 Write(const std::string& val) { return m_codec->Encode(val, *this); }
       virtual uint64 Write(const std::wstring& val) { return m_codec->Encode(val, *this); }
       virtual uint64 Write(char val) { return m_codec->Encode(val, *this); }
-      virtual uint64 Write(uchar val) { return m_codec->Encode(val, *this); }
       virtual uint64 Write(bool val) { return m_codec->Encode(val, *this); }
 
       virtual uint64 WriteEndOfLine() { return m_codec->EncodeEndOfLine(*this); }

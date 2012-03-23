@@ -156,6 +156,16 @@ namespace tc
        * Method for reading one signed 16bit integer from the stream
        * @param val the short which should store the short
        */
+      virtual uint64 Read(sint8 &val) = 0;
+      /**
+       * Method for reading one unsigned 16bit integer from the stream
+       * @param val the short which should store the short
+       */
+      virtual uint64 Read(uint8 &val) = 0;
+      /**
+       * Method for reading one signed 16bit integer from the stream
+       * @param val the short which should store the short
+       */
       virtual uint64 Read(sint16 &val) = 0;
       /**
        * Method for reading one unsigned 16bit integer from the stream
@@ -208,17 +218,22 @@ namespace tc
       */
       virtual uint64 Read(char &val) = 0;
       /**
-      * Method for reading one unsigned char from the stream
-      * @param val the char which should store the char
-      */
-      virtual uint64 Read(uchar &val) = 0;
-      /**
       * Method for reading one bool from the stream
       * @param val the char which should store the bool
       */
       virtual uint64 Read(bool &val) = 0;
 
 
+      /**
+      * Method for writing one signed 8bit integer to the stream
+      * @param val the short which to write
+      */
+      virtual uint64 Write(sint8 val) = 0;
+      /**
+      * Method for writing one unsigned 8bit integer to the stream
+      * @param val the short which to write
+      */
+      virtual uint64 Write(uint8 val) = 0;
       /**
       * Method for writing one signed 16bit integer to the stream
       * @param val the short which to write
@@ -279,11 +294,6 @@ namespace tc
       * @param val the char which to write
       */
       virtual uint64 Write(char val) = 0;
-      /**
-      * Method for writing one unsigned char to the stream
-      * @param val the char which to write
-      */
-      virtual uint64 Write(uchar val) = 0;
       /**
       * Method for writing one bool to the stream
       * @param val the bool which to write

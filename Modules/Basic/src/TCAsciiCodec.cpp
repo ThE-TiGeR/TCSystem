@@ -99,6 +99,24 @@ static uint64 ReadNextValueString(Stream& stream, std::string& val)
    return len;
 }
 
+uint64 AsciiCodec::Decode(Stream& stream, sint8& val)
+{
+    std::string strval;
+    uint64 len = ReadNextValueString(stream, strval);
+    val = string::ToSint8(strval);
+
+    return len;
+}
+
+uint64 AsciiCodec::Decode(Stream& stream, uint8& val)
+{
+    std::string strval;
+    uint64 len = ReadNextValueString(stream, strval);
+    val = string::ToUint8(strval);
+
+    return len;
+}
+
 uint64 AsciiCodec::Decode(Stream& stream, sint16& val)
 {
    std::string strval;
@@ -218,11 +236,6 @@ uint64 AsciiCodec::Decode(Stream& stream, char &val)
    return stream.ReadBytes(1, &val);
 }
 
-uint64 AsciiCodec::Decode(Stream& stream, uchar &val)
-{
-   return stream.ReadBytes(1, &val);
-}
-
 uint64 AsciiCodec::Decode(Stream& stream, bool &val)
 {
    std::string strval;
@@ -231,6 +244,17 @@ uint64 AsciiCodec::Decode(Stream& stream, bool &val)
    return len;
 }
 
+
+
+uint64 AsciiCodec::Encode(sint8 val, Stream& stream)
+{
+    return Encode(sint16(val), stream);
+}
+
+uint64 AsciiCodec::Encode(uint8 val, Stream& stream)
+{
+    return Encode(uint16(val), stream);
+}
 
 uint64 AsciiCodec::Encode(sint16 val, Stream& stream)
 {
@@ -310,11 +334,6 @@ uint64 AsciiCodec::Encode(const char *val, Stream& stream)
 }
 
 uint64 AsciiCodec::Encode(char val, Stream& stream)
-{
-   return stream.WriteBytes(1, &val);
-}
-
-uint64 AsciiCodec::Encode(uchar val, Stream& stream)
 {
    return stream.WriteBytes(1, &val);
 }

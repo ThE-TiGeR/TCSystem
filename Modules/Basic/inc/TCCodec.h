@@ -65,6 +65,20 @@ namespace tc
     {
     public:
        /**
+        * Method for reading one signed 8bit integer from the stream
+        * @param stream Stream from which to decode the data
+        * @param val the short which should store the short
+        * @return Number of bytes decoded
+        */
+       virtual uint64 Decode(Stream& stream, sint8 &val) = 0;
+       /**
+        * Method for reading one unsigned 8bit integer from the stream
+        * @param stream Stream from which to decode the data
+        * @param val the short which should store the short
+        * @return Number of bytes decoded
+        */
+       virtual uint64 Decode(Stream& stream, uint8 &val) = 0;
+       /**
         * Method for reading one signed 16bit integer from the stream
         * @param stream Stream from which to decode the data
         * @param val the short which should store the short
@@ -142,13 +156,6 @@ namespace tc
         */
        virtual uint64 Decode(Stream& stream, char &val) = 0;
        /**
-        * Method for reading one unsigned char from the stream
-        * @param stream Stream from which to decode the data
-        * @param val the char which should store the char
-        * @return Number of bytes decoded
-        */
-       virtual uint64 Decode(Stream& stream, uchar &val)  = 0;
-       /**
         * Method for reading one bool from the stream
         * @param stream Stream from which to decode the data
         * @param val the char which should store the bool
@@ -157,6 +164,20 @@ namespace tc
        virtual uint64 Decode(Stream& stream, bool &val)  = 0;
 
 
+       /**
+        * Method for writing one signed 8bit integer to the stream
+        * @param stream Stream to which to encode the data
+        * @param val the short which to write
+        * @return Number of bytes encoded
+        */
+       virtual uint64 Encode(sint8 val, Stream& stream) = 0;
+       /**
+        * Method for writing one unsigned 8bit integer to the stream
+        * @param stream Stream to which to encode the data
+        * @param val the short which to write
+        * @return Number of bytes encoded
+        */
+       virtual uint64 Encode(uint8 val, Stream& stream) = 0;
        /**
         * Method for writing one signed 16bit integer to the stream
         * @param stream Stream to which to encode the data
@@ -241,13 +262,6 @@ namespace tc
         * @return Number of bytes encoded
         */
        virtual uint64 Encode(char val, Stream& stream) = 0;
-       /**
-        * Method for writing one unsigned char to the stream
-        * @param stream Stream to which to encode the data
-        * @param val the char which to write
-        * @return Number of bytes encoded
-        */
-       virtual uint64 Encode(uchar val, Stream& stream) = 0;
 
        /**
         * Method for writing one bool to the stream

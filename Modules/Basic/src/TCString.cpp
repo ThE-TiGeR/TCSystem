@@ -170,24 +170,12 @@ namespace tc
 
    sint8 string::ToSint8(const std::string& val)
    {
-      sint8 v;
-      if (std::sscanf(val.c_str(), "%c", &v) != 1)
-      {
-         return 0;
-      }
-
-      return v;
+      return sint8(ToSint16(val));
    }
 
    uint8 string::ToUint8(const std::string& val)
    {
-      uint8 v;
-      if (std::sscanf(val.c_str(), "%c", &v) != 1)
-      {
-         return 0;
-      }
-
-      return v;
+      return uint8(ToUint16(val));
    }
 
    sint16 string::ToSint16(const std::string& val)

@@ -2527,9 +2527,10 @@ namespace tc
 
       // Read back pixels
       // Derived from code contributed by <sancelot@crosswinds.net>
-      bool Viewer::readPixels(std::vector<FX::FXColor>& buffer,sint32 x,sint32 y,sint32 w,sint32 h){
+      bool Viewer::readPixels(std::vector<FX::FXColor>& buffer,uint32 x,uint32 y,uint32 w,uint32 h){
 
-         if(1<=w && 1<=h){
+         if(1<=w && 1<=h)
+         {
             GLint swapbytes,lsbfirst,rowlength,skiprows,skippixels,alignment,oldbuf;
             register FXColor *p,*q,*pp,*qq,t;
 

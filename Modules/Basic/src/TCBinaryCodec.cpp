@@ -59,6 +59,16 @@ namespace tc
          {
          }
 
+         uint64 Decode(Stream& stream, sint8& val)
+         {
+             return stream.ReadBytes(1, &val);
+         }
+
+         uint64 Decode(Stream& stream, uint8& val)
+         {
+             return stream.ReadBytes(1, &val);
+         }
+
          uint64 Decode(Stream& stream, sint16 &val)
          {
             VALUE_CONV< sint16 > bval;
@@ -194,17 +204,22 @@ namespace tc
             return stream.ReadBytes(1, &val);
          }
 
-         uint64 Decode(Stream& stream, uchar &val)
-         {
-            return stream.ReadBytes(1, &val);
-         }
-
          uint64 Decode(Stream& stream, bool &val)
          {
             uchar cval;
             uint64 len = stream.ReadBytes(1, &cval);
             val = cval == 1;
             return len;
+         }
+
+         uint64 Encode(sint8 val, Stream& stream)
+         {
+             return stream.WriteBytes(1, &val);
+         }
+
+         uint64 Encode(uint8 val, Stream& stream)
+         {
+             return stream.WriteBytes(1, &val);
          }
 
          uint64 Encode(sint16 val, Stream& stream)
@@ -278,11 +293,6 @@ namespace tc
          }
 
          uint64 Encode(char val, Stream& stream)
-         {
-            return stream.WriteBytes(1, &val);
-         }
-
-         uint64 Encode(uchar val, Stream& stream)
          {
             return stream.WriteBytes(1, &val);
          }

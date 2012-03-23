@@ -220,10 +220,10 @@ namespace tc
          operator const T*() const {return m_data;}
 
          Iterator Begin() {return m_data;}
-         ConstIterator Begin() const {return m_data + SIZE;}
+         ConstIterator Begin() const {return m_data;}
 
-         Iterator End() {return m_data;}
-         ConstIterator End() const {return m_data + SIZE;}
+         Iterator End() {return m_data + ARRAY_DIMENSION;}
+         ConstIterator End() const {return m_data + ARRAY_DIMENSION;}
 
       private:
          T m_data[ARRAY_DIMENSION];
