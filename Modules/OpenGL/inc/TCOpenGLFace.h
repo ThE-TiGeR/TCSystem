@@ -103,7 +103,7 @@ namespace tc
          long OnUpdFrontMaterial(FX::FXObject*,FX::FXSelector,void*);
          long OnCmdBackMaterial(FX::FXObject*,FX::FXSelector,void*);
          long OnUpdBackMaterial(FX::FXObject*,FX::FXSelector,void*);
-         long OnCmdBoundingBox(FX::FXObject*,FX::FXSelector,void*);
+         long OnCmdDrawingStyle(FX::FXObject*,FX::FXSelector,void*);
          long OnUpdDrawingStyle(FX::FXObject*,FX::FXSelector,void*);
 
       protected:

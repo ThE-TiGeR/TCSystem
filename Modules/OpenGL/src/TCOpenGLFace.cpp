@@ -44,7 +44,7 @@ namespace tc
    namespace open_gl
    {
       Face::Face(const std::string& name, GLenum patch_type)
-         :Object3D(name, OP_LAST)
+         :Object3D(name)
          ,m_material()
          ,m_renderer(patch_type)
       {
@@ -210,7 +210,7 @@ namespace tc
          FXMAPFUNC(FX::SEL_UPDATE, Face::ID_FRONT_MATERIAL, Face::OnUpdFrontMaterial),
          FXMAPFUNC(FX::SEL_COMMAND, Face::ID_BACK_MATERIAL, Face::OnCmdBackMaterial),
          FXMAPFUNC(FX::SEL_UPDATE, Face::ID_BACK_MATERIAL, Face::OnUpdBackMaterial),
-         FXMAPFUNCS(FX::SEL_COMMAND, Face::FXID_SURFACE, Face::FXID_POINTS_COLORED, Face::OnCmdBoundingBox),
+         FXMAPFUNCS(FX::SEL_COMMAND, Face::FXID_SURFACE, Face::FXID_POINTS_COLORED, Face::OnCmdDrawingStyle),
          FXMAPFUNCS(FX::SEL_UPDATE, Face::FXID_SURFACE, Face::FXID_POINTS_COLORED, Face::OnUpdDrawingStyle)
       };
       FXIMPLEMENT_ABSTRACT(Face, Object3D, s_face_map, util::ArraySize(s_face_map))
@@ -281,7 +281,7 @@ namespace tc
       }
 
       // Drawing style toggles
-      long Face::OnCmdBoundingBox(FX::FXObject*,FX::FXSelector sel,void*)
+      long Face::OnCmdDrawingStyle(FX::FXObject*,FX::FXSelector sel,void*)
       {
          switch(FXSELID(sel))
          {

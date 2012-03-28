@@ -19,6 +19,7 @@ set (TC_OPENGL_PUBLIC_HEADER
     inc/TCOpenGLObjectGroup.h
     inc/TCOpenGLPatchRenderer.h
     inc/TCOpenGLTextRenderer.h
+    inc/TCOpenGLTexture2D.h
     inc/TCOpenGLTypes.h
     inc/TCOpenGLUtil.h
     inc/TCOpenGLViewer.h
@@ -38,6 +39,7 @@ add_library (TCOpenGL
     src/TCOpenGLObjectGroup.cpp
     src/TCOpenGLPatchRenderer.cpp
     src/TCOpenGLTextRenderer.cpp
+    src/TCOpenGLTexture2D.cpp
     src/TCOpenGLUtil.cpp
     src/TCOpenGLViewer.cpp
     ${TC_OPENGL_PUBLIC_HEADER}

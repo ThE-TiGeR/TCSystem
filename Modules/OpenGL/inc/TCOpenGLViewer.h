@@ -112,10 +112,8 @@ namespace tc
          // Common DND types
          static FX::FXDragType objectType;     // GL Object type
 
-      protected:
-
          // Mouse actions when in viewing window
-         enum 
+         enum OperationMode
          {
             HOVERING,                       // Hovering mouse w/o doing anything
             PICKING,                        // Pick mode
@@ -147,7 +145,7 @@ namespace tc
          sint32 renderFeedback(float *buffer,sint32 x,sint32 y,sint32 w,sint32 h,sint32 maxbuffer);
          void drawFeedback(FX::FXDCPrint& pdc,const float* buffer,sint32 used);
          virtual ObjectPtr processHits(const uint32 *pickbuffer,sint32 nhits);
-         void setOp(uint32 o);
+         void setOp(OperationMode o);
 
       private:
          void Init();
@@ -305,13 +303,6 @@ namespace tc
             ID_LAST
          };
 
-         enum
-         {
-            SEL_UPDATE_TRANSFORM  = FX::SEL_LAST,
-            SEL_UPDATE_PROJECTION,
-            SEL_LAST
-         };
-
       public:
 
          // Common DND type names
@@ -455,10 +446,10 @@ namespace tc
          const FX::FXMat4f& getInvTransform() const { return itransform; }
 
          /// Change the scene, i.e. the object being displayed.
-         void setScene(ObjectGroupPtr sc);
+         void SetScene(ObjectGroupPtr sc);
 
          /// Return the current scene object
-         ObjectGroupPtr getScene() const { return scene; }
+         ObjectGroupPtr GetScene() const { return scene; }
 
          /// Change the projection mode, PERSPECTIVE or PARALLEL
          void setProjection(uint32 proj);
@@ -510,18 +501,21 @@ namespace tc
          sint32 getMaxHits() const { return maxhits; }
 
          /**
-         * When drawing a GL object, if doesTurbo() is true, the object
+         * When drawing a GL object, if DoesTurbo() is true, the object
          * may choose to perform a reduced complexity drawing as the user is
          * interactively manipulating; another update will be done later when
          * the full complexity drawing can be performed again.
          */
-         bool doesTurbo() const { return doesturbo; }
+         bool DoesTurbo() const { return doesturbo; }
 
          /// Return turbo mode setting
-         bool getTurboMode() const { return turbomode; }
+         bool GetTurboMode() const { return turbomode; }
 
          /// Set turbo mode
-         void setTurboMode(bool turbo=TRUE);
+         void SetTurboMode(bool turbo=true);
+
+         /// Get Current operationMode
+         OperationMode GetOperationMode() const {return m_op_mode;}
 
          /// Return light source settings
          void getLight(Light& lite) const;
@@ -534,6 +528,9 @@ namespace tc
          void SetSelection(const std::vector<std::string>& sel);
          /// Return m_selected_objects
          const ObjectPtrVector& GetSelection() const { return m_selected_objects; }
+
+         bool MakeCurrent() {return makeCurrent() == TRUE;}
+         bool MakeNonCurrent() {return makeNonCurrent() == TRUE;}
 
          /// Destructor
          virtual ~Viewer();
@@ -567,7 +564,7 @@ namespace tc
          ObjectGroupPtr     scene;            // What we're looking at
          bool          doesturbo;        // Doing turbo mode
          bool          turbomode;        // Turbo mode
-         uint8         mode;             // Mode the widget is in
+         OperationMode m_op_mode;             // Mode the widget is in
          double        m_redraw_time;    // time needed for last redraw
       };
 

@@ -44,8 +44,8 @@ namespace tc
 {
    namespace open_gl
    {
-      Object3D::Object3D(const std::string& name, uint32 num_options)
-         :Object(name, num_options),
+      Object3D::Object3D(const std::string& name)
+         :Object(name),
          m_position(),
          m_bounding_box(),
          m_selection_color(0.5f,0.3f,0.45f),

@@ -284,7 +284,7 @@ namespace tc
          dial[2]=0;
          zsortfunc=0;
          doesturbo=false;
-         mode=HOVERING;
+         m_op_mode=HOVERING;
       }
 
 
@@ -390,7 +390,7 @@ namespace tc
          zsortfunc=0;                               // Routine to sort feedback buffer
          doesturbo=false;                              // In interaction
          turbomode=false;                              // Turbo mode
-         mode=HOVERING;                                // Mouse operation
+         m_op_mode=HOVERING;                                // Mouse operation
       }
 
 
@@ -435,7 +435,7 @@ namespace tc
       void Viewer::glsetup()
       {
          // Make GL context current
-         if(makeCurrent())
+         if(MakeCurrent())
          {
             // Initialize GL context
             glRenderMode(GL_RENDER);
@@ -517,7 +517,7 @@ namespace tc
             //PrintOpenGLTextureSupport();
             DetectOpenGLerror();
 
-            makeNonCurrent();
+            MakeNonCurrent();
          }
       }
 
@@ -526,7 +526,7 @@ namespace tc
       {
          FXGLVisual *vis = (FXGLVisual*)getVisual();
          FXASSERT(xid);
-         if(makeCurrent())
+         if(MakeCurrent())
          {
             Time draw_start_time = Time::Now();
             DrawScene(m_view_port);
@@ -542,7 +542,7 @@ namespace tc
             TCTRACE1("open_gl", 0, "Current fps = %f", 1000.0f/(total_time.ToMilliSeconds()+1));
             DetectOpenGLerror();
 
-            makeNonCurrent();
+            MakeNonCurrent();
          }
       }
 
@@ -725,7 +725,7 @@ namespace tc
          register sint32 mh=maxhits;
          hits=0;
          nhits=0;
-         if(makeCurrent())
+         if(MakeCurrent())
          {
             // Where to pick
             pickx=(m_view_port.w-2.0f*x-w)/((float)w);
@@ -768,7 +768,7 @@ namespace tc
                mh<<=1;
             }
             while(nhits<0);
-            makeNonCurrent();
+            MakeNonCurrent();
             if(!nhits) 
             {
                delete []hits;
@@ -945,7 +945,7 @@ namespace tc
 
 
       // Change scene
-      void Viewer::setScene(ObjectGroupPtr sc){
+      void Viewer::SetScene(ObjectGroupPtr sc){
          scene=sc;
          update();
       }
@@ -1074,10 +1074,7 @@ namespace tc
                m_view_port.bottom*=hither_fac;
             }
          }
-         if(target)
-         {
-            target->tryHandle(this, FXSEL(SEL_UPDATE_PROJECTION, message), 0);
-         }
+         if (target) target->tryHandle(this, FXSEL(SEL_CHANGED, message), 0);
       }
 
 
@@ -1107,7 +1104,7 @@ namespace tc
          //   FXTRACE((150,"\n"));
          if(target)
          {
-            target->tryHandle(this, FXSEL(SEL_UPDATE_TRANSFORM ,message), 0);
+            target->tryHandle(this, FXSEL(SEL_CHANGED ,message), 0);
          }
       }
 
@@ -1398,7 +1395,7 @@ namespace tc
          FXGLVisual *vis=(FXGLVisual*)getVisual();
 
          // With open_gl, first change back to 1:1 projection mode
-         if(makeCurrent()){
+         if(MakeCurrent()){
 
             // Save state
             glPushAttrib(GL_COLOR_BUFFER_BIT|GL_ENABLE_BIT|GL_DEPTH_BUFFER_BIT|GL_LINE_BIT);
@@ -1477,7 +1474,7 @@ namespace tc
             glMatrixMode(GL_MODELVIEW);
             glPopMatrix();
             glPopAttrib();
-            makeNonCurrent();
+            MakeNonCurrent();
          }
       }
 
@@ -1580,8 +1577,9 @@ namespace tc
 
 
       // Change operation
-      void Viewer::setOp(uint32 o){
-         if(mode!=o){
+      void Viewer::setOp(OperationMode o)
+      {
+         if(m_op_mode!=o){
             switch(o){
             case HOVERING:
                setDragCursor(getDefaultCursor());
@@ -1633,7 +1631,7 @@ namespace tc
                setDragCursor(getApp()->getDefaultCursor(DEF_ROTATE_CURSOR));
                break;
             case DO_LASSOSELECT:
-               if(mode==LASSOSELECT) return;
+               if(m_op_mode==LASSOSELECT) return;
                FXTRACE((100,"LASSOSELECT\n"));
                setDefaultCursor(getApp()->getDefaultCursor(DEF_CORNERNW_CURSOR));
                /// FIXME grab
@@ -1644,7 +1642,7 @@ namespace tc
                setDragCursor(getApp()->getDefaultCursor(DEF_CORNERNW_CURSOR));
                break;
             case DO_LASSOZOOM:
-               if(mode==LASSOZOOM) return;
+               if(m_op_mode==LASSOZOOM) return;
                FXTRACE((100,"LASSOZOOM\n"));
                setDefaultCursor(getApp()->getDefaultCursor(DEF_CORNERNW_CURSOR));
                /// FIXME grab
@@ -1655,7 +1653,8 @@ namespace tc
                setDragCursor(getApp()->getDefaultCursor(DEF_CORNERNW_CURSOR));
                break;
             }
-            mode=o;
+            m_op_mode=o;
+            if (target) target->tryHandle(this, FXSEL(SEL_CHANGED, message), 0);
          }
       }
 
@@ -1679,7 +1678,7 @@ namespace tc
             else if(event->state&MIDDLEBUTTONMASK){
                setOp(ROTATING);
             }
-            else if(mode==DO_LASSOZOOM){
+            else if(m_op_mode==DO_LASSOZOOM){
                if(0<=event->click_x && 0<=event->click_y && event->click_x<width && event->click_y<height){
                   drawLasso(event->click_x,event->click_y,event->win_x,event->win_y);
                   setOp(LASSOZOOM);
@@ -1688,7 +1687,7 @@ namespace tc
                   getApp()->beep();
                }
             }
-            else if(mode==DO_LASSOSELECT){
+            else if(m_op_mode==DO_LASSOSELECT){
                if(0<=event->click_x && 0<=event->click_y && event->click_x<width && event->click_y<height){
                   drawLasso(event->click_x,event->click_y,event->win_x,event->win_y);
                   setOp(LASSOSELECT);
@@ -1764,7 +1763,7 @@ namespace tc
                }
                grab();
             }
-            else if(mode==LASSOZOOM){
+            else if(m_op_mode==LASSOZOOM){
                new_x=FXCLAMP(0,event->win_x,(width-1));
                new_y=FXCLAMP(0,event->win_y,(height-1));
                drawLasso(event->click_x,event->click_y,new_x,new_y);
@@ -1781,14 +1780,14 @@ namespace tc
                }
                setOp(HOVERING);
             }
-            else if(mode==LASSOSELECT){           // FIXME interpret control and shift for m_selected_objects changes
+            else if(m_op_mode==LASSOSELECT){           // FIXME interpret control and shift for m_selected_objects changes
                new_x=FXCLAMP(0,event->win_x,(width-1));
                new_y=FXCLAMP(0,event->win_y,(height-1));
                drawLasso(event->click_x,event->click_y,new_x,new_y);
                handle(this,FXSEL(SEL_LASSOED,0),ptr);
                setOp(HOVERING);
             }
-            else if(mode==PICKING)
+            else if(m_op_mode==PICKING)
             {               // FIXME interpret control and shift for m_selected_objects changes
                setOp(HOVERING);
                if(!handle(this,FXSEL(SEL_PICKED,0),ptr))
@@ -1824,7 +1823,7 @@ namespace tc
                   handle(this,FXSEL(SEL_SELECTED,0), &objects);
                }
             }
-            else if(mode==DRAGGING)
+            else if(m_op_mode==DRAGGING)
             {
                if(target) target->tryHandle(this, FXSEL(SEL_DRAGGED,message), &m_selected_objects);
                setOp(HOVERING);
@@ -1970,7 +1969,7 @@ namespace tc
                grab();
             }
             else{
-               if(mode==POSTING)
+               if(m_op_mode==POSTING)
                {
                   setOp(HOVERING);
                   hit=pick(event->click_x,event->click_y);
@@ -1999,7 +1998,7 @@ namespace tc
          if(isEnabled()){
             if(target && target->tryHandle(this,FXSEL(SEL_MOTION,message),ptr)) return 1;
             getApp()->removeTimeout(this,ID_TIPTIMER);
-            switch(mode){
+            switch(m_op_mode){
             case HOVERING:            // Reset the timer each time we moved the cursor
                getApp()->addTimeout(this,ID_TIPTIMER,getApp()->getMenuPause());
                break;
@@ -2120,7 +2119,7 @@ namespace tc
             case KEY_Shift_R:
 
                // We do not switch modes unless something was going on already
-               if(mode!=HOVERING){
+               if(m_op_mode!=HOVERING){
                   if((event->state&MIDDLEBUTTONMASK) || ((event->state&LEFTBUTTONMASK) && (event->state&RIGHTBUTTONMASK))){
                      setOp(TRUCKING);
                   }
@@ -2133,7 +2132,7 @@ namespace tc
             case KEY_Control_R:
 
                // We do not switch modes unless something was going on already
-               if(mode!=HOVERING){
+               if(m_op_mode!=HOVERING){
                   if(event->state&RIGHTBUTTONMASK){
                      setOp(FOVING);
                   }
@@ -2155,7 +2154,7 @@ namespace tc
             case KEY_Shift_R:
 
                // We do not switch modes unless something was going on already
-               if(mode!=HOVERING){
+               if(m_op_mode!=HOVERING){
                   if((event->state&MIDDLEBUTTONMASK) || ((event->state&LEFTBUTTONMASK) && (event->state&RIGHTBUTTONMASK))){
                      setOp(ZOOMING);
                   }
@@ -2168,7 +2167,7 @@ namespace tc
             case KEY_Control_R:
 
                // We do not switch modes unless something was going on already
-               if(mode!=HOVERING){
+               if(m_op_mode!=HOVERING){
                   if(event->state&RIGHTBUTTONMASK){
                      setOp(TRANSLATING);
                   }
@@ -2539,7 +2538,7 @@ namespace tc
             if(buffer.size() == w*h)
             {
                // Make context current
-               makeCurrent();
+               MakeCurrent();
 
                // Save old pixel formats
                glGetIntegerv(GL_PACK_SWAP_BYTES,&swapbytes);
@@ -2589,7 +2588,7 @@ namespace tc
                glReadBuffer((GLenum)oldbuf);
 
                // Make context non-current
-               makeNonCurrent();
+               MakeNonCurrent();
                return true;
             }
          }
@@ -2665,12 +2664,12 @@ namespace tc
       {
 
          sint32 used;
-         makeCurrent();
+         MakeCurrent();
          glFeedbackBuffer(maxbuffer,GL_3D_COLOR,buffer);
          glRenderMode(GL_FEEDBACK);
          DrawScene(m_view_port);
          used=glRenderMode(GL_RENDER);
-         makeNonCurrent();
+         MakeNonCurrent();
          return used;
       }
 
@@ -3015,7 +3014,7 @@ namespace tc
 
       // Toggle Turbo Mode
       long Viewer::OnCmdTurbo(FXObject*,FXSelector,void*){
-         setTurboMode(!getTurboMode());
+         SetTurboMode(!GetTurboMode());
          return 1;
       }
 
@@ -3024,7 +3023,7 @@ namespace tc
       long Viewer::OnUpdTurbo(FXObject* sender,FXSelector,void*){
          sender->handle(this,FXSEL(SEL_COMMAND,ID_SHOW),0);
          sender->handle(this,FXSEL(SEL_COMMAND,ID_ENABLE),0);
-         sender->handle(this,getTurboMode() ? FXSEL(SEL_COMMAND,ID_CHECK) : FXSEL(SEL_COMMAND,ID_UNCHECK),0);
+         sender->handle(this,GetTurboMode() ? FXSEL(SEL_COMMAND,ID_CHECK) : FXSEL(SEL_COMMAND,ID_UNCHECK),0);
          return 1;
       }
 
@@ -3220,18 +3219,26 @@ namespace tc
       // Delegate all other messages to the GL Object
       long Viewer::onDefault(FXObject* sender,FXSelector sel,void* ptr)
       {
+         long handled = 0;
          if (m_selected_objects.size())
          {
             ForeachHandle fh(sender, sel, ptr);
             fh = std::for_each(m_selected_objects.begin(), m_selected_objects.end(), fh);
-            return fh.WasHandled() ? 1 : 0;
+            handled = fh.WasHandled() ? 1 : 0;
          }
-         return 0;
+
+         if (handled && FXSELTYPE(sel) == FX::SEL_COMMAND)
+         {
+            if (target) target->tryHandle(this, FXSEL(SEL_CHANGED, message), 0);
+            update();
+         }
+
+         return handled;
       }
 
 
       // Change turbo mode
-      void Viewer::setTurboMode(bool turbo){
+      void Viewer::SetTurboMode(bool turbo){
          if(!turbo) doesturbo=false;
          turbomode=turbo;
       }

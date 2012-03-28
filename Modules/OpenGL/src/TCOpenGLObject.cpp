@@ -41,12 +41,12 @@ namespace tc
 {
    namespace open_gl
    {
-      Object::Object(const std::string& name, uint32 num_options)
+      Object::Object(const std::string& name)
          :NamedObject(name)
-         ,m_options(num_options, 0)
+         ,m_options()
       {
-         m_options[OP_ACTIVE] = true;
-         m_options[OP_DRAG_ALLOWED] = true;
+         SetOption(OP_ACTIVE, true);
+         SetOption(OP_DRAG_ALLOWED, true);
       }
 
       Object::~Object() 
@@ -86,5 +86,16 @@ namespace tc
          sender->handle(this, FXSEL(FX::SEL_COMMAND, FX::FXWindow::ID_ENABLE), 0);
          return 1;
       }
+
+      void Object::SetOption(uint32 opt, bool state)
+      {
+         if (m_options.size() <= opt)
+         {
+            uint32 needed_size = util::Max(opt+1, uint32(m_options.size()*2));
+            m_options.resize(needed_size, false);
+         }
+         m_options[opt] = state;
+      }
+
    }
 }

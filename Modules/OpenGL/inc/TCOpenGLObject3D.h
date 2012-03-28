@@ -54,7 +54,7 @@ namespace tc
             OP_LAST = Object::OP_LAST
          };
 
-         explicit Object3D(const std::string& name, uint32 num_options);
+         explicit Object3D(const std::string& name);
          virtual ~Object3D();
 
          virtual void Draw(Viewer& viewer);

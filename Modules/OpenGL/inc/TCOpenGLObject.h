@@ -88,7 +88,7 @@ namespace tc
                               public NamedObject
       {
          FXDECLARE(Object)
-      protected:
+      public:
          enum Options
          {
             OP_ACTIVE,            ///< object is active
@@ -99,7 +99,7 @@ namespace tc
          };
 
       public:
-         explicit Object(const std::string& name, uint32 num_options);
+         explicit Object(const std::string& name);
          virtual ~Object();
 
          bool IsActive() const {return m_options[OP_ACTIVE];}
@@ -109,8 +109,8 @@ namespace tc
          void SetActive(bool sel) {m_options[OP_ACTIVE]=sel;}
          void SetSelected(bool sel) {m_options[OP_SELECTED]=sel;}
 
-         bool GetOption(uint32 opt) const {return m_options[opt];}
-         void SetOption(uint32 opt, bool state) {m_options[opt] = state;}
+         bool GetOption(uint32 opt) const {return m_options.size()>opt ? m_options[opt] : false;}
+         void SetOption(uint32 opt, bool state);
 
          virtual void Draw(Viewer& viewer) = 0;
          virtual void DrawForHit(Viewer& viewer) = 0;

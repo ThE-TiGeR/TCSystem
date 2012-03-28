@@ -45,7 +45,7 @@ namespace tc
    namespace open_gl
    {
       CoordinateCross::CoordinateCross(const std::string& name)
-         :Object3D(name, OP_LAST)
+         :Object3D(name)
       {
          SetOption(OP_DRAG_ALLOWED, false);
 

@@ -33,60 +33,35 @@
 //  $Id$
 //*******************************************************************************
 
-#ifndef _TC_OGL_OBJECT_2D_H_
-#define _TC_OGL_OBJECT_2D_H_
+#ifndef _TC_OGL_TEXTURE_2D_H_
+#define _TC_OGL_TEXTURE_2D_H_
 
-#include "TCOpenGLObject.h"
-
-#include "TCMathBox.h"
-#include "TCOpenGLColor.h"
+#include "TCOpenGLObject2D.h"
+#include "TCStlTypes.h"
 
 namespace tc
 {
    namespace open_gl
    {
-      class TCOGL_API Object2D: public Object
+      class TCOGL_API Texture2D: public Object2D
       {
-         FXDECLARE(Object2D)
       public:
-         enum Options
-         {
-            OP_LAST = Object::OP_LAST
-         };
+         Texture2D(const std::string& name);
+         ~Texture2D();
 
-         explicit Object2D(const std::string& name);
-         virtual ~Object2D();
-
-         virtual void Draw(Viewer& viewer);
-         virtual void DrawForHit(Viewer& viewer);
-         virtual bool Drag(Viewer& viewer, sint32 fx, sint32 fy, sint32 tx, sint32 ty);
-         virtual void Update(Viewer& viewer, uint32 curent_time, uint32 delta_time);
-         virtual ObjectPtr GetHitObject(const uint32* hitpath);
-         virtual void GetBoundingBox(BoundingBox2D& bounding_box);
-         virtual void GetBoundingBox(BoundingBox3D& bounding_box);
-         virtual void ResetPosition();
-
-         /** FOX IDs and handling methods */
-         enum FXIDs
-         {
-            ID_LAST = Object::ID_LAST
-         };
+         bool CreateTexture(const Vertex2D& size, const Uint32Vector& data);
+         void DeleteTexture();
 
       protected:
-         Object2D() {}
-         virtual void DrawSelf(Viewer& viewer) = 0;
+         virtual void DrawSelf(Viewer& viewer);
 
       private:
-         void DrawBoundingBox();
-         void DrawHandles();
-
-         Vertex2D m_position;
-         BoundingBox2D m_bounding_box;
-         Color m_selection_color;
-         Color m_bounding_box_color;
-
+         Vertex2D m_size;
+         GLuint m_texture_id;
       };
+
+      typedef SharedPtr<Texture2D> Texture2DPtr;
    }
 }
 
-#endif
+#endif // _TC_OGL_TEXTURE_2D_H_
