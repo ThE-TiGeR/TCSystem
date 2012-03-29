@@ -95,7 +95,7 @@ namespace tc
 
       TCBASE_API bool Split(const std::string& text, const std::string& split,
                  std::string& text1, std::string& text2);
-      TCBASE_API bool Split(const std::string& text, uint32 pos,
+      TCBASE_API bool Split(const std::string& text, std::string::size_type pos,
                  std::string& text1, std::string& text2);
       TCBASE_API bool Split(const std::string& text, const std::string& split,
                  std::vector<std::string>& texts);

@@ -654,10 +654,14 @@ int main(int narg, char** argv)
    {
       TCINFOS("TestBasic", "Start");
 
-      //GzStreamTest();
-      //Bz2StreamTest();
-      //RunUDPTest();
-      //RunSocketTest(narg, argv);
+      if (false)
+      {
+         TestFindPassword();
+         GzStreamTest();
+         Bz2StreamTest();
+         RunUDPTest();
+         RunSocketTest(narg, argv);
+      }
       ConvertPSKCvsToHaushaltsbuchCvs();
 
       TCINFO("TestBasic", "End");

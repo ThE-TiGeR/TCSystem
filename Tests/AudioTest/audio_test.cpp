@@ -33,7 +33,7 @@ bool RunAudioTest()
       return false;
    }
    
-         tc::audio::SoundPtr sound1 = manager->CreateSound("N:\\Musik\\Bravo Hits\\Bravo Hits 1\\01 _ Sandra -- Don't Be Aggressive.mp3");
+         tc::audio::SoundPtr sound1 = manager->CreateSound("D:\\Thomas\\Musik\\Anastacia\\Anastacia (2004) - Pop\\03 - Anastacia - Time - www.torrentazos.com.mp3");
    //tc::audio::SoundPtr sound1 = manager->CreateSound("akgit.wav");
 //    tc::audio::SoundPtr sound11 = manager->CreateSound("akgit.wav");
 //    tc::audio::SoundPtr sound12 = manager->CreateSound("akgit.wav");

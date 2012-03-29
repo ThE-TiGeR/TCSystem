@@ -5,7 +5,7 @@ project (TCSystem)
 #-----------------------------------------------------------------------------
 # TCSYSTEM version number, useful for packaging and doxygen doc:
 set (TCSystem_VERSION_MAJOR 2)
-set (TCSystem_VERSION_MINOR 0)
+set (TCSystem_VERSION_MINOR 1)
 set (TCSystem_VERSION_PATCH 0)
 
 SET(TCSystem_VERSION
@@ -19,13 +19,8 @@ SET(TCSystem_LIBRARY_PROPERTIES
   SOVERSION "${TCSystem_VERSION_MAJOR}.${TCSystem_VERSION_MINOR}"
 )
 
-if (CMAKE_CL_64)
-    set (TC_SYSTEM_LIB_INSTALL_DIR lib/x64)
-    set (TC_SYSTEM_BIN_INSTALL_DIR bin/x64)
-else ()
-    set (TC_SYSTEM_LIB_INSTALL_DIR lib)
-    set (TC_SYSTEM_BIN_INSTALL_DIR bin)
-endif ()
+set (TC_SYSTEM_LIB_INSTALL_DIR lib)
+set (TC_SYSTEM_BIN_INSTALL_DIR bin)
 
 SET(CPACK_PACKAGE_VERSION_MAJOR "${TCSystem_VERSION_MAJOR}")
 SET(CPACK_PACKAGE_VERSION_MINOR "${TCSystem_VERSION_MINOR}")
@@ -49,9 +44,6 @@ install(FILES "${PROJECT_BINARY_DIR}/TCSystem.pc" DESTINATION "lib/pkgconfig" CO
 install(FILES "${PROJECT_BINARY_DIR}/TCSystemNet.pc" DESTINATION "lib/pkgconfig" COMPONENT dev)
 install(FILES "${PROJECT_BINARY_DIR}/TCSystemGui.pc" DESTINATION "lib/pkgconfig" COMPONENT dev)
 install(FILES "${PROJECT_BINARY_DIR}/TCSystemAudio.pc" DESTINATION "lib/pkgconfig" COMPONENT dev)
-
-find_package(Boost)
-include_directories(${Boost_INCLUDE_DIRS})
 
 # set our compiler flags
 if (UNIX)

@@ -271,7 +271,7 @@ namespace tc
       return StringImp::Split(text, split, part1, part2);
    }
 
-   bool string::Split(const std::string& text, uint32 pos,
+   bool string::Split(const std::string& text, std::string::size_type pos,
       std::string& part1, std::string& part2)
    {
       return StringImp::Split(text, pos, part1, part2);
