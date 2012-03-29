@@ -37,6 +37,7 @@
 
 #include "TCOpenGLViewer.h"
 #include "TCOpenGLUtil.h"
+#include "TCOpenGLPatchRenderer.h"
 
 #include "TCNewEnable.h"
 
@@ -83,8 +84,6 @@ namespace tc
          if (m_texture_id)
          {
             glDisable(GL_COLOR_MATERIAL);
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-            glEnable(GL_BLEND);
             glEnable(GL_TEXTURE_2D);
 
             glBindTexture(GL_TEXTURE_2D, m_texture_id);
@@ -94,15 +93,21 @@ namespace tc
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
             DetectOpenGLerror();
 
+            GLint viewport[4];
+            glGetIntegerv(GL_VIEWPORT, viewport);
+            Vertex2D texture_size(m_size[0]/viewport[2], m_size[1]/viewport[3]);
+
+            ::glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
             glBegin(GL_QUADS);
-            glTexCoord2d(0,         m_size[1]/2);          glVertex2f(-m_size[0]/2, -m_size[1]/2);        
-            glTexCoord2d(m_size[0]/2, m_size[1]/2);        glVertex2f( m_size[0]/2, -m_size[1]/2);        
-            glTexCoord2d(m_size[0]/2, 0);                  glVertex2f( m_size[0]/2,  m_size[1]/2);
-            glTexCoord2d(0,         0);                    glVertex2f(-m_size[0]/2,  m_size[1]/2);
+            glTexCoord2d(0,         1);          glVertex3f(-texture_size[0], -texture_size[1], 0);        
+            glTexCoord2d(1, 1);                  glVertex3f( texture_size[0], -texture_size[1], 0);        
+            glTexCoord2d(1, 0);                  glVertex3f( texture_size[0],  texture_size[1], 0);
+            glTexCoord2d(0,         0);          glVertex3f(-texture_size[0],  texture_size[1], 0);
             glEnd();
 
             glBindTexture(GL_TEXTURE_2D, 0);
             glDisable(GL_TEXTURE_2D);
+
             DetectOpenGLerror();
          }
       }

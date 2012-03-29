@@ -124,20 +124,39 @@ namespace tc
             return *this;
          }
 
-         const T &operator()(uint32 i, uint32 j)const 
+         const T& operator()(uint32 i, uint32 j)const 
          {
             return m_data[i*SIZE+j];
          }
 
-         T &operator()(const uint32 i, uint32 j)
+         T& operator()(const uint32 i, uint32 j)
          {
             return m_data[i*SIZE+j];
+         }
+
+         const T* operator[](uint32 i) const 
+         {
+            return &m_data[i*SIZE];
+         }
+
+         T* operator[](uint32 i) 
+         {
+            return &m_data[i*SIZE];
+         }
+
+         void Identity()
+         {
+            for (uint32 i=0; i<SIZE; i++)
+            {
+               for (uint32 j=0; j<SIZE; j++)
+               {
+                  m_data[i*SIZE+j] = i == j ? 1 : 0;
+               }
+            }
          }
 
          void Transpose(const MatrixN<T, SIZE>& val)
          {
-            uint32 i,j;
-
             for (uint32 i=0; i<SIZE; i++)
             {
                for (uint32 j=0; j<SIZE; j++)
