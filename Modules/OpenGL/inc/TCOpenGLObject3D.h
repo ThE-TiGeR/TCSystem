@@ -78,10 +78,10 @@ namespace tc
          virtual void UpdateSelf(Viewer& viewer, uint32 curent_time, uint32 delta_time) = 0;
 
          void SetBoundingBox(const BoundingBox3D& bounding_box);
-      private:
          void DrawBoundingBox();
          void DrawHandles();
 
+      private:
          Vertex3D m_position;
          BoundingBox3D m_bounding_box;
          Color m_selection_color;

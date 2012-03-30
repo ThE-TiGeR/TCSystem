@@ -62,8 +62,17 @@ namespace tc
          ::glTranslatef(m_position[0], m_position[1], m_position[2]);
 
          DrawSelf(viewer);
-         DrawBoundingBox();
-         DrawHandles();
+
+         if(GetOption(OP_STYLE_BOUNDBOX) || GetOption(OP_SELECTED))
+         {
+             DrawBoundingBox();
+         }
+
+         if(GetOption(OP_SELECTED))
+         {
+             DrawHandles();
+         }
+         
 
          ::glTranslatef(-m_position[0], -m_position[1], -m_position[2]);
       }
@@ -104,12 +113,6 @@ namespace tc
 
       void Object3D::DrawBoundingBox()
       {
-         if(!GetOption(OP_STYLE_BOUNDBOX) &&
-            !GetOption(OP_SELECTED))
-         {
-            return;
-         }
-
          LineRenderer renderer;
          renderer.EnableLineStipple(0x00ff);
          if (GetOption(OP_SELECTED))
@@ -126,11 +129,6 @@ namespace tc
 
       void Object3D::DrawHandles()
       {
-         if(!GetOption(OP_SELECTED))
-         {
-            return;
-         }
-
          ::glColor4fv(m_selection_color);
          ::glPointSize(5);
 
