@@ -59,7 +59,7 @@ namespace tc
             TCTRACEF("TCNET", 10);
 
             SSLeay_add_ssl_algorithms();
-            const SSL_METHOD* meth = SSLv2_client_method();
+            const SSL_METHOD* meth = SSLv3_client_method();
             SSL_load_error_strings();
             m_ssl_ctx = SSL_CTX_new(meth);
 

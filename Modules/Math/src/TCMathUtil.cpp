@@ -35,16 +35,14 @@
 
 #include "TCMathUtil.h"
 
-#include <float.h>
-#include <math.h>
+#include <cfloat>
+#include <cmath>
 
 #if defined TCOS_SUN || defined TCOS_CYGWIN
 #include <ieeefp.h>
 #endif
 
 #include "TCNewEnable.h"
-
-using namespace std;
 
 namespace tc
 {
@@ -57,7 +55,7 @@ namespace tc
 #elif TCOS_QNX
          return (isnanf(val) == 0 ? false : true);
 #else
-         return (isnan(val) == 0 ? false : true);
+         return (std::isnan(val) == 0 ? false : true);
 #endif
       }
 

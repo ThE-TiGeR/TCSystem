@@ -49,10 +49,12 @@ namespace
    {
    public:
       FailureException(const tc::unit::Failure& failure) : failure_(failure) {}
+      ~FailureException() throw() {}
+
       const tc::unit::Failure& failure() const { return failure_; }
       /** Inherited from std::exception. Overloaded fatally since nobody
       should get a chance to call it. */
-      virtual const char* what() { assert(false); return 0;}
+      virtual const char* what() throw() { assert(false); return 0;}
 
    private:
       tc::unit::Failure failure_;
