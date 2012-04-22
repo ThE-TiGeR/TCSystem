@@ -138,6 +138,7 @@ add_library (TCBasic
 	tests/TCWStringTest.cpp	
 	${TC_BASIC_PUBLIC_HEADER}
 
+	../../cmake/TCSystemCompileFlags.cmake
 	../../cmake/FindFOX.cmake
 	../../cmake/FindGLext.cmake
 	../../cmake/FindMPG123.cmake

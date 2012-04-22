@@ -114,7 +114,7 @@
 /** @brief The Homepage of TCSystem */
 #define TCHOMPAGE       "http://sourceforge.net/projects/tcsystem/"
 /** @brief The copyright string*/
-#define TCCOPYRIGHT     "Copyright (C) 2003 - 2011 Thomas Goessler. All rights reserved"
+#define TCCOPYRIGHT     "Copyright (C) 2003 - 2012 Thomas Goessler. All rights reserved"
 
 // ---------------------------------------------------------------
 // For DLL´s
