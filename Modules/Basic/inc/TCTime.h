@@ -114,6 +114,12 @@ namespace tc
       /** Get the nano seconds of the time object */
       uint64 NanoSeconds() const {return m_nsecs;}
 
+      /** Get Total time in seconds */
+      uint64 ToSeconds() const
+      {
+         return m_secs + m_nsecs / ONE_SECOND_AS_NANO_SECONDS;
+      }
+
       /** Get Total time in milli seconds */
       uint64 ToMilliSeconds() const
       {
