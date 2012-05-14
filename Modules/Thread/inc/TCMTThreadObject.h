@@ -58,7 +58,7 @@ namespace multi_threading
     * @brief Base class of  object which are executed by a tc::multi_threading::Thread
     * When the thread gets started it executes the methode ThreadObject::Run
     */
-   class ThreadObject: protected NonCopyAble
+   class ThreadObject
    {
    public:
       /**

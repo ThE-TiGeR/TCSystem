@@ -65,7 +65,7 @@ namespace multi_threading
    /**
     * @brief Interface defining thread which then can start an ThreadObject
     */
-   class Thread: protected NonCopyAble
+   class Thread
    {
    public:
       /** The priorities we can give the thread */

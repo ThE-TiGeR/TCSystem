@@ -52,7 +52,7 @@ namespace tc
    * @author Thomas Goessler
    */
 
-    class DebugHeap: public Heap
+    class DebugHeap: public Heap, protected NonCopyAble
     {
     public:
         DebugHeap(Heap& heap);

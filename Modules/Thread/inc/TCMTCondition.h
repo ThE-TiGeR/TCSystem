@@ -36,7 +36,6 @@
 #ifndef _TC_MT_CONDITION_H_
 #define _TC_MT_CONDITION_H_
 
-#include "TCNonCopyable.h"
 #include "TCMTMutex.h"
 #include "TCSharedPtr.h"
 
@@ -62,7 +61,7 @@ namespace multi_threading
     * implicit UnLock and Lock around Wait() and TryWait(). The Mutex can be 
     * obtained with GetMutex
     */
-   class Condition: protected NonCopyAble
+   class Condition
    {
    public:
      /** @brief Get the mutex used with this condition */

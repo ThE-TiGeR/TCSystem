@@ -57,7 +57,7 @@ namespace tc
       * @brief ObjectClass dispatches incomming messages to 
       * registered callback functions
       */
-      class MessageDispatcher: protected NonCopyAble
+      class MessageDispatcher
       {
       public:
          class CallBack

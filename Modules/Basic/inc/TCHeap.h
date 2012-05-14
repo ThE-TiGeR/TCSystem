@@ -35,7 +35,6 @@
 #ifndef _TC_HEAP_H_
 #define _TC_HEAP_H_
 
-#include "TCNonCopyable.h"
 #include "TCException.h"
 
 namespace tc
@@ -55,7 +54,7 @@ namespace tc
    /** 
    * @brief Heap interface definition
    */
-   class Heap: protected NonCopyAble
+   class Heap
    {
    public:
       /**

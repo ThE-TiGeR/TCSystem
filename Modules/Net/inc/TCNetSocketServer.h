@@ -58,11 +58,11 @@ namespace net
     * class for running as net server which can communicate with any number of clients
     * on a specified port. Connections can be made with objects based on TCNetClient
     */
-   class SocketServer: protected NonCopyAble
+   class SocketServer
    {
    public:
       /** @brief Interface for retrieving incoming data on an socked */
-      class DataReceiver: protected NonCopyAble
+      class DataReceiver
       {
       public:
          virtual ~DataReceiver() {}

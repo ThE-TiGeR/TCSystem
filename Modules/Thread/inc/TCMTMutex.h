@@ -58,7 +58,7 @@ namespace multi_threading
    /**
     * Class for protecting variables or something else which is used in more than one thread
     */
-   class Mutex: protected NonCopyAble
+   class Mutex
    {
    public:
       /** Lock the mutex, if already locked wait until it get unlocked */

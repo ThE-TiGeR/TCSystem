@@ -35,7 +35,6 @@
 #ifndef _TCCODEC_H_
 #define _TCCODEC_H_
 
-#include "TCNonCopyable.h"
 #include "TCSharedPtr.h"
 
 #include <string>
@@ -61,7 +60,7 @@ namespace tc
      * method fro encoding and decoding standard types
      * and prepares methods for decoding and encoding
      */
-    class Codec: protected NonCopyAble
+    class Codec
     {
     public:
        /**

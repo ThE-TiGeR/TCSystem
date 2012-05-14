@@ -36,7 +36,6 @@
 #ifndef _TC_MT_SEMAPHORE_H_
 #define _TC_MT_SEMAPHORE_H_
 
-#include "TCNonCopyable.h"
 #include "TCSharedPtr.h"
 #include "TCTime.h"
 
@@ -58,7 +57,7 @@ namespace multi_threading
    /**
     * counted semaphore
     */
-   class Semaphore: protected NonCopyAble
+   class Semaphore
    {
    public:
       /**

@@ -36,7 +36,6 @@
 #ifndef _TC_MT_EVENT_H_
 #define _TC_MT_EVENT_H_
 
-#include "TCNonCopyable.h"
 #include "TCSharedPtr.h"
 #include "TCTime.h"
 
@@ -70,7 +69,7 @@ namespace multi_threading
     * Call Set to signal (make available) the event object. In the other thread reat it out 
     * with Wait or TryWait.
     */
-   class Event: protected NonCopyAble
+   class Event
    {
    public:
       /**
