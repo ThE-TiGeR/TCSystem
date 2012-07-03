@@ -64,14 +64,14 @@ namespace tc
             {
             }
 
-            virtual void RegisterMessageCallback(uint32 id, CallBackPtr call_back)
+            virtual void RegisterMessageCallback(uint32_t id, CallBackPtr call_back)
             {
                m_callback_map[id] = call_back;
             }
 
             virtual bool DispatchMessage(MessagePtr message)
             {
-               std::map<uint32, CallBackPtr>::iterator callback_it =
+               std::map<uint32_t, CallBackPtr>::iterator callback_it =
                   m_callback_map.find(message->GetMessageId());
                if (callback_it == m_callback_map.end())
                {
@@ -83,7 +83,7 @@ namespace tc
             }
 
          private:
-            std::map<uint32, CallBackPtr> m_callback_map;
+            std::map<uint32_t, CallBackPtr> m_callback_map;
          };
 
 

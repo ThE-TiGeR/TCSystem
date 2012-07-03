@@ -65,22 +65,22 @@ namespace tc
 
          bool EventWin32::Wait()
          {
-            TCTRACE("TCMT", 100,"...");
+            TCTRACES("TCMT", 100, "...");
 
             bool state = ::WaitForSingleObject(m_event, INFINITE) == WAIT_OBJECT_0;
 
-            TCTRACE1("TCMT", 100,"%s.", state ? "done" : "failed");
+            TCTRACES("TCMT", 100, state ? "done" : "failed");
 
             return state;
          }
 
          bool EventWin32::Try()
          {
-            TCTRACE("TCMT", 100,"...");
+            TCTRACES("TCMT", 100, "...");
 
             bool state = ::WaitForSingleObject(m_event, 0) == WAIT_OBJECT_0;
 
-            TCTRACE1("TCMT", 100,"%s.", state ? "done" : "failed");
+            TCTRACES("TCMT", 100, state ? "done" : "failed");
 
             return state;
          }
@@ -98,11 +98,11 @@ namespace tc
                return Wait();
             }
 
-            TCTRACE1("TCMT", 100, "%" TC_UINT64_FORMAT " ms ...", timeout.ToMilliSeconds());
+            TCTRACES("TCMT", 100, timeout.ToMilliSeconds() << " ms ...");
 
             bool state = ::WaitForSingleObject(m_event, static_cast<DWORD>(timeout.ToMilliSeconds())) == WAIT_OBJECT_0;
 
-            TCTRACE1("TCMT", 100,"%s.", state ? "done" : "failed");
+            TCTRACES("TCMT", 100, state ? "done" : "failed");
             return state;
          }
 

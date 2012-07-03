@@ -72,10 +72,10 @@ namespace tc
          */
          explicit Address(const std::string &name);
          /**
-         * constructs an net address with uint32 ip address (no ipv6)
-         * @see tc::net::Address::SetHostName(uint32 ip_address)
+         * constructs an net address with uint32_t ip address (no ipv6)
+         * @see tc::net::Address::SetHostName(uint32_t ip_address)
          */
-         explicit Address(uint32 ip_address);
+         explicit Address(uint32_t ip_address);
          /**
          * copy contructor
          * @see tc::net::Address::SetAddress(const tc::net::Address &add)
@@ -102,7 +102,7 @@ namespace tc
          operator std::string() const { return GetDotNotation(); }
 
          // operators for setting the net address
-         Address& operator=(uint32);
+         Address& operator=(uint32_t);
          Address& operator=(const std::string&);
          Address& operator=(const Address&);
          Address& operator=(const InternetAddress&);
@@ -119,10 +119,10 @@ namespace tc
          */
          void SetHostName(const std::string &name);
          /**
-         * inits an net address with uint32 ip address (no ipv6)
+         * inits an net address with uint32_t ip address (no ipv6)
          * @param add holds the ipv4 internet address
          */
-         void SetAddress(uint32 add);
+         void SetAddress(uint32_t add);
          /**
          * inits an net address with an net address
          * @param add holds the structure of an net address

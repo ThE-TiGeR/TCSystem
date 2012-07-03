@@ -58,7 +58,7 @@ namespace tc
       {
       }
 
-      uint64 MemoryStream::ReadBytes(uint64 num_bytes, void* bytes)
+      uint64_t MemoryStream::ReadBytes(uint64_t num_bytes, void* bytes)
       {
          if (num_bytes > std::numeric_limits<ByteVector::size_type>::max())
          {
@@ -78,7 +78,7 @@ namespace tc
          return 0;
       }
 
-      uint64 MemoryStream::WriteBytes(uint64 num_bytes, const void* bytes)
+      uint64_t MemoryStream::WriteBytes(uint64_t num_bytes, const void* bytes)
       {
          if (num_bytes > std::numeric_limits<ByteVector::size_type>::max())
          {
@@ -105,9 +105,9 @@ namespace tc
          return num_bytes;
       }
 
-      bool MemoryStream::SetPosition(sint64 pos, StreamPosition pos_mode)
+      bool MemoryStream::SetPosition(int64_t pos, StreamPosition pos_mode)
       {
-         if (uint64(util::Abs(pos)) > std::numeric_limits<ByteVector::size_type>::max())
+         if (uint64_t(util::Abs(pos)) > std::numeric_limits<ByteVector::size_type>::max())
          {
              return false;
          }
@@ -119,11 +119,25 @@ namespace tc
             break;
 
          case POSITION_CURRENT:
-            m_memory_position += ssize_type(pos);
+            if (pos > 0)
+            {
+               m_memory_position += ByteVector::size_type(pos);
+            }
+            else
+            {
+               m_memory_position -= ByteVector::size_type(util::Abs(pos));
+            }
             break;
 
          case POSITION_END:
-            m_memory_position = m_memory.size() + ssize_type(pos);
+            if (pos > 0)
+            {
+               m_memory_position = m_memory.size() + ByteVector::size_type(pos);
+            }
+            else
+            {
+               m_memory_position = m_memory.size() - ByteVector::size_type(util::Abs(pos));
+            }
             break;
          }
 
@@ -136,7 +150,7 @@ namespace tc
          return true;
       }
 
-      uint64 MemoryStream::GetPosition() const
+      uint64_t MemoryStream::GetPosition() const
       {
          return m_memory_position;
       }

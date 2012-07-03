@@ -74,7 +74,7 @@ namespace imp
       /**
       * counts the number of currently created net objects
       */
-      static sint32 m_num_created_net_objects;
+      static int32_t m_num_created_net_objects;
    };
 
    /**

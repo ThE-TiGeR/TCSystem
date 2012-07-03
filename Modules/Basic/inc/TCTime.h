@@ -72,13 +72,13 @@ namespace tc
 
    public:
       /** Create a Time object with specified seconds */
-      static Time FromSeconds(uint64 seconds);
+      static Time FromSeconds(uint64_t seconds);
       /** Create a Time object with specified milli seconds */
-      static Time FromMilliSeconds(uint64 milli_seconds);
+      static Time FromMilliSeconds(uint64_t milli_seconds);
       /** Create a Time object with specified micro seconds */
-      static Time FromMicroSeconds(uint64 micro_seconds);
+      static Time FromMicroSeconds(uint64_t micro_seconds);
       /** Create a Time object with specified nano seconds */
-      static Time FromNanoSeconds(uint64 nanos_seconds);
+      static Time FromNanoSeconds(uint64_t nanos_seconds);
       /** Create a Time object with current time values */
       static Time Now();
       /** Create a Time object with current monotonic time values 
@@ -107,33 +107,33 @@ namespace tc
       }
 
       /** @brief Constructor with specified seconds and nano seconds */
-      Time(uint64 secs, uint64 nsecs);
+      Time(uint64_t secs, uint64_t nsecs);
 
       /** Get the seconds of the time object */
-      uint64 Seconds() const {return m_secs;}
+      uint64_t Seconds() const {return m_secs;}
       /** Get the nano seconds of the time object */
-      uint64 NanoSeconds() const {return m_nsecs;}
+      uint64_t NanoSeconds() const {return m_nsecs;}
 
       /** Get Total time in seconds */
-      uint64 ToSeconds() const
+      uint64_t ToSeconds() const
       {
          return m_secs + m_nsecs / ONE_SECOND_AS_NANO_SECONDS;
       }
 
       /** Get Total time in milli seconds */
-      uint64 ToMilliSeconds() const
+      uint64_t ToMilliSeconds() const
       {
          return m_secs * ONE_SECOND_AS_MILLI_SECONDS + m_nsecs / ONE_MILLI_SECOND_AS_NANO_SECONDS;
       }
 
       /** Get Total time in micro seconds */
-      uint64 ToMicroSeconds() const
+      uint64_t ToMicroSeconds() const
       {
          return m_secs * ONE_SECOND_AS_MICRO_SECONDS + m_nsecs / ONE_MICRO_SECOND_AS_NANO_SECONDS;
       }
 
       /** Get Total time in nano seconds */
-      uint64 ToNanoSeconds() const
+      uint64_t ToNanoSeconds() const
       {
          return m_secs * ONE_SECOND_AS_NANO_SECONDS + m_nsecs;
       }
@@ -172,8 +172,8 @@ namespace tc
       friend TCBASE_API StreamPtr operator<<(StreamPtr stream, const Time& time);
 
    private:
-      uint64 m_secs;
-      uint64 m_nsecs;
+      uint64_t m_secs;
+      uint64_t m_nsecs;
    };
 
    inline const Time operator+(const Time& a, const Time& b) 

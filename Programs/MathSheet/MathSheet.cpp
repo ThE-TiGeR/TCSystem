@@ -20,7 +20,7 @@ namespace tc
       class Addition: public MathCalculation
       {
       public:
-         Addition(uint32 max_value)
+         Addition(uint32_t max_value)
             :m_max_value(max_value),
             m_rng(factory::Create69069Rng())
          {
@@ -28,22 +28,22 @@ namespace tc
 
          virtual std::string GetNextCalculationString(const std::string& sep)
          {
-            uint32 value1 = m_rng->GetRandomNumber(1, m_max_value);
-            uint32 value2 = m_rng->GetRandomNumber(1, m_max_value - value1);
+            uint32_t value1 = m_rng->GetRandomNumber(1, m_max_value);
+            uint32_t value2 = m_rng->GetRandomNumber(1, m_max_value - value1);
 
             return string::ToString(value1) + 
                sep + "+" + sep + string::ToString(value2);
          }
 
       private:
-         uint32 m_max_value;
+         uint32_t m_max_value;
          RngPtr m_rng;
       };
 
       class Subtraction: public MathCalculation
       {
       public:
-         Subtraction(uint32 max_value)
+         Subtraction(uint32_t max_value)
             :m_max_value(max_value),
             m_rng(factory::Create69069Rng())
          {
@@ -51,22 +51,22 @@ namespace tc
 
          virtual std::string GetNextCalculationString(const std::string& sep)
          {
-            uint32 value1 = m_rng->GetRandomNumber(1, m_max_value-1);
-            uint32 value2 = m_rng->GetRandomNumber(1, value1);
+            uint32_t value1 = m_rng->GetRandomNumber(1, m_max_value-1);
+            uint32_t value2 = m_rng->GetRandomNumber(1, value1);
 
             return string::ToString(value1) + 
                sep + "-" + sep + string::ToString(value2);
          }
 
       private:
-         uint32 m_max_value;
+         uint32_t m_max_value;
          RngPtr m_rng;
       };
 
       class Multiplication: public MathCalculation
       {
       public:
-         Multiplication(uint32 max_multiplayer1, uint32 max_multiplayer2)
+         Multiplication(uint32_t max_multiplayer1, uint32_t max_multiplayer2)
             :m_max_multiplayer1(max_multiplayer1),
             m_max_multiplayer2(max_multiplayer2),
             m_rng(factory::Create69069Rng())
@@ -75,23 +75,23 @@ namespace tc
 
          virtual std::string GetNextCalculationString(const std::string& sep)
          {
-            uint32 value1 = m_rng->GetRandomNumber(1, m_max_multiplayer1);
-            uint32 value2 = m_rng->GetRandomNumber(1, m_max_multiplayer2);
+            uint32_t value1 = m_rng->GetRandomNumber(1, m_max_multiplayer1);
+            uint32_t value2 = m_rng->GetRandomNumber(1, m_max_multiplayer2);
 
             return string::ToString(value1) +
                sep + "*" + sep + string::ToString(value2);
          }
 
       private:
-         uint32 m_max_multiplayer1;
-         uint32 m_max_multiplayer2;
+         uint32_t m_max_multiplayer1;
+         uint32_t m_max_multiplayer2;
          RngPtr m_rng;
       };
 
       class Multiplication10: public Multiplication
       {
       public:
-         Multiplication10(uint32 max_multiplayer)
+         Multiplication10(uint32_t max_multiplayer)
             :Multiplication(max_multiplayer, max_multiplayer)
          {
          }
@@ -105,7 +105,7 @@ namespace tc
       class Division: public MathCalculation
       {
       public:
-         Division(uint32 max_divider1, uint32 max_divider2)
+         Division(uint32_t max_divider1, uint32_t max_divider2)
             :m_max_divider1(max_divider1),
             m_max_divider2(max_divider2),
             m_rng(factory::Create69069Rng())
@@ -114,16 +114,16 @@ namespace tc
 
          virtual std::string GetNextCalculationString(const std::string& sep)
          {
-            uint32 value1 = m_rng->GetRandomNumber(1, m_max_divider1);
-            uint32 value2 = m_rng->GetRandomNumber(1, m_max_divider2);
+            uint32_t value1 = m_rng->GetRandomNumber(1, m_max_divider1);
+            uint32_t value2 = m_rng->GetRandomNumber(1, m_max_divider2);
 
             return string::ToString(value1 * value2) + 
                sep + ":" + sep + string::ToString(value2);
          }
 
       private:
-         uint32 m_max_divider1;
-         uint32 m_max_divider2;
+         uint32_t m_max_divider1;
+         uint32_t m_max_divider2;
          RngPtr m_rng;
       };
 
@@ -146,16 +146,16 @@ namespace tc
 
       public:
          std::string m_file_name;
-         uint32 m_num_calculations;
+         uint32_t m_num_calculations;
          bool m_create_addition;
          bool m_create_subtraction;
          bool m_create_multiplication;
          bool m_create_multiplication10;
          bool m_create_division;
 
-         uint32 m_max_add_sub_value;
-         uint32 m_max_mult_div_value1;
-         uint32 m_max_mult_div_value2;
+         uint32_t m_max_add_sub_value;
+         uint32_t m_max_mult_div_value1;
+         uint32_t m_max_mult_div_value2;
       };
 
       void DisplayUsage()
@@ -182,7 +182,7 @@ namespace tc
       {
          if (narg < 3 || ((narg-1) % 2) != 0)
          {
-            TCERROR("math_sheet", "Wrong command line arguments");
+            TCERRORS("math_sheet", "Wrong command line arguments");
             DisplayUsage();
             return false;
          }
@@ -228,7 +228,7 @@ namespace tc
             }
             else
             {
-               TCERROR("math_sheet", "Wrong command line arguments");
+               TCERRORS("math_sheet", "Wrong command line arguments");
                DisplayUsage();
                return false;
             }
@@ -269,9 +269,9 @@ namespace tc
          }
 
          const std::string sep(";");
-         for (uint32 i=0; i< settings.m_num_calculations; i++)
+         for (uint32_t i=0; i< settings.m_num_calculations; i++)
          {
-            uint32 idx = rng->GetRandomNumber(0, uint32(calculations.size())-1);
+            uint32_t idx = rng->GetRandomNumber(0, uint32_t(calculations.size())-1);
             out << calculations[idx]->GetNextCalculationString(sep) << sep << "=" << sep << sep;
             if ((i+1)%4 == 0) out << endl;
          }

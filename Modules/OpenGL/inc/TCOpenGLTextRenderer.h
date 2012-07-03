@@ -88,7 +88,7 @@ namespace tc
          * @param clip     if true, clip text to left edge of window. (Quite slow.)
          */
          void Render2DText(const std::string &text,
-            math::CoordN<sint32,2> xyco,
+            math::CoordN<int32_t,2> xyco,
             const Color &color,
             bool clip = false);
 
@@ -104,11 +104,11 @@ namespace tc
          /**
          * the gllist di which is neede for drawing then the fonts
          */
-         std::vector< uint32 > m_font_gl_lists;
+         std::vector< uint32_t > m_font_gl_lists;
          /**
          * current used font for rendering
          */
-         sint32 m_current_font;
+         int32_t m_current_font;
 
          static TextRenderer m_text_renderer;
       };

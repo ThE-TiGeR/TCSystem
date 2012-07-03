@@ -136,7 +136,7 @@ namespace tc
             {
                TCERRORS("open_gl", "     message: " << reinterpret_cast<const char*>(errorString));
             }
-            TCERRORS("open_gl", "     error_code: " << static_cast<uint32>(errorCode));
+            TCERRORS("open_gl", "     error_code: " << static_cast<uint32_t>(errorCode));
             return true;
          }
          return false;

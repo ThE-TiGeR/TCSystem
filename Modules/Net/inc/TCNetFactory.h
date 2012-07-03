@@ -97,7 +97,7 @@ namespace tc
          * @param ip_addr     Ip Address to find the correct network adapter to listen on
          *                    (Any addres is used to listen on all adapters)
          */
-         TCNET_API SocketPtr CreateTcpListenSocket(PortNumber port, uint32 connections, const Address& ip_addr=Address::GetAnyAddress());
+         TCNET_API SocketPtr CreateTcpListenSocket(PortNumber port, uint32_t connections, const Address& ip_addr=Address::GetAnyAddress());
 
          /**
          * @brief Creates a socket which can accept new UPD connections
@@ -107,7 +107,7 @@ namespace tc
          * @param ip_addr     Ip Address to find the correct network adapter to listen on
          *                    (Any addres is used to listen on all adapters)
          */
-         TCNET_API BroadcastReadSocketPtr CreateUdpListenSocket(PortNumber port, uint32 connections, const Address& ip_addr=Address::GetAnyAddress());
+         TCNET_API BroadcastReadSocketPtr CreateUdpListenSocket(PortNumber port, uint32_t connections, const Address& ip_addr=Address::GetAnyAddress());
 
          /**
          * @brief Creates a socket which can accept new UPD Broadcast messages

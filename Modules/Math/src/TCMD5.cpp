@@ -50,16 +50,16 @@ namespace imp
 
 struct MD5Context
 {
-   uint32 total[2];
-   uint32 state[4];
-   uchar buffer[64];
-   uchar digest[16];
+   uint32_t total[2];
+   uint32_t state[4];
+   uint8_t buffer[64];
+   uint8_t digest[16];
 };
 
 /* forward declaration */
-static void Transform(uint32* buf, const uint32* in);
+static void Transform(uint32_t* buf, const uint32_t* in);
 
-static uchar PADDING[64] = {
+static uint8_t PADDING[64] = {
    0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -82,22 +82,22 @@ static uchar PADDING[64] = {
 /* FF, GG, HH, and II transformations for rounds 1, 2, 3, and 4 */
 /* Rotation is separate from addition to prevent recomputation */
 #define FF(a, b, c, d, x, s, ac) \
-  {(a) += F ((b), (c), (d)) + (x) + (uint32)(ac); \
+  {(a) += F ((b), (c), (d)) + (x) + (uint32_t)(ac); \
    (a) = ROTATE_LEFT ((a), (s)); \
    (a) += (b); \
   }
 #define GG(a, b, c, d, x, s, ac) \
-  {(a) += G ((b), (c), (d)) + (x) + (uint32)(ac); \
+  {(a) += G ((b), (c), (d)) + (x) + (uint32_t)(ac); \
    (a) = ROTATE_LEFT ((a), (s)); \
    (a) += (b); \
   }
 #define HH(a, b, c, d, x, s, ac) \
-  {(a) += H ((b), (c), (d)) + (x) + (uint32)(ac); \
+  {(a) += H ((b), (c), (d)) + (x) + (uint32_t)(ac); \
    (a) = ROTATE_LEFT ((a), (s)); \
    (a) += (b); \
   }
 #define II(a, b, c, d, x, s, ac) \
-  {(a) += I ((b), (c), (d)) + (x) + (uint32)(ac); \
+  {(a) += I ((b), (c), (d)) + (x) + (uint32_t)(ac); \
    (a) = ROTATE_LEFT ((a), (s)); \
    (a) += (b); \
   }
@@ -121,20 +121,20 @@ void MD5Init(MD5Context * md5_context)
    account for the presence of each of the characters inBuf[0..inLen-1]
    in the message whose digest is being computed.
  */
-static void MD5Update(MD5Context * md5_context, const uchar *inBuf, uint32 inLen)
+static void MD5Update(MD5Context * md5_context, const uint8_t *inBuf, uint32_t inLen)
 {
-   uint32 in[16];
-   sint32 mdi;
-   uint32 i, ii;
+   uint32_t in[16];
+   int32_t mdi;
+   uint32_t i, ii;
 
    /* compute number of bytes mod 64 */
-   mdi = (sint32)((md5_context->total[0] >> 3) & 0x3F);
+   mdi = (int32_t)((md5_context->total[0] >> 3) & 0x3F);
 
    /* update number of bits */
-   if ((md5_context->total[0] + ((uint32) inLen << 3)) < md5_context->total[0])
+   if ((md5_context->total[0] + ((uint32_t) inLen << 3)) < md5_context->total[0])
       md5_context->total[1]++;
-   md5_context->total[0] += ((uint32) inLen << 3);
-   md5_context->total[1] += ((uint32) inLen >> 29);
+   md5_context->total[0] += ((uint32_t) inLen << 3);
+   md5_context->total[1] += ((uint32_t) inLen >> 29);
 
    while (inLen--)
    {
@@ -146,8 +146,8 @@ static void MD5Update(MD5Context * md5_context, const uchar *inBuf, uint32 inLen
       {
          for (i = 0, ii = 0; i < 16; i++, ii += 4)
             in[i] =
-               (((uint32) md5_context->buffer[ii + 3]) << 24) | (((uint32) md5_context->buffer[ii + 2]) << 16) |
-               (((uint32) md5_context->buffer[ii + 1]) << 8) | ((uint32) md5_context->buffer[ii]);
+               (((uint32_t) md5_context->buffer[ii + 3]) << 24) | (((uint32_t) md5_context->buffer[ii + 2]) << 16) |
+               (((uint32_t) md5_context->buffer[ii + 1]) << 8) | ((uint32_t) md5_context->buffer[ii]);
          Transform(md5_context->state, in);
          mdi = 0;
       }
@@ -159,17 +159,17 @@ static void MD5Update(MD5Context * md5_context, const uchar *inBuf, uint32 inLen
  */
 static void MD5Final(MD5Context * md5_context)
 {
-   uint32 in[16];
-   sint32 mdi;
-   uint32 i, ii;
-   uint32 padLen;
+   uint32_t in[16];
+   int32_t mdi;
+   uint32_t i, ii;
+   uint32_t padLen;
 
    /* save number of bits */
    in[14] = md5_context->total[0];
    in[15] = md5_context->total[1];
 
    /* compute number of bytes mod 64 */
-   mdi = (sint32)((md5_context->total[0] >> 3) & 0x3F);
+   mdi = (int32_t)((md5_context->total[0] >> 3) & 0x3F);
 
    /* pad out to 56 mod 64 */
    padLen = (mdi < 56) ? (56 - mdi) : (120 - mdi);
@@ -178,25 +178,25 @@ static void MD5Final(MD5Context * md5_context)
    /* append length in bits and transform */
    for (i = 0, ii = 0; i < 14; i++, ii += 4)
       in[i] =
-         (((uint32) md5_context->buffer[ii + 3]) << 24) | (((uint32) md5_context->buffer[ii + 2]) << 16) |
-         (((uint32) md5_context->buffer[ii + 1]) << 8) | ((uint32) md5_context->buffer[ii]);
+         (((uint32_t) md5_context->buffer[ii + 3]) << 24) | (((uint32_t) md5_context->buffer[ii + 2]) << 16) |
+         (((uint32_t) md5_context->buffer[ii + 1]) << 8) | ((uint32_t) md5_context->buffer[ii]);
    Transform(md5_context->state, in);
 
    /* store buffer in digest */
    for (i = 0, ii = 0; i < 4; i++, ii += 4)
    {
-      md5_context->digest[ii] = (uchar)(md5_context->state[i] & 0xFF);
-      md5_context->digest[ii + 1] = (uchar)((md5_context->state[i] >> 8) & 0xFF);
-      md5_context->digest[ii + 2] = (uchar)((md5_context->state[i] >> 16) & 0xFF);
-      md5_context->digest[ii + 3] = (uchar)((md5_context->state[i] >> 24) & 0xFF);
+      md5_context->digest[ii] = (uint8_t)(md5_context->state[i] & 0xFF);
+      md5_context->digest[ii + 1] = (uint8_t)((md5_context->state[i] >> 8) & 0xFF);
+      md5_context->digest[ii + 2] = (uint8_t)((md5_context->state[i] >> 16) & 0xFF);
+      md5_context->digest[ii + 3] = (uint8_t)((md5_context->state[i] >> 24) & 0xFF);
    }
 }
 
 /* Basic MD5 step. Transforms buf based on in.
  */
-static void Transform(uint32 * buf, const uint32* in)
+static void Transform(uint32_t * buf, const uint32_t* in)
 {
-   uint32 a = buf[0], b = buf[1], c = buf[2], d = buf[3];
+   uint32_t a = buf[0], b = buf[1], c = buf[2], d = buf[3];
 
    /* Round 1 */
 #define S11 7
@@ -305,7 +305,7 @@ MD5::~MD5()
    md5_context = 0;
 }
 
-void MD5::Append(const uchar *data, uint32 len)
+void MD5::Append(const uint8_t *data, uint32_t len)
 {
    MD5Update(md5_context, data, len);
 }
@@ -315,7 +315,7 @@ std::string MD5::GetHashString() const
    MD5Final(md5_context);
 
    char hash_string[33];
-   for(uint32 n = 0; n < 16; n++)
+   for(uint32_t n = 0; n < 16; n++)
    {
       string::Snprintf(hash_string + n*2, sizeof(hash_string), "%02x", md5_context->digest[n]);
    }

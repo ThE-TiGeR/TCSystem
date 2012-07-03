@@ -59,7 +59,7 @@ namespace tc
          SetBackColor(treeList->getBackColor());
       }
 
-      void TreeItem::draw(const FX::FXTreeList* list_in,FX::FXDC& dc,sint32 x,sint32 y,sint32 w,sint32 h) const
+      void TreeItem::draw(const FX::FXTreeList* list_in,FX::FXDC& dc,int32_t x,int32_t y,int32_t w,int32_t h) const
       {
          TreeList* list = const_cast<TreeList*>(static_cast<const TreeList*>(list_in));
 
@@ -83,42 +83,42 @@ namespace tc
          list->backColor = back_color;
       }
 
-      sint32 TreeItem::getHeight(const FX::FXTreeList* list_in) const
+      int32_t TreeItem::getHeight(const FX::FXTreeList* list_in) const
       {
          TreeList* list = const_cast<TreeList*>(static_cast<const TreeList*>(list_in));
 
          FX::FXFont* text_font = list->getFont();
          list->font = m_text_font;
 
-         sint32 h = FX::FXTreeItem::getHeight(list_in);
+         int32_t h = FX::FXTreeItem::getHeight(list_in);
 
          list->font = text_font;
 
          return h;
       }
 
-      sint32 TreeItem::getWidth(const FX::FXTreeList* list_in) const
+      int32_t TreeItem::getWidth(const FX::FXTreeList* list_in) const
       {
          TreeList* list = const_cast<TreeList*>(static_cast<const TreeList*>(list_in));
 
          FX::FXFont* text_font = list->getFont();
          list->font = m_text_font;
 
-         sint32 w = FX::FXTreeItem::getWidth(list_in);
+         int32_t w = FX::FXTreeItem::getWidth(list_in);
 
          list->font = text_font;
 
          return w;
       }
 
-      sint32 TreeItem::hitItem(const FX::FXTreeList* list_in, sint32 x, sint32 y) const
+      int32_t TreeItem::hitItem(const FX::FXTreeList* list_in, int32_t x, int32_t y) const
       {
          TreeList* list = const_cast<TreeList*>(static_cast<const TreeList*>(list_in));
 
          FX::FXFont* text_font = list->getFont();
          list->font = m_text_font;
 
-         sint32 hit = FX::FXTreeItem::hitItem(list_in, x, y);
+         int32_t hit = FX::FXTreeItem::hitItem(list_in, x, y);
 
          list->font = text_font;
 

@@ -164,7 +164,7 @@ namespace tc
          ::glPopMatrix();
       }
 
-      void CoordinateCross::UpdateSelf(Viewer& /*viewer*/, uint32 /*curent_time*/, uint32 /*delta_time*/)
+      void CoordinateCross::UpdateSelf(Viewer& /*viewer*/, uint32_t /*curent_time*/, uint32_t /*delta_time*/)
       {
       }
    }

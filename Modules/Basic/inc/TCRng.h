@@ -61,12 +61,12 @@ namespace tc
       /**
       * @brief Get Random true or false value
       */
-      virtual uint32 GetRandomNumber() = 0;
+      virtual uint32_t GetRandomNumber() = 0;
       /**
-      * @brief Get random uint32 value between lower_limit and upper_limit
+      * @brief Get random uint32_t value between lower_limit and upper_limit
       * The lower_limit and upper_limit is included in the set of random numbers
       */
-      virtual uint32 GetRandomNumber(uint32 lower_limit, uint32 upper_limit) = 0;
+      virtual uint32_t GetRandomNumber(uint32_t lower_limit, uint32_t upper_limit) = 0;
 
       /**
       * @brief Get random double value between lower_limit and upper_limit
@@ -75,7 +75,7 @@ namespace tc
       virtual double GetRandomNumberDouble(double lower_limit, double upper_limit) = 0;
 
       /** @brief Set a new seed to the random number generator */
-      virtual void SetSeed(uint32 seed) = 0;
+      virtual void SetSeed(uint32_t seed) = 0;
 
       virtual ~Rng() {}
    };

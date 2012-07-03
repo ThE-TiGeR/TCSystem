@@ -59,8 +59,8 @@ namespace imp
       SemaphoreWin32();
       ~SemaphoreWin32();
 
-      bool Init(uint32 initial);
-      bool Init(const std::string& shared_name, uint32 initial, factory::CreationMode mode);
+      bool Init(uint32_t initial);
+      bool Init(const std::string& shared_name, uint32_t initial, factory::CreationMode mode);
 
       bool Wait();
       bool Try();

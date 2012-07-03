@@ -87,11 +87,11 @@ namespace tc
       class TCBASE_API Texts
       {
       public:
-         Texts(uint32 num_texts, const Text* texts);
+         Texts(uint32_t num_texts, const Text* texts);
          ~Texts();
 
       private:
-         uint32 m_num_texts;
+         uint32_t m_num_texts;
          const Text* m_texts;
          const Texts* m_prev;
 

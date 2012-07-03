@@ -95,21 +95,21 @@ namespace imp
        */
       void SetStream(const std::string &fileName, StreamDirection direction);
 
-      virtual bool SetPosition(sint64, StreamPosition pos);
-      virtual uint64 GetPosition() const;
+      virtual bool SetPosition(int64_t, StreamPosition pos);
+      virtual uint64_t GetPosition() const;
 
       /**
        * methode for reading the bytes from the stream
        * @param nBytes number of bytes to read
        * @param bytes where to store the data which should be read
        */
-      virtual uint64 ReadBytes (uint64 nBytes, void *bytes);
+      virtual uint64_t ReadBytes (uint64_t nBytes, void *bytes);
       /**
        * methode for writing the bytes to the stream
        * @param nBytes number of bytes to written
        * @param bytes where the bytes are stored which should be written
        */
-      virtual uint64 WriteBytes(uint64 nBytes, const void *bytes);
+      virtual uint64_t WriteBytes(uint64_t nBytes, const void *bytes);
 
       /**
        * we flush the file

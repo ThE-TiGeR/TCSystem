@@ -53,7 +53,7 @@ namespace tc
          }
 
          virtual const SoundFormat& GetFormat() const = 0;
-         virtual uint64 GetData(uint64 num_bytes, uint8* buffer) = 0;
+         virtual uint64_t GetData(uint64_t num_bytes, uint8_t* buffer) = 0;
          virtual void SetToStart() = 0;
 
          virtual bool IsLooping() const { return m_loop_data; }

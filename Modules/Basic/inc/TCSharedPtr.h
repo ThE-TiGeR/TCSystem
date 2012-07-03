@@ -128,7 +128,7 @@ namespace tc
       friend bool operator!=(const SharedPtr<T>& a, unspecified_pointer_type b) {return a.m_ptr != b;}
 
       /** @brief Get how many shared pointer point to the same pointer */
-      uint32 GetUseCount() const {return m_count.GetUseCount();}
+      uint32_t GetUseCount() const {return m_count.GetUseCount();}
 
       /** @brief return true if there exists only one instance of this shared pointer */
       bool IsUnique() const {return m_count.GetUseCount() == 1;}

@@ -188,13 +188,13 @@ namespace tc
       * @return The not normalized normal vector of the plane
       */
       template <class T>
-      inline CoordN<T,3> Normalvector(uint32 numPoints, const CoordN<T,3>* coords)
+      inline CoordN<T,3> Normalvector(uint32_t numPoints, const CoordN<T,3>* coords)
       {
          CoordN<T,3> out;
 
-         for (uint32 pos=0; pos<numPoints; pos++)
+         for (uint32_t pos=0; pos<numPoints; pos++)
          {
-            uint32 index = (pos+1) % numPoints;
+            uint32_t index = (pos+1) % numPoints;
             out[0] += (coords[pos][1] - coords[index][1]) * (coords[pos][2] + coords[index][2]);
             out[1] += (coords[pos][2] - coords[index][2]) * (coords[pos][0] + coords[index][0]);
             out[2] += (coords[pos][0] - coords[index][0]) * (coords[pos][1] + coords[index][1]);
@@ -240,13 +240,13 @@ namespace tc
 
       template <class T>
       inline bool CheckInsidePolygon(const CoordN<T,2> &point,
-         uint32 num_points, const CoordN<T,2> *polygon)
+         uint32_t num_points, const CoordN<T,2> *polygon)
       {
-         uint32 crossings = 0;
+         uint32_t crossings = 0;
          //loop over all edges of polygon
-         for(uint32 num1=0; num1<num_points; num1++)
+         for(uint32_t num1=0; num1<num_points; num1++)
          {
-            uint32 num2 = (num1 - 1 + num_points) % num_points;
+            uint32_t num2 = (num1 - 1 + num_points) % num_points;
             CoordN<T,2> point1 = polygon[num1] - point;
             CoordN<T,2> point2 = polygon[num2] - point;
 

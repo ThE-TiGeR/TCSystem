@@ -132,12 +132,12 @@ namespace tc
          return m_sound_data->SetPan(pan);
       }
 
-      uint32 SoundSequenceImp::GetNumSounds() const
+      uint32_t SoundSequenceImp::GetNumSounds() const
       {
          return m_sound_data->GetNumSoundData();
       }
 
-      SoundPtr SoundSequenceImp::GetSound(uint32 idx)
+      SoundPtr SoundSequenceImp::GetSound(uint32_t idx)
       {
          SoundDataPtr data = m_sound_data->GetSoundData(idx);
          if (!data)

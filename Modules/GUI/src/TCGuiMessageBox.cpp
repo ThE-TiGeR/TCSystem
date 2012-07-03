@@ -55,7 +55,7 @@ namespace tc
 
          // Create message box
       MessageBox::MessageBox(FX::FXWindow * owner, const std::string& title,
-                             const std::string& text, FX::FXIcon * ic, sint32 buttons)
+                             const std::string& text, FX::FXIcon * ic, int32_t buttons)
          :FX::FXDialogBox(owner,(Application::GetInstance()->GetProgrammName() + "-" + title).c_str())
       {
          FX::FXVerticalFrame *content = new FX::FXVerticalFrame(this, FX::LAYOUT_FILL_X | FX::LAYOUT_FILL_Y);
@@ -93,7 +93,7 @@ namespace tc
       }
 
       // Show a modal error message
-      sint32 MessageBox::Error(FX::FXWindow * owner, const std::string & title, const std::string & message)
+      int32_t MessageBox::Error(FX::FXWindow * owner, const std::string & title, const std::string & message)
       {
          if (owner == 0) owner = FX::FXApp::instance()->getRootWindow();
          MessageBox box(owner, title, message, ImageHandler::GetInstance()->GetIcon("tc_gui_error_big"), BUTTONS_OK);
@@ -102,7 +102,7 @@ namespace tc
       }
 
       // Show a modal warning message
-      sint32 MessageBox::Warning(FX::FXWindow * owner, const std::string & title, const std::string & message)
+      int32_t MessageBox::Warning(FX::FXWindow * owner, const std::string & title, const std::string & message)
       {
          if (owner == 0) owner = FX::FXApp::instance()->getRootWindow();
          MessageBox box(owner, title, message, ImageHandler::GetInstance()->GetIcon("tc_gui_warning_big"), BUTTONS_OK);
@@ -111,7 +111,7 @@ namespace tc
       }
 
       // Show a modal question dialog
-      sint32 MessageBox::Question(FX::FXWindow * owner, const std::string & title, const std::string & message)
+      int32_t MessageBox::Question(FX::FXWindow * owner, const std::string & title, const std::string & message)
       {
          if (owner == 0) owner = FX::FXApp::instance()->getRootWindow();
          MessageBox box(owner, title, message, ImageHandler::GetInstance()->GetIcon("tc_gui_question_big"), BUTTONS_OK_CANCEL);
@@ -120,7 +120,7 @@ namespace tc
       }
 
       // Show a modal information dialog
-      sint32 MessageBox::Information(FX::FXWindow * owner, const std::string & title, const std::string & message)
+      int32_t MessageBox::Information(FX::FXWindow * owner, const std::string & title, const std::string & message)
       {
          if (owner == 0) owner = FX::FXApp::instance()->getRootWindow();
          MessageBox box(owner, title, message, ImageHandler::GetInstance()->GetIcon("tc_gui_info_big"), BUTTONS_OK);

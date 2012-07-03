@@ -54,7 +54,7 @@ namespace tc
          {
          }
 
-         bool SemaphoreWin32::Init(uint32 initial) 
+         bool SemaphoreWin32::Init(uint32_t initial) 
          {
             m_handle = ::CreateSemaphoreA(0, initial, 0xffffff, 0);
             if (m_handle == 0)
@@ -65,7 +65,7 @@ namespace tc
             return true;
          }
 
-         bool SemaphoreWin32::Init(const std::string& shared_name, uint32 initial, factory::CreationMode mode) 
+         bool SemaphoreWin32::Init(const std::string& shared_name, uint32_t initial, factory::CreationMode mode) 
          {
             m_handle = ::CreateSemaphoreA(0, initial, 0xffffff, shared_name.c_str());
             DWORD error = ::GetLastError();

@@ -59,7 +59,7 @@ namespace tc
       * @brief Class for handling N values
       * With implementation of all common coordinate or vector operators needed
       */
-      template <typename T, uint32 SIZE>
+      template <typename T, uint32_t SIZE>
       class MatrixN: public boost::totally_ordered< MatrixN<T, SIZE>,
          boost::additive       < MatrixN<T, SIZE>,
          boost::multipliable2  < MatrixN<T, SIZE>, T,
@@ -124,31 +124,31 @@ namespace tc
             return *this;
          }
 
-         const T& operator()(uint32 i, uint32 j)const 
+         const T& operator()(uint32_t i, uint32_t j)const 
          {
             return m_data[i*SIZE+j];
          }
 
-         T& operator()(const uint32 i, uint32 j)
+         T& operator()(const uint32_t i, uint32_t j)
          {
             return m_data[i*SIZE+j];
          }
 
-         const T* operator[](uint32 i) const 
+         const T* operator[](uint32_t i) const 
          {
             return &m_data[i*SIZE];
          }
 
-         T* operator[](uint32 i) 
+         T* operator[](uint32_t i) 
          {
             return &m_data[i*SIZE];
          }
 
          void Identity()
          {
-            for (uint32 i=0; i<SIZE; i++)
+            for (uint32_t i=0; i<SIZE; i++)
             {
-               for (uint32 j=0; j<SIZE; j++)
+               for (uint32_t j=0; j<SIZE; j++)
                {
                   m_data[i*SIZE+j] = i == j ? 1 : 0;
                }
@@ -157,9 +157,9 @@ namespace tc
 
          void Transpose(const MatrixN<T, SIZE>& val)
          {
-            for (uint32 i=0; i<SIZE; i++)
+            for (uint32_t i=0; i<SIZE; i++)
             {
-               for (uint32 j=0; j<SIZE; j++)
+               for (uint32_t j=0; j<SIZE; j++)
                {
                   m_data[i*SIZE+j] = val.m_data[j*SIZE+i];
                }
@@ -247,7 +247,7 @@ namespace tc
       private:
          T m_data[ARRAY_DIMENSION];
 
-         template <class T1, uint32 SIZE1> friend class MatrixN;
+         template <class T1, uint32_t SIZE1> friend class MatrixN;
       };
 
       /**

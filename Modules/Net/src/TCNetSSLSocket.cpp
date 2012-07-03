@@ -56,7 +56,7 @@ namespace tc
             ,m_ssl_ctx(0)
             ,m_ssl(0)
          {
-            TCTRACEF("TCNET", 10);
+            TCTRACES("TCNET", 10, "");
 
             SSLeay_add_ssl_algorithms();
             const SSL_METHOD* meth = SSLv3_client_method();
@@ -67,7 +67,7 @@ namespace tc
 
          SslSocket::~SslSocket()
          {
-            TCTRACEF("TCNET", 10);
+            TCTRACES("TCNET", 10, "");
 
             Close();
          }
@@ -116,7 +116,7 @@ namespace tc
 
          bool SslSocket::Close()
          {
-            TCTRACEF("TCNET", 20);
+            TCTRACES("TCNET", 20, "");
 
             if (m_ssl)
             {
@@ -128,12 +128,12 @@ namespace tc
             return m_socket->Close();
          }
 
-         uint64 SslSocket::WriteBytes(const void* buffer_in, uint64 size)
+         uint64_t SslSocket::WriteBytes(const void* buffer_in, uint64_t size)
          {
-            TCTRACE2("TCNET", 300, "(%x, %d)", buffer_in, size);
+            TCTRACES("TCNET", 300, "(" << buffer_in << ", " << size);
 
             const char* buffer = static_cast<const char*>(buffer_in);
-            uint64 nbytes_total = 0;
+            uint64_t nbytes_total = 0;
             while (nbytes_total < size)
             {
                 int nbytes = SSL_write(m_ssl, buffer, int(size));
@@ -149,11 +149,11 @@ namespace tc
             return nbytes_total;
          }
 
-         uint64 SslSocket::ReadBytes(void* buffer, uint64 size, const Time& timeout)
+         uint64_t SslSocket::ReadBytes(void* buffer, uint64_t size, const Time& timeout)
          {
-            TCTRACE2("TCNET", 300, "(%x, %d)", buffer, size);
+            TCTRACES("TCNET", 300, "(" << buffer << ", " << size);
 
-            uint64 read_bytes = 0;
+            uint64_t read_bytes = 0;
 
             Time start_time(Time::NowMonotonic());
             do
@@ -161,15 +161,14 @@ namespace tc
                int nbytes = SSL_read(m_ssl, buffer, int(size - read_bytes));
                if (nbytes < 0)
                {
-                  sint32 error_code = SSL_get_error(m_ssl, nbytes);
-                  TCERROR1("TCNET", "Error reading from socket error=%d",
-                     error_code);
+                  int32_t error_code = SSL_get_error(m_ssl, nbytes);
+                  TCERRORS("TCNET", "Error reading from socket error=" << error_code);
                   Close();
                   break;
                }
                else if (nbytes == 0)
                {
-                  //          sint32 error_code = SSL_get_error(m_ssl, len);
+                  //          int32_t error_code = SSL_get_error(m_ssl, len);
                   //          TCWARNING1("TCNET", "Other side closed socket connection error=%d",
                   //             error_code);
                   //          Close();
@@ -185,7 +184,7 @@ namespace tc
             return read_bytes;
          }
 
-         uint64 SslSocket::ReadBytes(void* buffer, uint64 size)
+         uint64_t SslSocket::ReadBytes(void* buffer, uint64_t size)
          {
             return ReadBytes(buffer, size, Time::Zero());
          }

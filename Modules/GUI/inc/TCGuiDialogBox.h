@@ -54,7 +54,7 @@ class TCGUI_API DialogBox: public Window
 
 public:
    /// Construct dialog which will always float over the owner window
-   DialogBox(FX::FXWindow* owner, const std::string& name, sint32 w=0, sint32 h=0);
+   DialogBox(FX::FXWindow* owner, const std::string& name, int32_t w=0, int32_t h=0);
 
    void    Reset();                                  // reset status of dialog box
    bool IsModified();                             // check if box was modified
@@ -89,18 +89,18 @@ protected:
    bool hasApplyButton, hasOkButton, hasCancelButton, wasModified;
 
 public:
-   void AddValue(sint32    &val);
-   void AddValue(uint32   &val);
+   void AddValue(int32_t    &val);
+   void AddValue(uint32_t   &val);
    void AddValue(float  &val);
    void AddValue(double &val);
    void AddValue(std::string &val);
    
 private:
-   std::vector< sint32  > m_int_values;
-   std::vector< sint32* > m_int_pointers;
+   std::vector< int32_t  > m_int_values;
+   std::vector< int32_t* > m_int_pointers;
    
-   std::vector< uint32  > m_uint_values;
-   std::vector< uint32* > m_uint_pointers;
+   std::vector< uint32_t  > m_uint_values;
+   std::vector< uint32_t* > m_uint_pointers;
    
    std::vector< float  > m_float_values;
    std::vector< float* > m_float_pointers;

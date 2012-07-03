@@ -69,7 +69,7 @@ namespace math
        * @param data The data to append to the calculation
        * @param len The length of the data to append
        */
-      virtual void Append(const uchar *data, uint32 len) = 0;
+      virtual void Append(const uint8_t *data, uint32_t len) = 0;
       
       /** @short Get the calculated hash string */
       virtual std::string GetHashString() const = 0;

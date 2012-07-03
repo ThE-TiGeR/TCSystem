@@ -61,7 +61,7 @@ namespace tc
 
             if (!m_file)
             {
-                TCERROR1("TCBASE", "Error opening file '%s'", fileName.c_str());
+                TCERRORS("TCBASE", "Error opening file '" << fileName << "'");
                 setStatus(error_stream_open);
             }
             setStreamDirection(direction);
@@ -83,7 +83,7 @@ namespace tc
             StreamBase::CloseStream();
         }
 
-        uint64 Bz2FileStream::ReadBytes(uint64 nBytes, void *bytes)
+        uint64_t Bz2FileStream::ReadBytes(uint64_t nBytes, void *bytes)
         {
             // check for an error
             if (Error())
@@ -98,10 +98,10 @@ namespace tc
                 return 0;
             }
 
-            uint64 read_bytes = 0;
+            uint64_t read_bytes = 0;
             while(read_bytes < nBytes)
             {
-                int num = ::BZ2_bzread(m_file, static_cast<uchar*>(bytes)+read_bytes, 
+                int num = ::BZ2_bzread(m_file, static_cast<uint8_t*>(bytes)+read_bytes, 
                     int(nBytes-read_bytes));
                 if (num <= 0)
                 {
@@ -123,7 +123,7 @@ namespace tc
             return read_bytes;
         }
 
-        uint64 Bz2FileStream::WriteBytes(uint64 nBytes, const void *bytes)
+        uint64_t Bz2FileStream::WriteBytes(uint64_t nBytes, const void *bytes)
         {
             if (nBytes == 0)
             {
@@ -143,10 +143,10 @@ namespace tc
                 return 0;
             }
 
-            uint64 wrote_bytes = 0;
+            uint64_t wrote_bytes = 0;
             while(wrote_bytes < nBytes)
             {
-                int num = ::BZ2_bzwrite(m_file, const_cast<uchar*>(static_cast<const uchar*>(bytes)+wrote_bytes),  
+                int num = ::BZ2_bzwrite(m_file, const_cast<uint8_t*>(static_cast<const uint8_t*>(bytes)+wrote_bytes),  
                     int(nBytes-wrote_bytes));
                 if (num <= 0)
                 {
@@ -178,13 +178,13 @@ namespace tc
             }
         }
 
-        bool Bz2FileStream::SetPosition(sint64, StreamPosition)
+        bool Bz2FileStream::SetPosition(int64_t, StreamPosition)
         {
             setStatus(error_set_stream_position);
             return false;
         }
 
-        uint64 Bz2FileStream::GetPosition() const
+        uint64_t Bz2FileStream::GetPosition() const
         {
             setStatus(error_set_stream_position);
             return 0;

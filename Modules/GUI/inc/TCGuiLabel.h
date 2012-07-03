@@ -59,13 +59,13 @@ class TCGUI_API Label: public FX::FXLabel, public Widget
 
 public:
    Label(FX::FXComposite* p, const std::string& text, FX::FXIcon* ic=0,
-              uint32 opts=FX::LABEL_NORMAL,
-              sint32 x=0,sint32 y=0,sint32 w=0,sint32 h=0,sint32 pl=FX::DEFAULT_PAD,sint32 pr=FX::DEFAULT_PAD,
-              sint32 pt=FX::DEFAULT_PAD,sint32 pb=FX::DEFAULT_PAD);
+              uint32_t opts=FX::LABEL_NORMAL,
+              int32_t x=0,int32_t y=0,int32_t w=0,int32_t h=0,int32_t pl=FX::DEFAULT_PAD,int32_t pr=FX::DEFAULT_PAD,
+              int32_t pt=FX::DEFAULT_PAD,int32_t pb=FX::DEFAULT_PAD);
    Label(FX::FXComposite* p, const std::string& text, FX::FXIcon* ic, FX::FXObject* tgt, FX::FXSelector sel,
-              uint32 opts=FX::LABEL_NORMAL,
-              sint32 x=0,sint32 y=0,sint32 w=0,sint32 h=0,sint32 pl=FX::DEFAULT_PAD,sint32 pr=FX::DEFAULT_PAD,
-              sint32 pt=FX::DEFAULT_PAD,sint32 pb=FX::DEFAULT_PAD);
+              uint32_t opts=FX::LABEL_NORMAL,
+              int32_t x=0,int32_t y=0,int32_t w=0,int32_t h=0,int32_t pl=FX::DEFAULT_PAD,int32_t pr=FX::DEFAULT_PAD,
+              int32_t pt=FX::DEFAULT_PAD,int32_t pb=FX::DEFAULT_PAD);
    virtual ~Label() {};
 
 protected:

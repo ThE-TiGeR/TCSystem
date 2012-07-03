@@ -65,7 +65,7 @@ namespace tc
          {
          public:
             ThreadBase(const std::string& thread_name,
-               uint32 stack_size, Thread::ThreadPriority priority);
+               uint32_t stack_size, Thread::ThreadPriority priority);
             virtual ~ThreadBase();
 
             bool Start(ThreadObjectPtr object_to_start);
@@ -91,7 +91,7 @@ namespace tc
             };
 
             /** methode which is executed by the thread and waits for start and stop messages */
-            uint32 ThreadRunner(InitStruct* init_data);
+            uint32_t ThreadRunner(InitStruct* init_data);
 
             /** create the os dependent thread */
             virtual bool CreateOSThread(InitStruct* init_data) = 0;
@@ -113,7 +113,7 @@ namespace tc
             /** The current priority of this thread */
             ThreadPriority m_priority;
             /** The current stack size of this thread */
-            uint32 m_stack_size;
+            uint32_t m_stack_size;
             /** The current state of the thread */
             ThreadState m_state;
             /** pointer to the message queue of the thread */

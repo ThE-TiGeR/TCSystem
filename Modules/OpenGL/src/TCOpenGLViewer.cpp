@@ -289,14 +289,14 @@ namespace tc
 
 
       // Construct GL viewer widget with private display list
-      Viewer::Viewer(FXComposite* p,FXGLVisual *vis,FXObject* tgt,FXSelector sel,uint32 opts,sint32 x,sint32 y,sint32 w,sint32 h):
+      Viewer::Viewer(FXComposite* p,FXGLVisual *vis,FXObject* tgt,FXSelector sel,uint32_t opts,int32_t x,int32_t y,int32_t w,int32_t h):
       FXGLCanvas(p,vis,0,tgt,sel,opts,x,y,w,h){
          Init();
       }
 
 
       // Construct GL viewer widget with shared display list
-      Viewer::Viewer(FXComposite* p,FXGLVisual *vis,Viewer* sharegroup,FXObject* tgt,FXSelector sel,uint32 opts,sint32 x,sint32 y,sint32 w,sint32 h):
+      Viewer::Viewer(FXComposite* p,FXGLVisual *vis,Viewer* sharegroup,FXObject* tgt,FXSelector sel,uint32_t opts,int32_t x,int32_t y,int32_t w,int32_t h):
       FXGLCanvas(p,vis,sharegroup,tgt,sel,opts,x,y,w,h){
          Init();
       }
@@ -398,7 +398,7 @@ namespace tc
       void Viewer::create()
       {
          // We would like to have this be true
-         FXASSERT(sizeof(uint32)==sizeof(GLuint));
+         FXASSERT(sizeof(uint32_t)==sizeof(GLuint));
 
          // Create Window
          FXGLCanvas::create();
@@ -539,7 +539,7 @@ namespace tc
             ::glFinish();
             ::glFlush();
             Time total_time = Time::Now() - draw_start_time;
-            TCTRACE1("open_gl", 0, "Current fps = %f", 1000.0f/(total_time.ToMilliSeconds()+1));
+            TCTRACES("open_gl", 0, "Current fps = " << 1000.0f/(total_time.ToMilliSeconds()+1));
             DetectOpenGLerror();
 
             MakeNonCurrent();
@@ -702,7 +702,7 @@ namespace tc
 
          Viewport jt=wv;
          double d=0.5*worldpx;
-         register uint32 i;
+         register uint32_t i;
          glClearAccum(0.0f,0.0f,0.0f,0.0f);
          glClear(GL_ACCUM_BUFFER_BIT);
          for(i=0; i<ARRAYNUMBER(jitter); i++)
@@ -719,10 +719,10 @@ namespace tc
 
 
       // Fill select buffer with hits in rectangle
-      sint32 Viewer::selectHits(uint32*& hits,sint32& nhits,sint32 x,sint32 y,sint32 w,sint32 h)
+      int32_t Viewer::selectHits(uint32_t*& hits,int32_t& nhits,int32_t x,int32_t y,int32_t w,int32_t h)
       {
          register float pickx,picky,pickw,pickh;
-         register sint32 mh=maxhits;
+         register int32_t mh=maxhits;
          hits=0;
          nhits=0;
          if(MakeCurrent())
@@ -756,7 +756,7 @@ namespace tc
             do
             {
                nhits=0;
-               hits = new uint32[mh];
+               hits = new uint32_t[mh];
                if(!hits) break;
                glSelectBuffer(mh, hits);
                glRenderMode(GL_SELECT);
@@ -781,9 +781,9 @@ namespace tc
 
 
       // Process picks
-      ObjectPtr Viewer::processHits(const uint32* pickbuffer,sint32 nhits)
+      ObjectPtr Viewer::processHits(const uint32_t* pickbuffer,int32_t nhits)
       {
-         uint32 d1,d2,i,n,zmin,zmax,sel=0;
+         uint32_t d1,d2,i,n,zmin,zmax,sel=0;
          if(0<=nhits)
          {
             for(i=0,zmin=zmax=4294967295U; nhits>0; i+=n+3,nhits--)
@@ -805,15 +805,15 @@ namespace tc
 
 
       // Build 0-terminated list of ALL picked objects overlapping rectangle
-      bool Viewer::select(sint32 x,sint32 y,sint32 w,sint32 h, std::vector<ObjectPtr>& selected_objects)
+      bool Viewer::select(int32_t x,int32_t y,int32_t w,int32_t h, std::vector<ObjectPtr>& selected_objects)
       {
-         sint32 nhits;
-         uint32 *hits = 0;
+         int32_t nhits;
+         uint32_t *hits = 0;
          if(scene && maxhits)
          {
             if(selectHits(hits,nhits,x,y,w,h))
             {
-               for(uint32 i=0; nhits>0; i+=hits[i]+3,nhits--)
+               for(uint32_t i=0; nhits>0; i+=hits[i]+3,nhits--)
                {
                   ObjectPtr obj = scene->GetHitObject(&hits[4+i]);
                   if(obj)
@@ -829,9 +829,9 @@ namespace tc
 
 
       // Lasso objects
-      bool Viewer::lasso(sint32 x1,sint32 y1,sint32 x2,sint32 y2, std::vector<ObjectPtr>& selected_objects)
+      bool Viewer::lasso(int32_t x1,int32_t y1,int32_t x2,int32_t y2, std::vector<ObjectPtr>& selected_objects)
       {
-         sint32 xlo,xhi,ylo,yhi;
+         int32_t xlo,xhi,ylo,yhi;
          FXMINMAX(xlo,xhi,x1,x2);
          FXMINMAX(ylo,yhi,y1,y2);
          return select(xlo,ylo,xhi-xlo+1,yhi-ylo+1, selected_objects);
@@ -839,11 +839,11 @@ namespace tc
 
 
       // Pick ONE object at x,y
-      ObjectPtr Viewer::pick(sint32 x,sint32 y)
+      ObjectPtr Viewer::pick(int32_t x,int32_t y)
       {
          ObjectPtr obj;
-         uint32 *hits = 0;
-         sint32 nhits;
+         uint32_t *hits = 0;
+         int32_t nhits;
          if(scene && maxhits)
          {
             if(selectHits(hits,nhits,x-PICK_TOL,y-PICK_TOL,PICK_TOL*2,PICK_TOL*2))
@@ -1189,7 +1189,7 @@ namespace tc
 
 
       // Get screen point from eye coordinate
-      void Viewer::eyeToScreen(sint32& sx,sint32& sy,Vertex3D e){
+      void Viewer::eyeToScreen(int32_t& sx,int32_t& sy,Vertex3D e){
          register double xp,yp;
          if(projection==PERSPECTIVE){
             if(e[2]==0.0f){ fxerror("%s::eyeToScreen: cannot transform point.\n",getClassName()); }
@@ -1206,7 +1206,7 @@ namespace tc
 
 
       // Convert screen point to eye coords
-      Vertex3D Viewer::screenToEye(sint32 sx,sint32 sy,float eyez){
+      Vertex3D Viewer::screenToEye(int32_t sx,int32_t sy,float eyez){
          register float xp,yp;
          Vertex3D e;
          xp=(float)(worldpx*sx+ax);
@@ -1227,7 +1227,7 @@ namespace tc
 
 
       // Convert screen to eye, on projection plane
-      Vertex3D Viewer::screenToTarget(sint32 sx,sint32 sy)
+      Vertex3D Viewer::screenToTarget(int32_t sx,int32_t sy)
       {
          return Vertex3D((float)(worldpx*sx+ax), (float)(ay-worldpx*sy), (float)-distance);
       }
@@ -1255,7 +1255,7 @@ namespace tc
 
 
       // Get world vector
-      Vertex3D Viewer::worldVector(sint32 fx,sint32 fy,sint32 tx,sint32 ty)
+      Vertex3D Viewer::worldVector(int32_t fx,int32_t fy,int32_t tx,int32_t ty)
       {
          FX::FXVec3f wfm,wto,vec;
          wfm=screenToTarget(fx,fy);
@@ -1266,7 +1266,7 @@ namespace tc
 
 
       // Get a bore vector
-      bool Viewer::getBoreVector(sint32 sx,sint32 sy,Vertex3D& point,Vertex3D& dir)
+      bool Viewer::getBoreVector(int32_t sx,int32_t sy,Vertex3D& point,Vertex3D& dir)
       {
          Vertex3D p=eyeToWorld(screenToEye(sx,sy,(float)(diameter-distance)));
          if(PARALLEL==projection)
@@ -1354,7 +1354,7 @@ namespace tc
 
 
       // Translate point into unit-sphere coordinate
-      Vertex3D Viewer::spherePoint(sint32 px,sint32 py)
+      Vertex3D Viewer::spherePoint(int32_t px,int32_t py)
       {
          float d,t,screenmin;
          Vertex3D v;
@@ -1382,7 +1382,7 @@ namespace tc
 
 
       // Turn camera; simpler now that arc() is changed
-      FXQuatf Viewer::turn(sint32 fx,sint32 fy,sint32 tx,sint32 ty)
+      FXQuatf Viewer::turn(int32_t fx,int32_t fy,int32_t tx,int32_t ty)
       {
          return FXQuatf(Vertex2FXVec3f(spherePoint(fx,fy)),
             Vertex2FXVec3f(spherePoint(tx,ty)));
@@ -1390,7 +1390,7 @@ namespace tc
 
 
       // Draw non-destructive lasso box; drawing twice will erase it again
-      void Viewer::drawLasso(sint32 x0,sint32 y0,sint32 x1,sint32 y1){
+      void Viewer::drawLasso(int32_t x0,int32_t y0,int32_t x1,int32_t y1){
 
          FXGLVisual *vis=(FXGLVisual*)getVisual();
 
@@ -1735,7 +1735,7 @@ namespace tc
       // Left mouse button released
       long Viewer::onLeftBtnRelease(FXObject*,FXSelector,void* ptr){
          FXEvent* event=(FXEvent*)ptr;
-         sint32 new_x,new_y,cx,cy,xl,xh,yl,yh;
+         int32_t new_x,new_y,cx,cy,xl,xh,yl,yh;
          Vertex3D vec;
          FXTRACE((100,"onLeftBtnRelease Mask=%08x\n",event->state));
          if(isEnabled()){
@@ -1988,7 +1988,7 @@ namespace tc
       // Mouse moved
       long Viewer::onMotion(FXObject*,FXSelector,void* ptr){
          FXEvent* event=(FXEvent*)ptr;
-         sint32 new_x,new_y,old_x,old_y;
+         int32_t new_x,new_y,old_x,old_y;
          long changed=(flags&FLAG_TIP)!=0;
          double delta;
          float tmp;
@@ -2214,7 +2214,7 @@ namespace tc
       long Viewer::onQueryTip(FXObject* sender,FXSelector sel,void* ptr){
          if(FXWindow::onQueryTip(sender,sel,ptr)) return 1;
          if(flags&FLAG_TIP){
-            sint32 x,y; uint32 state;
+            int32_t x,y; uint32_t state;
             getCursorPosition(x,y,state);
             ObjectPtr hit=pick(x,y);
             if(hit && hit->handle(sender,sel,ptr)) return 1;
@@ -2454,7 +2454,7 @@ namespace tc
          const Vertex3D xaxis(1.0f,0.0f,0.0f);
          const Vertex3D yaxis(0.0f,1.0f,0.0f);
          const Vertex3D zaxis(0.0f,0.0f,1.0f);
-         sint32 dialnew=(sint32)(FXival)ptr;
+         int32_t dialnew=(int32_t)(FXival)ptr;
          float ang;
          FXQuatf q;
          if(FXSELTYPE(sel)==SEL_CHANGED){
@@ -2526,7 +2526,7 @@ namespace tc
 
       // Read back pixels
       // Derived from code contributed by <sancelot@crosswinds.net>
-      bool Viewer::readPixels(std::vector<FX::FXColor>& buffer,uint32 x,uint32 y,uint32 w,uint32 h){
+      bool Viewer::readPixels(std::vector<FX::FXColor>& buffer,uint32_t x,uint32_t y,uint32_t w,uint32_t h){
 
          if(1<=w && 1<=h)
          {
@@ -2660,10 +2660,10 @@ namespace tc
 
 
       // Render
-      sint32 Viewer::renderFeedback(float *buffer,sint32,sint32,sint32,sint32,sint32 maxbuffer)
+      int32_t Viewer::renderFeedback(float *buffer,int32_t,int32_t,int32_t,int32_t,int32_t maxbuffer)
       {
 
-         sint32 used;
+         int32_t used;
          MakeCurrent();
          glFeedbackBuffer(maxbuffer,GL_3D_COLOR,buffer);
          glRenderMode(GL_FEEDBACK);
@@ -2675,7 +2675,7 @@ namespace tc
 
 
       // Read feedback buffer
-      bool Viewer::readFeedback(float*& buffer,sint32& used,sint32& size,sint32 x,sint32 y,sint32 w,sint32 h)
+      bool Viewer::readFeedback(float*& buffer,int32_t& used,int32_t& size,int32_t x,int32_t y,int32_t w,int32_t h)
       {
          bool ok=false;
          buffer=0;
@@ -2709,9 +2709,9 @@ namespace tc
 
 
       // Draw feedback buffer into dc
-      void Viewer::drawFeedback(FXDCPrint& pdc,const float* buffer,sint32 used){
+      void Viewer::drawFeedback(FXDCPrint& pdc,const float* buffer,int32_t used){
 
-         sint32 nvertices,smooth,token,i,p;
+         int32_t nvertices,smooth,token,i,p;
 
          // Draw background
          pdc.outf("%g %g %g C\n",m_background[0][0],m_background[0][1],m_background[0][2]);
@@ -2727,7 +2727,7 @@ namespace tc
          // Crank out primitives
          p=0;
          while(p<used){
-            token=(sint32)buffer[p++];
+            token=(int32_t)buffer[p++];
             switch(token){
 
                // Point primitive
@@ -2750,7 +2750,7 @@ namespace tc
 
                // Polygon primitive
             case GL_POLYGON_TOKEN:
-               nvertices = (sint32)buffer[p++];
+               nvertices = (int32_t)buffer[p++];
                if(nvertices==3){ // We assume polybusting has taken place already!
                   smooth=0;
                   for(i=1; i<nvertices; i++){
@@ -2791,7 +2791,7 @@ namespace tc
          FXPrintDialog dlg(this,tr("Print Scene"));
          FXPrinter printer;
          float *buffer;
-         sint32 used,size;
+         int32_t used,size;
 
          // Run dialog
          if(dlg.execute()){
@@ -3168,7 +3168,7 @@ namespace tc
 
          // Dropped on viewer
          FX::FXuchar* tmp;
-         uint32 len;
+         uint32_t len;
          if(getDNDData(FROM_DRAGNDROP,Viewer::colorType,tmp,len))
          {
             const FX::FXushort* clr=reinterpret_cast<const FX::FXushort*>(tmp);
@@ -3182,7 +3182,7 @@ namespace tc
 
 
       // Change projection
-      void Viewer::setProjection(uint32 proj)
+      void Viewer::setProjection(uint32_t proj)
       {
          projection=proj;
          updateProjection();
@@ -3191,7 +3191,7 @@ namespace tc
 
 
       // Set background
-      void Viewer::setBackgroundColor(const Color& clr, sint32 idx)
+      void Viewer::setBackgroundColor(const Color& clr, int32_t idx)
       {
          if(idx==-1)
          {

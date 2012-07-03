@@ -159,7 +159,7 @@ namespace tc
        */
       TCBASE_API RngPtr Create69069Rng();
 
-      TCBASE_API MemoryMappedFilePtr CreateMemoryMappedFile(const std::string &file_name, bool read_only, uint32 size=0);
+      TCBASE_API MemoryMappedFilePtr CreateMemoryMappedFile(const std::string &file_name, bool read_only, uint32_t size=0);
    } // namespace factory
 
    /**

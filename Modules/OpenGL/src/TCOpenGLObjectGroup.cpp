@@ -55,9 +55,9 @@ namespace tc
          m_objects.clear();
       }
 
-      uint32 ObjectGroup::GetNumObjects() const
+      uint32_t ObjectGroup::GetNumObjects() const
       {
-         return static_cast<uint32>(m_objects.size());
+         return static_cast<uint32_t>(m_objects.size());
       }
 
       void ObjectGroup::AddObject(ObjectPtr object)
@@ -78,11 +78,11 @@ namespace tc
          }
       }
 
-      ConstObjectPtr ObjectGroup::GetObject(uint32 idx) const
+      ConstObjectPtr ObjectGroup::GetObject(uint32_t idx) const
       {
          return m_objects[idx];
       }
-      ObjectPtr ObjectGroup::GetObject(uint32 idx)
+      ObjectPtr ObjectGroup::GetObject(uint32_t idx)
       {
          return m_objects[idx];
       }
@@ -145,7 +145,7 @@ namespace tc
          }
       }
 
-      void ObjectGroup::Update(Viewer& viewer, uint32 curent_time, uint32 delta_time)
+      void ObjectGroup::Update(Viewer& viewer, uint32_t curent_time, uint32_t delta_time)
       {
          ObjectPtrVector::iterator object;
          for (object=m_objects.begin(); object!=m_objects.end(); object++)
@@ -184,7 +184,7 @@ namespace tc
          ::glPopName();
       }
 
-      ObjectPtr ObjectGroup::GetHitObject(const uint32* hit_path)
+      ObjectPtr ObjectGroup::GetHitObject(const uint32_t* hit_path)
       {
          if (hit_path[0] >= m_objects.size())
          {
@@ -200,8 +200,8 @@ namespace tc
          return hit_object;
       }
 
-      bool ObjectGroup::Drag(Viewer& /*viewer*/, sint32 /*fx*/, sint32 /*fy*/, 
-                                                  sint32 /*tx*/, sint32 /*ty*/ ) 
+      bool ObjectGroup::Drag(Viewer& /*viewer*/, int32_t /*fx*/, int32_t /*fy*/, 
+                                                  int32_t /*tx*/, int32_t /*ty*/ ) 
       {
          return false;
       }

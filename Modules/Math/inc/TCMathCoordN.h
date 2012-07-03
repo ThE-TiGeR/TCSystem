@@ -62,7 +62,7 @@ namespace tc
         * @brief Class for handling N values
         * With implementation of all common coordinate or vector operators needed
         */
-        template <typename T, uint32 SIZE>
+        template <typename T, uint32_t SIZE>
         class CoordN: public boost::totally_ordered      < CoordN<T, SIZE>,
             boost::additive             < CoordN<T, SIZE>,
             boost::ring_operators2      < CoordN<T, SIZE>, T,
@@ -298,10 +298,10 @@ namespace tc
             /** stores the three components of the coordinate */
             T m_data[NUM_COMPONENTS];  
 
-            template <class T1, uint32 SIZE1> friend class CoordN;
+            template <class T1, uint32_t SIZE1> friend class CoordN;
         };
 
-        template <class T, uint32 SIZE>
+        template <class T, uint32_t SIZE>
         inline const CoordN<T, SIZE> operator-(const CoordN<T, SIZE>& v)
         {
             return v * T(-1);
@@ -322,7 +322,7 @@ namespace tc
         * @param coord The coordinate to read from the stream
         * @return the stream
         */
-        template <class T, uint32 SIZE>
+        template <class T, uint32_t SIZE>
         inline StreamPtr operator>>(StreamPtr stream, CoordN<T, SIZE>&coord)
         {
             for (T* data=coord.Begin(); data<coord.End(); ++data)
@@ -339,7 +339,7 @@ namespace tc
         * @param coord The coordinate to write on the stream
         * @return the stream
         */
-        template <class T, uint32 SIZE>
+        template <class T, uint32_t SIZE>
         inline StreamPtr operator<<(StreamPtr stream, const CoordN<T, SIZE>&coord)
         {
             for (const T* data=coord.Begin(); data<coord.End(); ++data)

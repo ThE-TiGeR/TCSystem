@@ -83,7 +83,7 @@ namespace tc
        * @param defaultValue The return value if no value is stored for this key
        * @return The value for the key
        */
-      sint32 GetIntEntry(const std::string &section, const std::string &key, sint32 defaultValue) const;
+      int32_t GetIntEntry(const std::string &section, const std::string &key, int32_t defaultValue) const;
       /**
        * Get the double value of a specified key in the specified section
        *
@@ -127,7 +127,7 @@ namespace tc
        * @param key String for which to set the value
        * @param value The value to set
        */
-      void SetIntEntry(const std::string &section, const std::string &key, sint32 value);
+      void SetIntEntry(const std::string &section, const std::string &key, int32_t value);
       /**
        * Set the float value of a specified key in the specified section
        *
@@ -173,17 +173,17 @@ namespace tc
 
    protected:
       /** @return the section hash table for specified section */
-      HashTable<std::string, uint32>* getSectionHashTable(const std::string &section, bool createNewSection);
+      HashTable<std::string, uint32_t>* getSectionHashTable(const std::string &section, bool createNewSection);
       /** add the entry to the specified section */
-      sint32 addEntryToSection(HashTable<std::string, uint32> *sHash, const std::string &key);
+      int32_t addEntryToSection(HashTable<std::string, uint32_t> *sHash, const std::string &key);
 
    private:
       /** The hashtable for fast access to the sections */
-      HashTable<std::string, uint32> m_section_string_hash_table;
+      HashTable<std::string, uint32_t> m_section_string_hash_table;
       /** Array of section names */
       std::vector< std::string > m_section_name;
       /** The hashtable for fast access to the keys of each section */
-      std::vector< HashTable<std::string, uint32>* > m_key_string_hash_table;
+      std::vector< HashTable<std::string, uint32_t>* > m_key_string_hash_table;
       /** The array of values of all keys converted to strings */
       std::vector< std::string > m_data_of_string;
    };

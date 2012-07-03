@@ -59,45 +59,45 @@ namespace tc
    /** @brief Functor for calculating a hash value */
    template <class KEY_TYPE> struct Hash { };
 
-   /** @brief Functor specialization (sint8) for calculating a hash value */
-   template<> struct Hash<sint8>
+   /** @brief Functor specialization (int8_t) for calculating a hash value */
+   template<> struct Hash<int8_t>
    {
-       uint32 operator() (sint8 val) const { return val; }
+       uint32_t operator() (int8_t val) const { return val; }
    };
-   /** @brief Functor specialization (uint8) for calculating a hash value */
-   template<> struct Hash<uint8>
+   /** @brief Functor specialization (uint8_t) for calculating a hash value */
+   template<> struct Hash<uint8_t>
    {
-       uint32 operator() (uint8 val) const { return val; }
+       uint32_t operator() (uint8_t val) const { return val; }
    };
-   /** @brief Functor specialization (sint16) for calculating a hash value */
-   template<> struct Hash<sint16>
+   /** @brief Functor specialization (int16_t) for calculating a hash value */
+   template<> struct Hash<int16_t>
    {
-       uint32 operator() (sint16 val) const { return val; }
+       uint32_t operator() (int16_t val) const { return val; }
    };
-   /** @brief Functor specialization (uint16) for calculating a hash value */
-   template<> struct Hash<uint16>
+   /** @brief Functor specialization (uint16_t) for calculating a hash value */
+   template<> struct Hash<uint16_t>
    {
-       uint32 operator() (uint16 val) const { return val; }
+       uint32_t operator() (uint16_t val) const { return val; }
    };
-   /** @brief Functor specialization (sint32) for calculating a hash value */
-   template<> struct Hash<sint32>
+   /** @brief Functor specialization (int32_t) for calculating a hash value */
+   template<> struct Hash<int32_t>
    {
-       uint32 operator() (sint32 val) const { return val; }
+       uint32_t operator() (int32_t val) const { return val; }
    };
-   /** @brief Functor specialization (uint32) for calculating a hash value */
-   template<> struct Hash<uint32>
+   /** @brief Functor specialization (uint32_t) for calculating a hash value */
+   template<> struct Hash<uint32_t>
    {
-       uint32 operator() (uint32 val) const { return val; }
+       uint32_t operator() (uint32_t val) const { return val; }
    };
 
    /** @brief Functor specialization (char*) for calculating a hash value */
    template<> struct Hash<char*>
    {
-       uint32 operator() (const char* text) const
+       uint32_t operator() (const char* text) const
        {
            const char *s = text;
-           uint32 h=0;
-           uint32 c;
+           uint32_t h=0;
+           uint32_t c;
            while((c=*s++) != '\0')
            {
                h = ((h << 5) + h) ^ c;
@@ -109,11 +109,11 @@ namespace tc
    /** @brief Functor specialization (std::string) for calculating a hash value */
    template<> struct Hash<std::string>
    {
-       uint32 operator() (const std::string& text) const
+       uint32_t operator() (const std::string& text) const
        {
            const char *s = text.c_str();
-           uint32 h=0;
-           uint32 c;
+           uint32_t h=0;
+           uint32_t c;
            while((c=*s++) != '\0')
            {
                h = ((h << 5) + h) ^ c;
@@ -139,7 +139,7 @@ namespace tc
     * @author Thomas Goessler
     */
    template< class KEY_TYPE,
-             class MAP_TYPE=sint32,
+             class MAP_TYPE=int32_t,
              class HASH_FUNC=Hash< KEY_TYPE>,
              class KEY_VALUE_COMPARE_FUNC=std::equal_to<KEY_TYPE> >
    class HashTable
@@ -162,7 +162,7 @@ namespace tc
         * @param notFound The value which should be returned when an searched
         *        element is not found in the hash table
         */
-       HashTable(uint32 size, const MAP_TYPE& notFound)
+       HashTable(uint32_t size, const MAP_TYPE& notFound)
            :m_size(size),
             m_not_found(notFound)
        {
@@ -173,13 +173,13 @@ namespace tc
        virtual ~HashTable() {}
 
        /** @return The size of the hash table in the first direction */
-       inline uint32 GetHashSize() const { return m_size; }
+       inline uint32_t GetHashSize() const { return m_size; }
 
        /**
         * Set the size of the hash table
         * @param size The size of the hash table int the first direction
         */
-       inline void SetHashSize(uint32 size)
+       inline void SetHashSize(uint32_t size)
        {
            m_size = size;
            Clear();
@@ -193,7 +193,7 @@ namespace tc
        {
            m_data.clear();
            m_data.reserve(m_size);
-           for (uint32 i=0; i<m_size; i++)
+           for (uint32_t i=0; i<m_size; i++)
            {
                m_data.push_back(std::vector< _Element >());
            }
@@ -219,8 +219,8 @@ namespace tc
         */
        void AddKey(const KEY_TYPE &key_value, const MAP_TYPE& map_value)
        {
-           uint32 p1;
-           sint32 p2;
+           uint32_t p1;
+           int32_t p2;
            GetElementPosition(key_value, p1, p2);
 
            _Element elem;
@@ -245,8 +245,8 @@ namespace tc
         */
        void RemoveKey(const KEY_TYPE &key_value)
        {
-           uint32 p1;
-           sint32 p2;
+           uint32_t p1;
+           int32_t p2;
            GetElementPosition(key_value, p1, p2);
 
 
@@ -265,8 +265,8 @@ namespace tc
         */
        const MAP_TYPE& GetMappedValue(const KEY_TYPE& key_value) const
        {
-           uint32 p1;
-           sint32 p2;
+           uint32_t p1;
+           int32_t p2;
            GetElementPosition(key_value, p1, p2);
 
            if (p2 == -1)
@@ -285,9 +285,9 @@ namespace tc
        /** Get all keys in the hash table */
        void GetAllKeys(std::vector< KEY_TYPE >& keys)
        {
-           for (uint32 i=0; i<m_data.size(); i++)
+           for (uint32_t i=0; i<m_data.size(); i++)
            {
-               for (uint32 j=0; j<m_data[i].size(); j++)
+               for (uint32_t j=0; j<m_data[i].size(); j++)
                {
                    keys.push_back(m_data[i][j].key_value);
                }
@@ -297,9 +297,9 @@ namespace tc
        /** Get all keys in the hash table */
        void GetAllKeysAndValues(std::vector< KEY_TYPE >& keys, std::vector< MAP_TYPE >& values)
        {
-           for (uint32 i=0; i<m_data.size(); i++)
+           for (uint32_t i=0; i<m_data.size(); i++)
            {
-               for (uint32 j=0; j<m_data[i].size(); j++)
+               for (uint32_t j=0; j<m_data[i].size(); j++)
                {
                    keys.push_back(m_data[i][j].key_value);
                    values.push_back(m_data[i][j].map_value);
@@ -313,14 +313,14 @@ namespace tc
         * @param  maxListLength  [OUT] Length of the longest list in the hash table.
         * @param  avgListLength  [OUT] Average length of the lists in the hash table.
         */
-       void GetStatistics(uint32& numEmptyLists, uint32& maxListLength, double& avgListLength) const
+       void GetStatistics(uint32_t& numEmptyLists, uint32_t& maxListLength, double& avgListLength) const
        {
            numEmptyLists = 0;
            maxListLength = 0;
            avgListLength = 0;
-           for (uint32 i = 0; i < m_data.size(); i++)
+           for (uint32_t i = 0; i < m_data.size(); i++)
            {
-               uint32 thisListLength = m_data[i].size();
+               uint32_t thisListLength = m_data[i].size();
                if (thisListLength == 0) numEmptyLists++;
                if (maxListLength < thisListLength) maxListLength = thisListLength;
                avgListLength += thisListLength;
@@ -335,12 +335,12 @@ namespace tc
         * To get this working the compare operator needs to be defined in that why
         * tha you only compare the value which you are searching for
         */
-       void GetElementPosition(const KEY_TYPE &key_value, uint32 &p1, sint32 &p2) const
+       void GetElementPosition(const KEY_TYPE &key_value, uint32_t &p1, int32_t &p2) const
        {
            KEY_VALUE_COMPARE_FUNC compare;
            p1 = GetTableEntryPosition(key_value);
            p2 = -1;
-           for (uint32 i=0; i<m_data[p1].size(); i++)
+           for (uint32_t i=0; i<m_data[p1].size(); i++)
            {
                if (compare(m_data[p1][i].key_value, key_value))
                {
@@ -358,7 +358,7 @@ namespace tc
         * @param  key_value The element for which to get the hash table position
         * @return The hash table position
         */
-       uint32 GetTableEntryPosition(const KEY_TYPE &key_value) const
+       uint32_t GetTableEntryPosition(const KEY_TYPE &key_value) const
        {
            HASH_FUNC func;
            return (func(key_value) % m_size);
@@ -366,7 +366,7 @@ namespace tc
 
    private:
        /** The size of the hash table */
-       uint32 m_size;
+       uint32_t m_size;
        /** holding the value when a element is not found **/
        MAP_TYPE m_not_found;
        /** 2-Dimensional array storing the elements */

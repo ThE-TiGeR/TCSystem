@@ -66,15 +66,15 @@ namespace tc
             virtual ~MessageQueue();
 
             bool AddMessage(MessagePtr message);
-            Message::ReturnValue GetMessage(uint32 msg_id_start, uint32 msg_id_end, 
+            Message::ReturnValue GetMessage(uint32_t msg_id_start, uint32_t msg_id_end, 
                MessagePtr& message);
-            Message::ReturnValue GetMessage(uint32 msg_id_start, uint32 msg_id_end, 
+            Message::ReturnValue GetMessage(uint32_t msg_id_start, uint32_t msg_id_end, 
                MessagePtr& message, const Time& timeout);
-            Message::ReturnValue TryGetMessage(uint32 msg_id_start, uint32 msg_id_end, 
+            Message::ReturnValue TryGetMessage(uint32_t msg_id_start, uint32_t msg_id_end, 
                MessagePtr& message, bool remove);
 
          private:
-            Message::ReturnValue GetMessageFromQueue(uint32 msg_id_start, uint32 msg_id_end, 
+            Message::ReturnValue GetMessageFromQueue(uint32_t msg_id_start, uint32_t msg_id_end, 
                MessagePtr& message, bool remove);
          private:
             std::vector<MessagePtr> m_messages;

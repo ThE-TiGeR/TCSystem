@@ -75,11 +75,11 @@ namespace tc
        * @param level is the level number
        * @see tc::Debug::m_trace_level
        */
-      TCBASE_API void SetTraceLevel(sint32 level);
+      TCBASE_API void SetTraceLevel(int32_t level);
       /**
        * @return trace level
        */
-      TCBASE_API sint32 GetTraceLevel();
+      TCBASE_API int32_t GetTraceLevel();
 
       /** @brief Set the print target object for printing errors, earnigs, info and traces */
       TCBASE_API void SetOuputTarget(PrintTargetPtr error_target);
@@ -102,7 +102,7 @@ namespace tc
        * @param ... parameters needed because of the format by snprintf
        */
       TCBASE_API void Error(const char* module, const char* function, 
-         uint32 line_number, const char* format, ...);
+         uint32_t line_number, const char* format, ...);
       /**
       * @brief Write output to the current active warning print target
       * @param module Name of the module to which this warning belongs to
@@ -112,7 +112,7 @@ namespace tc
       * @param ... parameters needed because of the format by snprintf
       */
       TCBASE_API void Warning(const char* module, const char* function, 
-         uint32 line_number, const char* format, ...);
+         uint32_t line_number, const char* format, ...);
       /**
       * @brief Write output to the current active info print target
       * @param module Name of the module to which this info belongs to
@@ -122,7 +122,7 @@ namespace tc
       * @param ... parameters needed because of the format by snprintf
       */
       TCBASE_API void Info(const char* module, const char* function, 
-         uint32 line_number, const char* format, ...);
+         uint32_t line_number, const char* format, ...);
       /**
       * Write output to the current active trace print target
       * when the level is lower then the global trace level tc::Debug::m_trace_level
@@ -133,8 +133,8 @@ namespace tc
       * @param format of the output used by snprintf
       * @param ... parameters needed because of the format by snprintf
       */
-      TCBASE_API void Trace(const char* module, sint32 level, const char* function, 
-         uint32 line_number, const char* format, ...);
+      TCBASE_API void Trace(const char* module, int32_t level, const char* function, 
+         uint32_t line_number, const char* format, ...);
 
    }// namespace output
 
@@ -162,12 +162,6 @@ namespace tc
 #endif
 
 #ifdef TCTRACE_ENABLE
-#   define TCTRACE(MODULE, LEVEL, FORMAT)                          tc::output::Trace(MODULE, LEVEL, _TC_FUNCTION_, __LINE__, FORMAT)
-#   define TCTRACE1(MODULE, LEVEL, FORMAT, ARG1)                   tc::output::Trace(MODULE, LEVEL, _TC_FUNCTION_, __LINE__, FORMAT, ARG1)
-#   define TCTRACE2(MODULE, LEVEL, FORMAT, ARG1, ARG2)             tc::output::Trace(MODULE, LEVEL, _TC_FUNCTION_, __LINE__, FORMAT, ARG1, ARG2)
-#   define TCTRACE3(MODULE, LEVEL, FORMAT, ARG1, ARG2, ARG3)       tc::output::Trace(MODULE, LEVEL, _TC_FUNCTION_, __LINE__, FORMAT, ARG1, ARG2, ARG3)
-#   define TCTRACE4(MODULE, LEVEL, FORMAT, ARG1, ARG2, ARG3, ARG4) tc::output::Trace(MODULE, LEVEL, _TC_FUNCTION_, __LINE__, FORMAT, ARG1, ARG2, ARG3, ARG4)
-#   define TCTRACEF(MODULE, LEVEL)                                 tc::output::Trace(MODULE, LEVEL, _TC_FUNCTION_, __LINE__, "")
 #   define TCTRACES(MODULE, LEVEL, STREAM) \
     { \
         std::string val; \
@@ -177,20 +171,9 @@ namespace tc
     }
 
 #else
-#   define TCTRACE(MODULE, LEVEL, FORMAT) ((void)0)
-#   define TCTRACE1(MODULE, LEVEL, FORMAT, ARG1) ((void)0)
-#   define TCTRACE2(MODULE, LEVEL, FORMAT, ARG1, ARG2) ((void)0)
-#   define TCTRACE3(MODULE, LEVEL, FORMAT, ARG1, ARG2, ARG3) ((void)0)
-#   define TCTRACE4(MODULE, LEVEL, FORMAT, ARG1, ARG2, ARG3, ARG4) ((void)0)
-#   define TCTRACEF(MODULE, LEVEL)((void)0)
 #   define TCTRACES(MODULE, LEVEL, STREAM) ((void)0)
 #endif
 
-#define TCINFO(MODULE, FORMAT)                          tc::output::Info(MODULE, _TC_FUNCTION_, __LINE__, FORMAT)
-#define TCINFO1(MODULE, FORMAT, ARG1)                   tc::output::Info(MODULE, _TC_FUNCTION_, __LINE__, FORMAT, ARG1)
-#define TCINFO2(MODULE, FORMAT, ARG1, ARG2)             tc::output::Info(MODULE, _TC_FUNCTION_, __LINE__, FORMAT, ARG1, ARG2)
-#define TCINFO3(MODULE, FORMAT, ARG1, ARG2, ARG3)       tc::output::Info(MODULE, _TC_FUNCTION_, __LINE__, FORMAT, ARG1, ARG2, ARG3)
-#define TCINFO4(MODULE, FORMAT, ARG1, ARG2, ARG3, ARG4) tc::output::Info(MODULE, _TC_FUNCTION_, __LINE__, FORMAT, ARG1, ARG2, ARG3, ARG4)
 #define TCINFOS(MODULE, STREAM) \
     { \
        std::string _tc_tmp_stream_val; \
@@ -199,11 +182,6 @@ namespace tc
        tc::output::Info(MODULE, _TC_FUNCTION_, __LINE__, "%s", _tc_tmp_stream_val.c_str()); \
    }
 
-#define TCWARNING(MODULE, FORMAT)                          tc::output::Warning(MODULE, _TC_FUNCTION_, __LINE__, FORMAT)
-#define TCWARNING1(MODULE, FORMAT, ARG1)                   tc::output::Warning(MODULE, _TC_FUNCTION_, __LINE__, FORMAT, ARG1)
-#define TCWARNING2(MODULE, FORMAT, ARG1, ARG2)             tc::output::Warning(MODULE, _TC_FUNCTION_, __LINE__, FORMAT, ARG1, ARG2)
-#define TCWARNING3(MODULE, FORMAT, ARG1, ARG2, ARG3)       tc::output::Warning(MODULE, _TC_FUNCTION_, __LINE__, FORMAT, ARG1, ARG2, ARG3)
-#define TCWARNING4(MODULE, FORMAT, ARG1, ARG2, ARG3, ARG4) tc::output::Warning(MODULE, _TC_FUNCTION_, __LINE__, FORMAT, ARG1, ARG2, ARG3, ARG4)
 #define TCWARNINGS(MODULE, STREAM) \
     { \
        std::string _tc_tmp_stream_val; \
@@ -212,11 +190,6 @@ namespace tc
        tc::output::Warning(MODULE, _TC_FUNCTION_, __LINE__, "%s", _tc_tmp_stream_val.c_str()); \
    }
 
-#define TCERROR(MODULE, FORMAT)                          tc::output::Error(MODULE, _TC_FUNCTION_, __LINE__, FORMAT)
-#define TCERROR1(MODULE, FORMAT, ARG1)                   tc::output::Error(MODULE, _TC_FUNCTION_, __LINE__, FORMAT, ARG1)
-#define TCERROR2(MODULE, FORMAT, ARG1, ARG2)             tc::output::Error(MODULE, _TC_FUNCTION_, __LINE__, FORMAT, ARG1, ARG2)
-#define TCERROR3(MODULE, FORMAT, ARG1, ARG2, ARG3)       tc::output::Error(MODULE, _TC_FUNCTION_, __LINE__, FORMAT, ARG1, ARG2, ARG3)
-#define TCERROR4(MODULE, FORMAT, ARG1, ARG2, ARG3, ARG4) tc::output::Error(MODULE, _TC_FUNCTION_, __LINE__, FORMAT, ARG1, ARG2, ARG3, ARG4)
 #define TCERRORS(MODULE, STREAM) \
     { \
        std::string _tc_tmp_stream_val; \

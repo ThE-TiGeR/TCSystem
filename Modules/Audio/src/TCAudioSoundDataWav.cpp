@@ -63,11 +63,11 @@ namespace tc
          return m_sound_format;
       }
 
-      uint64 SoundDataWav::GetData(uint64 num_bytes, uint8* buffer)
+      uint64_t SoundDataWav::GetData(uint64_t num_bytes, uint8_t* buffer)
       {
          Locker lock(this);
 
-         uint64 n_read = m_stream->ReadBytes(num_bytes, buffer);
+         uint64_t n_read = m_stream->ReadBytes(num_bytes, buffer);
          if (n_read < num_bytes && IsLooping())
          {
             m_stream->SetPosition(m_start_of_sound_data, Stream::POSITION_SET);
@@ -89,14 +89,14 @@ namespace tc
 
       void SoundDataWav::ProcessStream()
       {
-         uint32 magic_id;
+         uint32_t magic_id;
          m_stream >> magic_id; util::SwapBytes(magic_id);
          if (magic_id != 'RIFF')
          {
             throw  Exception("Sound format no RIFF");
          }
 
-         uint32 chunk_length;
+         uint32_t chunk_length;
          m_stream >> chunk_length;
          m_stream >> magic_id; util::SwapBytes(magic_id);
          if ( magic_id != 'WAVE')
@@ -129,7 +129,7 @@ namespace tc
          }
       }
 
-      void SoundDataWav::ProcessFormat(uint32 chunk_length)
+      void SoundDataWav::ProcessFormat(uint32_t chunk_length)
       {
          if (chunk_length < 16)
          {
@@ -172,7 +172,7 @@ namespace tc
          }
       }
 
-      void SoundDataWav::ProcessData(uint32 /*chunk_length*/)
+      void SoundDataWav::ProcessData(uint32_t /*chunk_length*/)
       {
          m_start_of_sound_data = m_stream->GetPosition();
       }

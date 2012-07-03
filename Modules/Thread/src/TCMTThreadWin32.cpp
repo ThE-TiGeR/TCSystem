@@ -55,15 +55,15 @@ namespace tc
          static ThreadPtr s_main_thread_ptr(&s_main_thread, tc::NoDelete());
 
          ThreadPtr ThreadWin32::Create(const std::string& thread_name,
-            uint32 stack_size,
+            uint32_t stack_size,
             ThreadPriority priority)
          {
-            TCTRACE1("TCMT", 1, "%s", thread_name.c_str());
+            TCTRACES("TCMT", 1, thread_name);
 
             ThreadWin32* thread = new ThreadWin32(thread_name, stack_size, priority);
             if (!thread)
             {
-               TCERROR1("TCMT", "%s failed.", thread_name.c_str());
+               TCERRORS("TCMT", thread_name << " failed.");
                return ThreadPtr();
             }
 
@@ -80,16 +80,16 @@ namespace tc
 
             if (!thread->Init())
             {
-               TCERROR1("TCMT", "%s failed.", thread_name.c_str());
+               TCERRORS("TCMT", thread_name << " Init failed.");
                return ThreadPtr();
             }
 
-            TCTRACE1("TCMT", 1, "%s done.", thread_name.c_str());
+            TCTRACES("TCMT", 1, thread_name << " done.");
             return thread_ptr;
          }
 
          ThreadWin32::ThreadWin32(const std::string& thread_name,
-            uint32 stack_size, Thread::ThreadPriority priority)
+            uint32_t stack_size, Thread::ThreadPriority priority)
             :ThreadBase(thread_name, stack_size, priority),
             m_handle(0),
             m_thread_id(0)
@@ -105,7 +105,7 @@ namespace tc
 
          ThreadWin32::~ThreadWin32()
          {
-            TCTRACE1("TCMT", 1, "%s", m_name.c_str());
+            TCTRACES("TCMT", 1, m_name);
 
             if (m_handle)
             {
@@ -119,11 +119,11 @@ namespace tc
             m_handle = ::CreateThread(0, m_stack_size, Wrapper, init_data, 0, &m_thread_id);
             if (m_handle == 0)
             {
-               TCERROR1("TCMT", "%s failed.", m_name.c_str());
+               TCERRORS("TCMT", m_name << " failed.");
                return false;
             }
 
-            TCTRACE1("TCMT", 2, "%s done.", m_name.c_str());
+            TCTRACES("TCMT", 1, m_name << " done.");
             return true;
          }
 
@@ -137,7 +137,7 @@ namespace tc
 
          bool ThreadWin32::JoinOS()
          {
-            TCTRACE1("TCMT", 5,"%s", m_name.c_str());
+            TCTRACES("TCMT", 5, m_name);
 
             if (::WaitForSingleObject(m_handle, INFINITE)!= WAIT_OBJECT_0)
             {
@@ -151,13 +151,13 @@ namespace tc
          {
             if (!m_handle)
             {
-               TCTRACE1("TCMT", -1, "%s failed.", m_name.c_str());
+               TCERRORS("TCMT", m_name << " failed.");
                return false;
             }
 
             if (!::SetThreadPriority(m_handle, GetPriority(priority_in)))
             {
-               TCTRACE1("TCMT", -1, "%s failed.", m_name.c_str());
+               TCERRORS("TCMT", m_name << " failed.");
                return false;
             }
             return true;
@@ -165,11 +165,11 @@ namespace tc
 
          ThreadPtr ThreadWin32::Self()
          {
-            TCTRACEF("TCMT", 10);
+            TCTRACES("TCMT", 10, "");
 
             DWORD id = ::GetCurrentThreadId();
             MutexLocker lock(m_threads_mutex);
-            for (uint32 i=0; i<m_threads.size(); i++)
+            for (uint32_t i=0; i<m_threads.size(); i++)
             {
                ThreadPtr thread = m_threads[i];
                SharedPtr< ThreadWin32 > thread_imp;
@@ -187,11 +187,11 @@ namespace tc
 
          void ThreadWin32::SwitchContext()
          {
-            TCTRACEF("TCMT", 10);
+            TCTRACES("TCMT", 10, "");
             ::Sleep(0);
          }
 
-         sint32 ThreadWin32::GetPriority(ThreadPriority pri)
+         int32_t ThreadWin32::GetPriority(ThreadPriority pri)
          {
             switch (pri)
             {

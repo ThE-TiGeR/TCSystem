@@ -63,14 +63,14 @@ namespace tc
       /// open_gl Viewer Viewport
       struct Viewport 
       {
-         sint32   w,h;               // Viewport dimensions
+         int32_t   w,h;               // Viewport dimensions
          double   left,right;        // World box
          double   bottom,top;
          double   hither,yon;
       };
 
       // Feedback buffer sort routine
-      typedef bool (*ZSortFunc)(float*& buffer,sint32& used,sint32& size);
+      typedef bool (*ZSortFunc)(float*& buffer,int32_t& used,int32_t& size);
 
       struct FXQuatf2Coord4f
       {
@@ -136,15 +136,15 @@ namespace tc
          void glsetup();
          virtual void updateProjection();
          virtual void updateTransform();
-         Vertex3D spherePoint(sint32 px,sint32 py);
-         FX::FXQuatf turn(sint32 fx,sint32 fy,sint32 tx,sint32 ty);
+         Vertex3D spherePoint(int32_t px,int32_t py);
+         FX::FXQuatf turn(int32_t fx,int32_t fy,int32_t tx,int32_t ty);
          virtual void DrawScene(Viewport& wv);
          void drawAnti(Viewport& wv);
-         void drawLasso(sint32 x0,sint32 y0,sint32 x1,sint32 y1);
-         sint32 selectHits(uint32*& hits,sint32& nhits,sint32 x,sint32 y,sint32 w,sint32 h);
-         sint32 renderFeedback(float *buffer,sint32 x,sint32 y,sint32 w,sint32 h,sint32 maxbuffer);
-         void drawFeedback(FX::FXDCPrint& pdc,const float* buffer,sint32 used);
-         virtual ObjectPtr processHits(const uint32 *pickbuffer,sint32 nhits);
+         void drawLasso(int32_t x0,int32_t y0,int32_t x1,int32_t y1);
+         int32_t selectHits(uint32_t*& hits,int32_t& nhits,int32_t x,int32_t y,int32_t w,int32_t h);
+         int32_t renderFeedback(float *buffer,int32_t x,int32_t y,int32_t w,int32_t h,int32_t maxbuffer);
+         void drawFeedback(FX::FXDCPrint& pdc,const float* buffer,int32_t used);
+         virtual ObjectPtr processHits(const uint32_t *pickbuffer,int32_t nhits);
          void setOp(OperationMode o);
 
       private:
@@ -311,10 +311,10 @@ namespace tc
       public:
 
          /// Construct GL viewer widget
-         Viewer(FX::FXComposite* p,FX::FXGLVisual *vis,FX::FXObject* tgt=0,FX::FXSelector sel=0,uint32 opts=0,sint32 x=0,sint32 y=0,sint32 w=0,sint32 h=0);
+         Viewer(FX::FXComposite* p,FX::FXGLVisual *vis,FX::FXObject* tgt=0,FX::FXSelector sel=0,uint32_t opts=0,int32_t x=0,int32_t y=0,int32_t w=0,int32_t h=0);
 
          /// Construct GL viewer widget sharing display list with another GL viewer
-         Viewer(FX::FXComposite* p,FX::FXGLVisual *vis,Viewer* sharegroup,FX::FXObject* tgt=0,FX::FXSelector sel=0,uint32 opts=0,sint32 x=0,sint32 y=0,sint32 w=0,sint32 h=0);
+         Viewer(FX::FXComposite* p,FX::FXGLVisual *vis,Viewer* sharegroup,FX::FXObject* tgt=0,FX::FXSelector sel=0,uint32_t opts=0,int32_t x=0,int32_t y=0,int32_t w=0,int32_t h=0);
 
          /// Create all of the server-side resources for this window
          virtual void create();
@@ -332,13 +332,13 @@ namespace tc
          double modelPix() const { return modelpx; }
 
          /// fills thw vector with the selected objects an returns true if found
-         bool lasso(sint32 x1,sint32 y1,sint32 x2,sint32 y2, std::vector<ObjectPtr>& selected_objects);
+         bool lasso(int32_t x1,int32_t y1,int32_t x2,int32_t y2, std::vector<ObjectPtr>& selected_objects);
 
          /// fills thw vector with the selected objects an returns true if found
-         virtual bool select(sint32 x,sint32 y,sint32 w,sint32 h, std::vector<ObjectPtr>& selected_objects);
+         virtual bool select(int32_t x,int32_t y,int32_t w,int32_t h, std::vector<ObjectPtr>& selected_objects);
 
          /// Perform a pick operation, returning the object at the given x,y position, or 0
-         virtual ObjectPtr pick(sint32 x,sint32 y);
+         virtual ObjectPtr pick(int32_t x,int32_t y);
 
          /// Change the model bounding box; this adjusts the viewer
          virtual bool setBounds(const BoundingBox3D& box);
@@ -350,13 +350,13 @@ namespace tc
          void getViewport(Viewport& v) const;
 
          /// Translate eye-coordinate to screen coordinate
-         void eyeToScreen(sint32& sx,sint32& sy,Vertex3D e);
+         void eyeToScreen(int32_t& sx,int32_t& sy,Vertex3D e);
 
          /// Translate screen coordinate to eye coordinate at the given depth
-         Vertex3D screenToEye(sint32 sx,sint32 sy,float eyez=0.0);
+         Vertex3D screenToEye(int32_t sx,int32_t sy,float eyez=0.0);
 
          /// Translate screen coordinate to eye coordinate at the target point depth
-         Vertex3D screenToTarget(sint32 sx,sint32 sy);
+         Vertex3D screenToTarget(int32_t sx,int32_t sy);
 
          /// Translate world coordinate to eye coordinate
          Vertex3D worldToEye(Vertex3D w);
@@ -368,7 +368,7 @@ namespace tc
          Vertex3D eyeToWorld(Vertex3D e);
 
          /// Calculate world coordinate vector from screen movement
-         Vertex3D worldVector(sint32 fx,sint32 fy,sint32 tx,sint32 ty);
+         Vertex3D worldVector(int32_t fx,int32_t fy,int32_t tx,int32_t ty);
 
          ///  Change default object material setting
          void setMaterial(const Material &mtl);
@@ -419,7 +419,7 @@ namespace tc
          void translate(Vertex3D vec);
 
          /// Return boresight vector
-         bool getBoreVector(sint32 sx,sint32 sy,Vertex3D& point,Vertex3D& dir);
+         bool getBoreVector(int32_t sx,int32_t sy,Vertex3D& point,Vertex3D& dir);
 
          /// Return eyesight vector
          Vertex3D getEyeVector() const;
@@ -452,16 +452,16 @@ namespace tc
          ObjectGroupPtr GetScene() const { return scene; }
 
          /// Change the projection mode, PERSPECTIVE or PARALLEL
-         void setProjection(uint32 proj);
+         void setProjection(uint32_t proj);
 
          /// Return the projection mode
-         uint32 getProjection() const { return projection; }
+         uint32_t getProjection() const { return projection; }
 
          /// Change top or bottom or both background colors
-         void setBackgroundColor(const Color& clr, sint32 idx);
+         void setBackgroundColor(const Color& clr, int32_t idx);
 
          /// Return top or bottom window background color.
-         const Color& getBackgroundColor(sint32 idx) const { return m_background[idx]; }
+         const Color& getBackgroundColor(int32_t idx) const { return m_background[idx]; }
 
          /// Change global ambient light color
          void setAmbientColor(const Color& clr);
@@ -474,13 +474,13 @@ namespace tc
          * this array can be directly passed to fxsaveBMP and other image
          * output routines.
          */
-         bool readPixels(std::vector<FX::FXColor>& buffer,uint32 x,uint32 y,uint32 w,uint32 h);
+         bool readPixels(std::vector<FX::FXColor>& buffer,uint32_t x,uint32_t y,uint32_t w,uint32_t h);
 
          /**
          * Read the feedback buffer containing the current scene, returning used
          * and allocated size.
          */
-         bool readFeedback(float*& buffer,sint32& used,sint32& size,sint32 x,sint32 y,sint32 w,sint32 h);
+         bool readFeedback(float*& buffer,int32_t& used,int32_t& size,int32_t x,int32_t y,int32_t w,int32_t h);
 
          /**
          * Change hidden-surface feedback buffer sorting algorithm.
@@ -495,10 +495,10 @@ namespace tc
          * Change the maximum hits, i.e. the maximum size of the pick buffer.
          * When set to less than or equal to zero, picking is essentially turned off.
          */
-         void setMaxHits(sint32 maxh) { maxhits=maxh; }
+         void setMaxHits(int32_t maxh) { maxhits=maxh; }
 
          /// Return maximum pickbuffer size
-         sint32 getMaxHits() const { return maxhits; }
+         int32_t getMaxHits() const { return maxhits; }
 
          /**
          * When drawing a GL object, if DoesTurbo() is true, the object
@@ -538,7 +538,7 @@ namespace tc
          Viewport      m_view_port;              // Window viewport transform
          FX::FXMat4f         m_transformation;        // Current transformation matrix
          FX::FXMat4f         itransform;       // Inverse of current transformation matrix
-         uint32          projection;       // Projection mode
+         uint32_t          projection;       // Projection mode
          FX::FXQuatf         rotation;         // Viewer orientation
          double        fov;              // Field of view
          double        zoom;             // Zoom factor
@@ -546,7 +546,7 @@ namespace tc
          Vertex3D         scale;            // Model scale
          double        worldpx;          // Pixel size in world
          double        modelpx;          // Pixel size in model
-         sint32           maxhits;          // Maximum number of hits
+         int32_t           maxhits;          // Maximum number of hits
          double        ax,ay;            // Quick view->world coordinate mapping
          double        diameter;         // Size of model diameter (always > 0)
          double        distance;         // Distance of PRP to target
@@ -555,7 +555,7 @@ namespace tc
          Color         ambient;          // Global ambient light
          Light           light;            // Light source
          Material        material;         // Base material properties
-         sint32           dial[3];          // Dial positions
+         int32_t           dial[3];          // Dial positions
          FX::FXString        help;             // Status help
          FX::FXString        tip;              // Tooltip for background
          ObjectPtr     dropped;          // Object being dropped on

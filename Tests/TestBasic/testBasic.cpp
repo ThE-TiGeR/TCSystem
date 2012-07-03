@@ -23,8 +23,8 @@ std::string make_base64_string(const std::string& str)
    const char *base64_table = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
    /* make base64 string */
-   tc::uint32 src_len = static_cast<tc::uint32>(str.length());
-   tc::uint32 dst_len = (src_len+2)/3*4;
+   tc::uint32_t src_len = static_cast<tc::uint32_t>(str.length());
+   tc::uint32_t dst_len = (src_len+2)/3*4;
    char* buf = new char[dst_len+1];
 
    int bits = 0;
@@ -123,7 +123,7 @@ private:
    bool Receive(tc::net::ReadWriteSocketPtr socket, std::string& data_received)
    {
       char data[100];
-      tc::uint64 data_len = socket->ReadBytes(data, sizeof(data)-1);
+      tc::uint64_t data_len = socket->ReadBytes(data, sizeof(data)-1);
       if (!socket->IsOpened())
       {
          m_data_received_event->Set();
@@ -267,7 +267,7 @@ public:
    {
       char buffer[200];
       tc::net::Address address;
-      tc::uint64 len = m_socket->ReadBytesFrom(buffer, tc::util::ArraySize(buffer)-1, address);
+      tc::uint64_t len = m_socket->ReadBytesFrom(buffer, tc::util::ArraySize(buffer)-1, address);
       if (len == 0)
       {
          return false;
@@ -361,7 +361,7 @@ static void RunSocketTest(int narg, char** argv)
    tc::Time next_access;
    while (event->TryWait(next_access) == false)
    {
-      tc::uint64 idx = rng->GetRandomNumber(0, tc::util::ArraySize(port)-1);
+      tc::uint64_t idx = rng->GetRandomNumber(0, tc::util::ArraySize(port)-1);
 
       tc::net::ReadWriteSocketPtr socket;
 
@@ -401,7 +401,7 @@ static void RunSocketTest(int narg, char** argv)
       command += "\r\n";
 
       TCTRACES("TestBasic", 5,"Loading page http://" << host_name[idx] << file_name[idx] << " ");
-      if (socket->WriteBytes(command.c_str(), static_cast<tc::uint32>(command.length())) != command.length())
+      if (socket->WriteBytes(command.c_str(), static_cast<tc::uint32_t>(command.length())) != command.length())
       {
          TCTRACES("TestBasic", 5,"failed sending command");
          continue;
@@ -415,7 +415,7 @@ static void RunSocketTest(int narg, char** argv)
          continue;
       }
       TCTRACES("TestBasic", 5,"done.");
-      TCTRACES("TestBasic", 5,"  received page size was " << static_cast<tc::uint32>(data.length()));
+      TCTRACES("TestBasic", 5,"  received page size was " << static_cast<tc::uint32_t>(data.length()));
 
       server->RemoveSocket(socket);
 
@@ -434,7 +434,7 @@ static void RunUDPTest()
    server->Start(true);
 
    tc::net::BroadcastWriteSocketPtr bs = tc::net::factory::CreateUdpBroadcastSocket();
-   for (tc::uint32 i=0; i<100, bs->IsOpened(); i++)
+   for (tc::uint32_t i=0; i<100, bs->IsOpened(); i++)
    {
       std::string test("hello world");
       bs->WriteBytesTo(test.c_str(), test.length()+1, tc::net::Address::GetAnyAddress(), 8042);
@@ -446,11 +446,11 @@ static void RunUDPTest()
 }
 
 static char s_charset[] = "0123456789.";
-static tc::uint32 s_num_chars = sizeof(s_charset) - 1;
+static tc::uint32_t s_num_chars = sizeof(s_charset) - 1;
 class PassWordFinder
 {
 public:
-   PassWordFinder(tc::uint32 min_pwd_len, tc::uint32 max_pwd_len)
+   PassWordFinder(tc::uint32_t min_pwd_len, tc::uint32_t max_pwd_len)
       :m_min_pwd_len(min_pwd_len),
       m_max_pwd_len(max_pwd_len),
       m_current_pwd_len(0),
@@ -487,7 +487,7 @@ public:
 private:
    bool NextCharacter()
    {
-      for (tc::uint32 i=0; i<m_current_pwd_len; i++)
+      for (tc::uint32_t i=0; i<m_current_pwd_len; i++)
       {
          if (m_current_char[i] == s_num_chars-1)
          {
@@ -505,7 +505,7 @@ private:
 
    void InitCurrentChar()
    {
-      for (tc::uint32 i=0; i<m_current_pwd_len; i++)
+      for (tc::uint32_t i=0; i<m_current_pwd_len; i++)
       {
          m_current_char[i] = 0;
       }
@@ -513,7 +513,7 @@ private:
 
    void SetPassword(char* password)
    {
-      for (tc::uint32 i=0; i<m_current_pwd_len; i++)
+      for (tc::uint32_t i=0; i<m_current_pwd_len; i++)
       {
          password[i] = s_charset[m_current_char[i]];
       }
@@ -522,15 +522,15 @@ private:
    }
 
 private:
-   tc::uint32 m_min_pwd_len;
-   tc::uint32 m_max_pwd_len;
-   tc::uint32 m_current_pwd_len;
-   std::vector<tc::uint32> m_current_char;
+   tc::uint32_t m_min_pwd_len;
+   tc::uint32_t m_max_pwd_len;
+   tc::uint32_t m_current_pwd_len;
+   std::vector<tc::uint32_t> m_current_char;
 };
 
 static void TestFindPassword()
 {
-   tc::uint64 num = 0;
+   tc::uint64_t num = 0;
    char pwd[10];
    PassWordFinder pwd_finder(1, 8);
    tc::Time start(tc::Time::Now());
@@ -664,7 +664,7 @@ int main(int narg, char** argv)
       }
       ConvertPSKCvsToHaushaltsbuchCvs();
 
-      TCINFO("TestBasic", "End");
+      TCINFOS("TestBasic", "End");
    }
 
    catch (tc::Exception& e)

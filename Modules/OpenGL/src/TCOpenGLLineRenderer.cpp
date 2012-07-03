@@ -61,7 +61,7 @@ namespace tc
          ::glDisable(GL_BLEND);
       }
 
-      void LineRenderer::EnableLineStipple(uint32 stipple_pattern)
+      void LineRenderer::EnableLineStipple(uint32_t stipple_pattern)
       {
          ::glEnable(GL_LINE_STIPPLE);
          ::glLineStipple(1, stipple_pattern);
@@ -73,14 +73,14 @@ namespace tc
       }
 
       void LineRenderer::RenderLine(const Vertex3DVector& vertexes,
-         const Color& color, uint32 num_pixels, GLenum line_type)
+         const Color& color, uint32_t num_pixels, GLenum line_type)
       {
          ::glColor4fv(color);
          ::glLineWidth(num_pixels);
 
          ::glBegin(line_type);
          {
-            for (uint32 i = 0; i < vertexes.size(); i++)
+            for (uint32_t i = 0; i < vertexes.size(); i++)
             {
                ::glVertex3fv(vertexes[i]);
             }
@@ -91,14 +91,14 @@ namespace tc
       }
 
       void LineRenderer::RenderLine(const Vertex3DVector& vertexes,
-         const std::vector<Color>& colors, uint32 num_pixels, 
+         const std::vector<Color>& colors, uint32_t num_pixels, 
          GLenum line_type)
       {
          ::glLineWidth(num_pixels);
 
          ::glBegin(line_type);
          {
-            for (uint32 i = 0; i < vertexes.size(); i++)
+            for (uint32_t i = 0; i < vertexes.size(); i++)
             {
                ::glVertex3fv(vertexes[i]);
                ::glColor4fv(colors[i]);
@@ -111,26 +111,26 @@ namespace tc
 
       void LineRenderer::RenderLines(const std::vector< Vertex3DVector > &vertexes,
          const std::vector< std::vector<Color> >& colors, 
-         uint32 num_pixels, GLenum line_type)
+         uint32_t num_pixels, GLenum line_type)
       {
-         for (uint32 line=0; line<vertexes.size(); line++)
+         for (uint32_t line=0; line<vertexes.size(); line++)
          {
             RenderLine(vertexes[line], colors[line], num_pixels, line_type);
          }
       }
 
       void LineRenderer::RenderLines(const std::vector< Vertex3DVector > &vertexes,
-         const Color& color, uint32 num_pixels,      
+         const Color& color, uint32_t num_pixels,      
          GLenum line_type) 
       {
-         for (uint32 line=0; line<vertexes.size(); line++)
+         for (uint32_t line=0; line<vertexes.size(); line++)
          {
             RenderLine(vertexes[line], color, num_pixels, line_type);
          }
       }
 
       void LineRenderer::RenderBox(const math::Box< Vertex3D >& box,     
-         const Color& color, uint32 num_pixels/*=DEFAULT_WIDTH*/) 
+         const Color& color, uint32_t num_pixels/*=DEFAULT_WIDTH*/) 
       {
          ::glColor4fv(color);
          ::glLineWidth(num_pixels);
@@ -164,7 +164,7 @@ namespace tc
       }
 
       void LineRenderer::RenderBox(const math::Box< Vertex2D >& box,     
-         const Color& color, uint32 num_pixels/*=DEFAULT_WIDTH*/) 
+         const Color& color, uint32_t num_pixels/*=DEFAULT_WIDTH*/) 
       {
          ::glColor4fv(color);
          ::glLineWidth(num_pixels);

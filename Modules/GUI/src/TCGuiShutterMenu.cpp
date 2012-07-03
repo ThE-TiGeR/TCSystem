@@ -53,7 +53,7 @@ namespace tc
 
       FXIMPLEMENT(ShutterMenu, FXScrollWindow, 0, 0);
 
-      ShutterMenu::ShutterMenu(FXComposite *p, FX::FXObject* tgt, FX::FXSelector sel, uint32 opts)
+      ShutterMenu::ShutterMenu(FXComposite *p, FX::FXObject* tgt, FX::FXSelector sel, uint32_t opts)
          :FXScrollWindow(p, opts)
       {
          backColor = FXRGB(FXMAX(FXREDVAL(backColor)   - 60, 0),
@@ -88,7 +88,7 @@ namespace tc
       FXIMPLEMENT(ShutterMenuItem, FX::FXVerticalFrame, s_shutter_menu_item_map, ARRAYNUMBER(s_shutter_menu_item_map));
 
       ShutterMenuItem::ShutterMenuItem(ShutterMenu* p, const std::string& text, FX::FXIcon* ic,
-         FX::FXObject* tgt, FX::FXSelector sel, uint32 opts)
+         FX::FXObject* tgt, FX::FXSelector sel, uint32_t opts)
          :FXVerticalFrame(p->m_item_frame, opts|FX::LAYOUT_FILL_X, 0, 0, 0, 0, 0, 0, 0, 0)
       {
          setTarget(tgt);

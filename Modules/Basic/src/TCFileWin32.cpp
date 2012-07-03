@@ -124,7 +124,7 @@ namespace tc
    }
 
    // Change the mode flags for this file
-   bool file::SetFileAttr(const std::string &file, uint32 attr)
+   bool file::SetFileAttr(const std::string &file, uint32_t attr)
    {
       attr &= (FILEATTR_READONLY | FILEATTR_ARCHIVE | FILEATTR_SYSTEM | FILEATTR_HIDDEN) ;
       return SetFileAttributesA(file.c_str(), attr) == TRUE ? true : false;
@@ -162,7 +162,7 @@ namespace tc
       SharedPtr<file::Progress> progress(*(SharedPtr<file::Progress>*)lpData);
       double val = (double)(TotalFileSize.QuadPart/TotalBytesTransferred.QuadPart) * 100;
 
-      progress->OnCurrentStatus(uint32(val));
+      progress->OnCurrentStatus(uint32_t(val));
 
       return 0;
    }
@@ -221,7 +221,7 @@ namespace tc
    }
 
    // Return time file was last modified
-   uint64 file::GetModificationTime(const std::string &file)
+   uint64_t file::GetModificationTime(const std::string &file)
    {
       HANDLE f = ::CreateFileA(file.c_str(),
          FILE_READ_ATTRIBUTES,
@@ -250,7 +250,7 @@ namespace tc
    }
 
    // Return time file was last accessed
-   uint64 file::GetLastAccessTime(const std::string &file)
+   uint64_t file::GetLastAccessTime(const std::string &file)
    {
       HANDLE f = ::CreateFileA(file.c_str(),
          FILE_READ_ATTRIBUTES,
@@ -279,7 +279,7 @@ namespace tc
    }
 
    // Return time when created
-   uint64 file::GetCreationTime(const std::string &file)
+   uint64_t file::GetCreationTime(const std::string &file)
    {
       HANDLE f = ::CreateFileA(file.c_str(),
          FILE_READ_ATTRIBUTES,
@@ -308,7 +308,7 @@ namespace tc
    }
 
    // Get file size
-   uint64 file::GetFileSize(const std::string &file)
+   uint64_t file::GetFileSize(const std::string &file)
    {
       HANDLE f = ::CreateFileA(file.c_str(),
          FILE_READ_ATTRIBUTES,
@@ -350,7 +350,7 @@ namespace tc
       // Check GetLastError for CreateFile error code.
       if (hFile == INVALID_HANDLE_VALUE)
       {
-         TCERROR("TCBASE", system::GetLastErrorMessage().c_str());
+         TCERRORS("TCBASE", system::GetLastErrorMessage().c_str());
          return "";
       }
 
@@ -366,7 +366,7 @@ namespace tc
       if (GetSecurityInfo(hFile, SE_FILE_OBJECT, info_type,
          &pSidOwner, 0, 0, 0, &pSD) != ERROR_SUCCESS)
       {
-         TCERROR("TCBASE", system::GetLastErrorMessage().c_str());
+         TCERRORS("TCBASE", system::GetLastErrorMessage().c_str());
          return "";
       }
       ::CloseHandle(hFile);
@@ -388,7 +388,7 @@ namespace tc
          &dwDomainName,                 // size of domain name buffer
          &eUse))                        // SID type
       {
-         TCERROR("TCBASE", system::GetLastErrorMessage().c_str());
+         TCERRORS("TCBASE", system::GetLastErrorMessage().c_str());
          return "";
       }
       ::GlobalFree(pSidOwner);

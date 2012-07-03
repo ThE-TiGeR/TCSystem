@@ -59,9 +59,9 @@ namespace tc
 
          virtual void Draw(Viewer& viewer);
          virtual void DrawForHit(Viewer& viewer);
-         virtual bool Drag(Viewer& viewer, sint32 fx, sint32 fy, sint32 tx, sint32 ty);
-         virtual void Update(Viewer& viewer, uint32 curent_time, uint32 delta_time);
-         virtual ObjectPtr GetHitObject(const uint32* hitpath);
+         virtual bool Drag(Viewer& viewer, int32_t fx, int32_t fy, int32_t tx, int32_t ty);
+         virtual void Update(Viewer& viewer, uint32_t curent_time, uint32_t delta_time);
+         virtual ObjectPtr GetHitObject(const uint32_t* hitpath);
          virtual void GetBoundingBox(BoundingBox3D& bounding_box);
          virtual void ResetPosition();
 
@@ -75,7 +75,7 @@ namespace tc
          Object3D() {}
          virtual void DrawSelf(Viewer& viewer) = 0;
          virtual void DrawForHitSelf(Viewer& viewer) = 0;
-         virtual void UpdateSelf(Viewer& viewer, uint32 curent_time, uint32 delta_time) = 0;
+         virtual void UpdateSelf(Viewer& viewer, uint32_t curent_time, uint32_t delta_time) = 0;
 
          void SetBoundingBox(const BoundingBox3D& bounding_box);
          void DrawBoundingBox();

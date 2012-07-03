@@ -49,7 +49,7 @@ namespace tc
          SoundDataMultitrack();
          virtual ~SoundDataMultitrack();
 
-         virtual uint64 GetData(uint64 num_bytes, uint8* buffer);
+         virtual uint64_t GetData(uint64_t num_bytes, uint8_t* buffer);
          virtual void SetToStart();
 
          virtual void SetLoopData(bool loop);

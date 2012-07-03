@@ -107,7 +107,7 @@ namespace tc
       }
 
       // Return time when touched
-      uint64 GetTouchedTime(const std::string &file)
+      uint64_t GetTouchedTime(const std::string &file)
       {
          return util::Max(GetModificationTime(file), 
             GetLastAccessTime(file),

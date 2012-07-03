@@ -80,7 +80,7 @@ namespace multi_threading
        * @param priority Priority of the thread @see ThreadPriority
        */
       TCMT_API ThreadPtr CreateThread(const std::string& thread_name,
-                                      uint32 stack_size=0,
+                                      uint32_t stack_size=0,
                                       Thread::ThreadPriority priority=Thread::PRIORITY_NORMAL);
 
       /**
@@ -93,7 +93,7 @@ namespace multi_threading
        * @param priority Priority of the thread @see ThreadPriority
        */
       TCMT_API ThreadPtr CreateCommandExecutionThread(const std::string& thread_name,
-                                                      uint32 stack_size=0,
+                                                      uint32_t stack_size=0,
                                                       Thread::ThreadPriority priority=Thread::PRIORITY_NORMAL);
 
       /**
@@ -137,14 +137,14 @@ namespace multi_threading
        * @brief Construct an semaphore object
        * @param initial_value The initial value of the semaphore
        */
-      TCMT_API SemaphorePtr CreateSemaphore(uint32 initial_value);
+      TCMT_API SemaphorePtr CreateSemaphore(uint32_t initial_value);
       /** 
        * @brief Construct an shared semaphore object
        * @param shared_name the name of the mutex so that it can be created inside other processes
        * @param initial_value The initial value of the semaphore
        * @param mode How to create the mutex
        */
-      TCMT_API SemaphorePtr CreateSemaphore(const std::string& shared_name, uint32 initial_value, CreationMode mode=CRM_ALWAYS);
+      TCMT_API SemaphorePtr CreateSemaphore(const std::string& shared_name, uint32_t initial_value, CreationMode mode=CRM_ALWAYS);
 
       /**
        * @brief construct a Condition variable

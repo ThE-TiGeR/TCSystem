@@ -59,12 +59,12 @@ namespace tc
       public:   
          Application();
          virtual ~Application();
-         virtual bool Init(uint32 narg, char **argv,
+         virtual bool Init(uint32_t narg, char **argv,
             const std::string &name, const std::string &version,
             const std::string &company);
 
          virtual bool Run();
-         virtual void Exit(sint32 exitCode);
+         virtual void Exit(int32_t exitCode);
       protected:
          virtual FX::FXMainWindow* CreateMainWindow() = 0;
       private:

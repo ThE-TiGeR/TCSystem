@@ -93,7 +93,7 @@ namespace tc
          //Draw(viewer);
       }
 
-      ObjectPtr Object2D::GetHitObject(const uint32* /*hitpath*/)
+      ObjectPtr Object2D::GetHitObject(const uint32_t* /*hitpath*/)
       {
          return ObjectPtr();
       }
@@ -108,11 +108,11 @@ namespace tc
          bounding_box = BoundingBox3D();
       }
 
-      void Object2D::Update(Viewer& /*viewer*/, uint32 /*curent_time*/, uint32 /*delta_time*/) 
+      void Object2D::Update(Viewer& /*viewer*/, uint32_t /*curent_time*/, uint32_t /*delta_time*/) 
       {
       }
 
-      bool Object2D::Drag(Viewer& /*viewer*/, sint32 fx, sint32 fy, sint32 tx, sint32 ty)
+      bool Object2D::Drag(Viewer& /*viewer*/, int32_t fx, int32_t fy, int32_t tx, int32_t ty)
       {
          m_position[0] += tx - fx;
          m_position[1] += ty - fy;

@@ -56,7 +56,7 @@ namespace tc
          :Exception("tc::Time::UnderflowError") {}
    };
 
-   Time Time::FromSeconds(uint64 seconds)
+   Time Time::FromSeconds(uint64_t seconds)
    {
       Time time;
       time.m_secs = seconds;
@@ -64,7 +64,7 @@ namespace tc
       return time;
    }
 
-   Time Time::FromMilliSeconds(uint64 milli_seconds)
+   Time Time::FromMilliSeconds(uint64_t milli_seconds)
    {
       Time time;
       time.m_secs = milli_seconds / ONE_SECOND_AS_MILLI_SECONDS;
@@ -72,7 +72,7 @@ namespace tc
       return time;
    }
 
-   Time Time::FromMicroSeconds(uint64 micro_seconds)
+   Time Time::FromMicroSeconds(uint64_t micro_seconds)
    {
       Time time;
       time.m_secs = micro_seconds / ONE_SECOND_AS_MICRO_SECONDS;
@@ -80,7 +80,7 @@ namespace tc
       return time;
    }
 
-   Time Time::FromNanoSeconds(uint64 nano_seconds)
+   Time Time::FromNanoSeconds(uint64_t nano_seconds)
    {
       Time time;
       time.m_secs = nano_seconds / ONE_SECOND_AS_NANO_SECONDS;
@@ -132,7 +132,7 @@ namespace tc
       {
          LARGE_INTEGER ticks;
          ::QueryPerformanceCounter(&ticks);
-         uint64 mticks = uint64(ticks.QuadPart/s_frequence);
+         uint64_t mticks = uint64_t(ticks.QuadPart/s_frequence);
          time = Time::FromNanoSeconds(mticks);
       }
       else
@@ -150,7 +150,7 @@ namespace tc
    }
 
 
-   Time::Time(uint64 secs, uint64 nsecs)
+   Time::Time(uint64_t secs, uint64_t nsecs)
    {
       Time time = FromSeconds(secs) + FromNanoSeconds(nsecs);
       m_secs  = time.m_secs;
@@ -171,7 +171,7 @@ namespace tc
 
    Time& Time::operator-=(const Time& time_to_sub)
    {
-      uint64 sub_sec = 0;
+      uint64_t sub_sec = 0;
       if (m_nsecs < time_to_sub.m_nsecs)
       {
          sub_sec = 1;
@@ -203,7 +203,7 @@ namespace tc
 
    Time Time::Infinite()
    {
-      return Time(std::numeric_limits<uint64>::max(), 0);
+      return Time(std::numeric_limits<uint64_t>::max(), 0);
    }
 
    Time Time::Zero()

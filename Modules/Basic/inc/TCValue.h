@@ -93,11 +93,11 @@ namespace tc
       }
 
       /** @return bytes in little endian const*/
-      const uchar* GetBytes() const { return reinterpret_cast<const uchar*>(&m_val); }
+      const uint8_t* GetBytes() const { return reinterpret_cast<const uint8_t*>(&m_val); }
       /** @return bytes in little endian non const */
-      uchar* GetBytes() { return reinterpret_cast<uchar*>(&m_val); }
+      uint8_t* GetBytes() { return reinterpret_cast<uint8_t*>(&m_val); }
       /** @return number of bytes of value */
-      uint32 GetNumBytes() const { return (uint32)sizeof(T); }
+      uint32_t GetNumBytes() const { return (uint32_t)sizeof(T); }
 
       /** assignment operator for setting values */
       Value<T>& operator=(const T &a)
@@ -156,13 +156,13 @@ namespace tc
       }
 
       /** @return bytes in little endian const*/
-      const uchar* GetBytes() const { return reinterpret_cast<const uchar*>(&m_val); }
+      const uint8_t* GetBytes() const { return reinterpret_cast<const uint8_t*>(&m_val); }
       /** @return bytes in little endian non const */
-      uchar* GetBytes() { return reinterpret_cast<uchar*>(&m_val); }
+      uint8_t* GetBytes() { return reinterpret_cast<uint8_t*>(&m_val); }
       /** @return number of bytes of value */
-      uint32 GetNumBytes() const { return (uint32)sizeof(T); }
+      uint32_t GetNumBytes() const { return (uint32_t)sizeof(T); }
       /** assign the value because of bytes */
-      void SetBytes(const uchar* bytes) {m_val = *reinterpret_cast<const T*>(bytes);}
+      void SetBytes(const uint8_t* bytes) {m_val = *reinterpret_cast<const T*>(bytes);}
       /** assignment operator for setting values */
       ByteOrderedValue<T, IS_LITTLE_ENDIAN>& operator=(const T &a)
       {

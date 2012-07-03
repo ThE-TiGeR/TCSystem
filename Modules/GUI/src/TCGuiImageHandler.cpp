@@ -48,7 +48,7 @@ namespace tc
       class Image
       {
       public:
-         Image(const char* _id, const char* _lang_id, const uchar* _image_data, ImageHandler::ImageType _type=ImageHandler::BITMAP)
+         Image(const char* _id, const char* _lang_id, const uint8_t* _image_data, ImageHandler::ImageType _type=ImageHandler::BITMAP)
          :id(_id), lang_id(_lang_id), image_data(_image_data), type(_type), icon(0)
          {
          }
@@ -60,7 +60,7 @@ namespace tc
       private:
          std::string id;
          std::string lang_id;
-         const uchar* image_data;
+         const uint8_t* image_data;
          ImageHandler::ImageType type;
          FX::FXIcon* icon;
 
@@ -79,7 +79,7 @@ namespace tc
             util::FreeMemoryOfStlContainer(m_images);
          }
 
-         virtual void AddImageData(const char* _id, const char* _lang_id, const uchar* _image_data, ImageType image_type=BITMAP)
+         virtual void AddImageData(const char* _id, const char* _lang_id, const uint8_t* _image_data, ImageType image_type=BITMAP)
          {
             SharedPtr<Image> image(new Image(_id, _lang_id, _image_data, image_type));
             m_images.insert(std::make_pair(std::string(_id), image));

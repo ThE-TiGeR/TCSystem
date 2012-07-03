@@ -59,10 +59,10 @@ class TCGUI_API Button: public FX::FXButton, public Widget
 
 public:
    Button(FX::FXComposite* p, const std::string& text, FX::FXIcon* ic=0, 
-               FX::FXObject* tgt=0, FX::FXSelector sel=0, uint32 opts=FX::BUTTON_NORMAL,
-               sint32 x=0,sint32 y=0,sint32 w=0,sint32 h=0,
-               sint32 pl=FX::DEFAULT_PAD,sint32 pr=FX::DEFAULT_PAD,
-               sint32 pt=FX::DEFAULT_PAD,sint32 pb=FX::DEFAULT_PAD);
+               FX::FXObject* tgt=0, FX::FXSelector sel=0, uint32_t opts=FX::BUTTON_NORMAL,
+               int32_t x=0,int32_t y=0,int32_t w=0,int32_t h=0,
+               int32_t pl=FX::DEFAULT_PAD,int32_t pr=FX::DEFAULT_PAD,
+               int32_t pt=FX::DEFAULT_PAD,int32_t pb=FX::DEFAULT_PAD);
    virtual ~Button() {};
 
 protected:
@@ -79,9 +79,9 @@ class TCGUI_API HelpButton: public Button
 
 public:
    HelpButton(FX::FXComposite* p, 
-                   FX::FXObject* tgt=0, FX::FXSelector sel=0, uint32 opts=0,
-                   sint32 x=0,sint32 y=0,sint32 w=26,sint32 h=26,
-                   sint32 pl=0,sint32 pr=2,sint32 pt=0,sint32 pb=0);
+                   FX::FXObject* tgt=0, FX::FXSelector sel=0, uint32_t opts=0,
+                   int32_t x=0,int32_t y=0,int32_t w=26,int32_t h=26,
+                   int32_t pl=0,int32_t pr=2,int32_t pt=0,int32_t pb=0);
    
 protected:
    HelpButton() {};
@@ -97,9 +97,9 @@ class TCGUI_API ApplyButton: public Button
 
 public:
    ApplyButton(FX::FXComposite* p,
-                    FX::FXObject* tgt=0, FX::FXSelector sel=0, uint32 opts=0,
-                    sint32 x=0, sint32 y=0, sint32 w=85, sint32 h=26,
-                    sint32 pl=0, sint32 pr=2, sint32 pt=0, sint32 pb=0);
+                    FX::FXObject* tgt=0, FX::FXSelector sel=0, uint32_t opts=0,
+                    int32_t x=0, int32_t y=0, int32_t w=85, int32_t h=26,
+                    int32_t pl=0, int32_t pr=2, int32_t pt=0, int32_t pb=0);
 
 protected:
    ApplyButton() {};
@@ -115,9 +115,9 @@ class TCGUI_API CancelButton: public Button
 
 public:
    CancelButton(FX::FXComposite* p,
-                     FX::FXObject* tgt=0, FX::FXSelector sel=0, uint32 opts=0,
-                     sint32 x=0, sint32 y=0, sint32 w=85, sint32 h=26,
-                     sint32 pl=0, sint32 pr=2, sint32 pt=0, sint32 pb=0);
+                     FX::FXObject* tgt=0, FX::FXSelector sel=0, uint32_t opts=0,
+                     int32_t x=0, int32_t y=0, int32_t w=85, int32_t h=26,
+                     int32_t pl=0, int32_t pr=2, int32_t pt=0, int32_t pb=0);
 
 protected:
    CancelButton() {};
@@ -133,9 +133,9 @@ class TCGUI_API YesButton: public Button
 
 public:
    YesButton(FX::FXComposite* p,
-                  FX::FXObject* tgt=0, FX::FXSelector sel=0, uint32 opts=0,
-                  sint32 x=0, sint32 y=0, sint32 w=85, sint32 h=26,
-                  sint32 pl=0, sint32 pr=2, sint32 pt=0, sint32 pb=0);
+                  FX::FXObject* tgt=0, FX::FXSelector sel=0, uint32_t opts=0,
+                  int32_t x=0, int32_t y=0, int32_t w=85, int32_t h=26,
+                  int32_t pl=0, int32_t pr=2, int32_t pt=0, int32_t pb=0);
 
 protected:
    YesButton() {};
@@ -151,9 +151,9 @@ class TCGUI_API NoButton: public Button
 
 public:
    NoButton(FX::FXComposite* p,
-                 FX::FXObject* tgt=0, FX::FXSelector sel=0, uint32 opts=0,
-                 sint32 x=0, sint32 y=0, sint32 w=85, sint32 h=26,
-                 sint32 pl=0, sint32 pr=2, sint32 pt=0, sint32 pb=0);
+                 FX::FXObject* tgt=0, FX::FXSelector sel=0, uint32_t opts=0,
+                 int32_t x=0, int32_t y=0, int32_t w=85, int32_t h=26,
+                 int32_t pl=0, int32_t pr=2, int32_t pt=0, int32_t pb=0);
 
 
 protected:
@@ -170,9 +170,9 @@ class TCGUI_API OkButton: public Button
 
 public:
    OkButton(FX::FXComposite* p,
-                 FX::FXObject* tgt=0, FX::FXSelector sel=0, uint32 opts=0,
-                 sint32 x=0, sint32 y=0, sint32 w=85, sint32 h=26,
-                 sint32 pl=0, sint32 pr=2, sint32 pt=0, sint32 pb=0);
+                 FX::FXObject* tgt=0, FX::FXSelector sel=0, uint32_t opts=0,
+                 int32_t x=0, int32_t y=0, int32_t w=85, int32_t h=26,
+                 int32_t pl=0, int32_t pr=2, int32_t pt=0, int32_t pb=0);
 
 protected:
    OkButton() {};

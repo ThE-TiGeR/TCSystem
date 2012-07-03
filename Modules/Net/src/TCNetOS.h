@@ -91,7 +91,7 @@ namespace imp
 #if TCOS_LINUX || TCOS_IBM
    typedef socklen_t AddrLength;
 #else
-   typedef sint32  AddrLength;
+   typedef int32_t  AddrLength;
 #endif
 
 } // namespace imp

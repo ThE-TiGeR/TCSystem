@@ -68,10 +68,10 @@ namespace tc
          };
          typedef SharedPtr<CallBack> CallBackPtr;
 
-         virtual void RegisterMessageCallback(uint32 id, CallBackPtr call_back) = 0;
+         virtual void RegisterMessageCallback(uint32_t id, CallBackPtr call_back) = 0;
 
          template <class MessageClass, class ObjectClass, typename CallBackMethod>
-         void RegisterMessageCallback(uint32 id, SharedPtr<ObjectClass> class_instance, 
+         void RegisterMessageCallback(uint32_t id, SharedPtr<ObjectClass> class_instance, 
             CallBackMethod call_back);
 
          virtual bool DispatchMessage(MessagePtr message) = 0;
@@ -105,7 +105,7 @@ namespace tc
       };
 
       template <class MessageClass, class ObjectClass, typename CallBackMethod>
-      void MessageDispatcher::RegisterMessageCallback(uint32 id, SharedPtr<ObjectClass> class_instance, 
+      void MessageDispatcher::RegisterMessageCallback(uint32_t id, SharedPtr<ObjectClass> class_instance, 
          CallBackMethod call_back)
       {
          RegisterMessageCallback(id, 

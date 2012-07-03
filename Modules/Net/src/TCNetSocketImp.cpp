@@ -76,7 +76,7 @@ namespace tc
             return m_socket;
          }
 
-         uint64 SocketImp::ReadBytes(void* buffer, uint64 size)
+         uint64_t SocketImp::ReadBytes(void* buffer, uint64_t size)
          {
             if ((!IsOpened()) || (size == 0))
             {
@@ -94,7 +94,7 @@ namespace tc
             return nbytes;
          }
 
-         uint64 SocketImp::ReadBytes(void* buffer, uint64 size, const Time& timeout_in)
+         uint64_t SocketImp::ReadBytes(void* buffer, uint64_t size, const Time& timeout_in)
          {
             if ((!IsOpened()) || (size == 0) || !buffer)
             {
@@ -112,7 +112,7 @@ namespace tc
 
             Time timeout(timeout_in);
             Time start_time = Time::Now();
-            uint64 bytes_received = 0;
+            uint64_t bytes_received = 0;
             do
             {
                timeval rx_timeout = 
@@ -121,7 +121,7 @@ namespace tc
                   static_cast<long>(timeout.NanoSeconds() / 1000)
                };
 
-               sint32 s = ::select(1 + 1, &read_set, 0, 0, &rx_timeout);
+               int32_t s = ::select(1 + 1, &read_set, 0, 0, &rx_timeout);
                if (s == socket_error)
                {
                   util::PrintSocketError("SocketImp::ReceiveBytes with timeout select failed", true);
@@ -133,7 +133,7 @@ namespace tc
                   return false;
                }
 
-               uint64 rx_len = ReadBytes(buffer, size);
+               uint64_t rx_len = ReadBytes(buffer, size);
                if(rx_len == 0)
                {
                   return false;
@@ -158,7 +158,7 @@ namespace tc
             return bytes_received;
          }
 
-         uint64 SocketImp::ReadBytesFrom(void* buffer, uint64 size, Address& ip)
+         uint64_t SocketImp::ReadBytesFrom(void* buffer, uint64_t size, Address& ip)
          {
             ip = 0;
             if ((!IsOpened()) || (size==0))
@@ -182,7 +182,7 @@ namespace tc
             return nbytes;
          }
 
-         uint64 SocketImp::WriteBytes(const void* buffer_in, uint64 size)
+         uint64_t SocketImp::WriteBytes(const void* buffer_in, uint64_t size)
          {
             if (!IsOpened())
             {
@@ -190,7 +190,7 @@ namespace tc
             }
 
             const char* buffer = static_cast<const char*>(buffer_in);
-            uint64 nbytes_total = 0;
+            uint64_t nbytes_total = 0;
             while (nbytes_total < size)
             {
                int nbytes = ::send(m_socket, buffer, int(size-nbytes_total), 0);
@@ -209,7 +209,7 @@ namespace tc
             return nbytes_total;
          }
 
-         uint64 SocketImp::WriteBytesTo(const void* buffer_in, uint64 size, const Address& ip, PortNumber port)
+         uint64_t SocketImp::WriteBytesTo(const void* buffer_in, uint64_t size, const Address& ip, PortNumber port)
          {
             if (!IsOpened())
             {
@@ -222,10 +222,10 @@ namespace tc
             address.sin_addr = ip;
 
             const char* buffer = static_cast<const char*>(buffer_in);
-            uint64 nbytes_total = 0;
+            uint64_t nbytes_total = 0;
             while (nbytes_total < size)
             {
-               sint32 nbytes = ::sendto(m_socket, buffer, int(size-nbytes_total), 
+               int32_t nbytes = ::sendto(m_socket, buffer, int(size-nbytes_total), 
                    0, reinterpret_cast<sockaddr*>(&address), sizeof(address));
                if(nbytes == 0 || nbytes == socket_error)
                {

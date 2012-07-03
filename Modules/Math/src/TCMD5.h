@@ -36,7 +36,6 @@
 #ifndef _TC_MD5_H_
 #define _TC_MD5_H_
 
-#include "TCNonCopyable.h"
 #include "TCMathChecksum.h"
 
 #include <string>
@@ -73,7 +72,7 @@ namespace imp
        * @param data The data to append to the calculation
        * @param len The length of the data to append
        */
-      virtual void Append(const uchar *data, uint32 len);
+      virtual void Append(const uint8_t *data, uint32_t len);
       
       /** @short Get the calculated hash string */
       virtual std::string GetHashString() const;
@@ -82,7 +81,7 @@ namespace imp
       virtual std::string GetHashDigets() const;
 
    private:
-      void Process(const uchar data[64]);
+      void Process(const uint8_t data[64]);
       struct MD5Context* md5_context;
    };
 

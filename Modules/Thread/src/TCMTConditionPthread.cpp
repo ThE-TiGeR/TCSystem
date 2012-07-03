@@ -85,7 +85,7 @@ namespace tc
          {
             Time time = Time::Now() + timeout;
             timespec t = {time.Seconds(), time.NanoSeconds()};
-            sint32 rc;
+            int32_t rc;
 
             do
             {

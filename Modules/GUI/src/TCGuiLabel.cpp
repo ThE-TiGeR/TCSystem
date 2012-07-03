@@ -47,16 +47,16 @@ namespace tc
       TCGUIBASE_IMPLEMENT(Label, FX::FXLabel, 0, 0)
 
       Label::Label(FX::FXComposite * p, const std::string &text_id, FX::FXIcon* ic,
-                   uint32 opts, sint32 x, sint32 y, sint32 w, sint32 h,
-                   sint32 pl, sint32 pr, sint32 pt, sint32 pb)
+                   uint32_t opts, int32_t x, int32_t y, int32_t w, int32_t h,
+                   int32_t pl, int32_t pr, int32_t pt, int32_t pb)
          :FX::FXLabel(p, mls::Handler::GetText(text_id).c_str(), ic, opts, x, y,w, h,pl,pr,pt,pb)
          ,Widget(text_id)
       {
       }
 
       Label::Label(FX::FXComposite * p, const std::string &text_id, FX::FXIcon* ic, FX::FXObject * tgt, FX::FXSelector sel,
-         uint32 opts, sint32 x, sint32 y, sint32 w, sint32 h,
-         sint32 pl, sint32 pr, sint32 pt, sint32 pb)
+         uint32_t opts, int32_t x, int32_t y, int32_t w, int32_t h,
+         int32_t pl, int32_t pr, int32_t pt, int32_t pb)
          :FX::FXLabel(p, mls::Handler::GetText(text_id).c_str(), ic, opts, x, y,w, h,pl,pr,pt,pb)
          ,Widget(text_id)
       {

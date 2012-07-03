@@ -53,9 +53,9 @@ namespace tc
 
          virtual const SoundFormat& GetFormat() const;
 
-         uint32 GetNumSoundData() const;
-         SoundDataPtr GetSoundData(uint32 idx);
-         SoundDataCPtr GetSoundData(uint32 idx) const;
+         uint32_t GetNumSoundData() const;
+         SoundDataPtr GetSoundData(uint32_t idx);
+         SoundDataCPtr GetSoundData(uint32_t idx) const;
          bool AddSoundData(SoundDataPtr sound_data);
          bool RemoveSoundData(SoundDataPtr sound_data);
 

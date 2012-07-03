@@ -73,12 +73,12 @@ namespace tc
       TCBASE_API std::string GetUserName();
 
       /** @return Number of CPU´s in the computer */
-      TCBASE_API sint32 GetNumCPUs();
+      TCBASE_API int32_t GetNumCPUs();
       /** @return The hostname */
       TCBASE_API std::string GetCpuModel();
 
       /** @return CPU time needed since starttime */
-      TCBASE_API uint64 GetCpuTime(uint64 starttime=0);
+      TCBASE_API uint64_t GetCpuTime(uint64_t starttime=0);
 
       /**
       * Suspends the process for specified time if supported by the system
@@ -86,16 +86,16 @@ namespace tc
       *
       * @param milli_seconds Number of milli seconds to wait
       */
-      TCBASE_API void Sleep(uint64 milli_seconds);
+      TCBASE_API void Sleep(uint64_t milli_seconds);
 
       /** @return The date information stored in a string */
       TCBASE_API std::string  GetDate();
       /** @return The string defined for environment variable */
       TCBASE_API std::string GetEnvironment(const std::string &ename);
       /** @return The process id of the current running process */
-      TCBASE_API uint32 GetProcessID();
+      TCBASE_API uint32_t GetProcessID();
       /** @return The current thread id of the current running process */
-      TCBASE_API uint32 GetCurrentThreadID();
+      TCBASE_API uint32_t GetCurrentThreadID();
 
       struct NetworkDeviceInfo
       {
@@ -107,11 +107,11 @@ namespace tc
       TCBASE_API bool GetNetworkDeviceInfos(std::vector<NetworkDeviceInfo>& infos);
 
       /** @return The last happend error code */
-      TCBASE_API sint32 GetLastError();
+      TCBASE_API int32_t GetLastError();
       /** @return The string last happend error code */
       TCBASE_API std::string GetLastErrorMessage();
       /** @return The string of happend error code */
-      TCBASE_API std::string GetErrorMessage(sint32 error_code);
+      TCBASE_API std::string GetErrorMessage(int32_t error_code);
 
       /** @return Get directory for storing temporary files */
       TCBASE_API std::string GetTmpDir();

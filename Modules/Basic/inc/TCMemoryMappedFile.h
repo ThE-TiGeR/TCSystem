@@ -66,13 +66,13 @@ namespace tc
    {
    public:
       /** @return Returns the size of the memory mapped file*/
-      virtual uint32 GetSize() const = 0;
+      virtual uint32_t GetSize() const = 0;
 
       /** @return Returns a pointer to the mapped data. If read only then 0 */
-      virtual uint8* GetData() = 0;
+      virtual uint8_t* GetData() = 0;
 
       /** @return Pointer to the actual data if successful */
-      virtual const uint8* GetReadOnlyData() const = 0;
+      virtual const uint8_t* GetReadOnlyData() const = 0;
 
       /** Closes the memory mapping. The data is then no more accessible */
       virtual ~MemoryMappedFile() {}

@@ -64,16 +64,16 @@ namespace tc
          /**
          * @brief Constructor with specified seed
          */
-         explicit Rng69069(uint32 seed);
+         explicit Rng69069(uint32_t seed);
 
-         virtual uint32 GetRandomNumber();
-         virtual uint32 GetRandomNumber(uint32 lower_limit, uint32 upper_limit);
+         virtual uint32_t GetRandomNumber();
+         virtual uint32_t GetRandomNumber(uint32_t lower_limit, uint32_t upper_limit);
          virtual double GetRandomNumberDouble(double lower_limit, double upper_limit);
-         virtual void SetSeed(uint32 seed);
+         virtual void SetSeed(uint32_t seed);
 
       private:
-         uint32 CreateRandomNumber();
-         uint32 m_rng;
+         uint32_t CreateRandomNumber();
+         uint32_t m_rng;
       };
 
       /**

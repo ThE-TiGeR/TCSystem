@@ -85,15 +85,15 @@ namespace tc
          {
             StreamPtr stream = CreateWriteStream();
             WriteValue<char>(stream, 't'); stream << space;
-            WriteValue<uint8>(stream, uint8(8)); stream << space;
-            WriteValue<uint16>(stream, 1); stream << space;
-            WriteValue<uint32>(stream, 1); stream << endl;
-            WriteValue<uint64>(stream, 1); stream << space;
+            WriteValue<uint8_t>(stream, uint8_t(8)); stream << space;
+            WriteValue<uint16_t>(stream, 1); stream << space;
+            WriteValue<uint32_t>(stream, 1); stream << endl;
+            WriteValue<uint64_t>(stream, 1); stream << space;
 
-            WriteValue<sint8>(stream, sint8(8)); stream << space;
-            WriteValue<sint16>(stream, 1); stream << space;
-            WriteValue<sint32>(stream, 1); stream << endl;
-            WriteValue<sint64>(stream, 1); stream << space;
+            WriteValue<int8_t>(stream, int8_t(8)); stream << space;
+            WriteValue<int16_t>(stream, 1); stream << space;
+            WriteValue<int32_t>(stream, 1); stream << endl;
+            WriteValue<int64_t>(stream, 1); stream << space;
 
             WriteValue<bool>(stream, true); stream << space;
             WriteValue<bool>(stream, false); stream << space;
@@ -106,15 +106,15 @@ namespace tc
          {
             StreamPtr stream = CreateReadStream();
             ReadValue<char>(stream, 't');
-            ReadValue<uint8>(stream, uint8(8));
-            ReadValue<uint16>(stream, 1);
-            ReadValue<uint32>(stream, 1);
-            ReadValue<uint64>(stream, 1);
+            ReadValue<uint8_t>(stream, uint8_t(8));
+            ReadValue<uint16_t>(stream, 1);
+            ReadValue<uint32_t>(stream, 1);
+            ReadValue<uint64_t>(stream, 1);
 
-            ReadValue<sint8>(stream, sint8(8));
-            ReadValue<sint16>(stream, 1);
-            ReadValue<sint32>(stream, 1);
-            ReadValue<sint64>(stream, 1);
+            ReadValue<int8_t>(stream, int8_t(8));
+            ReadValue<int16_t>(stream, 1);
+            ReadValue<int32_t>(stream, 1);
+            ReadValue<int64_t>(stream, 1);
             ReadValue<bool>(stream, true);
             ReadValue<bool>(stream, false);
 

@@ -345,7 +345,7 @@ namespace tc
       return evalue;
    }
 
-   uint32 system::GetProcessID()
+   uint32_t system::GetProcessID()
    {
 #if TCOS_WINDOWS || TCOS_WINCE_40
       return GetCurrentProcessId();
@@ -354,7 +354,7 @@ namespace tc
 #endif
    }
 
-   void system::Sleep(uint64 millisec)
+   void system::Sleep(uint64_t millisec)
    {
 #if TCOS_WINDOWS || TCOS_WINCE_40
 #define MAX_SLEEP_MILLI_SECONDS 0xffffffe   // 2**32-2
@@ -364,15 +364,15 @@ namespace tc
          return;
       }
 
-      uint64 no_of_max_sleeps = millisec / MAX_SLEEP_MILLI_SECONDS;
-      for (uint64 i = 0; i < no_of_max_sleeps; i++)
+      uint64_t no_of_max_sleeps = millisec / MAX_SLEEP_MILLI_SECONDS;
+      for (uint64_t i = 0; i < no_of_max_sleeps; i++)
       {
          ::Sleep(MAX_SLEEP_MILLI_SECONDS);
       }
 
       ::Sleep(static_cast<DWORD>(millisec % MAX_SLEEP_MILLI_SECONDS));
 #elif TCOS_CRAY || TCOS_FUJITSU
-      uint64 t = GetWallTime();
+      uint64_t t = GetWallTime();
       while (GetWallTime(t) < millisec);
 #else
       timespec rqts;
@@ -387,7 +387,7 @@ namespace tc
 #endif
    }
 
-   sint32 system::GetLastError()
+   int32_t system::GetLastError()
    {
 #if TCOS_WINDOWS || TCOS_WINCE_40
       return ::GetLastError();
@@ -401,7 +401,7 @@ namespace tc
       return GetErrorMessage(GetLastError());
    }
 
-   std::string system::GetErrorMessage(sint32 error_code)
+   std::string system::GetErrorMessage(int32_t error_code)
    {
 #if TCOS_WINDOWS || TCOS_WINCE_40
       LPSTR lpMsgBuf;
@@ -420,18 +420,16 @@ namespace tc
       message = string::Replace(message, '\n', ' ');
 
       LocalFree(lpMsgBuf);
-      return message;
 #else
-      char emess[SYS_CHAR_LEN] = "";
-      strcpy(emess, strerror(error_code));
-      return emess;
+      std::string message(strerror(error_code));
 #endif
+      return message;
    }
 
 
-   sint32 system::GetNumCPUs()
+   int32_t system::GetNumCPUs()
    {
-      sint32 nCPU = 0;
+      int32_t nCPU = 0;
 #ifdef TCOS_LINUX
       std::ifstream file("/proc/stat");
       if (!file) return 1;
@@ -446,7 +444,7 @@ namespace tc
 
 #elif TCOS_IBM
       struct nlist info;
-      sint32 fd;
+      int32_t fd;
 
       info.n_name = "_system_configuration";
 
@@ -460,7 +458,7 @@ namespace tc
       nCPU = _system_configuration.ncpus;
 
 #elif TCOS_SGI
-      nCPU = (sint32)sysmp(MP_NPROCS);
+      nCPU = (int32_t)sysmp(MP_NPROCS);
 
 #elif TCOS_HP
       struct pst_dynamic buf;
@@ -469,7 +467,7 @@ namespace tc
       nCPU = buf.psd_proc_cnt;
 
 #elif TCOS_ALPHA
-      sint32 start = 0;
+      int32_t start = 0;
       struct cpu_info info;
 
       getsysinfo(GSI_CPU_INFO, (caddr_t)&info, sizeof(info), &start, 0);
@@ -487,9 +485,9 @@ namespace tc
       return util::Max(1, nCPU);
    }
 
-   uint64 system::GetCpuTime(uint64 timeIn)
+   uint64_t system::GetCpuTime(uint64_t timeIn)
    {
-      uint64 dt;
+      uint64_t dt;
 #if defined(TCOS_WINDOWS) || defined(TCOS_WINCE_40)
       dt = GetTickCount() / CLOCKS_PER_SEC * 1000 - timeIn;
 #elif defined(TCOS_CRAY) || defined(TCOS_FUJITSU)
@@ -499,7 +497,7 @@ namespace tc
 
       getrusage(RUSAGE_SELF, &rusage);
 
-      uint64 q = rusage.ru_utime.tv_sec * 1000;
+      uint64_t q = rusage.ru_utime.tv_sec * 1000;
 
       dt = q + rusage.ru_utime.tv_usec / 1000 - timeIn;
 #endif
@@ -507,12 +505,12 @@ namespace tc
       return dt;
    }
 
-   uint32 system::GetCurrentThreadID()
+   uint32_t system::GetCurrentThreadID()
    {
 #if TCOS_WINDOWS
-      return static_cast<uint32>(::GetCurrentThreadId());
+      return static_cast<uint32_t>(::GetCurrentThreadId());
 #elif defined TCOS_POSIX
-      return static_cast<uint32>(::pthread_self());
+      return static_cast<uint32_t>(::pthread_self());
 #endif
    }
 
@@ -521,7 +519,7 @@ namespace tc
 #if TCOS_WINDOWS
       ULONG size = 0;
       ::GetAdaptersInfo( 0, &size);
-      IP_ADAPTER_INFO* adapters = (IP_ADAPTER_INFO*)new uint8[size];
+      IP_ADAPTER_INFO* adapters = (IP_ADAPTER_INFO*)new uint8_t[size];
       if (::GetAdaptersInfo(adapters, &size) != NO_ERROR)
       {
          return false;
@@ -531,7 +529,7 @@ namespace tc
       while (current_adapter)
       {
          std::string mac_address;
-         for (uint32 i = 0; i < current_adapter->AddressLength ; i++)
+         for (uint32_t i = 0; i < current_adapter->AddressLength ; i++)
          {
             mac_address += string::Print("%.2X", current_adapter->Address[i]);
             if (i != current_adapter->AddressLength - 1)
@@ -546,7 +544,7 @@ namespace tc
          current_adapter = current_adapter->Next;
       }
 
-      delete[] (uint8*)adapters;
+      delete[] (uint8_t*)adapters;
 #else
       for (int ed=0; ed<10; ed++)
       {

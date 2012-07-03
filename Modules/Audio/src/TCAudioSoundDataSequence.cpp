@@ -49,15 +49,15 @@ namespace tc
       {
       }
 
-      uint64 SoundDataSequence::GetData(uint64 num_bytes, uint8* buffer)
+      uint64_t SoundDataSequence::GetData(uint64_t num_bytes, uint8_t* buffer)
       {
          Locker lock(this);
 
-         uint64 n_read = 0;
+         uint64_t n_read = 0;
          while(num_bytes > 0 && 
                m_current_sound_data < m_sound_data.size())
          {
-            uint64 c_read = m_sound_data[m_current_sound_data]->GetData(num_bytes, buffer);
+            uint64_t c_read = m_sound_data[m_current_sound_data]->GetData(num_bytes, buffer);
             if (c_read < num_bytes)
             {
                m_sound_data[m_current_sound_data]->SetToStart();

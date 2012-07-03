@@ -58,7 +58,7 @@ namespace tc
          static ThreadPtr s_main_thread_ptr(&s_main_thread, tc::NoDelete());
 
          ThreadPtr ThreadPthread::Create(const std::string& thread_name,
-            uint32 stack_size,
+            uint32_t stack_size,
             ThreadPriority priority)
          {
             TCTRACE1("TCMT", 1, "%s", thread_name.c_str());
@@ -92,7 +92,7 @@ namespace tc
          }
 
          ThreadPthread::ThreadPthread(const std::string& thread_name,
-            uint32 stack_size, ThreadPriority priority)
+            uint32_t stack_size, ThreadPriority priority)
             :ThreadBase(thread_name, stack_size, priority),
             m_handle(0)
          {
@@ -166,8 +166,8 @@ namespace tc
             }
 
             struct sched_param sparam;
-            sint32 policy = 0;
-            sint32 error = pthread_getschedparam(m_handle, &policy, &sparam);
+            int32_t policy = 0;
+            int32_t error = pthread_getschedparam(m_handle, &policy, &sparam);
             if (error != 0)
             {
                TCERROR3("TCMT", "%s (error=%d %s) failed.",
@@ -189,11 +189,11 @@ namespace tc
 
          ThreadPtr ThreadPthread::Self()
          {
-            TCTRACEF("TCMT", 10);
+            TCTRACES("TCMT", 10);
 
             pthread_t handle = ::pthread_self();
             MutexLocker lock(m_threads_mutex);
-            for (uint32 i=0; i<m_threads.size(); i++)
+            for (uint32_t i=0; i<m_threads.size(); i++)
             {
                ThreadPtr thread = m_threads[i];
                SharedPtr< ThreadPthread > thread_imp;
@@ -211,16 +211,16 @@ namespace tc
 
          void ThreadPthread::SwitchContext()
          {
-            TCTRACEF("TCMT", 10);
+            TCTRACES("TCMT", 10);
             ::sched_yield();
          }
 
-         sint32 ThreadPthread::GetPriority(ThreadPriority pri)
+         int32_t ThreadPthread::GetPriority(ThreadPriority pri)
          {
             static bool priorities_setup = false;
-            static sint32 lowest_priority = 0;
-            static sint32 normal_priority = 0;
-            static sint32 highest_priority = 0;
+            static int32_t lowest_priority = 0;
+            static int32_t normal_priority = 0;
+            static int32_t highest_priority = 0;
 
             if (!priorities_setup)
             {

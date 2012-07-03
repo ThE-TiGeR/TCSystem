@@ -40,23 +40,23 @@ namespace tc
 {
    namespace imp
    {
-      Rng69069::Rng69069(uint32 seed)
+      Rng69069::Rng69069(uint32_t seed)
          :m_rng(seed)
       {
       }
 
-      uint32 Rng69069::GetRandomNumber()
+      uint32_t Rng69069::GetRandomNumber()
       {
          return CreateRandomNumber();
       }
 
-      uint32 Rng69069::GetRandomNumber(uint32 lower_limit, uint32 upper_limit)
+      uint32_t Rng69069::GetRandomNumber(uint32_t lower_limit, uint32_t upper_limit)
       {
-         uint64 diff = 1 + static_cast<uint64>(upper_limit - lower_limit);
-         uint64 aux = diff * CreateRandomNumber();
+         uint64_t diff = 1 + static_cast<uint64_t>(upper_limit - lower_limit);
+         uint64_t aux = diff * CreateRandomNumber();
          aux = aux >> 32;
 
-         return lower_limit + static_cast<uint32>(aux);
+         return lower_limit + static_cast<uint32_t>(aux);
       }
 
       double Rng69069::GetRandomNumberDouble(double lower_limit, double upper_limit)
@@ -66,12 +66,12 @@ namespace tc
          return lower_limit + val * (upper_limit - lower_limit);
       }
 
-      void Rng69069::SetSeed(uint32 seed)
+      void Rng69069::SetSeed(uint32_t seed)
       {
          m_rng = seed;
       }
 
-      uint32 Rng69069::CreateRandomNumber()
+      uint32_t Rng69069::CreateRandomNumber()
       {
          m_rng = (69069 * m_rng) + 1;
          return m_rng;

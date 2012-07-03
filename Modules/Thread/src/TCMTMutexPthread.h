@@ -96,7 +96,7 @@ namespace imp
       bool UnGetIfOwner();
 
    private:
-      uint32 m_nesting_level;
+      uint32_t m_nesting_level;
       ::pthread_t m_owner_process;
       SemaphorePtr m_semaphore;
    };

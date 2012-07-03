@@ -177,7 +177,7 @@ namespace tc
 
          if(!base.empty() && !IsTopDirectory(base))
          {
-            sint32 p=0,q=0,bp=0,bq=0;
+            int32_t p=0,q=0,bp=0,bq=0;
 
             // Find branch point
 #ifdef TCOS_WINDOWS
@@ -265,9 +265,9 @@ namespace tc
             STRING_TYPE result_str(file);
             FILE_NAME_TRAITS::ReplaceString(result_str, 
                FILE_NAME_TRAITS::PATH_SEPERATOR_WRONG, FILE_NAME_TRAITS::PATH_SEPERATOR);
-            sint32 p=0;
-            sint32 q=0;
-            sint32 s;
+            int32_t p=0;
+            int32_t q=0;
+            int32_t s;
 
             typename STRING_TYPE::value_type* result = const_cast<typename STRING_TYPE::value_type*>(result_str.c_str());
 #ifdef TCOS_WINDOWS

@@ -150,7 +150,7 @@ namespace tc
 #endif
       /** @return The number of elements of an C array */
       template <class T>
-      uint32 ArraySize(const T& array)
+      uint32_t ArraySize(const T& array)
       {
          return sizeof(array)/sizeof(array[0]);
       }
@@ -158,70 +158,70 @@ namespace tc
 #pragma warning (pop)
 #endif
 
-      /** @brief Swaps the bytes of an uint8 value */
-      inline void SwapBytes(uint8&)
+      /** @brief Swaps the bytes of an uint8_t value */
+      inline void SwapBytes(uint8_t&)
       {
       }
-      /** @brief Swaps the bytes of an uint16 value */
-      inline void SwapBytes(uint16& val)
+      /** @brief Swaps the bytes of an uint16_t value */
+      inline void SwapBytes(uint16_t& val)
       {
           val = (val >> 8) | (val << 8);
       }
-      /** @brief Swaps the bytes of an uint32 value */
-      inline void SwapBytes(uint32& val)
+      /** @brief Swaps the bytes of an uint32_t value */
+      inline void SwapBytes(uint32_t& val)
       {
           val = (val >> 24) | ((val & 0x00ff0000) >> 8) | ((val & 0x0000ff00) << 8) | (val << 24);
       }
-      /** @brief Swaps the bytes of an uint64 value */
-      inline void SwapBytes(uint64& val)
+      /** @brief Swaps the bytes of an uint64_t value */
+      inline void SwapBytes(uint64_t& val)
       {
-         uint32 *val_ptr = (uint32 *)&val;
-         uint32 tmp1 = val_ptr[0];
-         uint32 tmp2 = val_ptr[1];
+         uint32_t *val_ptr = (uint32_t *)&val;
+         uint32_t tmp1 = val_ptr[0];
+         uint32_t tmp2 = val_ptr[1];
          SwapBytes(tmp1);
          SwapBytes(tmp2);
          val_ptr[0] = tmp2;
          val_ptr[1] = tmp1;
       }
 
-      /** @brief Swaps the bytes of an sint8 value */
-      inline void SwapBytes(sint8&)
+      /** @brief Swaps the bytes of an int8_t value */
+      inline void SwapBytes(int8_t&)
       {
       }
-      /** @brief Swaps the bytes of an sint16 value */
-      inline void SwapBytes(sint16& val)
+      /** @brief Swaps the bytes of an int16_t value */
+      inline void SwapBytes(int16_t& val)
       {
-          SwapBytes((uint16&)val);
+          SwapBytes((uint16_t&)val);
       }
-      /** @brief Swaps the bytes of an sint32 value */
-      inline void SwapBytes(sint32& val)
+      /** @brief Swaps the bytes of an int32_t value */
+      inline void SwapBytes(int32_t& val)
       {
-          SwapBytes((uint32&)val);
+          SwapBytes((uint32_t&)val);
       }
-      /** @brief Swaps the bytes of an sint64 value */
-      inline void SwapBytes(sint64& val)
+      /** @brief Swaps the bytes of an int64_t value */
+      inline void SwapBytes(int64_t& val)
       {
-          SwapBytes((uint64&)val);
+          SwapBytes((uint64_t&)val);
       }
       /** @brief Swaps the bytes of an float value */
       inline void SwapBytes(float& val)
       {
-          SwapBytes((uint32&)val);
+          SwapBytes((uint32_t&)val);
       }
       /** @brief Swaps the bytes of an double value */
       inline void SwapBytes(double& val)
       {
-          SwapBytes((uint64&)val);
+          SwapBytes((uint64_t&)val);
       }
 
       /** @brief Swaps the bytes of any type */
       template <class T>
       void SwapBytes(T &val)
       {
-         uchar *buffer = (uchar*)&val;
-         for (uint32 i = 0; i<sizeof(val)/2; i++)
+         uint8_t *buffer = (uint8_t*)&val;
+         for (uint32_t i = 0; i<sizeof(val)/2; i++)
          {
-            uchar b = buffer[i];
+            uint8_t b = buffer[i];
 
             buffer[i] = buffer[sizeof(val)/2 - i - 1];
             buffer[sizeof(val)/2 - i - 1] = b;
@@ -232,7 +232,7 @@ namespace tc
       {
          union
          {
-            sint32 int_val;
+            int32_t int_val;
             char bytes[4];
          } data;
          data.int_val = 1;

@@ -105,9 +105,9 @@ namespace tc
             throw Exception("Unknown MP3 encoding");
          }
 
-         m_sound_format.num_channels = uint16(channels);
+         m_sound_format.num_channels = uint16_t(channels);
          m_sound_format.samples_per_second = rate;
-         m_sound_format.bytes_per_sample = uint16(channels * m_sound_format.bits_per_sample / 8);
+         m_sound_format.bytes_per_sample = uint16_t(channels * m_sound_format.bits_per_sample / 8);
          m_sound_format.bytes_per_second = m_sound_format.samples_per_second * 
                                            channels *  m_sound_format.bits_per_sample / 8;
 
@@ -127,7 +127,7 @@ namespace tc
          return m_sound_format;
       }
 
-      uint64 SoundDataMp3::GetData(uint64 num_bytes, uint8* buffer)
+      uint64_t SoundDataMp3::GetData(uint64_t num_bytes, uint8_t* buffer)
       {
          Locker lock(this);
 
@@ -162,14 +162,14 @@ namespace tc
       {
       }
 
-      ssize_t SoundDataMp3::Mp3Read(void* h, void *buf, size_t cnt)
+      ::ssize_t SoundDataMp3::Mp3Read(void* h, void *buf, ::size_t cnt)
       {
          SoundDataMp3* mp3_data = (SoundDataMp3*)h;
          StreamPtr stream = mp3_data->m_stream;
-         return ssize_t(stream->ReadBytes(cnt, buf));
+         return ::ssize_t(stream->ReadBytes(cnt, buf));
       }
 
-      off_t SoundDataMp3::Mp3Seek(void* h, off_t of, int origin)
+      ::off_t SoundDataMp3::Mp3Seek(void* h, ::off_t of, int origin)
       {
          SoundDataMp3* mp3_data = (SoundDataMp3*)h;
          StreamPtr stream = mp3_data->m_stream;

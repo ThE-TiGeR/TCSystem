@@ -48,7 +48,7 @@ namespace tc
    struct HeapCrtlib::Header
    {
       void*  m_user_visible_pointer;
-      uint32 m_allocation_size;
+      uint32_t m_allocation_size;
    };
 
    HeapCrtlib::HeapCrtlib()
@@ -60,9 +60,9 @@ namespace tc
    {
    }
 
-   void* HeapCrtlib::Alloc(uint32 size)
+   void* HeapCrtlib::Alloc(uint32_t size)
    {
-      uint32 allocation_size = size + sizeof(Header);
+      uint32_t allocation_size = size + sizeof(Header);
       Header* p = static_cast<Header*>(std::malloc(allocation_size));
       if (p)
       {
@@ -81,12 +81,12 @@ namespace tc
    }
 
 
-   void* HeapCrtlib::Alloc(uint32 size, const char*, uint32)
+   void* HeapCrtlib::Alloc(uint32_t size, const char*, uint32_t)
    {
       return Alloc(size);
    }
 
-   void* HeapCrtlib::ReAlloc(void* memory, uint32 size)
+   void* HeapCrtlib::ReAlloc(void* memory, uint32_t size)
    {
       void* new_memory = Alloc(size);
 
@@ -110,7 +110,7 @@ namespace tc
       Header* header = static_cast<Header*>(memory);
       --header;
 
-      uint32 mem_size = util::Min(size, header->m_allocation_size - uint32(sizeof(Header)));
+      uint32_t mem_size = util::Min(size, header->m_allocation_size - uint32_t(sizeof(Header)));
       std::memcpy(new_memory, memory, mem_size);
 
       Free(memory);
@@ -118,7 +118,7 @@ namespace tc
       return new_memory;
    }
 
-   void* HeapCrtlib::ReAlloc(void* memory, uint32 size, const char*, uint32)
+   void* HeapCrtlib::ReAlloc(void* memory, uint32_t size, const char*, uint32_t)
    {
       return ReAlloc(memory, size);
    }

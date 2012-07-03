@@ -61,8 +61,8 @@ namespace tc
             SemaphorePthread();
             ~SemaphorePthread();
 
-            bool Init(uint32 initial);
-            bool Init(const std::string& shared_name, uint32 initial, factory::CreationMode mode);
+            bool Init(uint32_t initial);
+            bool Init(const std::string& shared_name, uint32_t initial, factory::CreationMode mode);
 
             bool Wait();
             bool Try();

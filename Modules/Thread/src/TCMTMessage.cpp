@@ -44,17 +44,17 @@ namespace tc
    namespace multi_threading
    {
       static tc::interlocked::Type s_unique_reply_id(0);
-      static uint32 GetReplyIdentifier()
+      static uint32_t GetReplyIdentifier()
       {
-          uint32 reply_id;
+          uint32_t reply_id;
           do
           {
-             reply_id = static_cast<uint32>(tc::interlocked::Increment(s_unique_reply_id));
+             reply_id = static_cast<uint32_t>(tc::interlocked::Increment(s_unique_reply_id));
           } while (reply_id == 0);
           return reply_id;
       }
 
-      Message::Message( uint32 message_id )
+      Message::Message( uint32_t message_id )
           :m_message_id(message_id)
           ,m_reply_id(GetReplyIdentifier())
           ,m_sender_thread(factory::GetCurrentThread())

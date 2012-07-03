@@ -73,7 +73,7 @@ namespace tc
 
       TextRenderer::~TextRenderer()
       {
-         for (uint32 i=0; i<m_fonts.size(); i++)
+         for (uint32_t i=0; i<m_fonts.size(); i++)
          {
             ::glDeleteLists(m_font_gl_lists[i], m_fonts[i]->getMaxChar() + 1);
             delete m_fonts[i];
@@ -105,18 +105,18 @@ namespace tc
          {
             FX::FXFont *font = new FX::FXFont(FX::FXApp::instance(), fontdesc);
             font->create();
-            uint32 first = font->getMinChar();
-            uint32 last  = util::Min(uint32(font->getMaxChar()), uint32(255)); // in the moment only ascii character are supported
+            uint32_t first = font->getMinChar();
+            uint32_t last  = util::Min(uint32_t(font->getMaxChar()), uint32_t(255)); // in the moment only ascii character are supported
 
             // generate list for all characters   
-            uint32 fontList = glGenLists(last + 1);
+            uint32_t fontList = glGenLists(last + 1);
             FX::glUseFXFont(font, first, last - first, fontList + first);
 
             // store the data of creted font
             m_fonts.push_back(font);
             m_font_gl_lists.push_back(fontList);
 
-            m_current_font = static_cast<sint32>(m_fonts.size() - 1);
+            m_current_font = static_cast<int32_t>(m_fonts.size() - 1);
          }
 
          if (m_current_font == -1 && m_fonts.size()) m_current_font = 0;
@@ -142,7 +142,7 @@ namespace tc
       }
 
       void TextRenderer::Render2DText(const std::string &text,
-         math::CoordN<sint32,2> xyco,
+         math::CoordN<int32_t,2> xyco,
          const Color &color,
          bool clip)
       {
@@ -160,14 +160,14 @@ namespace tc
          {
             //TCMatrix4x4 m;
             //glGetDoublev(GL_MODELVIEW_MATRIX, (TCDouble*)((const TCDouble*)m));
-            //sint32 translationX = (sint32)(m[3][0]);
+            //int32_t translationX = (int32_t)(m[3][0]);
             //char currentCharacter[2];
             //currentCharacter[1] = 0;
             //FXFont* font = m_fonts[m_current_font];
             //while ((translationX+xyco[0] < 0) && (textLength > 0)) 
             //{
             //   currentCharacter[0] = *textPtr;
-            //   sint32 charWidth = font->getTextWidth(currentCharacter, 1);
+            //   int32_t charWidth = font->getTextWidth(currentCharacter, 1);
             //   xyco[0] += charWidth;
             //   textLength--;
             //   textPtr++;
@@ -192,7 +192,7 @@ namespace tc
          glPushAttrib(GL_LIST_BIT);
          glListBase(m_font_gl_lists[m_current_font]);
 
-         for(uint32 i=0; i<textArray.size(); ++i)
+         for(uint32_t i=0; i<textArray.size(); ++i)
          {   
             glRasterPos3f(xyzcoArray[i][0], xyzcoArray[i][1], xyzcoArray[i][2]);
             glCallLists(static_cast<GLsizei>(textArray[i].length()), GL_UNSIGNED_BYTE, textArray[i].c_str());

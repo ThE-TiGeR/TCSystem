@@ -83,10 +83,10 @@ namespace tc
       private:
          std::vector<StreamingSourcePtr> m_streaming_sources;
 
-         uint8* m_streaming_buffer;
-         uint32 m_streaming_buffer_size;
+         uint8_t* m_streaming_buffer;
+         uint32_t m_streaming_buffer_size;
 
-         uint32 m_total_num_processed_buffers;
+         uint32_t m_total_num_processed_buffers;
       };
 
       typedef SharedPtr<StreamingThread> StreamingThreadPtr;

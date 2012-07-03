@@ -120,7 +120,7 @@ namespace tc
 
          SocketServerImp::SocketServerImp()
          {
-            TCTRACEF("TCNET", 10);
+            TCTRACES("TCNET", 10, "");
 
             m_server_thread = multi_threading::factory::CreateThread("SocketServerImp");
             m_server_thread->Start(multi_threading::ThreadObjectPtr(new ThreadObject(this)));
@@ -128,20 +128,20 @@ namespace tc
 
          SocketServerImp::~SocketServerImp()
          {
-            TCTRACEF("TCNET", 50);
+            TCTRACES("TCNET", 50, "");
 
             Stop(true);
          }
 
          bool SocketServerImp::HandleMessage(multi_threading::MessagePtr message)
          {
-            TCTRACE1("TCNET", 50, "(%d)", message->GetMessageId());
+            TCTRACES("TCNET", 50, "(" << message->GetMessageId() << ")");
 
             switch(message->GetMessageId())
             {
             case StartMessage::MESSAGE_ID:
                {
-                  TCTRACE("TCNET", 50, "StartMessage");
+                  TCTRACES("TCNET", 50, "StartMessage");
                   m_current_timeout = Time::Zero();
                   if (SharedPtr<StartMessage>::StaticCast(message)->m_sync)
                   {
@@ -152,7 +152,7 @@ namespace tc
 
             case StopMessage::MESSAGE_ID:
                {
-                  TCTRACE("TCNET", 50, "StopMessage");
+                  TCTRACES("TCNET", 50, "StopMessage");
                   m_running = false;
                   return true;
                }
@@ -189,7 +189,7 @@ namespace tc
 
          bool SocketServerImp::Run()
          {
-            TCTRACEF("TCNET", 50);   
+            TCTRACES("TCNET", 50, "");   
 
             m_running = true;
             m_current_timeout = Time::Infinite();
@@ -202,7 +202,7 @@ namespace tc
                {
                   if (!HandleMessage(message))
                   {
-                     TCERROR1("TCNET", "Message not handled id=%d", message->GetMessageId());   
+                     TCERRORS("TCNET", "Message not handled id=" << message->GetMessageId());   
                   }
                }
                else
@@ -211,13 +211,13 @@ namespace tc
                }
             };
 
-            TCTRACE("TCNET", 50, "done.");   
+            TCTRACES("TCNET", 50, "done.");   
             return true;
          }
 
          bool SocketServerImp::Start(bool wait_started)
          {
-            TCTRACEF("TCNET", 50);
+            TCTRACES("TCNET", 50, "");
 
             if (m_server_thread->IsRunning())
             {
@@ -236,7 +236,7 @@ namespace tc
 
          void SocketServerImp::Stop(bool wait_stopped)
          {
-            TCTRACEF("TCNET", 50);
+            TCTRACES("TCNET", 50, "");
 
             if (m_server_thread->IsRunning())
             {
@@ -272,7 +272,7 @@ namespace tc
 
          bool SocketServerImp::Accept()
          {
-            TCTRACEF("TCNET", 100);
+            TCTRACES("TCNET", 100, "");
 
             // init read set
             fd_set read_set;
@@ -281,7 +281,7 @@ namespace tc
             // add all existing connections
             // and get max id
             SocketId max_id = 0;
-            uint32 i;
+            uint32_t i;
             for (i=0; i<m_sockets.size(); i++)
             {
                if (m_sockets[i] &&
@@ -303,7 +303,7 @@ namespace tc
             {
                struct timeval timeout = {0, SELECT_TIMEOUT * 1000};
 
-               sint32 s = ::select(static_cast<sint32>(max_id + 1),
+               int32_t s = ::select(static_cast<int32_t>(max_id + 1),
                   &read_set, 0, 0, &timeout);
                if (s > 0)
                {
@@ -332,13 +332,12 @@ namespace tc
 #endif
                   if (error != 0)
                   {
-                     TCERROR1("TCNET", "select error %s", error_str.c_str());
+                     TCERRORS("TCNET", "select error " << error_str);
                   }
                }
                else if (s < 0)
                {
-                  TCERROR1("TCNET", "select error %s", 
-                     system::GetLastErrorMessage().c_str());
+                  util::PrintSocketError("Select error", true);
                   return false;
                }
             }

@@ -71,7 +71,7 @@ void StreamBase::EnableDisplayErrorMessages(bool displ)
 // -----------------------------------------------------------------
 // status methodes
 // -----------------------------------------------------------------
-void StreamBase::setStatus(sint32 err) const
+void StreamBase::setStatus(int32_t err) const
 {
    m_status = err;
 
@@ -81,7 +81,7 @@ void StreamBase::setStatus(sint32 err) const
       displayErrorMessage();
       if (GetStatus() != error_none && system::GetLastError() !=0)
       {
-         TCERROR("TCBASE", system::GetLastErrorMessage().c_str());
+         TCERRORS("TCBASE", system::GetLastErrorMessage().c_str());
       }
    }
 }
@@ -96,30 +96,30 @@ void StreamBase::displayErrorMessage() const
    switch (GetStatus())
    {
       case error_stream_open:
-         TCERROR("TCBASE", "Error opening stream");
+         TCERRORS("TCBASE", "Error opening stream");
        break;
 
       case error_stream_close:
-         TCERROR("TCBASE", "Error closing stream");
+         TCERRORS("TCBASE", "Error closing stream");
        break;
 
       case error_stream_direction:
-         TCERROR("TCBASE", "Error wrong stream direction");
+         TCERRORS("TCBASE", "Error wrong stream direction");
        break;
 
       case error_read_from_stream:
-         TCERROR("TCBASE", "Error during read from stream");
+         TCERRORS("TCBASE", "Error during read from stream");
          break;
 
       case error_write_to_stream:
-         TCERROR("TCBASE", "Error during write to stream");
+         TCERRORS("TCBASE", "Error during write to stream");
          break;
 
       case error_end_of_stream:
          break;
 
       case error_set_stream_position:
-         TCERROR("TCBASE", "Set or get position of stream not supported");
+         TCERRORS("TCBASE", "Set or get position of stream not supported");
          break;
 
    }

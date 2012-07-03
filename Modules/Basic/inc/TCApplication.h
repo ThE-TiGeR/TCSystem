@@ -73,7 +73,7 @@ namespace tc
       virtual ~Application();
       
       /** Init the app */
-      virtual bool Init(uint32 narg, char **argv,
+      virtual bool Init(uint32_t narg, char **argv,
                         const std::string &name,
                         const std::string &version,
                         const std::string &company);

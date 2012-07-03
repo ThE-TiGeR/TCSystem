@@ -69,11 +69,11 @@ namespace tc
             GzFileStream(const std::string &fileName, StreamDirection direction, CodecPtr codec);
             virtual ~GzFileStream();
 
-            virtual bool SetPosition(sint64, StreamPosition pos);
-            virtual uint64 GetPosition() const;
+            virtual bool SetPosition(int64_t, StreamPosition pos);
+            virtual uint64_t GetPosition() const;
 
-            virtual uint64 ReadBytes (uint64 nBytes, void *bytes);
-            virtual uint64 WriteBytes(uint64 nBytes, const void *bytes);
+            virtual uint64_t ReadBytes (uint64_t nBytes, void *bytes);
+            virtual uint64_t WriteBytes(uint64_t nBytes, const void *bytes);
             virtual void Flush();
 
             virtual void CloseStream();

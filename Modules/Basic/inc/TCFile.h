@@ -97,18 +97,18 @@ namespace tc
       TCBASE_API bool IsExecutable(const std::string &file);
 
       /// @brief  Change the mode flags for this file
-      TCBASE_API bool SetFileAttr(const std::string &file, uint32 attr);
+      TCBASE_API bool SetFileAttr(const std::string &file, uint32_t attr);
       /// @brief  Get file size
-      TCBASE_API uint64 GetFileSize(const std::string &file);
+      TCBASE_API uint64_t GetFileSize(const std::string &file);
 
       /// @brief  returns time file was last modified   
-      TCBASE_API uint64 GetModificationTime(const std::string &file);
+      TCBASE_API uint64_t GetModificationTime(const std::string &file);
       /// @brief  returns time file was last accessed
-      TCBASE_API uint64 GetLastAccessTime(const std::string &file);
+      TCBASE_API uint64_t GetLastAccessTime(const std::string &file);
       /// @brief  returns time when created
-      TCBASE_API uint64 GetCreationTime(const std::string &file);
+      TCBASE_API uint64_t GetCreationTime(const std::string &file);
       /// @brief  returns time when touched
-      TCBASE_API uint64 GetTouchedTime(const std::string &file);
+      TCBASE_API uint64_t GetTouchedTime(const std::string &file);
 
       /// @brief  get name of file user
       TCBASE_API std::string GetFileUser(const std::string &file);
@@ -124,9 +124,9 @@ namespace tc
       struct FileInfo
       {
          std::string name;
-         uint64 last_modified;
+         uint64_t last_modified;
          bool is_directory;
-         uint64 file_size;
+         uint64_t file_size;
       };
       typedef std::vector < FileInfo > FileInfos;
 
@@ -145,7 +145,7 @@ namespace tc
       class Progress
       {
       public:
-         virtual void OnCurrentStatus(uint32 percent_done) = 0;
+         virtual void OnCurrentStatus(uint32_t percent_done) = 0;
 
          virtual ~Progress() {}
       };

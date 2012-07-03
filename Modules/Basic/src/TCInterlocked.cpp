@@ -97,7 +97,7 @@ namespace tc
 #endif
       }
 
-      Type Exchange(Type& target, sint32 new_value)
+      Type Exchange(Type& target, int32_t new_value)
       {
 #ifdef TCOS_WINDOWS
          return ::InterlockedExchange(&target, new_value);
@@ -110,14 +110,14 @@ namespace tc
 #endif
       }
 
-      Type Add(Type& target, sint32 value_to_add)
+      Type Add(Type& target, int32_t value_to_add)
       {
 #ifdef TCOS_WINDOWS
          return ::InterlockedExchangeAdd(&target, value_to_add);
 #else
          Locked lock;
 
-         sint32 old_value = target;
+         int32_t old_value = target;
          target += value_to_add;
 
          return old_value;

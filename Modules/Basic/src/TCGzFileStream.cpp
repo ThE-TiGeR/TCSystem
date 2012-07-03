@@ -61,7 +61,7 @@ namespace tc
 
             if (!m_file)
             {
-                TCERROR1("TCBASE", "Error opening file '%s'", fileName.c_str());
+                TCERRORS("TCBASE", "Error opening file '" << fileName << "'");
                 setStatus(error_stream_open);
             }
             setStreamDirection(direction);
@@ -83,7 +83,7 @@ namespace tc
             StreamBase::CloseStream();
         }
 
-        uint64 GzFileStream::ReadBytes(uint64 nBytes, void *bytes)
+        uint64_t GzFileStream::ReadBytes(uint64_t nBytes, void *bytes)
         {
             // check for an error
             if (Error())
@@ -98,10 +98,10 @@ namespace tc
                 return 0;
             }
 
-            uint64 read_bytes = 0;
+            uint64_t read_bytes = 0;
             while(read_bytes < nBytes)
             {
-                int num = ::gzread(m_file, static_cast<uchar*>(bytes)+read_bytes, 
+                int num = ::gzread(m_file, static_cast<uint8_t*>(bytes)+read_bytes, 
                     unsigned(nBytes-read_bytes));
                 if (num <= 0)
                 {
@@ -121,7 +121,7 @@ namespace tc
             return read_bytes;
         }
 
-        uint64 GzFileStream::WriteBytes(uint64 nBytes, const void *bytes)
+        uint64_t GzFileStream::WriteBytes(uint64_t nBytes, const void *bytes)
         {
             if (nBytes == 0)
             {
@@ -141,10 +141,10 @@ namespace tc
                 return 0;
             }
 
-            uint64 wrote_bytes = 0;
+            uint64_t wrote_bytes = 0;
             while(wrote_bytes < nBytes)
             {
-                int num = ::gzwrite(m_file, static_cast<const uchar*>(bytes)+wrote_bytes,  
+                int num = ::gzwrite(m_file, static_cast<const uint8_t*>(bytes)+wrote_bytes,  
                     unsigned(nBytes-wrote_bytes));
                 if (num <= 0)
                 {
@@ -176,7 +176,7 @@ namespace tc
             }
         }
 
-        bool GzFileStream::SetPosition(sint64 pos, StreamPosition pos_mode)
+        bool GzFileStream::SetPosition(int64_t pos, StreamPosition pos_mode)
         {
             ResetStatus();
 
@@ -195,7 +195,7 @@ namespace tc
             return false;
         }
 
-        uint64 GzFileStream::GetPosition() const
+        uint64_t GzFileStream::GetPosition() const
         {
             return ::gztell(m_file);
         }

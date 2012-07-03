@@ -60,7 +60,7 @@ class TCGUI_API MenuTitle: public FX::FXMenuTitle, public Widget
 
 public:
    MenuTitle(FX::FXComposite* p, const std::string& text,
-                  FX::FXIcon* ic=0, FX::FXPopup* pup=0, uint32 opts=0);
+                  FX::FXIcon* ic=0, FX::FXPopup* pup=0, uint32_t opts=0);
    virtual ~MenuTitle() {};
   
 protected:
@@ -82,7 +82,7 @@ class TCGUI_API MenuCommand: public FX::FXMenuCommand, public Widget
 
 public:
    MenuCommand(FX::FXComposite* p, const std::string& text,
-                    FX::FXIcon* ic=0, FX::FXObject* tgt=0, FX::FXSelector sel=0, uint32 opts=0);
+                    FX::FXIcon* ic=0, FX::FXObject* tgt=0, FX::FXSelector sel=0, uint32_t opts=0);
    virtual ~MenuCommand();
 
 protected:

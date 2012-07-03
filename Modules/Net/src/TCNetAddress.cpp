@@ -109,7 +109,7 @@ namespace tc
          SetAddress(_addr);
       }
 
-      Address::Address(uint32 ip_address)
+      Address::Address(uint32_t ip_address)
          :m_address(0)
          ,m_base(new imp::Base)
       {
@@ -162,7 +162,7 @@ namespace tc
          *m_address = _addr.sin_addr;
       }
 
-      void Address::SetAddress(uint32 ip_address)
+      void Address::SetAddress(uint32_t ip_address)
       {
          initAddress();
          m_address->s_addr = htonl(ip_address);
@@ -190,11 +190,12 @@ namespace tc
          {            
             char hostname[256];
             if (gethostname(hostname, sizeof(hostname)) >= 0)
+            {
                hname = hostname;
+            }
             else
             {
-               TCERROR1("TCNET", "error setting up internet address of %s",
-                  hname.c_str());
+               TCERRORS("TCNET", "Error setting up internet address of " << hname);
                return;
             }
 
@@ -214,8 +215,7 @@ namespace tc
                if (setjmp(alarmEnv) != 0)
                {
                   // alarm went off
-                  TCERROR1("TCNET", "error setting up internet address of %s",
-                     hname.c_str());
+                  TCERRORS("TCNET", "Error setting up internet address of " << hname);
                   return;
                }
 
@@ -237,8 +237,7 @@ namespace tc
 
          if (!hent) 
          {
-            TCERROR1("TCNET", "error setting up internet address of %s",
-               hname.c_str());
+            TCERRORS("TCNET", "Error setting up internet address of " << hname);
             return;
          }
 
@@ -260,7 +259,7 @@ namespace tc
          }
 #endif
 
-         sint32 addrLen = sizeof(InternetAddress);
+         int32_t addrLen = sizeof(InternetAddress);
          struct hostent* hent = gethostbyaddr((char*)m_address, addrLen, AF_INET);
 
 #ifndef TCOS_WINDOWS
@@ -303,7 +302,7 @@ namespace tc
          return *this;
       }
 
-      Address& Address::operator=(uint32 _addr)
+      Address& Address::operator=(uint32_t _addr)
       {
          SetAddress(_addr);
          return *this;

@@ -36,6 +36,7 @@
 #define _TC_DEBUG_HEAP_H_
 
 #include "TCHeap.h"
+#include "TCNonCopyable.h"
 #include "TCStream.h"
 
 namespace tc
@@ -58,10 +59,10 @@ namespace tc
         DebugHeap(Heap& heap);
         ~DebugHeap();
 
-        virtual void* Alloc(uint32 size);
-        virtual void* Alloc(uint32 size, const char* file_name, uint32 line_numer);
-        virtual void* ReAlloc(void* memory, uint32 size);
-        virtual void* ReAlloc(void* memory, uint32 size, const char* file_name, uint32 line_numer);
+        virtual void* Alloc(uint32_t size);
+        virtual void* Alloc(uint32_t size, const char* file_name, uint32_t line_numer);
+        virtual void* ReAlloc(void* memory, uint32_t size);
+        virtual void* ReAlloc(void* memory, uint32_t size, const char* file_name, uint32_t line_numer);
         virtual void Free(void* memory);
         virtual bool IsAHeapPointer(void* memory) const;
 

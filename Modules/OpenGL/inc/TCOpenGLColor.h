@@ -191,7 +191,7 @@ namespace tc
          *                the next 8 bits are green, then blue.
          *                The least significant 8 bit are alpha.
          */
-         explicit Color(uint32 color);
+         explicit Color(uint32_t color);
 
          /** @return the red component of this Color object */
          float GetRed()   const {  return m_red;   }
@@ -247,7 +247,7 @@ namespace tc
          * @param pos Defines which value to get, green green or ...
          * @return The value of the component
          */
-         float operator[] (sint32 pos) const
+         float operator[] (int32_t pos) const
          {
             TC_ASSERT(pos>=0 && pos<=3 );
             if      (pos==0) return m_red;
@@ -261,7 +261,7 @@ namespace tc
          * @param pos Defines which value to set, green green or ...
          * @return The reference to the value of the component
          */
-         float& operator[] (sint32 pos)
+         float& operator[] (int32_t pos)
          {
             TC_ASSERT(pos>=0 && pos<=3 );
             if      (pos==0) return m_red;
@@ -290,12 +290,12 @@ namespace tc
          * The color components go from 0-255
          * @param color The long color value which holds all for components
          */
-         void FromUnsignedInt(uint32 color);
+         void FromUnsignedInt(uint32_t color);
 
          /** 
          * @return the unsigned int value of all 4 components between 0-255 
          */
-         uint32 ToUnsignedInt() const;
+         uint32_t ToUnsignedInt() const;
 
       private:
          /** the green component of the color */

@@ -35,7 +35,6 @@
 #ifndef _TCSTREAM_H_
 #define _TCSTREAM_H_
 
-#include "TCNonCopyable.h"
 #include "TCSharedPtr.h"
 
 #include <string>
@@ -59,7 +58,7 @@ namespace tc
     * @brief Base class for all streams
     * implements all operators and prepares methods for reading and writing
     */
-   class Stream: protected NonCopyAble
+   class Stream
    {
    public:
       /**
@@ -110,7 +109,7 @@ namespace tc
        * @return the error flag
        * defined in TCStream::StreamErrorFlags
        */
-      virtual sint32 GetStatus() const = 0;
+      virtual int32_t GetStatus() const = 0;
       /** Reset the error flag to error_none */
       virtual void ResetStatus() = 0;
       /** @return False if no error happend else true */
@@ -131,9 +130,9 @@ namespace tc
          POSITION_END,
       };
       /** Set the current position of the stream where to read or write */
-      virtual bool SetPosition(sint64, StreamPosition pos) = 0;
+      virtual bool SetPosition(int64_t, StreamPosition pos) = 0;
       /** Get the current position of the stream */
-      virtual uint64 GetPosition() const = 0;
+      virtual uint64_t GetPosition() const = 0;
 
       /**
        * Method for reading the bytes from the stream
@@ -142,7 +141,7 @@ namespace tc
        * @param nBytes number of bytes to read
        * @param bytes where to store the data which should be read
        */
-      virtual uint64 ReadBytes (uint64 nBytes, void *bytes) = 0;
+      virtual uint64_t ReadBytes (uint64_t nBytes, void *bytes) = 0;
       /**
        * Method for writing the bytes to the stream
        * has to be implemented in each derived class
@@ -150,163 +149,163 @@ namespace tc
        * @param nBytes number of bytes to written
        * @param bytes where the bytes are stored which should be written
        */
-      virtual uint64 WriteBytes(uint64 nBytes, const void *bytes) = 0;
+      virtual uint64_t WriteBytes(uint64_t nBytes, const void *bytes) = 0;
 
       /**
        * Method for reading one signed 16bit integer from the stream
        * @param val the short which should store the short
        */
-      virtual uint64 Read(sint8 &val) = 0;
+      virtual uint64_t Read(int8_t &val) = 0;
       /**
        * Method for reading one unsigned 16bit integer from the stream
        * @param val the short which should store the short
        */
-      virtual uint64 Read(uint8 &val) = 0;
+      virtual uint64_t Read(uint8_t &val) = 0;
       /**
        * Method for reading one signed 16bit integer from the stream
        * @param val the short which should store the short
        */
-      virtual uint64 Read(sint16 &val) = 0;
+      virtual uint64_t Read(int16_t &val) = 0;
       /**
        * Method for reading one unsigned 16bit integer from the stream
        * @param val the short which should store the short
        */
-      virtual uint64 Read(uint16 &val) = 0;
+      virtual uint64_t Read(uint16_t &val) = 0;
       /**
        * Method for reading one signed int 32bit integer the stream
        * @param val the int which should store the int
        */
-      virtual uint64 Read(sint32 &val) = 0;
+      virtual uint64_t Read(int32_t &val) = 0;
       /**
        * Method for reading one unsigned 32bit integer from the stream
        * @param val the int which should store the int
        */
-      virtual uint64 Read(uint32 &val) = 0;
+      virtual uint64_t Read(uint32_t &val) = 0;
       /**
        * Method for reading one signed 64bit integer from the stream
        * @param val the long which should store the long
        */
-      virtual uint64 Read(sint64 &val) = 0;
+      virtual uint64_t Read(int64_t &val) = 0;
       /**
        * Method for reading one unsigned 64bit integer from the stream
        * @param val the long which should store the long
        */
-      virtual uint64 Read(uint64 &val) = 0;
+      virtual uint64_t Read(uint64_t &val) = 0;
       /**
        * Method for reading one float from the stream
        * @param val the float which should store the float
        */
-      virtual uint64 Read(float &val) = 0;
+      virtual uint64_t Read(float &val) = 0;
       /**
        * Method for reading one double from the stream
        * @param val the double which should store the double
        */
-      virtual uint64 Read(double &val) = 0;
+      virtual uint64_t Read(double &val) = 0;
       /**
       * Method for reading one std::string from the stream
       * @param val the string which should store the string
       */
-      virtual uint64 Read(std::string& val) = 0;
+      virtual uint64_t Read(std::string& val) = 0;
       /**
       * Method for reading one std::wstring from the stream
       * @param val the wstring which should store the string
       */
-      virtual uint64 Read(std::wstring& val) = 0;
+      virtual uint64_t Read(std::wstring& val) = 0;
       /**
       * Method for reading one char from the stream
       * @param val the char which should store the char
       */
-      virtual uint64 Read(char &val) = 0;
+      virtual uint64_t Read(char &val) = 0;
       /**
       * Method for reading one bool from the stream
       * @param val the char which should store the bool
       */
-      virtual uint64 Read(bool &val) = 0;
+      virtual uint64_t Read(bool &val) = 0;
 
 
       /**
       * Method for writing one signed 8bit integer to the stream
       * @param val the short which to write
       */
-      virtual uint64 Write(sint8 val) = 0;
+      virtual uint64_t Write(int8_t val) = 0;
       /**
       * Method for writing one unsigned 8bit integer to the stream
       * @param val the short which to write
       */
-      virtual uint64 Write(uint8 val) = 0;
+      virtual uint64_t Write(uint8_t val) = 0;
       /**
       * Method for writing one signed 16bit integer to the stream
       * @param val the short which to write
       */
-      virtual uint64 Write(sint16 val) = 0;
+      virtual uint64_t Write(int16_t val) = 0;
       /**
       * Method for writing one unsigned 16bit integer to the stream
       * @param val the short which to write
       */
-      virtual uint64 Write(uint16 val) = 0;
+      virtual uint64_t Write(uint16_t val) = 0;
       /**
       * Method for writing one signed 32bit integer to the stream
       * @param val the int which to write
       */
-      virtual uint64 Write(sint32 val) = 0;
+      virtual uint64_t Write(int32_t val) = 0;
       /**
       * Method for writing one unsigned 32bit integer to the stream
       * @param val the int which to write
       */
-      virtual uint64 Write(uint32 val) = 0;
+      virtual uint64_t Write(uint32_t val) = 0;
       /**
       * Method for writing one signed 64bit integer to the stream
       * @param val the long which to write
       */
-      virtual uint64 Write(sint64 val) = 0;
+      virtual uint64_t Write(int64_t val) = 0;
       /**
       * Method for writing one unsigned 64bit integer to the stream
       * @param val the long which to write
       */
-      virtual uint64 Write(uint64 val) = 0;
+      virtual uint64_t Write(uint64_t val) = 0;
       /**
       * Method for writing one float to the stream
       * @param val the float which to write
       */
-      virtual uint64 Write(float val) = 0;
+      virtual uint64_t Write(float val) = 0;
       /**
       * Method for writing one double to the stream
       * @param val the double which to write
       */
-      virtual uint64 Write(double val) = 0;
+      virtual uint64_t Write(double val) = 0;
       /**
       * Method for writing one string to the stream
       * @param val the string which to write
       */
-      virtual uint64 Write(const char *val) = 0;
+      virtual uint64_t Write(const char *val) = 0;
       /**
       * Method for writing one std::string to the stream
       * @param val the string which to write
       */
-      virtual uint64 Write(const std::string& val) = 0;
+      virtual uint64_t Write(const std::string& val) = 0;
       /**
       * Method for writing one std::wstring to the stream
       * @param val the wstring which to write
       */
-      virtual uint64 Write(const std::wstring& val) = 0;
+      virtual uint64_t Write(const std::wstring& val) = 0;
       /**
       * Method for writing one signed char to the stream
       * @param val the char which to write
       */
-      virtual uint64 Write(char val) = 0;
+      virtual uint64_t Write(char val) = 0;
       /**
       * Method for writing one bool to the stream
       * @param val the bool which to write
       */
-      virtual uint64 Write(bool val) = 0;
+      virtual uint64_t Write(bool val) = 0;
 
       /** Writes the end of line characters if needed for the stream */
-      virtual uint64 WriteEndOfLine() = 0;
+      virtual uint64_t WriteEndOfLine() = 0;
       /**
       * Writes space to the stream if needed for the stream
       * needed for separating words or numbers
       */
-      virtual uint64 WriteSpace() = 0;
+      virtual uint64_t WriteSpace() = 0;
 
       /** flushes the stream if needed */
       virtual void Flush() = 0;
@@ -345,7 +344,7 @@ namespace tc
    template <class T>
    inline StreamPtr operator>>(StreamPtr stream, std::vector<T>& values)
    {
-       uint64 size;
+       uint64_t size;
        stream >> size;
        values.resize(typename std::vector<T>::size_type(size));
        for (typename std::vector<T>::iterator it=values.begin(); it!=values.end(); ++it)
@@ -366,7 +365,7 @@ namespace tc
    template <class T>
    inline StreamPtr operator<<(StreamPtr stream, const std::vector<T>& values)
    {
-       stream << static_cast<uint64>(values.size()) << space;
+       stream << static_cast<uint64_t>(values.size()) << space;
        for (typename std::vector<T>::const_iterator it=values.begin(); it!=values.end(); ++it)
        {
            stream << *it << space;

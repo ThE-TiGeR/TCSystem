@@ -57,7 +57,7 @@ namespace tc
       */
 
       /** typedef for port numbers */
-      typedef uint16 PortNumber;
+      typedef uint16_t PortNumber;
 
 #ifdef TCOS_WINDOWS
       /** socket type */

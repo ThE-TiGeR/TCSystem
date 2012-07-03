@@ -77,24 +77,24 @@ namespace tc
          };
 
          ThreadBase::ThreadBase(const std::string& thread_name,
-            uint32 stack_size,
+            uint32_t stack_size,
             ThreadPriority priority)
             :m_name(thread_name),
             m_priority(priority),
             m_stack_size(stack_size),
             m_state(STATE_NEW)
          {
-            TCTRACE2("TCMT", 1, "%s(%d)", m_name.c_str(), m_threads.size());
+            TCTRACES("TCMT", 1, m_name << "(" << m_threads.size() << ")");
          }
 
          ThreadBase::~ThreadBase()
          {
-            TCTRACE1("TCMT", 1, "%s", m_name.c_str());
+            TCTRACES("TCMT", 1, m_name);
          }
 
          bool ThreadBase::Init()
          {
-            TCTRACE1("TCMT", 2,"%s ...", m_name.c_str());
+            TCTRACES("TCMT", 2, m_name << " ...");
 
             InitStruct init_data;
             init_data.thread = this;
@@ -102,29 +102,29 @@ namespace tc
 
             if (!CreateOSThread(&init_data))
             {
-               TCERROR1("TCMT", "%s error creating thread.", m_name.c_str());
+               TCERRORS("TCMT", m_name << ", Error creating thread.");
                return false;
             }
 
             if (!init_data.event->Wait())
             {
-               TCERROR1("TCMT", "%s error waitng thread startup.", m_name.c_str());
+               TCERRORS("TCMT", m_name << ", Error waiting thread startup.");
                return false;
             }
 
             if (!SetPriority(m_priority))
             {
-               TCERROR1("TCMT", "%s failed.", m_name.c_str());
+               TCERRORS("TCMT", m_name << ", Error setting priority.");
                return false;
             }
 
-            TCTRACE1("TCMT", 2, "%s done.", m_name.c_str());
+            TCTRACES("TCMT", 2, m_name << " done.");
             return true;
          }
 
-         uint32 ThreadBase::ThreadRunner(InitStruct* init_data)
+         uint32_t ThreadBase::ThreadRunner(InitStruct* init_data)
          {
-            TCTRACE1("TCMT", 3,"%s enter", m_name.c_str());
+            TCTRACES("TCMT", 3, m_name << " ...");
 
             m_state = STATE_RUNNING;
             init_data->event->Set();
@@ -134,28 +134,26 @@ namespace tc
             while (m_state == STATE_RUNNING &&
                WaitThreadMessage(message) != Message::MSG_RECEIVE_FAILED)
             {
-               TCTRACE2("TCMT", 50, "%s Received message %d",
-                  m_name.c_str(), message->GetMessageId());
+               TCTRACES("TCMT", 50, m_name << " Received message " << message->GetMessageId());
                switch(message->GetMessageId())
                {
                case StopThreadMessage::MESSAGE_ID:
                   {
-                     TCTRACE1("TCMT", 4,"%s Stop.", m_name.c_str());
+                     TCTRACES("TCMT", 4, m_name << "Stop.");
                      m_state = STATE_TERMINATED;
                   }
                   break;
 
                case StartThreadMessage::MESSAGE_ID:
                   {
-                     TCTRACE1("TCMT", 4,"%s Run ...", m_name.c_str());
+                     TCTRACES("TCMT", 4, m_name << "Run ...");
                      SharedPtr<StartThreadMessage>::DynamicCast(message)->m_object_to_start->Run();
-                     TCTRACE1("TCMT", 4,"%s Run done.", m_name.c_str());
+                     TCTRACES("TCMT", 4, m_name << "Run done.");
                      break;
                   }
 
                default:
-                  TCERROR2("TCMT", "%s Received unknown message %d",
-                     m_name.c_str(), message->GetMessageId());
+                  TCERRORS("TCMT", m_name << " Received unknown message " << message->GetMessageId());
                   break;
                }
 
@@ -171,7 +169,7 @@ namespace tc
             m_threads.erase(thread_it);
 
             // if the last thread we free the array
-            uint64 num_threads = m_threads.size();
+            uint64_t num_threads = m_threads.size();
             if (num_threads== 0)
             {
                m_threads_mutex->UnLock();
@@ -184,7 +182,7 @@ namespace tc
                m_threads_mutex->UnLock();
             }
 
-            TCTRACE2("TCMT", 3,"%s leave. (still running %" TC_UINT64_FORMAT ")", m_name.c_str(), num_threads);
+            TCTRACES("TCMT", 3, m_name << " leave. (still running " << num_threads << ")");
 
             return 0;
          }
@@ -192,14 +190,14 @@ namespace tc
 
          bool ThreadBase::Start(ThreadObjectPtr object_to_start)
          {
-            TCTRACE1("TCMT", 5,"%s", m_name.c_str());
+            TCTRACES("TCMT", 5, m_name << " ...");
 
             return SendThreadMessage(MessagePtr(new StartThreadMessage(object_to_start)));
          }
 
          bool ThreadBase::Join()
          {
-            TCTRACE1("TCMT", 5,"%s", m_name.c_str());
+            TCTRACES("TCMT", 5, m_name << " ...");
 
             if (factory::GetCurrentThread() == this)
             {
@@ -232,7 +230,7 @@ namespace tc
 
          bool ThreadBase::SetPriority(ThreadPriority priority_in)
          {
-            TCTRACE1("TCMT", 5,"%s", m_name.c_str());
+            TCTRACES("TCMT", 5, m_name << " ...");
 
             if (!SetPriorityOS(priority_in))
             {
@@ -242,13 +240,13 @@ namespace tc
             Locker lock(this);
             m_priority = priority_in;
 
-            TCTRACE1("TCMT", 5,"%s done.", m_name.c_str());
+            TCTRACES("TCMT", 5, m_name << " done.");
             return true;
          }
 
          ThreadBase::ThreadState ThreadBase::GetState()const
          {
-            TCTRACE1("TCMT", 10,"%s ...", m_name.c_str());
+            TCTRACES("TCMT", 10, m_name << " ...");
             Locker lock(const_cast<ThreadBase*>(this));
 
             return m_state;
@@ -256,7 +254,7 @@ namespace tc
 
          ThreadBase::ThreadPriority ThreadBase::GetPriority()const
          {
-            TCTRACE1("TCMT", 10,"%s ...", m_name.c_str());
+            TCTRACES("TCMT", 10, m_name << " ...");
             Locker lock(const_cast<ThreadBase*>(this));
 
             return m_priority;
@@ -264,18 +262,18 @@ namespace tc
 
          Message::ReturnValue ThreadBase::WaitThreadMessage(MessagePtr &message, const Time& timeout)
          {
-            TCTRACE2("TCMT", 100, "%s %" TC_UINT64_FORMAT " ...", m_name.c_str(), timeout.ToMilliSeconds());
+            TCTRACES("TCMT", 500, m_name << " " << timeout.ToMilliSeconds() << "ms ...");
             Message::ReturnValue ret;
             if (timeout == Time::Zero())
             {
-               ret = m_message_queue.TryGetMessage(uint32(Message::MSG_ID_UNKNOWN),
-                  uint32(Message::MSG_ID_UNKNOWN),
+               ret = m_message_queue.TryGetMessage(uint32_t(Message::MSG_ID_UNKNOWN),
+                  uint32_t(Message::MSG_ID_UNKNOWN),
                   message, true);
             }
             else
             {
-               ret = m_message_queue.GetMessage(uint32(Message::MSG_ID_UNKNOWN),
-                  uint32(Message::MSG_ID_UNKNOWN),
+               ret = m_message_queue.GetMessage(uint32_t(Message::MSG_ID_UNKNOWN),
+                  uint32_t(Message::MSG_ID_UNKNOWN),
                   message, timeout);
             }
 
@@ -284,56 +282,59 @@ namespace tc
 
          Message::ReturnValue ThreadBase::WaitThreadMessage(MessagePtr &message)
          {
-            TCTRACE1("TCMT", 50, "%s ...", m_name.c_str());
-            Message::ReturnValue ret = m_message_queue.GetMessage(uint32(Message::MSG_ID_UNKNOWN),
-               uint32(Message::MSG_ID_UNKNOWN),
+            TCTRACES("TCMT", 50, m_name << " ...");
+            Message::ReturnValue ret = m_message_queue.GetMessage(uint32_t(Message::MSG_ID_UNKNOWN),
+               uint32_t(Message::MSG_ID_UNKNOWN),
                message);
 
             if (ret == Message::MSG_RECEIVE_FAILED)
             {
-               TCERROR1("TCMT", "%s failed.", m_name.c_str());
+               TCERRORS("TCMT", m_name << " failed.");
                return ret;
             }
 
-            TCTRACE1("TCMT", 50, "%s done.", m_name.c_str());
+            TCTRACES("TCMT", 50, m_name << " done.");
             return ret;
          }
 
          bool ThreadBase::SendThreadMessage(MessagePtr message)
          {
-            TCTRACE1("TCMT", 50, "%s ...", m_name.c_str());
+            TCTRACES("TCMT", 50, m_name << " ...");
             // check if already terminated because then it is not possible to send a message
             if (IsTerminated())
             {
-               TCERROR1("TCMT", "%s failed.", m_name.c_str());
+               TCERRORS("TCMT", m_name << " failed.");
                return false;
             }
 
             if (!m_message_queue.AddMessage(message))
             {
-               TCERROR1("TCMT", "%s failed.", m_name.c_str());
+               TCERRORS("TCMT", m_name << " failed.");
                return false;
             }
 
+            TCTRACES("TCMT", 50, m_name << " done.");
             return true;
          }
 
          Message::ReturnValue ThreadBase::SendSyncThreadMessage(MessagePtr message)
          {
+            TCTRACES("TCMT", 50, m_name << " ...");
             Message::ReturnValue ret = Message::MSG_RECEIVE_FAILED;
             if (SendThreadMessage(message))
             {
-                SharedPtr<ThreadBase> thread = SharedPtr<ThreadBase>::StaticCast(message->GetSenderThread());
+               SharedPtr<ThreadBase> thread = SharedPtr<ThreadBase>::StaticCast(message->GetSenderThread());
 
-                MessagePtr ret_message;
-                ret = thread->m_message_queue.GetMessage(message->GetMessageId(),
-                    message->GetMessageId(), ret_message);
-                if (ret == Message::MSG_RECEIVED)
-                {
-                    ret = ret_message->GetReplyId() == message->GetReplyId() ? Message::MSG_RECEIVED : Message::MSG_RECEIVE_FAILED;
-                }
+               MessagePtr ret_message;
+               ret = thread->m_message_queue.GetMessage(message->GetMessageId(),
+                  message->GetMessageId(), ret_message);
+               if (ret == Message::MSG_RECEIVED)
+               {
+                  ret = ret_message->GetReplyId() == message->GetReplyId() ? Message::MSG_RECEIVED : Message::MSG_RECEIVE_FAILED;
+               }
             }
 
+            TCTRACES("TCMT", 50, m_name << " done(" << ret << ").");
             return ret;
          }
 

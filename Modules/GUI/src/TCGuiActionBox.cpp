@@ -53,7 +53,7 @@ namespace tc
 
       TCGUIBASE_IMPLEMENT(ActionBox, Window, TCGuiActionBoxMap, ARRAYNUMBER(TCGuiActionBoxMap))
 
-         ActionBox::ActionBox(FXWindow * owner, const std::string & title, sint32 w, sint32 h)
+         ActionBox::ActionBox(FXWindow * owner, const std::string & title, int32_t w, int32_t h)
          :Window(owner, title, w,  h)
       {
          closeOnExecute = 0;
@@ -75,7 +75,7 @@ namespace tc
       long ActionBox::onUpdDoAction(FX::FXObject *sender, FX::FXSelector, void*)
       {
          FX::FXButton *o = (FX::FXButton*)sender;
-         sint32 w = o->getFont()->getTextWidth(o->getText().text(), o->getText().length());
+         int32_t w = o->getFont()->getTextWidth(o->getText().text(), o->getText().length());
          if (o->getWidth() != util::Max(w + 22 + 15, 85))
          {
             o->setWidth(util::Max(w + 22 + 15, 85));

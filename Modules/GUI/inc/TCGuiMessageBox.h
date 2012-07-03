@@ -89,16 +89,16 @@ public:
 public:
    /// Construct message box with given caption, icon, and message text
    MessageBox(FX::FXWindow* owner, const std::string &title, const std::string &message,
-              FX::FXIcon* ic=0, sint32 buttons=0);
+              FX::FXIcon* ic=0, int32_t buttons=0);
 
    /// Show a modal error message
-   static sint32 Error(FX::FXWindow* owner, const std::string &title, const std::string &message);
+   static int32_t Error(FX::FXWindow* owner, const std::string &title, const std::string &message);
    /// Show a modal warning message
-   static sint32 Warning(FX::FXWindow* owner, const std::string &title, const std::string &message);
+   static int32_t Warning(FX::FXWindow* owner, const std::string &title, const std::string &message);
    /// Show a modal question dialog
-   static sint32 Question(FX::FXWindow* owner, const std::string &title, const std::string &message);
+   static int32_t Question(FX::FXWindow* owner, const std::string &title, const std::string &message);
    /// Show a modal information dialog
-   static sint32 Information(FX::FXWindow* owner, const std::string &title, const std::string &message);
+   static int32_t Information(FX::FXWindow* owner, const std::string &title, const std::string &message);
 
    long onCmdClicked(FX::FXObject*, FX::FXSelector, void*);
    

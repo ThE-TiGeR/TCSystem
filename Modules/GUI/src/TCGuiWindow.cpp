@@ -53,7 +53,7 @@ namespace tc
       };
       TCGUIBASE_IMPLEMENT(Window, FX::FXDialogBox, WindowMap, ARRAYNUMBER(WindowMap))
 
-      Window::Window(FX::FXWindow * owner, const std::string & title, sint32 w, sint32 h)
+      Window::Window(FX::FXWindow * owner, const std::string & title, int32_t w, int32_t h)
          :FX::FXDialogBox(owner, " ", FX::DECOR_TITLE | FX::DECOR_BORDER |FX::DECOR_RESIZE, 0, 0, w,  h, 0, 0, 0, 0)
       {
          SetTitle(title);
@@ -116,8 +116,8 @@ namespace tc
 
       void Window::AutoResize()
       {
-         sint32 _w = dialogPacker->getDefaultWidth();
-         sint32 _h = dialogPacker->getDefaultHeight();
+         int32_t _w = dialogPacker->getDefaultWidth();
+         int32_t _h = dialogPacker->getDefaultHeight();
 
          if (_w + 20 != getWidth() || _h + 20 != getHeight())   
             resize(_w + 20, _h + 20);
@@ -147,8 +147,8 @@ namespace tc
       TCGUIBASE_IMPLEMENT(TopWindow, FX::FXTopWindow, TopWindowMap, ARRAYNUMBER(TopWindowMap))
 
 
-      TopWindow::TopWindow(FX::FXWindow* owner, const std::string& title, FX::FXIcon *ma, FX::FXIcon *mi, uint32 opts, sint32 x,sint32 y, sint32 w,sint32 h,
-         sint32 pl,sint32 pr,sint32 pt,sint32 pb,sint32 hs,sint32 vs)
+      TopWindow::TopWindow(FX::FXWindow* owner, const std::string& title, FX::FXIcon *ma, FX::FXIcon *mi, uint32_t opts, int32_t x,int32_t y, int32_t w,int32_t h,
+         int32_t pl,int32_t pr,int32_t pt,int32_t pb,int32_t hs,int32_t vs)
          :FX::FXTopWindow(owner, "",ma,mi,opts,x,y,w,h,pl,pr,pt,pb,hs,vs)
       {
          SetTitle(title);
@@ -165,8 +165,8 @@ namespace tc
          wasShown = false;
       }
 
-      TopWindow::TopWindow(FX::FXApp* app, const std::string& title, FX::FXIcon *ma, FX::FXIcon *mi, uint32 opts, sint32 x,sint32 y, sint32 w,sint32 h,
-         sint32 pl,sint32 pr,sint32 pt,sint32 pb,sint32 hs,sint32 vs)
+      TopWindow::TopWindow(FX::FXApp* app, const std::string& title, FX::FXIcon *ma, FX::FXIcon *mi, uint32_t opts, int32_t x,int32_t y, int32_t w,int32_t h,
+         int32_t pl,int32_t pr,int32_t pt,int32_t pb,int32_t hs,int32_t vs)
          :FX::FXTopWindow(app, "",ma,mi,opts,x,y,w,h,pl,pr,pt,pb,hs,vs)
       {
          SetTitle(title);
@@ -227,8 +227,8 @@ namespace tc
 
       void TopWindow::AutoResize()
       {
-         sint32 _w = dialogPacker->getDefaultWidth();
-         sint32 _h = dialogPacker->getDefaultHeight();
+         int32_t _w = dialogPacker->getDefaultWidth();
+         int32_t _h = dialogPacker->getDefaultHeight();
 
          if (_w + 20 != getWidth() || _h + 20 != getHeight())   
             resize(_w + 20, _h + 20);

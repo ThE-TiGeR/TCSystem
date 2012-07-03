@@ -56,17 +56,17 @@ namespace tc
       const Color Color::BLACK(0, 0, 0, DEFAULT_ALPHA);
       const Color Color::GRAY(0.5f, 0.5f, 0.5f, DEFAULT_ALPHA);
 
-      Color::Color(uint32 color)
+      Color::Color(uint32_t color)
       {
          FromUnsignedInt(color);
       }
 
-      uint32 Color::ToUnsignedInt() const
+      uint32_t Color::ToUnsignedInt() const
       {
          return FXRGBA(255.0 * m_red, 255.0 * m_green, 255.0 * m_blue, 255.0 * m_alpha);
       }
 
-      void Color::FromUnsignedInt(uint32 color)
+      void Color::FromUnsignedInt(uint32_t color)
       {
          m_red   = 0.003921568627f * FXREDVAL(color);
          m_green = 0.003921568627f * FXGREENVAL(color);

@@ -91,7 +91,7 @@ void Clock::Stop()
 void Clock::Update()
 {
    // get windows' idea of current time
-   uint64 elapsed = 0;
+   uint64_t elapsed = 0;
 
    m_last_time    = m_current_time;
    m_current_time = Time::Now().ToMilliSeconds();

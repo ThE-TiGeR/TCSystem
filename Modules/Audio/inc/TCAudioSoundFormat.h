@@ -57,12 +57,12 @@ namespace tc
       class TC_DLL_LOCAL SoundFormat
       {
       public:
-         uint16 audio_format;       ///< 1 = Uncompressed (PCM), > 1: Compressed
-         uint16 num_channels;       ///< Number of channels, can be any number
-         uint32 samples_per_second; ///< Samples per second (Hertz)
-         uint32 bytes_per_second;   ///< bytes per second 
-         uint16 bytes_per_sample;   ///< channels * bits/sample / 8
-         uint16 bits_per_sample;    ///< 8, 16 or 24
+         uint16_t audio_format;       ///< 1 = Uncompressed (PCM), > 1: Compressed
+         uint16_t num_channels;       ///< Number of channels, can be any number
+         uint32_t samples_per_second; ///< Samples per second (Hertz)
+         uint32_t bytes_per_second;   ///< bytes per second 
+         uint16_t bytes_per_sample;   ///< channels * bits/sample / 8
+         uint16_t bits_per_sample;    ///< 8, 16 or 24
       };
 
       /**

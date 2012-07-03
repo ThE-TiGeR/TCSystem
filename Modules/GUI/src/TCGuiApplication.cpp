@@ -60,7 +60,7 @@ namespace tc
          m_fx_app     = 0;
       }
 
-      bool Application::Init(uint32 narg, char **argv,
+      bool Application::Init(uint32_t narg, char **argv,
          const std::string &prgName, const std::string &prgVersion, const std::string &company)
       {
          {
@@ -86,7 +86,7 @@ namespace tc
          m_main_window = CreateMainWindow();
          if (!m_main_window)
          {
-            TCERROR("TCGUI", "Faild Creating Main Window");
+            TCERRORS("TCGUI", "Faild Creating Main Window");
             return false;
          }
 
@@ -103,7 +103,7 @@ namespace tc
          return false;  
       }
 
-      void Application::Exit(sint32 code)
+      void Application::Exit(int32_t code)
       {
          m_fx_app->reg().writeStringEntry("Version",
             "IdStr", (GetProgrammName() + " " + GetProgrammVersion()).c_str());

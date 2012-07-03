@@ -53,7 +53,7 @@ namespace tc
          class ConditionWin32::ConditionData
          {
          public:
-            uint32 waiters_count;
+            uint32_t waiters_count;
             // Count of the number of waiters.
 
             CRITICAL_SECTION waiters_count_lock;

@@ -65,13 +65,13 @@ namespace tc
          return m_sound_data[0]->GetFormat();
       }
 
-      uint32 SoundDataCompound::GetNumSoundData() const
+      uint32_t SoundDataCompound::GetNumSoundData() const
       {
          Locker lock(this);
-         return uint32(m_sound_data.size());
+         return uint32_t(m_sound_data.size());
       }
 
-      SoundDataPtr SoundDataCompound::GetSoundData(uint32 idx)
+      SoundDataPtr SoundDataCompound::GetSoundData(uint32_t idx)
       {
          Locker lock(this);
          if (idx >= m_sound_data.size())
@@ -82,7 +82,7 @@ namespace tc
          return m_sound_data[idx];
       }
 
-      SoundDataCPtr SoundDataCompound::GetSoundData(uint32 idx) const
+      SoundDataCPtr SoundDataCompound::GetSoundData(uint32_t idx) const
       {
          Locker lock(this);
          if (idx >= m_sound_data.size())

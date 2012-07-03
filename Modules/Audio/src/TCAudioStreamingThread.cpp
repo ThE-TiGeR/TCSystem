@@ -154,7 +154,7 @@ namespace tc
 
          catch (Exception& e)
          {
-            TCERROR1("TCAUDIO", "failed with exception\n%s", e.what());
+            TCERRORS("TCAUDIO", "failed with exception\n" << e.what());
             m_running->Reset();
             return false;
          }

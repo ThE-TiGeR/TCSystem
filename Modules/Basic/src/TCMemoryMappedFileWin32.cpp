@@ -57,12 +57,12 @@ namespace tc
       UnmapFromMemory();
    }
 
-   uint32 MemoryMappedFileWin32::GetSize() const
+   uint32_t MemoryMappedFileWin32::GetSize() const
    {
       return m_size;
    }
 
-   uint8* MemoryMappedFileWin32::GetData()
+   uint8_t* MemoryMappedFileWin32::GetData()
    {
       if (m_readonly)
       {
@@ -70,22 +70,22 @@ namespace tc
       }
       else
       {
-         return static_cast<uint8*>(m_data);
+         return static_cast<uint8_t*>(m_data);
       }
    }
 
 
-   const uint8* MemoryMappedFileWin32::GetReadOnlyData() const
+   const uint8_t* MemoryMappedFileWin32::GetReadOnlyData() const
    {
-      return static_cast<const uint8*>(m_data);
+      return static_cast<const uint8_t*>(m_data);
    }
 
-   bool MemoryMappedFileWin32::MapToMemory(const std::string& fileName, bool readonly, uint32 size)
+   bool MemoryMappedFileWin32::MapToMemory(const std::string& fileName, bool readonly, uint32_t size)
    {
       return MapToMemory(wstring::ToString(fileName), readonly, size);
    }
 
-   bool MemoryMappedFileWin32::MapToMemory(const std::wstring& fileName, bool readonly, uint32 size)
+   bool MemoryMappedFileWin32::MapToMemory(const std::wstring& fileName, bool readonly, uint32_t size)
    {
       m_file = ::CreateFileW(fileName.c_str(),
          readonly ? GENERIC_READ : (GENERIC_READ | GENERIC_WRITE),

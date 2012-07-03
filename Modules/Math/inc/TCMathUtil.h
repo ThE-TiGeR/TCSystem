@@ -81,7 +81,7 @@ namespace math
 
    /** integer version of pow(..) */
    template<class T>
-   inline T Pow(T x, uint32 y)
+   inline T Pow(T x, uint32_t y)
    {
       if (y == 0)
       {
@@ -101,7 +101,7 @@ namespace math
    * @param size - value that should be aligned
    * @return size aligned to 32 bytes
    */
-   inline uint32 Align32(uint32 size)
+   inline uint32_t Align32(uint32_t size)
    {
       return ((size + 31) & (~31));
    }
@@ -117,7 +117,7 @@ namespace math
    * @param size - value that should be aligned
    * @return size aligned to 16 bytes
    */
-   inline uint32 Align16(uint32 size)
+   inline uint32_t Align16(uint32_t size)
    {
       return ((size + 15) & (~15));
    }
@@ -205,14 +205,14 @@ namespace math
       if (val == (T)0) return (T)0;
 
       double logRange   = std::log10(Abs(val));
-      sint32 logRangeFloor = (sint32)std::floor(logRange);
-      double normalized = (sint32)std::pow(10.0, logRange - logRangeFloor);
+      int32_t logRangeFloor = (int32_t)std::floor(logRange);
+      double normalized = (int32_t)std::pow(10.0, logRange - logRangeFloor);
 
-      sint32 i;
+      int32_t i;
       if (logRangeFloor > 0)
          for (i=0; i<logRangeFloor; i++) normalized *= 10.;
       else {
-         sint32 absLogRangeFloor = Abs(logRangeFloor);
+         int32_t absLogRangeFloor = Abs(logRangeFloor);
          for (i=0; i<absLogRangeFloor; i++) normalized *= 0.1;
       }
 

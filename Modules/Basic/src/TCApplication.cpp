@@ -51,15 +51,15 @@
 namespace tc
 {
 
-   TC_CT_ASSERT(sizeof(sint64) == 8);
-   TC_CT_ASSERT(sizeof(sint32) == 4);
-   TC_CT_ASSERT(sizeof(sint16) == 2);
-   TC_CT_ASSERT(sizeof(sint8)  == 1);
+   TC_CT_ASSERT(sizeof(int64_t) == 8);
+   TC_CT_ASSERT(sizeof(int32_t) == 4);
+   TC_CT_ASSERT(sizeof(int16_t) == 2);
+   TC_CT_ASSERT(sizeof(int8_t)  == 1);
 
-   TC_CT_ASSERT(sizeof(uint64) == 8);
-   TC_CT_ASSERT(sizeof(uint32) == 4);
-   TC_CT_ASSERT(sizeof(uint16) == 2);
-   TC_CT_ASSERT(sizeof(uint8)  == 1);
+   TC_CT_ASSERT(sizeof(uint64_t) == 8);
+   TC_CT_ASSERT(sizeof(uint32_t) == 4);
+   TC_CT_ASSERT(sizeof(uint16_t) == 2);
+   TC_CT_ASSERT(sizeof(uint8_t)  == 1);
 
    TC_CT_ASSERT(sizeof(double) == 8);
    TC_CT_ASSERT(sizeof(float) == 4);
@@ -74,7 +74,7 @@ namespace tc
       }
       else
       {
-         TCERROR("TCBASE", "It is not allowed to create two applications");
+         TCERRORS("TCBASE", "It is not allowed to create two applications");
          std::exit(7);
       }
    }
@@ -89,7 +89,7 @@ namespace tc
       return m_application;
    }
 
-   bool Application::Init(uint32 narg, char **argv, const std::string& name, 
+   bool Application::Init(uint32_t narg, char **argv, const std::string& name, 
       const std::string& version, const std::string& company)
    {
       m_programm_name    = name;
@@ -97,7 +97,7 @@ namespace tc
       m_programm_company = company;
 
       std::vector<std::string> a;
-      uint32 i;
+      uint32_t i;
       for (i=1; i<narg; i++)
       {
          a.push_back(argv[i]);

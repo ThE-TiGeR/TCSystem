@@ -49,22 +49,22 @@ namespace tc
          explicit ObjectGroup(const std::string& name);
          virtual ~ObjectGroup();
 
-         uint32 GetNumObjects() const;
+         uint32_t GetNumObjects() const;
          void AddObject(ObjectPtr object);
          void RemoveObject(const std::string& name);
 
-         ConstObjectPtr GetObject(uint32 idx) const;
-         ObjectPtr GetObject(uint32 idx);
+         ConstObjectPtr GetObject(uint32_t idx) const;
+         ObjectPtr GetObject(uint32_t idx);
          ConstObjectPtr GetObject(const std::string& name) const;
          ObjectPtr GetObject(const std::string& name);
 
          ObjectPtr FindObject(const std::string& name);
 
          virtual void Draw(Viewer& viewer);
-         virtual void Update(Viewer& viewer, uint32 curent_time, uint32 delta_time);
+         virtual void Update(Viewer& viewer, uint32_t curent_time, uint32_t delta_time);
          virtual void DrawForHit(Viewer& viewer);
-         virtual bool Drag(Viewer& viewer, sint32 fx, sint32 fy, sint32 tx, sint32 ty);
-         virtual ObjectPtr GetHitObject(const uint32* hitpath);
+         virtual bool Drag(Viewer& viewer, int32_t fx, int32_t fy, int32_t tx, int32_t ty);
+         virtual ObjectPtr GetHitObject(const uint32_t* hitpath);
          virtual void GetBoundingBox(BoundingBox3D& bounding_box);
          virtual void ResetPosition();
 

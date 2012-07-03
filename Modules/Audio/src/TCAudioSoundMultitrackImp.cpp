@@ -58,7 +58,7 @@ namespace tc
 
       bool SoundMultitrackImp::Play()
       {
-         for (uint32 i=0; i<m_sound_data->GetNumSoundData(); i++)
+         for (uint32_t i=0; i<m_sound_data->GetNumSoundData(); i++)
          {
             if (!m_sound_player->PlaySoundData(m_sound_data->GetSoundData(i)))
             {
@@ -70,7 +70,7 @@ namespace tc
 
       bool SoundMultitrackImp::Pause()
       {
-         for (uint32 i=0; i<m_sound_data->GetNumSoundData(); i++)
+         for (uint32_t i=0; i<m_sound_data->GetNumSoundData(); i++)
          {
             if (!m_sound_player->PauseSoundData(m_sound_data->GetSoundData(i)))
             {
@@ -82,7 +82,7 @@ namespace tc
 
       bool SoundMultitrackImp::Stop()
       {
-         for (uint32 i=0; i<m_sound_data->GetNumSoundData(); i++)
+         for (uint32_t i=0; i<m_sound_data->GetNumSoundData(); i++)
          {
             if (!m_sound_player->StopSoundData(m_sound_data->GetSoundData(i)))
             {
@@ -104,7 +104,7 @@ namespace tc
 
       bool SoundMultitrackImp::IsPlaying() const
       {
-         for (uint32 i=0; i<m_sound_data->GetNumSoundData(); i++)
+         for (uint32_t i=0; i<m_sound_data->GetNumSoundData(); i++)
          {
             if (m_sound_player->IsSoundDataPlaying(m_sound_data->GetSoundData(i)))
             {
@@ -117,7 +117,7 @@ namespace tc
 
       bool SoundMultitrackImp::IsPaused() const
       {
-         for (uint32 i=0; i<m_sound_data->GetNumSoundData(); i++)
+         for (uint32_t i=0; i<m_sound_data->GetNumSoundData(); i++)
          {
             if (m_sound_player->IsSoundDataPaused(m_sound_data->GetSoundData(i)))
             {
@@ -169,12 +169,12 @@ namespace tc
          return m_sound_data->SetPan(pan);
       }
 
-      uint32 SoundMultitrackImp::GetNumSounds() const
+      uint32_t SoundMultitrackImp::GetNumSounds() const
       {
          return m_sound_data->GetNumSoundData();
       }
 
-      SoundPtr SoundMultitrackImp::GetSound(uint32 idx)
+      SoundPtr SoundMultitrackImp::GetSound(uint32_t idx)
       {
          SoundDataPtr data = m_sound_data->GetSoundData(idx);
          if (!data)

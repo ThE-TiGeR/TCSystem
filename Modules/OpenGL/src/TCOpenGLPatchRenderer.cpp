@@ -183,7 +183,7 @@ namespace tc
             return;
          }
 
-         uint64 allocation_size = 0; 
+         uint64_t allocation_size = 0; 
          // Setting vertex buffers
          if (vertex.size() != 0)
          {
@@ -292,7 +292,7 @@ namespace tc
 
          ::glEnableClientState(GL_VERTEX_ARRAY);
 
-         uint64 step = m_num_vertex;
+         uint64_t step = m_num_vertex;
          GLint max(0);
          ::glGetIntegerv(GL_MAX_ELEMENTS_INDICES, &max);
          ::glGetIntegerv(GL_MAX_ELEMENTS_VERTICES, &max);
@@ -335,7 +335,7 @@ namespace tc
             }
          }
 
-         for (uint32 i=0; i<m_num_vertex; i+=step)
+         for (uint32_t i=0; i<m_num_vertex; i+=step)
          {
             ::glDrawArrays(m_patch_type, i, util::Min(m_num_vertex-i, step));
          }
@@ -411,12 +411,12 @@ namespace tc
                pglMapBufferARB && pglUnmapBufferARB && pglDeleteBuffersARB && pglGetBufferParameterivARB)
             {
                s_vbo_supported = true;
-               TCINFO("open_gl", "Video card supports GL_ARB_vertex_buffer_object.");
+               TCINFOS("open_gl", "Video card supports GL_ARB_vertex_buffer_object.");
             }
             else
             {
                s_vbo_supported = false;
-               TCINFO("open_gl", "Video card does NOT support GL_ARB_vertex_buffer_object.");
+               TCINFOS("open_gl", "Video card does NOT support GL_ARB_vertex_buffer_object.");
             }
          }
 #endif
@@ -436,10 +436,10 @@ namespace tc
             glDeleteBuffersARB(1, &m_vertex_buffer_id);
             m_vertex_buffer_id = 0;
          }
-         m_vertex_offset = std::numeric_limits<uint64>::max();
-         m_texture_offset = std::numeric_limits<uint64>::max();
-         m_color_offset = std::numeric_limits<uint64>::max();
-         m_normal_offset = std::numeric_limits<uint64>::max();
+         m_vertex_offset = std::numeric_limits<uint64_t>::max();
+         m_texture_offset = std::numeric_limits<uint64_t>::max();
+         m_color_offset = std::numeric_limits<uint64_t>::max();
+         m_normal_offset = std::numeric_limits<uint64_t>::max();
       }
    }
 }

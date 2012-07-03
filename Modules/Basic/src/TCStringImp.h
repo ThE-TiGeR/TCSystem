@@ -200,8 +200,8 @@ namespace tc
       static STRING_CLASS VPrint(const value_type *fmt, va_list arguments_in)
       {
          STRING_CLASS return_string;
-         uint32 size_of_buf = 64;
-         sint32 len;
+         uint32_t size_of_buf = 64;
+         int32_t len;
          do 
          {
             size_of_buf *= 2;
@@ -222,8 +222,8 @@ namespace tc
       }
 
       static void ReplaceString(STRING_CLASS& data,
-         const value_type* token, uint32 token_length,
-         const value_type* replace, uint32 replace_length)
+         const value_type* token, uint32_t token_length,
+         const value_type* replace, uint32_t replace_length)
       {
          std::string::size_type pos = data.find(token, 0, token_length);
 
@@ -236,7 +236,7 @@ namespace tc
          }
       }
 
-      static sint32 StringICompare(const value_type* s1, const value_type* s2)
+      static int32_t StringICompare(const value_type* s1, const value_type* s2)
       {
          value_type c1, c2;
 
@@ -261,16 +261,16 @@ namespace tc
                break;
             }
          }
-         return (sint32)c1 - (sint32)c2;
+         return (int32_t)c1 - (int32_t)c2;
       }
 
 
-      static sint32 StringICompare(const value_type* s1, const value_type* s2, uint32 len_to_compare)
+      static int32_t StringICompare(const value_type* s1, const value_type* s2, uint32_t len_to_compare)
       {
          value_type c1=0;
          value_type c2=0;
 
-         for (uint32 i=0; i<len_to_compare; i++)
+         for (uint32_t i=0; i<len_to_compare; i++)
          {
             c1 = *s1++;
             c2 = *s2++;
@@ -291,16 +291,16 @@ namespace tc
                break;
             }
          }
-         return (sint32)c1 - (sint32)c2;
+         return (int32_t)c1 - (int32_t)c2;
       }
       static STRING_CLASS TrimmSpaces(const STRING_CLASS& text_in)
       {
          if (text_in.length() == 0) return STRING_CLASS();
 
-         sint32 i;
+         int32_t i;
          STRING_CLASS text(text_in);
          // skip spaces at the end
-         for (i = static_cast<sint32>(text.length()) - 1; i >= 0; i--)
+         for (i = static_cast<int32_t>(text.length()) - 1; i >= 0; i--)
          {
             if (TRAITS::IsSpace(text.at(i) ) )
             {
@@ -342,10 +342,10 @@ namespace tc
       {
          if (text_in.length() == 0) return STRING_CLASS();
 
-         sint32 i;
+         int32_t i;
          STRING_CLASS text(text_in);
         // skip spaces at the end
-         for (i = static_cast<sint32>(text.length()) - 1; i >= 0; i--)
+         for (i = static_cast<int32_t>(text.length()) - 1; i >= 0; i--)
          {
             if (TRAITS::IsSpace(text.at(i) ) )
             {

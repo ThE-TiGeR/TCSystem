@@ -43,19 +43,19 @@
 
 void *operator new(size_t size) TC_NEW_THROW
 {
-   return tc::system::GetInstance()->Alloc(static_cast<tc::uint32>(size), "unknown new", 0);
+   return tc::system::GetInstance()->Alloc(static_cast<tc::uint32_t>(size), "unknown new", 0);
 }
 void *operator new[](size_t size) TC_NEW_THROW
 {
-   return tc::system::GetInstance()->Alloc(static_cast<tc::uint32>(size), "unknown new[]", 1);
+   return tc::system::GetInstance()->Alloc(static_cast<tc::uint32_t>(size), "unknown new[]", 1);
 }
 void *operator new(size_t size, const char *fileName, int line) TC_NEW_THROW
 {
-   return tc::system::GetInstance()->Alloc(static_cast<tc::uint32>(size), fileName, line);
+   return tc::system::GetInstance()->Alloc(static_cast<tc::uint32_t>(size), fileName, line);
 }
 void *operator new[](size_t size, const char *fileName, int line) TC_NEW_THROW
 {
-   return tc::system::GetInstance()->Alloc(static_cast<tc::uint32>(size), fileName, line);
+   return tc::system::GetInstance()->Alloc(static_cast<tc::uint32_t>(size), fileName, line);
 }
 
 void operator delete(void *p) TC_DEL_THROW

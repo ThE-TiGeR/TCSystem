@@ -38,7 +38,6 @@
 
 #include "TCMTMessage.h"
 #include "TCMTThreadObject.h"
-#include "TCNonCopyable.h"
 #include "TCTime.h"
 
 #include <string>

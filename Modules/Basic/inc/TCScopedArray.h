@@ -75,9 +75,9 @@ namespace tc
       ~ScopedArray() { DELETER()(m_array);}
 
       /** Get element at specified index */
-      inline const DATA_TYPE& operator[](uint32 index) const { return m_array[index];}
+      inline const DATA_TYPE& operator[](uint32_t index) const { return m_array[index];}
       /** Get element at specified index */
-      inline DATA_TYPE& operator[](uint32 index) { return m_array[index]; }
+      inline DATA_TYPE& operator[](uint32_t index) { return m_array[index]; }
 
       typedef DATA_TYPE* ThisType::*unspecified_bool_type;
       /** User define conversion for if like "if (pointer)" */

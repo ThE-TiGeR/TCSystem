@@ -63,7 +63,7 @@ namespace tc
                {
                   WORD wVersionReq = MAKEWORD(2, 2);
                   WSADATA wsaData;
-                  sint32 err = ::WSAStartup(wVersionReq, &wsaData);
+                  int32_t err = ::WSAStartup(wVersionReq, &wsaData);
                   if (err == 0)
                   {
                      s_is_initialised = true;
@@ -125,7 +125,7 @@ namespace tc
                return port;
             }
 
-            SocketId CreateSocket(sint32 type, const std::string& protocol)
+            SocketId CreateSocket(int32_t type, const std::string& protocol)
             {
                // make shure sockkets are initialized
                InitSocket();
@@ -206,7 +206,7 @@ namespace tc
                   return false;
                }
 #else
-               sint32 opts = fcntl(id, F_GETFL);
+               int32_t opts = fcntl(id, F_GETFL);
                // unable to get options
                if (opts < 0)
                {
@@ -258,11 +258,11 @@ namespace tc
                std::string error_str = system::GetErrorMessage(error);
                if (is_error)
                {
-                  TCERROR3("NET", "%s(%d, %s)", error_message, error, error_str.c_str());
+                  TCERRORS("NET", error_message << "("<< error << ", " << error_str);
                }
                else
                {
-                  TCTRACE3("NET", 10, "%s(%d, %s)", error_message, error, error_str.c_str());
+                  TCTRACES("NET", 10, error_message << "("<< error << ", " << error_str);
                }
             }
 

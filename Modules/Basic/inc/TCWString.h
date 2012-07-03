@@ -66,14 +66,14 @@ namespace tc
       TCBASE_API std::string  ToString(const std::wstring& val);
       TCBASE_API std::wstring ToString(wchar_t val);
       TCBASE_API std::wstring ToString(bool val);
-      TCBASE_API std::wstring ToString(uint64 val);
-      TCBASE_API std::wstring ToString(uint32 val);
-      TCBASE_API std::wstring ToString(uint16 val);
-      TCBASE_API std::wstring ToString(uint8 val);
-      TCBASE_API std::wstring ToString(sint64 val);
-      TCBASE_API std::wstring ToString(sint32 val);
-      TCBASE_API std::wstring ToString(sint16 val);
-      TCBASE_API std::wstring ToString(sint8 val);
+      TCBASE_API std::wstring ToString(uint64_t val);
+      TCBASE_API std::wstring ToString(uint32_t val);
+      TCBASE_API std::wstring ToString(uint16_t val);
+      TCBASE_API std::wstring ToString(uint8_t val);
+      TCBASE_API std::wstring ToString(int64_t val);
+      TCBASE_API std::wstring ToString(int32_t val);
+      TCBASE_API std::wstring ToString(int16_t val);
+      TCBASE_API std::wstring ToString(int8_t val);
       TCBASE_API std::wstring ToString(float val);
       TCBASE_API std::wstring ToString(double val);
 
@@ -83,15 +83,15 @@ namespace tc
 
       TCBASE_API bool  ToBool(const std::wstring& text);
 
-      TCBASE_API uint64 ToUint64(const std::wstring& text);
-      TCBASE_API uint32 ToUint32(const std::wstring& text);
-      TCBASE_API uint16 ToUint16(const std::wstring& text);
-      TCBASE_API uint8  ToUint8(const std::wstring& text);
+      TCBASE_API uint64_t ToUint64(const std::wstring& text);
+      TCBASE_API uint32_t ToUint32(const std::wstring& text);
+      TCBASE_API uint16_t ToUint16(const std::wstring& text);
+      TCBASE_API uint8_t  ToUint8(const std::wstring& text);
 
-      TCBASE_API sint64 ToSint64(const std::wstring& text);
-      TCBASE_API sint32 ToSint32(const std::wstring& text);
-      TCBASE_API sint16 ToSint16(const std::wstring& text);
-      TCBASE_API sint8  ToSint8(const std::wstring& text);
+      TCBASE_API int64_t ToSint64(const std::wstring& text);
+      TCBASE_API int32_t ToSint32(const std::wstring& text);
+      TCBASE_API int16_t ToSint16(const std::wstring& text);
+      TCBASE_API int8_t  ToSint8(const std::wstring& text);
 
       TCBASE_API double ToFlt64(const std::wstring& text);
       TCBASE_API float ToFlt32(const std::wstring& text);
@@ -121,7 +121,7 @@ namespace tc
        * @param s2 Another string
        * @return 0 if equal
        */
-      TCBASE_API sint32 StringICompare(const wchar_t* s1, const wchar_t* s2);
+      TCBASE_API int32_t StringICompare(const wchar_t* s1, const wchar_t* s2);
       /**
        * @short Compare two strings case-insensitively
        * @param s1 One string
@@ -129,10 +129,10 @@ namespace tc
        * @param len_to_compare len of the two strings which should be compared
        * @return 0 if equal
        */
-      TCBASE_API sint32 StringICompare(const wchar_t* s1, const wchar_t* s2, uint32 len_to_compare);
+      TCBASE_API int32_t StringICompare(const wchar_t* s1, const wchar_t* s2, uint32_t len_to_compare);
 
-      TCBASE_API sint32 Snprintf(wchar_t* buffer, uint32 size_of_buf, const wchar_t*, ...);
-      TCBASE_API sint32 VSnprintf(wchar_t* buffer, uint32 size_of_buf, const wchar_t*, va_list arguments);
+      TCBASE_API int32_t Snprintf(wchar_t* buffer, uint32_t size_of_buf, const wchar_t*, ...);
+      TCBASE_API int32_t VSnprintf(wchar_t* buffer, uint32_t size_of_buf, const wchar_t*, va_list arguments);
       TCBASE_API std::wstring Print(const wchar_t* format, ...);
       TCBASE_API std::wstring VPrint(const wchar_t* format, va_list arguments);
 

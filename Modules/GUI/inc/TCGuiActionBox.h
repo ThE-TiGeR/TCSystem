@@ -54,7 +54,7 @@ class TCGUI_API ActionBox: public Window
 
 public:
    /// Construct dialog which will always float over the owner window
-   ActionBox(FX::FXWindow* owner, const std::string& name, sint32 w=0, sint32 h=0);
+   ActionBox(FX::FXWindow* owner, const std::string& name, int32_t w=0, int32_t h=0);
    virtual ~ActionBox() {}
 
 public:

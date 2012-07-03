@@ -53,12 +53,12 @@ namespace tc
          virtual ~SoundDataMp3();
 
          virtual const SoundFormat& GetFormat() const;
-         virtual uint64 GetData(uint64 num_bytes, uint8* buffer);
+         virtual uint64_t GetData(uint64_t num_bytes, uint8_t* buffer);
          virtual void SetToStart();
 
       private:
-         static ssize_t Mp3Read(void* h, void *buf, size_t cnt);
-         static off_t Mp3Seek(void* h, off_t of, int origin);
+         static ::ssize_t Mp3Read(void* h, void *buf, ::size_t cnt);
+         static ::off_t Mp3Seek(void* h, ::off_t of, int origin);
          static void Mp3Cleanup(void* h);
 
       private:

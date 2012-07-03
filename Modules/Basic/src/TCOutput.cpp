@@ -47,19 +47,19 @@ namespace tc
 {
    namespace output
    {
-      static sint32 s_trace_level = 10;
+      static int32_t s_trace_level = 10;
       static PrintTargetPtr s_error_target;
       static PrintTargetPtr s_warning_target;
       static PrintTargetPtr s_info_target;
       static PrintTargetPtr s_trace_target;
 
-      void SetTraceLevel(sint32 level)
+      void SetTraceLevel(int32_t level)
       {
          s_trace_level = level;
-         TCTRACE1("TCBASE", -1, "setting trace level to %d", s_trace_level);
+         TCTRACES("TCBASE", -1, "setting trace level to " << s_trace_level);
       }
 
-      sint32 GetTraceLevel()
+      int32_t GetTraceLevel()
       {
          return s_trace_level;
       }
@@ -90,7 +90,7 @@ namespace tc
       }
 
       void Error(const char* module, const char* function, 
-         uint32 line_number, const char* format, ...)
+         uint32_t line_number, const char* format, ...)
       {
          std::string s = string::Print("%%E(%s, %6s), %s(%u): ", 
             system::GetDate().c_str(), module, function, line_number);
@@ -112,7 +112,7 @@ namespace tc
       }
 
       void Warning(const char* module, const char* function, 
-         uint32 line_number, const char* format, ...)
+         uint32_t line_number, const char* format, ...)
       {
          std::string s = string::Print("%%W(%s, %6s), %s(%u): ", 
             system::GetDate().c_str(), module, function, line_number);
@@ -134,7 +134,7 @@ namespace tc
       }
 
       void Info(const char* module, const char* function, 
-         uint32 line_number, const char* format, ...)
+         uint32_t line_number, const char* format, ...)
       {
          std::string s = string::Print("%%I(%s, %6s), %s(%u): ", 
             system::GetDate().c_str(), module, function, line_number);
@@ -155,8 +155,8 @@ namespace tc
          }
       }
 
-      void Trace(const char* module, sint32 level, const char* function, 
-         uint32 line_number, const char* format, ...)
+      void Trace(const char* module, int32_t level, const char* function, 
+         uint32_t line_number, const char* format, ...)
       {
          if (level < s_trace_level)
          {

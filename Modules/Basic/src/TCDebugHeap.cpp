@@ -52,7 +52,7 @@ namespace tc
       class Entry
       {
       public:
-         void Init(uint32 size, const char* file, uint32 line)
+         void Init(uint32_t size, const char* file, uint32_t line)
          {
             const char* name;
             name = std::strrchr(file, '\\');
@@ -79,9 +79,9 @@ namespace tc
          void*        m_user;
          Entry*       m_prev;
          Entry*       m_next;
-         uint32       m_line;
-         uint32       m_size;
-         uint32       m_thread;
+         uint32_t       m_line;
+         uint32_t       m_size;
+         uint32_t       m_thread;
          char         m_file[32];
       };
 
@@ -91,11 +91,11 @@ namespace tc
       {
       }
 
-      uint32 GetNumEntries() const
+      uint32_t GetNumEntries() const
       {
          m_mutex.Lock();
 
-         uint32 num_blocks = 0;
+         uint32_t num_blocks = 0;
          Entry* block = m_first;
          while (block)
          {
@@ -199,23 +199,23 @@ namespace tc
 
       }
 
-      static uint32 IsLargerThan(const Entry* entry1, const Entry* entry2)
+      static uint32_t IsLargerThan(const Entry* entry1, const Entry* entry2)
       {
-         sint32 str_diff  = std::strcmp(entry1->m_file, entry2->m_file);
+         int32_t str_diff  = std::strcmp(entry1->m_file, entry2->m_file);
          if (str_diff > 0)
          {
             return 1;
          }
          else if (str_diff == 0)
          {
-            sint32 line_diff = (sint32)entry1->m_line - (sint32)entry2->m_line;
+            int32_t line_diff = (int32_t)entry1->m_line - (int32_t)entry2->m_line;
             if (line_diff > 0)
             {
                return 2;
             }
             else if (line_diff == 0)
             {
-               sint32 thread_diff = (sint32)entry1->m_thread - (sint32)entry2->m_thread;
+               int32_t thread_diff = (int32_t)entry1->m_thread - (int32_t)entry2->m_thread;
                if (thread_diff >= 0)
                {
                   return 3;
@@ -340,12 +340,12 @@ namespace tc
       m_alloc_list = 0;
    }
 
-   void* DebugHeap::Alloc(uint32 size)
+   void* DebugHeap::Alloc(uint32_t size)
    {
       return Alloc(size, "unknown alloc", 0);
    }
 
-   void* DebugHeap::Alloc(uint32 size, const char *file_name, uint32 line)
+   void* DebugHeap::Alloc(uint32_t size, const char *file_name, uint32_t line)
    {
       void* pointer = 0;
 
@@ -363,8 +363,8 @@ namespace tc
       return pointer;
    }
 
-   void* DebugHeap::ReAlloc(void* memory, uint32 size,
-      const char* file_name, uint32 line)
+   void* DebugHeap::ReAlloc(void* memory, uint32_t size,
+      const char* file_name, uint32_t line)
    {
       void* new_memory = Alloc(size, file_name, line);
       if (!new_memory)
@@ -394,7 +394,7 @@ namespace tc
       return new_memory;
    }
 
-   void* DebugHeap::ReAlloc(void* memory, uint32 size)
+   void* DebugHeap::ReAlloc(void* memory, uint32_t size)
    {
       return ReAlloc(memory, size, "unknown realloc", 0);
    }
@@ -437,10 +437,10 @@ namespace tc
 
       AllocList::Entry* current = m_alloc_list->GetFirstEntry();
       const AllocList::Entry* prev = current;
-      uint32 prev_num_bytes = 0;
-      uint32 prev_num_times = 0;
-      uint32 total_bytes    = 0;
-      uint32 total_allocs   = 0;
+      uint32_t prev_num_bytes = 0;
+      uint32_t prev_num_times = 0;
+      uint32_t total_bytes    = 0;
+      uint32_t total_allocs   = 0;
       while (current)
       {
          if (std::strcmp(current->m_file, prev->m_file) == 0 &&

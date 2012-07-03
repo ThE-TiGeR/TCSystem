@@ -56,7 +56,7 @@ namespace tc
       return val ? L"1" : L"0";
    }
 
-   std::wstring wstring::ToString(uint16 val)
+   std::wstring wstring::ToString(uint16_t val)
    {
       wchar_t string[32];
       Snprintf(string, util::ArraySize(string), L"%u", val);
@@ -64,7 +64,7 @@ namespace tc
       return string;
    }
 
-   std::wstring wstring::ToString(sint16 val)
+   std::wstring wstring::ToString(int16_t val)
    {
       wchar_t string[32];
       Snprintf(string, util::ArraySize(string), L"%d", val);
@@ -72,7 +72,7 @@ namespace tc
       return string;
    }
 
-   std::wstring wstring::ToString(uint32 val)
+   std::wstring wstring::ToString(uint32_t val)
    {
       wchar_t string[32];
       Snprintf(string, util::ArraySize(string), L"%u", val);
@@ -80,7 +80,7 @@ namespace tc
       return string;
    }
 
-   std::wstring wstring::ToString(sint32 val)
+   std::wstring wstring::ToString(int32_t val)
    {
       wchar_t string[32];
       Snprintf(string, util::ArraySize(string), L"%d", val);
@@ -88,7 +88,7 @@ namespace tc
       return string;
    }
 
-   std::wstring wstring::ToString(uint64 val)
+   std::wstring wstring::ToString(uint64_t val)
    {
       wchar_t string[32];
       Snprintf(string, util::ArraySize(string), L"%" TC_UINT64_WFORMAT, val);
@@ -96,7 +96,7 @@ namespace tc
       return string;
    }
 
-   std::wstring wstring::ToString(sint64 val)
+   std::wstring wstring::ToString(int64_t val)
    {
       wchar_t string[32];
       Snprintf(string, util::ArraySize(string), L"%" TC_SINT64_WFORMAT, val);
@@ -122,7 +122,7 @@ namespace tc
 
    bool wstring::IsIntValue(const std::wstring& val)
    {
-      sint32 tmp;
+      int32_t tmp;
       return std::swscanf(val.c_str(), L"%d", &tmp) == 1;
    }
 
@@ -159,9 +159,9 @@ namespace tc
       return v;
    }
 
-   sint8 wstring::ToSint8(const std::wstring& val)
+   int8_t wstring::ToSint8(const std::wstring& val)
    {
-      sint8 v;
+      int8_t v;
       if (std::swscanf(val.c_str(), L"%c", &v) != 1)
       {
          return 0;
@@ -170,9 +170,9 @@ namespace tc
       return v;
    }
 
-   uint8 wstring::ToUint8(const std::wstring& val)
+   uint8_t wstring::ToUint8(const std::wstring& val)
    {
-      uint8 v;
+      uint8_t v;
       if (std::swscanf(val.c_str(), L"%c", &v) != 1)
       {
          return 0;
@@ -181,9 +181,9 @@ namespace tc
       return v;
    }
 
-   sint16 wstring::ToSint16(const std::wstring& val)
+   int16_t wstring::ToSint16(const std::wstring& val)
    {
-      sint16 v;
+      int16_t v;
       if (std::swscanf(val.c_str(), L"%hd", &v) != 1)
       {
          return 0;
@@ -192,9 +192,9 @@ namespace tc
       return v;
    }
 
-   uint16 wstring::ToUint16(const std::wstring& val)
+   uint16_t wstring::ToUint16(const std::wstring& val)
    {
-      uint16 v;
+      uint16_t v;
       if (std::swscanf(val.c_str(), L"%hu", &v) != 1)
       {
          return 0;
@@ -203,9 +203,9 @@ namespace tc
       return v;
    }
 
-   sint32 wstring::ToSint32(const std::wstring& val)
+   int32_t wstring::ToSint32(const std::wstring& val)
    {
-      sint32 v;
+      int32_t v;
       if (std::swscanf(val.c_str(), L"%d", &v) != 1)
       {
          return 0;
@@ -214,9 +214,9 @@ namespace tc
       return v;
    }
 
-   uint32 wstring::ToUint32(const std::wstring& val)
+   uint32_t wstring::ToUint32(const std::wstring& val)
    {
-      uint32 v;
+      uint32_t v;
       if (std::swscanf(val.c_str(), L"%u", &v) != 1)
       {
          return 0;
@@ -225,9 +225,9 @@ namespace tc
       return v;
    }
 
-   sint64 wstring::ToSint64(const std::wstring& val)
+   int64_t wstring::ToSint64(const std::wstring& val)
    {
-      sint64 v;
+      int64_t v;
       if (std::swscanf(val.c_str(), L"%" TC_SINT64_WFORMAT, &v) != 1)
       {
          return 0;
@@ -236,9 +236,9 @@ namespace tc
       return v;
    }
 
-   uint64 wstring::ToUint64(const std::wstring& val)
+   uint64_t wstring::ToUint64(const std::wstring& val)
    {
-      uint64 v;
+      uint64_t v;
       if (std::swscanf(val.c_str(), L"%" TC_UINT64_WFORMAT, &v) != 1)
       {
          return 0;
@@ -317,27 +317,27 @@ namespace tc
       return WStringImp::Replace(text_in, r1, r2);
    }
 
-   sint32 wstring::VSnprintf(wchar_t* buf, uint32 size_of_buf, const wchar_t* fmt, va_list arguments)
+   int32_t wstring::VSnprintf(wchar_t* buf, uint32_t size_of_buf, const wchar_t* fmt, va_list arguments)
    {
       return WStringTraits::VsnPrintf(buf, size_of_buf, fmt, arguments);
    }
 
-   sint32 wstring::Snprintf(wchar_t* buf, uint32 size_of_buf, const wchar_t* fmt, ...)
+   int32_t wstring::Snprintf(wchar_t* buf, uint32_t size_of_buf, const wchar_t* fmt, ...)
    {
       va_list arguments;
       va_start(arguments, fmt);
-      sint32 len = WStringTraits::VsnPrintf(buf, size_of_buf, fmt, arguments);
+      int32_t len = WStringTraits::VsnPrintf(buf, size_of_buf, fmt, arguments);
       va_end(arguments);
 
       return len;
    }
 
-   sint32 StringICompare(const wchar_t* s1, const wchar_t* s2)
+   int32_t StringICompare(const wchar_t* s1, const wchar_t* s2)
    {
        return WStringImp::StringICompare(s1, s2);
    }
    
-   sint32 StringICompare(const wchar_t* s1, const wchar_t* s2, uint32 len_to_compare)
+   int32_t StringICompare(const wchar_t* s1, const wchar_t* s2, uint32_t len_to_compare)
    {
        return WStringImp::StringICompare(s1, s2, len_to_compare);
    }
@@ -372,10 +372,10 @@ namespace tc
       if (utf8_string.length() > 0)
       {
 #ifdef TCOS_POSIX
-         sint32 wc_buffer_size = ::mbstowcs(0, utf8_string.c_str(), 0);
+         int32_t wc_buffer_size = ::mbstowcs(0, utf8_string.c_str(), 0);
 #else
          // convert to to wchar string from uft8 multibyte string
-         sint32 wc_buffer_size = ::MultiByteToWideChar(CP_UTF8,
+         int32_t wc_buffer_size = ::MultiByteToWideChar(CP_UTF8,
             0,
             utf8_string.c_str(),
             -1,
@@ -422,10 +422,10 @@ namespace tc
       if (string.length() > 0)
       {
 #ifdef TCOS_POSIX
-         sint32 c_buffer_size = ::wcstombs(0, string.c_str(), 0);
+         int32_t c_buffer_size = ::wcstombs(0, string.c_str(), 0);
 #else
          // convert from wchar string to uft8 multibyte string
-         sint32 c_buffer_size = ::WideCharToMultiByte(CP_UTF8, 0, string.c_str(), -1, 0, 0, 0, 0);
+         int32_t c_buffer_size = ::WideCharToMultiByte(CP_UTF8, 0, string.c_str(), -1, 0, 0, 0, 0);
 #endif
 
          if (c_buffer_size > 0)

@@ -62,7 +62,7 @@ namespace tc
    {
 
       ThreadPtr factory::CreateThread(const std::string& thread_name,
-         uint32 stack_size/* =0 */, 
+         uint32_t stack_size/* =0 */, 
          Thread::ThreadPriority priority/* =Thread::PRIORITY_NORMAL */)
       {
 #ifdef TCOS_WINDOWS
@@ -73,7 +73,7 @@ namespace tc
       }
 
       ThreadPtr factory::CreateCommandExecutionThread(const std::string& thread_name,
-         uint32 stack_size/* =0 */, 
+         uint32_t stack_size/* =0 */, 
          Thread::ThreadPriority priority/* =Thread::PRIORITY_NORMAL */)
       {
          ThreadPtr thread = factory::CreateThread(thread_name, stack_size, priority);
@@ -138,7 +138,7 @@ namespace tc
 #endif
       }
 
-      SemaphorePtr factory::CreateSemaphore(uint32 initial_value /* = 1 */)
+      SemaphorePtr factory::CreateSemaphore(uint32_t initial_value /* = 1 */)
       {
 #ifdef TCOS_WINDOWS
          SharedPtr<imp::SemaphoreWin32> semaphore(new imp::SemaphoreWin32);
@@ -154,7 +154,7 @@ namespace tc
       }
 
       SemaphorePtr factory::CreateSemaphore(const std::string& shared_name,
-          uint32 initial_value, CreationMode mode /* = CRM_ALWAYS */)
+          uint32_t initial_value, CreationMode mode /* = CRM_ALWAYS */)
       {
 #ifdef TCOS_WINDOWS
          SharedPtr<imp::SemaphoreWin32> semaphore(new imp::SemaphoreWin32);

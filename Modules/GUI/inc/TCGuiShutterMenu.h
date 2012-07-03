@@ -45,7 +45,7 @@ namespace tc
       {
          TCGUIBASE_DECLARE(ShutterMenu)
       public:
-         ShutterMenu(FX::FXComposite *p, FX::FXObject* tgt=0, FX::FXSelector sel=0, uint32 opts=0);
+         ShutterMenu(FX::FXComposite *p, FX::FXObject* tgt=0, FX::FXSelector sel=0, uint32_t opts=0);
          virtual ~ShutterMenu();
 
       protected:
@@ -63,7 +63,7 @@ namespace tc
       {
          TCGUIBASE_DECLARE(ShutterMenuItem)
       public:
-         ShutterMenuItem(ShutterMenu* p, const std::string& text, FX::FXIcon* ic=0, FX::FXObject* tgt=0, FX::FXSelector sel=0, uint32 opts=0);
+         ShutterMenuItem(ShutterMenu* p, const std::string& text, FX::FXIcon* ic=0, FX::FXObject* tgt=0, FX::FXSelector sel=0, uint32_t opts=0);
          virtual ~ShutterMenuItem();
 
          FX::FXVerticalFrame* GetContent() {return m_button_frame;};

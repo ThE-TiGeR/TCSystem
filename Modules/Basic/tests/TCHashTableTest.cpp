@@ -53,7 +53,7 @@ namespace tc
          }
          virtual void Execute()
          {
-            HashTable<std::string, sint32> hash_table(100, -1);
+            HashTable<std::string, int32_t> hash_table(100, -1);
             TCUNIT_ASSERT(hash_table.GetHashSize() == 100);
             TCUNIT_ASSERT(hash_table.GetNotFoundValue() == -1);
             std::vector<std::string> keys;
@@ -71,7 +71,7 @@ namespace tc
          }
          virtual void Execute()
          {
-            HashTable<std::string, sint32> hash_table(100, -1);
+            HashTable<std::string, int32_t> hash_table(100, -1);
             hash_table.SetHashSize(200);
             TCUNIT_ASSERT(hash_table.GetHashSize() == 200);
          }
@@ -86,7 +86,7 @@ namespace tc
          }
          virtual void Execute()
          {
-            HashTable<std::string, sint32> hash_table(100, -1);
+            HashTable<std::string, int32_t> hash_table(100, -1);
             hash_table.SetNotFoundValue(0);
             TCUNIT_ASSERT(hash_table.GetNotFoundValue() == 0);
          }
@@ -101,7 +101,7 @@ namespace tc
          }
          virtual void Execute()
          {
-            HashTable<std::string, sint32> hash_table(100, -1);
+            HashTable<std::string, int32_t> hash_table(100, -1);
             hash_table.AddKey("test1", 1);
             hash_table.AddKey("test2", 2);
 
@@ -122,7 +122,7 @@ namespace tc
          }
          virtual void Execute()
          {
-            HashTable<std::string, sint32> hash_table(100, -1);
+            HashTable<std::string, int32_t> hash_table(100, -1);
             hash_table.AddKey("test1", 1);
             hash_table.AddKey("test2", 2);
 
@@ -141,7 +141,7 @@ namespace tc
          }
          virtual void Execute()
          {
-            HashTable<std::string, sint32> hash_table(100, -1);
+            HashTable<std::string, int32_t> hash_table(100, -1);
             hash_table.AddKey("test1", 1);
             hash_table.AddKey("test2", 2);
 
@@ -160,7 +160,7 @@ namespace tc
          }
          virtual void Execute()
          {
-            HashTable<std::string, sint32> hash_table(100, -1);
+            HashTable<std::string, int32_t> hash_table(100, -1);
             hash_table.AddKey("test1", 1);
             hash_table.AddKey("test2", 2);
 
@@ -181,12 +181,12 @@ namespace tc
          }
          virtual void Execute()
          {
-            HashTable<std::string, sint32> hash_table(100, -1);
+            HashTable<std::string, int32_t> hash_table(100, -1);
             hash_table.AddKey("test1", 1);
             hash_table.AddKey("test2", 2);
 
             std::vector<std::string> keys;
-            std::vector<sint32> values;
+            std::vector<int32_t> values;
             hash_table.GetAllKeysAndValues(keys, values);
             TCUNIT_ASSERT(keys.size() == 2);
             TCUNIT_ASSERT(keys[0] == "test2");

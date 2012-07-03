@@ -91,22 +91,22 @@ namespace multi_threading
       };
 
       /** @brief Create empty message */
-      explicit Message(uint32 message_id);
+      explicit Message(uint32_t message_id);
 
       /** @brief Destruct message */
       virtual ~Message();
       /** @brief get the id of the message */
-      inline uint32 GetMessageId() const {return m_message_id;}
+      inline uint32_t GetMessageId() const {return m_message_id;}
       /** @brief get the id of the message */
-      inline uint32 GetReplyId() const {return m_reply_id;}
+      inline uint32_t GetReplyId() const {return m_reply_id;}
       /** @brief get the sender thread of the message */
       inline ThreadPtr GetSenderThread() {return m_sender_thread;}
 
    private:
       /** global id of the message */
-      uint32 m_message_id;
+      uint32_t m_message_id;
       /** id which is used for reply if sync message */
-      uint32 m_reply_id;
+      uint32_t m_reply_id;
       /** The sender thread */
       ThreadPtr m_sender_thread;
    };

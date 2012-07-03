@@ -77,7 +77,7 @@ namespace tc
 
          glColor3f(0.9f, 0.9f, 0.9f);
          glBegin(GL_LINE_LOOP);
-         for (uint32 i=0;i<32;i++)
+         for (uint32_t i=0;i<32;i++)
          {
             float cosine = cos (i*2*math::PI/32.0) * 0.33;
             float sine = sin(i*2*math::PI / 32.0) * 0.33 * aspect;

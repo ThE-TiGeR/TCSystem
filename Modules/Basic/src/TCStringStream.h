@@ -35,6 +35,7 @@
 #ifndef _TC_STRING_STREAM_H_
 #define _TC_STRING_STREAM_H_
 
+#include "TCNonCopyable.h"
 #include "TCStreamBase.h"
 
 #include <string>
@@ -62,7 +63,7 @@ namespace imp
     * Just implements the writing and reading of bytes
     * the rest is done in class StreamBase
     */
-   class TC_DLL_LOCAL StringStream: public StreamBase
+   class TC_DLL_LOCAL StringStream: public StreamBase, protected NonCopyAble
    {
    public:
       /**
@@ -72,11 +73,11 @@ namespace imp
       /** destruct an tc::StringStream object */
       virtual ~StringStream();
 
-      virtual bool SetPosition(sint64, StreamPosition pos);
-      virtual uint64 GetPosition() const;
+      virtual bool SetPosition(int64_t, StreamPosition pos);
+      virtual uint64_t GetPosition() const;
 
-      virtual uint64 ReadBytes(uint64 nBytes, void *bytes);
-      virtual uint64 WriteBytes(uint64 nBytes, const void *bytes);
+      virtual uint64_t ReadBytes(uint64_t nBytes, void *bytes);
+      virtual uint64_t WriteBytes(uint64_t nBytes, const void *bytes);
 
    private:
       /** An list arry holding the data */

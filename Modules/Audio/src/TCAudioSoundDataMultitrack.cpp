@@ -49,7 +49,7 @@ namespace tc
       {
       }
 
-      uint64 SoundDataMultitrack::GetData(uint64 /*num_bytes*/, uint8* /*buffer*/)
+      uint64_t SoundDataMultitrack::GetData(uint64_t /*num_bytes*/, uint8_t* /*buffer*/)
       {
          return 0;
       }

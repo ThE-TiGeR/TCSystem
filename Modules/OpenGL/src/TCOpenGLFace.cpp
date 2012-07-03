@@ -217,12 +217,12 @@ namespace tc
 
       long Face::OnDNDDrop(FX::FXObject* sender,FX::FXSelector,void*)
       {
-         uint32 len; 
+         uint32_t len; 
          FX::FXuchar* tmp;
          if(((FX::FXWindow*)sender)->getDNDData(FX::FROM_DRAGNDROP, FX::FXWindow::colorType,tmp,len))
          {
             Color color;
-            const uint16* clr = reinterpret_cast<const uint16*>(tmp);
+            const uint16_t* clr = reinterpret_cast<const uint16_t*>(tmp);
             color[0]=clr[0]/65535.0f;
             color[1]=clr[1]/65535.0f;
             color[2]=clr[2]/65535.0f;

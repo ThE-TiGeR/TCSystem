@@ -61,7 +61,7 @@ namespace imp
       * @param protocol name of the protocol to use e.g. "udp"
       * @return id of the socket (error is INVALID_SOCKET)
       */
-      TC_DLL_LOCAL SocketId CreateSocket(sint32 socketType, const std::string& protocol);
+      TC_DLL_LOCAL SocketId CreateSocket(int32_t socketType, const std::string& protocol);
       /**
       * closes a open socket
       * @param id is the open socket

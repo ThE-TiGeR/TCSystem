@@ -62,12 +62,12 @@ namespace tc
       UnmapFromMemory();
    }
 
-   uint32 MemoryMappedFilePosix::GetSize() const
+   uint32_t MemoryMappedFilePosix::GetSize() const
    {
       return m_size;
    }
 
-   uint8* MemoryMappedFilePosix::GetData()
+   uint8_t* MemoryMappedFilePosix::GetData()
    {
       if (m_readonly)
       {
@@ -75,17 +75,17 @@ namespace tc
       }
       else
       {
-         return static_cast<uint8*>(m_data);
+         return static_cast<uint8_t*>(m_data);
       }
    }
 
 
-   const uint8* MemoryMappedFilePosix::GetReadOnlyData() const
+   const uint8_t* MemoryMappedFilePosix::GetReadOnlyData() const
    {
-      return static_cast<const uint8*>(m_data);
+      return static_cast<const uint8_t*>(m_data);
    }
 
-   bool MemoryMappedFilePosix::MapToMemory(const std::string&  file_name, bool readonly, uint32 size)
+   bool MemoryMappedFilePosix::MapToMemory(const std::string&  file_name, bool readonly, uint32_t size)
    {
       int file_handle = ::open(file_name.c_str(), readonly ? O_RDONLY : O_RDWR);
       if (file_handle == -1)
@@ -94,7 +94,7 @@ namespace tc
       }
       m_file = file_handle;
 
-      uint32 num_bytes = size;
+      uint32_t num_bytes = size;
       if (num_bytes == 0)
       {
          struct stat status;
@@ -115,7 +115,7 @@ namespace tc
       return true;
    }
 
-   bool MemoryMappedFilePosix::MapToMemory(const std::wstring& fileName, bool readonly, uint32 size)
+   bool MemoryMappedFilePosix::MapToMemory(const std::wstring& fileName, bool readonly, uint32_t size)
    {
       return MapToMemory(wstring::ToString(fileName.c_str()), readonly, size);
    }

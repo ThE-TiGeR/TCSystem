@@ -135,7 +135,7 @@ namespace tc
             StreamPtr file = factory::CreateFileStream(file_name, Stream::stream_read, codec);
             if (!file)
             {
-               TCERROR1("TCAUDIO", "ManagerImp::CreateSound open file %s failed.", file_name.c_str());
+               TCERRORS("TCAUDIO", "ManagerImp::CreateSound open file " << file_name << " failed.");
                return SoundPtr();
             }
 
@@ -144,7 +144,7 @@ namespace tc
 
          catch (std::exception& e)
          {
-            TCERROR2("TCAUDIO", "from file %s failed %s", file_name.c_str(), e.what());
+            TCERRORS("TCAUDIO", "From file " << file_name << " failed " << e.what());
             return SoundPtr();
          }
       }
@@ -162,7 +162,7 @@ namespace tc
 
          catch (std::exception& e)
          {
-            TCERROR2("TCAUDIO", "from stream %s failed %s", name.c_str(), e.what());
+            TCERRORS("TCAUDIO", "From Stream " << name << " failed " << e.what());
             return SoundPtr();
          }
       }
@@ -182,7 +182,7 @@ namespace tc
 
          catch (std::exception& e)
          {
-            TCERROR1("TCAUDIO", "failed %s", e.what());
+            TCERRORS("TCAUDIO", "failed " << e.what());
             return SoundCompoundPtr();
          }
      }
@@ -202,7 +202,7 @@ namespace tc
 
          catch (std::exception& e)
          {
-            TCERROR1("TCAUDIO", "failed %s", e.what());
+            TCERRORS("TCAUDIO", "failed " << e.what());
             return SoundCompoundPtr();
          }
       }
@@ -222,7 +222,7 @@ namespace tc
 
          catch (std::exception& e)
          {
-            TCERROR1("TCAUDIO", "failed %s", e.what());
+            TCERRORS("TCAUDIO", "failed " << e.what());
          }
 
          sound = SoundPtr();
@@ -245,7 +245,7 @@ namespace tc
 
          catch (std::exception& e)
          {
-            TCERROR1("TCAUDIO", "failed %s", e.what());
+            TCERRORS("TCAUDIO", "failed " << e.what());
             return ManagerPtr();
          }
       }

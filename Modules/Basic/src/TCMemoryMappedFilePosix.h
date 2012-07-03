@@ -62,23 +62,23 @@ namespace tc
       MemoryMappedFilePosix();
       virtual ~MemoryMappedFilePosix();
 
-      virtual uint32 GetSize() const;
-      virtual uint8* GetData();
-      virtual const uint8* GetReadOnlyData() const;
+      virtual uint32_t GetSize() const;
+      virtual uint8_t* GetData();
+      virtual const uint8_t* GetReadOnlyData() const;
 
       virtual bool MapToMemory(const std::wstring& fileName,
          bool            readonly,
-         uint32          size);
+         uint32_t          size);
       virtual bool MapToMemory(const std::string& fileName,
          bool            readonly,
-         uint32          size);
+         uint32_t          size);
 
    private:
       virtual void UnmapFromMemory();
 
    private:
       /** Size of the mapped data */
-      uint32 m_size;
+      uint32_t m_size;
       /** Pointer to the mapped data */
       void* m_data;
       /** Handle of the file */

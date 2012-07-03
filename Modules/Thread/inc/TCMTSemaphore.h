@@ -92,7 +92,7 @@ namespace multi_threading
    typedef SharedPtr< Semaphore > SemaphorePtr;
 
    /** @brief Locking object for Semaphore objects */
-   class SemaphoreLocker: protected NonCopyAble
+   class SemaphoreLocker
    {
    public:
       SemaphoreLocker(SemaphorePtr s) 

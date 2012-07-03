@@ -99,7 +99,7 @@ namespace tc
             }
          }
          /** @brief Get current usage count */
-         inline uint32 GetUseCount() const { return m_count;}
+         inline uint32_t GetUseCount() const { return m_count;}
 
          /** @brief Add a new weak reference to this counter */
          inline void AddWeakReference()
@@ -223,7 +223,7 @@ namespace tc
       }
 
       /** @brief Get current use count */
-      uint32 GetUseCount() const
+      uint32_t GetUseCount() const
       {
          return m_count ? m_count->GetUseCount() : 0;
       }
@@ -301,7 +301,7 @@ namespace tc
       }
 
       /** @brief Get current use count */
-      uint32 GetUseCount() const
+      uint32_t GetUseCount() const
       {
          return m_count != 0 ? m_count->GetUseCount(): 0;
       }

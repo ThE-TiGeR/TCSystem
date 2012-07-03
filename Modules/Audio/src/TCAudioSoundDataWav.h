@@ -51,18 +51,18 @@ namespace tc
          virtual ~SoundDataWav();
 
          virtual const SoundFormat& GetFormat() const;
-         virtual uint64 GetData(uint64 num_bytes, uint8* buffer);
+         virtual uint64_t GetData(uint64_t num_bytes, uint8_t* buffer);
          virtual void SetToStart();
 
       private:
          void ProcessStream();
-         void ProcessFormat(uint32 chunk_length);
-         void ProcessData(uint32 chunk_length);
+         void ProcessFormat(uint32_t chunk_length);
+         void ProcessData(uint32_t chunk_length);
 
       private:
          SoundFormat m_sound_format;
          StreamPtr m_stream;
-         uint64 m_start_of_sound_data;
+         uint64_t m_start_of_sound_data;
 
          typedef multi_threading::LockerPtr<const SoundDataWav*> Locker;
          friend class multi_threading::LockerPtr<const SoundDataWav*>;

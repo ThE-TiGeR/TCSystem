@@ -74,13 +74,14 @@ namespace tc
       {
 #ifdef TCTRACE_ENABLE
          Time start_time = Time::Now();
-         uint32 old_buffers = m_total_num_processed_buffers;
+         uint32_t old_buffers = m_total_num_processed_buffers;
 #endif
          ProcessStreamingSources();
 #ifdef TCTRACE_ENABLE
-         uint64 ellapsed = (Time::Now() - start_time).ToMilliSeconds();
-         TCTRACE3("AUDIO", 10, "Sounds = %ld, Buffers = %3ld, Time = %3" TC_UINT64_FORMAT,
-            m_streaming_sources.size(), m_total_num_processed_buffers-old_buffers, ellapsed);
+         uint64_t ellapsed = (Time::Now() - start_time).ToMilliSeconds();
+         TCTRACES("AUDIO", 10, "Sounds = " << m_streaming_sources.size() <<
+                               ", Buffers = " << m_total_num_processed_buffers-old_buffers << 
+                               ", Time = " << ellapsed);
 #endif
 
          return TASK_OK;
@@ -102,7 +103,7 @@ namespace tc
             // update buffer size for this format
             UpdateBufferSize(streaming_source->m_sound_data->GetFormat());
             // Fill all the Buffers with audio data from the wavefile
-            for (uint32 iLoop = 0; iLoop < tc::util::ArraySize(streaming_source->m_buffer); iLoop++)
+            for (uint32_t iLoop = 0; iLoop < tc::util::ArraySize(streaming_source->m_buffer); iLoop++)
             {
                QueueBuffer(streaming_source, streaming_source->m_buffer[iLoop]);
             }
@@ -242,7 +243,7 @@ namespace tc
          const SoundFormat& format(streaming_source->m_sound_data->GetFormat());
 
          // Read more audio data (if there is any)
-         uint64 bytes_in_buffer = 
+         uint64_t bytes_in_buffer = 
             streaming_source->m_sound_data->GetData(m_streaming_buffer_size, m_streaming_buffer);
          // end if sound data
          if (bytes_in_buffer == 0)
@@ -270,7 +271,7 @@ namespace tc
       {
          StreamingSourcePtr streaming_source(new StreamingSource);
          streaming_source->m_source = OpenALHandler::GetInstance()->GetUnusedSource();
-         for (uint32 i=0; i<tc::util::ArraySize(streaming_source->m_buffer); i++)
+         for (uint32_t i=0; i<tc::util::ArraySize(streaming_source->m_buffer); i++)
          {
             streaming_source->m_buffer[i] = OpenALHandler::GetInstance()->GetUnusedBuffer();
          }
@@ -303,7 +304,7 @@ namespace tc
          OpenALHandler::GetInstance()->CheckErrorAndThrowException("alSourcei");
 
          OpenALHandler::GetInstance()->ReleaseSource((*streaming_source)->m_source);
-         for (uint32 i=0; i<tc::util::ArraySize((*streaming_source)->m_buffer); i++)
+         for (uint32_t i=0; i<tc::util::ArraySize((*streaming_source)->m_buffer); i++)
          {
             OpenALHandler::GetInstance()->ReleaseBuffer((*streaming_source)->m_buffer[i]);
          }
@@ -327,18 +328,18 @@ namespace tc
 
       void StreamingTask::UpdateBufferSize(const SoundFormat& format)
       {
-         //uint32 buffer_size = format.bytes_per_second >> 4;
-         uint32 buffer_size = format.bytes_per_second >> 2;
+         //uint32_t buffer_size = format.bytes_per_second >> 4;
+         uint32_t buffer_size = format.bytes_per_second >> 2;
          // we always force a multiple of 4
          // IMPORTANT : The Buffer Size must be an exact multiple of the BlockAlignment ...
-         buffer_size -= (buffer_size % tc::util::Max(format.bytes_per_sample, uint16(4)));
+         buffer_size -= (buffer_size % tc::util::Max(format.bytes_per_sample, uint16_t(4)));
 
          //tcout << double(buffer_size)/format.bytes_per_second << "block time" << endl;
 
          if (m_streaming_buffer_size < buffer_size)
          {
             delete []m_streaming_buffer;
-            m_streaming_buffer = new uint8[buffer_size];
+            m_streaming_buffer = new uint8_t[buffer_size];
             if (!m_streaming_buffer)
             {
                throw Exception("StreamingTask::UpdateBufferSize allocation failed");

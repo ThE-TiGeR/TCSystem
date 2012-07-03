@@ -113,7 +113,7 @@ namespace tc
          * @see  http://www.opengl.org/developers/faqs/technical/transparency.htm
          * @param stipple_pattern  The pattern to use for rendering lines
          */
-         void EnableLineStipple(uint32 stipple_pattern);
+         void EnableLineStipple(uint32_t stipple_pattern);
          /** Disable rendering lines with specified stipple pattern */
          void DisableLineStipple();
 
@@ -128,7 +128,7 @@ namespace tc
          *                                         - GL_LINE_LOOP
          */
          void RenderLine(const Vertex3DVector& vertexes,
-                         const Color& color, uint32 num_pixels=DEFAULT_WIDTH, 
+                         const Color& color, uint32_t num_pixels=DEFAULT_WIDTH, 
                          GLenum line_type=GL_LINE_STRIP);
          /**
          * This method renders an Open GL line because of specified line type.
@@ -141,7 +141,7 @@ namespace tc
          *                                         - GL_LINE_LOOP
          */
          void RenderLine(const Vertex3DVector& vertexes,
-                         const std::vector<Color>& colors, uint32 num_pixels=DEFAULT_WIDTH, 
+                         const std::vector<Color>& colors, uint32_t num_pixels=DEFAULT_WIDTH, 
                          GLenum line_type=GL_LINE_STRIP);
 
          /**
@@ -151,11 +151,11 @@ namespace tc
          * @param color         The color of the all lines
          */
          void RenderLines(const std::vector< Vertex3DVector > &vertexes,
-                          const Color& color, uint32 num_pixels=DEFAULT_WIDTH, 
+                          const Color& color, uint32_t num_pixels=DEFAULT_WIDTH, 
                           GLenum line_type=GL_LINE_STRIP);
          void RenderLines(const std::vector< Vertex3DVector > &vertexes,
                           const std::vector< std::vector<Color> >& colors, 
-                          uint32 num_pixels=DEFAULT_WIDTH, GLenum line_type=GL_LINE_STRIP);
+                          uint32_t num_pixels=DEFAULT_WIDTH, GLenum line_type=GL_LINE_STRIP);
 
          /**
           * @brief Render specified box in specified color and linewith
@@ -165,7 +165,7 @@ namespace tc
           * @param num_pixels The thickness of the line in pixel (default = 1)
           */
          void RenderBox(const math::Box< Vertex3D >& box,
-                        const Color& color, uint32 num_pixels=DEFAULT_WIDTH);
+                        const Color& color, uint32_t num_pixels=DEFAULT_WIDTH);
 
          /**
           * @brief Render specified box in specified color and linewith
@@ -175,7 +175,7 @@ namespace tc
           * @param num_pixels The thickness of the line in pixel (default = 1)
           */
          void RenderBox(const math::Box< Vertex2D >& box,
-                        const Color& color, uint32 num_pixels=DEFAULT_WIDTH);
+                        const Color& color, uint32_t num_pixels=DEFAULT_WIDTH);
       };
    }
 }

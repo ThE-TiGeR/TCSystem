@@ -164,7 +164,7 @@ namespace tc
          /** Type of patches */
          GLenum m_patch_type;
          /** number of vertex to draw */
-         uint64 m_num_vertex;
+         uint64_t m_num_vertex;
 
          // Data needed if allocated in system memory
          /** pointer to the specified vertex array */
@@ -180,13 +180,13 @@ namespace tc
          bool m_is_vbo_enable;
          GLuint m_vertex_buffer_id;
          /** offset in the allocated array where vertex start */
-         uint64 m_vertex_offset;
+         uint64_t m_vertex_offset;
          /** offset in the allocated array where texture coordinates start */
-         uint64 m_texture_offset;
+         uint64_t m_texture_offset;
          /** offset in the allocated array where color start */
-         uint64 m_color_offset;
+         uint64_t m_color_offset;
          /** offset in the allocated array where normals start */
-         uint64 m_normal_offset;
+         uint64_t m_normal_offset;
       };
    }
 }

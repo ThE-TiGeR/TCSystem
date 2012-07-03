@@ -81,7 +81,7 @@ namespace tc
          static TCGUI_API void DestroyInstance();
          static TCGUI_API ImageHandler::Ptr GetInstance();
 
-         virtual void AddImageData(const char* _id, const char* _lang_id, const uchar* _image_data, ImageType image_type=BITMAP) = 0;
+         virtual void AddImageData(const char* _id, const char* _lang_id, const uint8_t* _image_data, ImageType image_type=BITMAP) = 0;
          virtual FX::FXIcon* GetIcon(const std::string& image_id) = 0;
       };
 

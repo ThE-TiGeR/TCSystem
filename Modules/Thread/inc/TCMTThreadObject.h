@@ -36,7 +36,6 @@
 #ifndef _TC_MT_THREAD_OBJECT_H_
 #define _TC_MT_THREAD_OBJECT_H_
 
-#include "TCNonCopyable.h"
 #include "TCSharedPtr.h"
 
 namespace tc

@@ -61,26 +61,26 @@ namespace tc
       * @brief Allocate a block of size bytes
       * @return The address of the block on success; std::bad_alloc on failure
       */
-      virtual void* Alloc(uint32 size) = 0;
+      virtual void* Alloc(uint32_t size) = 0;
       /**
       * @brief Allocate a block of size bytes
       * If The heap supports memory leak detection it should store for each allocation
       * file name and line number
       * @return The address of the block on success; std::bad_alloc on failure
       */
-      virtual void* Alloc(uint32 size, const char* file_name, uint32 line_numer) = 0;
+      virtual void* Alloc(uint32_t size, const char* file_name, uint32_t line_numer) = 0;
       /**
       * @brief ReAllocate a block of size bytes
       * @return The address of the block on success; std::bad_alloc on failure
       */
-      virtual void* ReAlloc(void* ptr, uint32 size) = 0;
+      virtual void* ReAlloc(void* ptr, uint32_t size) = 0;
       /**
       * @brief ReAllocate a block of size bytes
       * If The heap supports memory leak detection it should store for each allocation
       * file name and line number
       * @return The address of the block on success; std::bad_alloc on failure
       */
-      virtual void* ReAlloc(void* ptr, uint32 size, const char* file_name, uint32 line_numer) = 0;
+      virtual void* ReAlloc(void* ptr, uint32_t size, const char* file_name, uint32_t line_numer) = 0;
       /**
       * @brief Free an allocated block
       * The pointer is only freed if it belongs to this heap

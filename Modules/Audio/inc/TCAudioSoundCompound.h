@@ -62,9 +62,9 @@ namespace tc
       {
       public:
          /** @brief Get number of sounds included in this compound sound */
-         virtual uint32 GetNumSounds() const = 0;
+         virtual uint32_t GetNumSounds() const = 0;
          /** @brief Get specified sound at index */
-         virtual SoundPtr GetSound(uint32 idx) = 0;
+         virtual SoundPtr GetSound(uint32_t idx) = 0;
 
          /** @brief Add a sound to this compound sound */
          virtual bool AddSound(SoundPtr sound) = 0;

@@ -67,7 +67,7 @@ namespace imp
        * @param priority Priority of the thread @see ThreadPriority
        */
       static ThreadPtr Create(const std::string& thread_name,
-                              uint32 stack_size,
+                              uint32_t stack_size,
                               ThreadPriority priority);
       /**
        * @return  the calling thread's Thread object.
@@ -81,7 +81,7 @@ namespace imp
 
    public:
       ThreadPthread(const std::string& thread_name,
-                  uint32 stack_size, ThreadPriority priority);
+                  uint32_t stack_size, ThreadPriority priority);
       ThreadPthread(const std::string& thread_name, pthread_t handle);
       virtual ~ThreadPthread();
 
@@ -92,7 +92,7 @@ namespace imp
 
    private:
       /** @brief Get OS dependent thread priority because of ThreadPriority */
-      static sint32 GetPriority(ThreadPriority priority);
+      static int32_t GetPriority(ThreadPriority priority);
       static void* Wrapper(void* ptr);
 
    private:

@@ -50,7 +50,7 @@ namespace tc
 
       protected:
          virtual void DrawSelf(Viewer& viewer);
-         virtual void UpdateSelf(Viewer& viewer, uint32 curent_time, uint32 delta_time);;
+         virtual void UpdateSelf(Viewer& viewer, uint32_t curent_time, uint32_t delta_time);;
          virtual void DrawForHitSelf(Viewer& viewer);
       private:
          CoordinateCross() {}

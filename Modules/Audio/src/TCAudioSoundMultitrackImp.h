@@ -91,8 +91,8 @@ namespace tc
          virtual double GetPan() const;
          virtual double SetPan(double pan);      
 
-         virtual uint32 GetNumSounds() const;
-         virtual SoundPtr GetSound(uint32 idx);
+         virtual uint32_t GetNumSounds() const;
+         virtual SoundPtr GetSound(uint32_t idx);
 
          virtual bool AddSound(SoundPtr sound);
          virtual bool RemoveSound(SoundPtr sound);

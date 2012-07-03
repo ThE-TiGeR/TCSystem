@@ -122,7 +122,7 @@ namespace tc
 
             if (!m_event.state)
             {
-               TCERROR("TCMT", "not set.");
+               TCERRORS("TCMT", "not set.");
                return false;
             }
 

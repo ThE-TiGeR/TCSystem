@@ -70,7 +70,7 @@ namespace tc
             return m_new_message_event->Set();
          }
 
-         Message::ReturnValue MessageQueue::GetMessage(uint32 msg_id_start, uint32 msg_id_end, 
+         Message::ReturnValue MessageQueue::GetMessage(uint32_t msg_id_start, uint32_t msg_id_end, 
             MessagePtr& message)
          {
             do
@@ -86,7 +86,7 @@ namespace tc
             return Message::MSG_RECEIVE_FAILED;
          }
 
-         Message::ReturnValue MessageQueue::GetMessage(uint32 msg_id_start, uint32 msg_id_end,
+         Message::ReturnValue MessageQueue::GetMessage(uint32_t msg_id_start, uint32_t msg_id_end,
             MessagePtr& message, const Time& timeout)
          {
             Time start_time = Time::Now();
@@ -112,13 +112,13 @@ namespace tc
             return ret;
          }
 
-         Message::ReturnValue MessageQueue::TryGetMessage(uint32 msg_id_start, uint32 msg_id_end,
+         Message::ReturnValue MessageQueue::TryGetMessage(uint32_t msg_id_start, uint32_t msg_id_end,
             MessagePtr& message, bool remove)
          {
             return GetMessageFromQueue(msg_id_start, msg_id_end, message, remove);
          }
 
-         Message::ReturnValue MessageQueue::GetMessageFromQueue(uint32 msg_id_start, uint32 msg_id_end,
+         Message::ReturnValue MessageQueue::GetMessageFromQueue(uint32_t msg_id_start, uint32_t msg_id_end,
             MessagePtr& message, bool remove)
          {
             Message::ReturnValue ret = Message::MSG_RECEIVE_FAILED;

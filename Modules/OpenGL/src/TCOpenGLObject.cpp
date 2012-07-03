@@ -87,11 +87,11 @@ namespace tc
          return 1;
       }
 
-      void Object::SetOption(uint32 opt, bool state)
+      void Object::SetOption(uint32_t opt, bool state)
       {
          if (m_options.size() <= opt)
          {
-            uint32 needed_size = util::Max(opt+1, uint32(m_options.size()*2));
+            uint32_t needed_size = util::Max(opt+1, uint32_t(m_options.size()*2));
             m_options.resize(needed_size, false);
          }
          m_options[opt] = state;

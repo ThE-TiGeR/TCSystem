@@ -59,7 +59,7 @@ namespace tc
       {
       }
 
-      uint64 StringStream::ReadBytes(uint64 nBytes, void *bytes)
+      uint64_t StringStream::ReadBytes(uint64_t nBytes, void *bytes)
       {
          // check for an error
          if (Error())
@@ -87,7 +87,7 @@ namespace tc
 
          if (m_string_position < m_string.size())
          {
-            uint64 num_bytes_to_read = util::Min(nBytes, uint64(m_string.size() - m_string_position));
+            uint64_t num_bytes_to_read = util::Min(nBytes, uint64_t(m_string.size() - m_string_position));
             std::memcpy(bytes, &m_string[m_string_position], std::string::size_type(num_bytes_to_read));
 
             m_string_position += std::string::size_type(num_bytes_to_read);
@@ -96,7 +96,7 @@ namespace tc
          return nBytes;
       }
 
-      uint64 StringStream::WriteBytes(uint64 nBytes, const void *bytes)
+      uint64_t StringStream::WriteBytes(uint64_t nBytes, const void *bytes)
       {
          if (nBytes > std::numeric_limits<std::string::size_type>::max())
          {
@@ -111,7 +111,7 @@ namespace tc
          return nBytes;
       }
 
-      bool StringStream::SetPosition(sint64 pos, StreamPosition pos_mode)
+      bool StringStream::SetPosition(int64_t pos, StreamPosition pos_mode)
       {
          switch(pos_mode)
          {
@@ -120,18 +120,32 @@ namespace tc
             break;
 
          case POSITION_CURRENT:
-            m_string_position += ssize_type(pos);
+            if (pos > 0)
+            {
+               m_string_position += std::string::size_type(pos);
+            }
+            else
+            {
+               m_string_position -= std::string::size_type(util::Abs(pos));
+            }
             break;
 
          case POSITION_END:
-            m_string_position = m_string.size() + ssize_type(pos);
+            if (pos > 0)
+            {
+               m_string_position = m_string.size() + std::string::size_type(pos);
+            }
+            else
+            {
+               m_string_position = m_string.size() - std::string::size_type(util::Abs(pos));
+            }
             break;
          }
 
          return true;
       }
 
-      uint64 StringStream::GetPosition() const
+      uint64_t StringStream::GetPosition() const
       {
          return m_string_position;
       }

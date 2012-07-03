@@ -48,7 +48,7 @@ namespace tc
          const Texts* texts = m_last_mls_texts;
          while (texts)
          {
-            for (uint32 i=0; i<texts->m_num_texts; i++)
+            for (uint32_t i=0; i<texts->m_num_texts; i++)
             {
                if (texts->m_texts[i].id == mls_id)
                {
@@ -66,7 +66,7 @@ namespace tc
       {
       }
 
-      Texts::Texts(uint32 num_texts, const Text* texts)
+      Texts::Texts(uint32_t num_texts, const Text* texts)
          :m_num_texts(num_texts),
          m_texts(texts),
          m_prev(0)

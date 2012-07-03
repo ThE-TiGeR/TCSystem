@@ -93,13 +93,13 @@ namespace tc
 
       void ConvertToNumber::Execute()
       {
-         // test conversion to uint32
+         // test conversion to uint32_t
          TCUNIT_ASSERT(wstring::ToUint32(L"123456.789") == 123456);
          TCUNIT_ASSERT(wstring::ToUint32(L"0")          == 0);               // min value
          TCUNIT_ASSERT(wstring::ToUint32(L"4294967295") == 4294967295ul);      // max value
          TCUNIT_ASSERT(wstring::ToUint32(L"-1")         == 4294967295ul);
 
-         // test conversion to sint32
+         // test conversion to int32_t
          TCUNIT_ASSERT(wstring::ToSint32(L"123456.789") == 123456);
          TCUNIT_ASSERT(wstring::ToSint32(L"0") == 0);
          TCUNIT_ASSERT(wstring::ToSint32(L"-123") == -123);
@@ -136,9 +136,9 @@ namespace tc
             TCUNIT_ASSERT(wstring::ToString(static_cast<wchar_t *>(0)).empty());
          }
 
-         // convert from uint64
+         // convert from uint64_t
          {
-            uint64 uint64_number = 123456789;
+            uint64_t uint64_number = 123456789;
             TCUNIT_ASSERT(wstring::ToString(uint64_number)      == L"123456789");
             uint64_number = TC_UINT64_VAL(18446744073709551615);
             TCUNIT_ASSERT(wstring::ToString(uint64_number)      == L"18446744073709551615");
@@ -146,9 +146,9 @@ namespace tc
             TCUNIT_ASSERT(wstring::ToString(uint64_number)      == L"0");
          }
 
-         // convert from uint32
+         // convert from uint32_t
          {
-            uint32 uint32_number = 123456789;
+            uint32_t uint32_number = 123456789;
             TCUNIT_ASSERT(wstring::ToString(uint32_number)      == L"123456789");
             uint32_number = 4294967295ul;
             TCUNIT_ASSERT(wstring::ToString(uint32_number)      == L"4294967295");
@@ -156,9 +156,9 @@ namespace tc
             TCUNIT_ASSERT(wstring::ToString(uint32_number)      == L"0");
          }
 
-         // convert from uint16
+         // convert from uint16_t
          {
-            uint16 uint16_number = 12345;
+            uint16_t uint16_number = 12345;
             TCUNIT_ASSERT(wstring::ToString(uint16_number)      == L"12345");
             uint16_number = 65535;
             TCUNIT_ASSERT(wstring::ToString(uint16_number)      == L"65535");
@@ -167,13 +167,13 @@ namespace tc
          }
 
 
-         // convert from sint64
+         // convert from int64_t
          {
-            sint64 sint64_number = 123456789;
+            int64_t sint64_number = 123456789;
             TCUNIT_ASSERT(wstring::ToString(sint64_number)      == L"123456789");
             sint64_number = -123456789;
             TCUNIT_ASSERT(wstring::ToString(sint64_number)      == L"-123456789");
-            sint64_number = static_cast<sint64>(TC_SINT64_VAL(9223372036854775807));
+            sint64_number = static_cast<int64_t>(TC_SINT64_VAL(9223372036854775807));
             TCUNIT_ASSERT(wstring::ToString(sint64_number)      == L"9223372036854775807");
             sint64_number = TC_SINT64_VAL(-9223372036854775807);
             TCUNIT_ASSERT(wstring::ToString(sint64_number)      == L"-9223372036854775807");
@@ -181,9 +181,9 @@ namespace tc
             TCUNIT_ASSERT(wstring::ToString(sint64_number)      == L"0");
          }
 
-         // convert from sint32
+         // convert from int32_t
          {
-            sint32 sint32_number = 123456789;
+            int32_t sint32_number = 123456789;
             TCUNIT_ASSERT(wstring::ToString(sint32_number)      == L"123456789");
             sint32_number = -123456789;
             TCUNIT_ASSERT(wstring::ToString(sint32_number)      == L"-123456789");
@@ -195,9 +195,9 @@ namespace tc
             TCUNIT_ASSERT(wstring::ToString(sint32_number)      == L"0");
          }
 
-         // convert from sint16
+         // convert from int16_t
          {
-            sint16 sint16_number = 12345;
+            int16_t sint16_number = 12345;
             TCUNIT_ASSERT(wstring::ToString(sint16_number)      == L"12345");
             sint16_number = -12345;
             TCUNIT_ASSERT(wstring::ToString(sint16_number)      == L"-12345");
@@ -330,7 +330,7 @@ namespace tc
             }
             // 
             //          {
-            //             std::vector<uint32> values;
+            //             std::vector<uint32_t> values;
             //             wstring::Split(L"1 2 3", L' ', values, false);
             //             TCUNIT_ASSERT(values.size()==3 && values[0]==1 && values[1]==2 && values[2]==3);
             // 
@@ -343,7 +343,7 @@ namespace tc
             //          }
             // 
             //          {
-            //             std::vector<sint32> values;
+            //             std::vector<int32_t> values;
             //             wstring::Split(L"1 -2 3", L' ', values, false);
             //             TCUNIT_ASSERT(values.size()==3 && values[0]==1 && values[1]==-2 && values[2]==3);
             // 
@@ -378,7 +378,7 @@ namespace tc
          {
             {
                wchar_t buffer[100];
-               sint32 l = wstring::Snprintf(buffer, tc::util::ArraySize(buffer),
+               int32_t l = wstring::Snprintf(buffer, tc::util::ArraySize(buffer),
                   L"%d, %g, %ls", 1, 1.0, L"test");
                TCUNIT_ASSERT(l != -1);
                TCUNIT_ASSERT(wcscmp(L"1, 1, test", buffer) == 0);
@@ -387,7 +387,7 @@ namespace tc
 
             {
                wchar_t buffer[5];
-               sint32 l = wstring::Snprintf(buffer, tc::util::ArraySize(buffer),
+               int32_t l = wstring::Snprintf(buffer, tc::util::ArraySize(buffer),
                   L"%d, %g, %ls", 1, 1.0, L"test");
                TCUNIT_ASSERT(l == -1);
                TCUNIT_ASSERT(wcscmp(L"1, 1", buffer) == 0);

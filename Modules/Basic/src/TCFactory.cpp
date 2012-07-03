@@ -141,7 +141,7 @@ namespace tc
          return CreateFileStream(stderr, Stream::stream_write, codec);
       }
 
-      static imp::Rng69069 s_internal_rng(static_cast<uint32>(Time::Now().ToMilliSeconds()));
+      static imp::Rng69069 s_internal_rng(static_cast<uint32_t>(Time::Now().ToMilliSeconds()));
 
       RngPtr Create69069Rng()
       {
@@ -149,7 +149,7 @@ namespace tc
          return rng;
       }
 
-      MemoryMappedFilePtr CreateMemoryMappedFile(const std::string &file_name, bool read_only, uint32 size)
+      MemoryMappedFilePtr CreateMemoryMappedFile(const std::string &file_name, bool read_only, uint32_t size)
       {
 #ifdef TCOS_WINDOWS
          SharedPtr<MemoryMappedFileWin32> file(new MemoryMappedFileWin32);

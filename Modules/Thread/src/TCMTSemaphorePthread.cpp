@@ -83,7 +83,7 @@ namespace tc
             }
          }
 
-         bool SemaphorePthread::Init(uint32 initial)
+         bool SemaphorePthread::Init(uint32_t initial)
          {
             m_semaphore = new sem_t;
             if (::sem_init(m_semaphore, 0, initial) != 0)
@@ -97,7 +97,7 @@ namespace tc
             return true;
          }
 
-         bool SemaphorePthread::Init(const std::string& shared_name, uint32 initial, factory::CreationMode mode)
+         bool SemaphorePthread::Init(const std::string& shared_name, uint32_t initial, factory::CreationMode mode)
          {
             switch(mode)
             {

@@ -37,7 +37,6 @@
 #define _TCNET_SOCKET_H
 
 #include "TCNetTypes.h"
-#include "TCNonCopyable.h"
 
 namespace tc
 {

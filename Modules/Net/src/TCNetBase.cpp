@@ -46,7 +46,7 @@ namespace tc
       namespace imp
       {
 
-         sint32 Base::m_num_created_net_objects = 0;
+         int32_t Base::m_num_created_net_objects = 0;
 
          Base::Base()
          {

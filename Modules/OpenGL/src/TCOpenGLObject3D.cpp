@@ -86,7 +86,7 @@ namespace tc
          ::glTranslatef(-m_position[0], -m_position[1], -m_position[2]);
       }
 
-      ObjectPtr Object3D::GetHitObject(const uint32* /*hitpath*/)
+      ObjectPtr Object3D::GetHitObject(const uint32_t* /*hitpath*/)
       {
          return ObjectPtr();
       }
@@ -96,12 +96,12 @@ namespace tc
          bounding_box = m_bounding_box;
       }
 
-      void Object3D::Update(Viewer& viewer, uint32 curent_time, uint32 delta_time) 
+      void Object3D::Update(Viewer& viewer, uint32_t curent_time, uint32_t delta_time) 
       {
          UpdateSelf(viewer, curent_time, delta_time);
       }
 
-      bool Object3D::Drag(Viewer& viewer, sint32 fx, sint32 fy, sint32 tx, sint32 ty)
+      bool Object3D::Drag(Viewer& viewer, int32_t fx, int32_t fy, int32_t tx, int32_t ty)
       {
          float zz = viewer.worldToEyeZ(m_position);
          Vertex3D wf = viewer.eyeToWorld(viewer.screenToEye(fx, fy, zz));

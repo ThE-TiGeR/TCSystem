@@ -102,9 +102,9 @@ namespace tc
          void SetMax(const COORD_TYPE& bottom) {m_max=bottom;}
 
          /** Get by index 0 = min 1 = max */
-         COORD_TYPE& operator[](uint32 i){ return (&m_min)[i]; }
+         COORD_TYPE& operator[](uint32_t i){ return (&m_min)[i]; }
          /** Get by index 0 = min 1 = max */
-         const COORD_TYPE& operator[](uint32 i) const { return (&m_min)[i]; }
+         const COORD_TYPE& operator[](uint32_t i) const { return (&m_min)[i]; }
 
          /** @brief compare two boxes */
          bool operator==(const Box& box) const { return m_min==box.m_min && m_max==box.m_max; }
@@ -159,7 +159,7 @@ namespace tc
          */
          bool Contains(const COORD_TYPE& p) const
          {
-            for (uint32 i=0; i<COORD_TYPE::NUM_COMPONENTS; i++)
+            for (uint32_t i=0; i<COORD_TYPE::NUM_COMPONENTS; i++)
             {
                bool inside = m_min[i] <= p[i] && p[i] < m_max[i];
                if (!inside)

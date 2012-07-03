@@ -94,16 +94,16 @@ namespace tc
       void BeginFrame();
 
       /** Get the system time since last reset */
-      inline uint64 GetSystem() { Update(); return m_system_time; }
+      inline uint64_t GetSystem() { Update(); return m_system_time; }
       /** Get time which has been spent for the simulation */
-      inline uint64 GetTime() { return m_simulation_time; }
+      inline uint64_t GetTime() { return m_simulation_time; }
 
       /** Get the current frame number */
-      inline uint64 GetFrame() { return m_frame_count; }
+      inline uint64_t GetFrame() { return m_frame_count; }
       /** Get the starttime of this frame */
-      inline uint64 GetFrameStart() { return m_frame_start_time; }
+      inline uint64_t GetFrameStart() { return m_frame_start_time; }
       /** Get the endtime of this frame which is the starttime for the next frame*/
-      inline uint64 GetFrameEnd() { return m_frame_end_time; }
+      inline uint64_t GetFrameEnd() { return m_frame_end_time; }
 
    protected:
       /** updates all time values */
@@ -111,18 +111,18 @@ namespace tc
 
    private:
       bool m_running;
-      uint64 m_current_time;
-      uint64 m_last_time;
+      uint64_t m_current_time;
+      uint64_t m_last_time;
 
-      uint64 m_system_time;
-      uint64 m_stop_start_time;
+      uint64_t m_system_time;
+      uint64_t m_stop_start_time;
 
-      uint64 m_frame_count;
-      uint64 m_frame_start_time;
-      uint64 m_frame_end_time;
+      uint64_t m_frame_count;
+      uint64_t m_frame_start_time;
+      uint64_t m_frame_end_time;
 
-      uint64 m_simulation_time;
-      uint64 m_simulation_offset_time;
+      uint64_t m_simulation_time;
+      uint64_t m_simulation_offset_time;
    };
 
    /**

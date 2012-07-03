@@ -63,7 +63,7 @@ namespace tc
          * @param size [in]  size of \c buffer
          * @return number of bytes received
          */
-         virtual uint64 ReadBytes(void* buffer, uint64 size) = 0;
+         virtual uint64_t ReadBytes(void* buffer, uint64_t size) = 0;
 
          /**
          * @brief Reads data with length 'size' from socket with timeout
@@ -73,14 +73,14 @@ namespace tc
          * @return true  -> all data received in given time
          *         false -> by timeout or error or not all data received
          */
-         virtual uint64 ReadBytes(void* buffer, uint64 size, const Time& timeout) = 0;
+         virtual uint64_t ReadBytes(void* buffer, uint64_t size, const Time& timeout) = 0;
 
          /**
          * @brief  Writes bytes to the socket
          * @param buffer [out] data which should be sent
          * @param size [in] size of \c buffer
          */
-         virtual uint64 WriteBytes(const void* buffer, uint64 size) = 0;
+         virtual uint64_t WriteBytes(const void* buffer, uint64_t size) = 0;
 
          virtual ~ReadWriteSocket() {}
       };

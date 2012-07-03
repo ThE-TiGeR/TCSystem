@@ -62,8 +62,8 @@ public:
                  FX::FXIcon* oi=0, FX::FXIcon* ci=0, void* ptr=0);
    ~TreeItem() {};
 
-   virtual sint32 getWidth(const FX::FXTreeList* list) const;
-   virtual sint32 getHeight(const FX::FXTreeList* list) const;
+   virtual int32_t getWidth(const FX::FXTreeList* list) const;
+   virtual int32_t getHeight(const FX::FXTreeList* list) const;
 
    virtual void SetTextFont(FX::FXFont* text_font)
    {
@@ -85,8 +85,8 @@ public:
 protected:
    TreeItem() {}
 
-   virtual void draw(const FX::FXTreeList* list,FX::FXDC& dc,sint32 x,sint32 y,sint32 w,sint32 h) const;
-   virtual sint32 hitItem(const FX::FXTreeList* list,sint32 x,sint32 y) const;
+   virtual void draw(const FX::FXTreeList* list,FX::FXDC& dc,int32_t x,int32_t y,int32_t w,int32_t h) const;
+   virtual int32_t hitItem(const FX::FXTreeList* list,int32_t x,int32_t y) const;
 
 protected: 
    FX::FXFont*  m_text_font;

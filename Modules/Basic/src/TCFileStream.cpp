@@ -107,7 +107,7 @@ void FileStream::SetStream(const std::string &fileName, StreamDirection directio
 
    if (!file)
    {
-      TCERROR1("TCBASE", "Error opening file '%s'", fileName.c_str());
+      TCERRORS("TCBASE", "Error opening file '" << fileName << "'");
       setStatus(error_stream_open);
    }
 
@@ -116,7 +116,7 @@ void FileStream::SetStream(const std::string &fileName, StreamDirection directio
 }
 
 
-uint64 FileStream::ReadBytes(uint64 nBytes, void *bytes)
+uint64_t FileStream::ReadBytes(uint64_t nBytes, void *bytes)
 {
    // check for an error
    if (Error())
@@ -131,10 +131,10 @@ uint64 FileStream::ReadBytes(uint64 nBytes, void *bytes)
       return 0;
    }
 
-   uint64 read_bytes = 0;
+   uint64_t read_bytes = 0;
    while(read_bytes < nBytes)
    {
-       std::size_t num = std::fread(static_cast<uchar*>(bytes)+read_bytes, 1, 
+       std::size_t num = std::fread(static_cast<uint8_t*>(bytes)+read_bytes, 1, 
            std::size_t(nBytes-read_bytes), m_stream_pointer);
        if (num <= 0)
        {
@@ -154,7 +154,7 @@ uint64 FileStream::ReadBytes(uint64 nBytes, void *bytes)
    return read_bytes;
 }
 
-uint64 FileStream::WriteBytes(uint64 nBytes, const void *bytes)
+uint64_t FileStream::WriteBytes(uint64_t nBytes, const void *bytes)
 {
    if (nBytes == 0)
    {
@@ -174,10 +174,10 @@ uint64 FileStream::WriteBytes(uint64 nBytes, const void *bytes)
       return 0;
    }
 
-   uint64 wrote_bytes = 0;
+   uint64_t wrote_bytes = 0;
    while(wrote_bytes < nBytes)
    {
-       std::size_t num = std::fwrite(static_cast<const uchar*>(bytes)+wrote_bytes, 1, 
+       std::size_t num = std::fwrite(static_cast<const uint8_t*>(bytes)+wrote_bytes, 1, 
            std::size_t(nBytes-wrote_bytes), m_stream_pointer);
        if (num <= 0)
        {
@@ -209,7 +209,7 @@ void FileStream::Flush()
    }
 }
 
-bool FileStream::SetPosition(sint64 pos, StreamPosition pos_mode)
+bool FileStream::SetPosition(int64_t pos, StreamPosition pos_mode)
 {
    ResetStatus();
 
@@ -228,7 +228,7 @@ bool FileStream::SetPosition(sint64 pos, StreamPosition pos_mode)
    return false;
 }
 
-uint64 FileStream::GetPosition() const
+uint64_t FileStream::GetPosition() const
 {
    return std::ftell(m_stream_pointer);
 }

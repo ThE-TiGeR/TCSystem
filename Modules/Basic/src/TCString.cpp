@@ -60,7 +60,7 @@ namespace tc
       return val ? "1" : "0";
    }
 
-   std::string string::ToString(uint16 val)
+   std::string string::ToString(uint16_t val)
    {
       char string[32];
       Snprintf(string, util::ArraySize(string), "%hu", val);
@@ -68,7 +68,7 @@ namespace tc
       return string;
    }
 
-   std::string string::ToString(sint16 val)
+   std::string string::ToString(int16_t val)
    {
       char string[32];
       Snprintf(string, util::ArraySize(string), "%hd", val);
@@ -76,7 +76,7 @@ namespace tc
       return string;
    }
 
-   std::string string::ToString(uint32 val)
+   std::string string::ToString(uint32_t val)
    {
       char string[32];
       Snprintf(string, util::ArraySize(string), "%u", val);
@@ -84,7 +84,7 @@ namespace tc
       return string;
    }
 
-   std::string string::ToString(sint32 val)
+   std::string string::ToString(int32_t val)
    {
       char string[32];
       Snprintf(string, util::ArraySize(string), "%d", val);
@@ -92,7 +92,7 @@ namespace tc
       return string;
    }
 
-   std::string string::ToString(uint64 val)
+   std::string string::ToString(uint64_t val)
    {
       char string[32];
       Snprintf(string, util::ArraySize(string), "%" TC_UINT64_FORMAT, val);
@@ -100,7 +100,7 @@ namespace tc
       return string;
    }
 
-   std::string string::ToString(sint64 val)
+   std::string string::ToString(int64_t val)
    {
       char string[32];
       Snprintf(string, util::ArraySize(string), "%" TC_SINT64_FORMAT, val);
@@ -131,7 +131,7 @@ namespace tc
 
    bool string::IsIntValue(const std::string& val)
    {
-      sint32 tmp;
+      int32_t tmp;
       return std::sscanf(val.c_str(), "%d", &tmp) == 1;
    }
 
@@ -168,19 +168,19 @@ namespace tc
       return v;
    }
 
-   sint8 string::ToSint8(const std::string& val)
+   int8_t string::ToSint8(const std::string& val)
    {
-      return sint8(ToSint16(val));
+      return int8_t(ToSint16(val));
    }
 
-   uint8 string::ToUint8(const std::string& val)
+   uint8_t string::ToUint8(const std::string& val)
    {
-      return uint8(ToUint16(val));
+      return uint8_t(ToUint16(val));
    }
 
-   sint16 string::ToSint16(const std::string& val)
+   int16_t string::ToSint16(const std::string& val)
    {
-      sint16 v;
+      int16_t v;
       if (std::sscanf(val.c_str(), "%hd", &v) != 1)
       {
          return 0;
@@ -189,9 +189,9 @@ namespace tc
       return v;
    }
 
-   uint16 string::ToUint16(const std::string& val)
+   uint16_t string::ToUint16(const std::string& val)
    {
-      uint16 v;
+      uint16_t v;
       if (std::sscanf(val.c_str(), "%hu", &v) != 1)
       {
          return 0;
@@ -200,9 +200,9 @@ namespace tc
       return v;
    }
 
-   sint32 string::ToSint32(const std::string& val)
+   int32_t string::ToSint32(const std::string& val)
    {
-      sint32 v;
+      int32_t v;
       if (std::sscanf(val.c_str(), "%d", &v) != 1)
       {
          return 0;
@@ -211,9 +211,9 @@ namespace tc
       return v;
    }
 
-   uint32 string::ToUint32(const std::string& val)
+   uint32_t string::ToUint32(const std::string& val)
    {
-      uint32 v;
+      uint32_t v;
       if (std::sscanf(val.c_str(), "%u", &v) != 1)
       {
          return 0;
@@ -222,9 +222,9 @@ namespace tc
       return v;
    }
 
-   sint64 string::ToSint64(const std::string& val)
+   int64_t string::ToSint64(const std::string& val)
    {
-      sint64 v;
+      int64_t v;
       if (std::sscanf(val.c_str(), "%" TC_SINT64_FORMAT, &v) != 1)
       {
          return 0;
@@ -233,9 +233,9 @@ namespace tc
       return v;
    }
 
-   uint64 string::ToUint64(const std::string& val)
+   uint64_t string::ToUint64(const std::string& val)
    {
-      uint64 v;
+      uint64_t v;
       if (std::sscanf(val.c_str(), "%" TC_UINT64_FORMAT, &v) != 1)
       {
          return 0;
@@ -320,27 +320,27 @@ namespace tc
       return StringImp::Replace(text_in, r1, r2);
    }
 
-   sint32 string::Snprintf(char* buf, uint32 size_of_buf, const char* fmt, ...)
+   int32_t string::Snprintf(char* buf, uint32_t size_of_buf, const char* fmt, ...)
    {
       va_list arguments;
       va_start(arguments, fmt);
-      sint32 len = StringTraits::VsnPrintf(buf, size_of_buf, fmt, arguments);
+      int32_t len = StringTraits::VsnPrintf(buf, size_of_buf, fmt, arguments);
       va_end(arguments);
 
       return len;
    }
 
-   sint32 string::VSnprintf(char* buf, uint32 size_of_buf, const char *fmt, va_list arguments)
+   int32_t string::VSnprintf(char* buf, uint32_t size_of_buf, const char *fmt, va_list arguments)
    {
       return StringTraits::VsnPrintf(buf, size_of_buf, fmt, arguments);
    }
 
-   sint32 StringICompare(const char* s1, const char* s2)
+   int32_t StringICompare(const char* s1, const char* s2)
    {
        return StringImp::StringICompare(s1, s2);
    }
    
-   sint32 StringICompare(const char* s1, const char* s2, uint32 len_to_compare)
+   int32_t StringICompare(const char* s1, const char* s2, uint32_t len_to_compare)
    {
        return StringImp::StringICompare(s1, s2, len_to_compare);
    }

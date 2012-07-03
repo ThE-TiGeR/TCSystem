@@ -109,14 +109,14 @@ namespace tc
          void SetActive(bool sel) {m_options[OP_ACTIVE]=sel;}
          void SetSelected(bool sel) {m_options[OP_SELECTED]=sel;}
 
-         bool GetOption(uint32 opt) const {return m_options.size()>opt ? m_options[opt] : false;}
-         void SetOption(uint32 opt, bool state);
+         bool GetOption(uint32_t opt) const {return m_options.size()>opt ? m_options[opt] : false;}
+         void SetOption(uint32_t opt, bool state);
 
          virtual void Draw(Viewer& viewer) = 0;
          virtual void DrawForHit(Viewer& viewer) = 0;
-         virtual void Update(Viewer& viewer, uint32 curent_time, uint32 delta_time) = 0;
-         virtual bool Drag(Viewer& viewer, sint32 fx, sint32 fy, sint32 tx, sint32 ty) = 0;
-         virtual ObjectPtr GetHitObject(const uint32* hitpath) = 0;
+         virtual void Update(Viewer& viewer, uint32_t curent_time, uint32_t delta_time) = 0;
+         virtual bool Drag(Viewer& viewer, int32_t fx, int32_t fy, int32_t tx, int32_t ty) = 0;
+         virtual ObjectPtr GetHitObject(const uint32_t* hitpath) = 0;
          virtual void GetBoundingBox(BoundingBox3D& bounding_box) = 0;
          virtual void ResetPosition() = 0;
 

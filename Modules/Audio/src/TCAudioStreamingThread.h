@@ -51,7 +51,7 @@ namespace tc
       class TC_DLL_LOCAL SoundDataMessage: public multi_threading::Message
       {
       public:
-         SoundDataMessage(uint32 message_id, SoundDataPtr sound_data)
+         SoundDataMessage(uint32_t message_id, SoundDataPtr sound_data)
             :Message(message_id),
             m_sound_data(sound_data)
          {

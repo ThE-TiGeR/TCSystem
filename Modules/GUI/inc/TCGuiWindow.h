@@ -54,12 +54,12 @@ namespace tc
 
       public:
          TopWindow(FX::FXWindow* owner, const std::string& title, FX::FXIcon *ma=0, FX::FXIcon *mi=0,
-            uint32 opts=FX::DECOR_TITLE|FX::DECOR_BORDER|FX::DECOR_CLOSE, sint32 x=0,sint32 y=0,
-            sint32 w=0,sint32 h=0, sint32 pl=0,sint32 pr=0,sint32 pt=0,sint32 pb=0,sint32 hs=0,sint32 vs=0);
+            uint32_t opts=FX::DECOR_TITLE|FX::DECOR_BORDER|FX::DECOR_CLOSE, int32_t x=0,int32_t y=0,
+            int32_t w=0,int32_t h=0, int32_t pl=0,int32_t pr=0,int32_t pt=0,int32_t pb=0,int32_t hs=0,int32_t vs=0);
 
          TopWindow(FX::FXApp* app, const std::string& title, FX::FXIcon *ma=0, FX::FXIcon *mi=0,
-            uint32 opts=FX::DECOR_TITLE|FX::DECOR_BORDER|FX::DECOR_CLOSE, sint32 x=0,sint32 y=0,
-            sint32 w=0,sint32 h=0, sint32 pl=0,sint32 pr=0,sint32 pt=0,sint32 pb=0,sint32 hs=0,sint32 vs=0);
+            uint32_t opts=FX::DECOR_TITLE|FX::DECOR_BORDER|FX::DECOR_CLOSE, int32_t x=0,int32_t y=0,
+            int32_t w=0,int32_t h=0, int32_t pl=0,int32_t pr=0,int32_t pt=0,int32_t pb=0,int32_t hs=0,int32_t vs=0);
          virtual   ~TopWindow() {}
 
          void SetTitle(const std::string &name);    // set title of window
@@ -103,7 +103,7 @@ namespace tc
 
       public:
          /// Construct dialog which will always float over the owner window
-         Window(FX::FXWindow* owner, const std::string& title, sint32 w=0, sint32 h=0);
+         Window(FX::FXWindow* owner, const std::string& title, int32_t w=0, int32_t h=0);
          virtual ~Window() {}
 
          void      SetTitle(const std::string &name);    // set title of window

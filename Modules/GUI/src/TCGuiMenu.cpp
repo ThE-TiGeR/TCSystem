@@ -47,7 +47,7 @@ namespace tc
       TCGUIBASE_IMPLEMENT(MenuCascade, FX::FXMenuCascade, 0, 0)
       TCGUIBASE_IMPLEMENT(MenuCommand, FX::FXMenuCommand, 0, 0)
 
-      MenuTitle::MenuTitle(FX::FXComposite* p, const std::string& text_id, FX::FXIcon* ic, FX::FXPopup* pup, uint32 opts)
+      MenuTitle::MenuTitle(FX::FXComposite* p, const std::string& text_id, FX::FXIcon* ic, FX::FXPopup* pup, uint32_t opts)
          :FX::FXMenuTitle(p, mls::Handler::GetText(text_id).c_str(), ic, pup, opts|FX::ICON_BEFORE_TEXT)
          ,Widget(text_id)
       {
@@ -59,7 +59,7 @@ namespace tc
       {
       }
 
-      MenuCommand::MenuCommand(FX::FXComposite * p, const std::string &text_id, FX::FXIcon* ic, FX::FXObject* tgt, FX::FXSelector sel, uint32 opts)
+      MenuCommand::MenuCommand(FX::FXComposite * p, const std::string &text_id, FX::FXIcon* ic, FX::FXObject* tgt, FX::FXSelector sel, uint32_t opts)
          :FX::FXMenuCommand(p, mls::Handler::GetText(text_id).c_str(), ic, tgt, sel, opts)
          ,Widget(text_id)
       {

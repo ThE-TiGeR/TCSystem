@@ -57,7 +57,7 @@ namespace tc
 
       TCGUIBASE_IMPLEMENT(DialogBox, Window, TCGuiDialogBoxMap, ARRAYNUMBER(TCGuiDialogBoxMap))
 
-      DialogBox::DialogBox(FXWindow * owner, const std::string & title, sint32 w, sint32 h)
+      DialogBox::DialogBox(FXWindow * owner, const std::string & title, int32_t w, int32_t h)
          :Window(owner, title, w,  h)
       {
          hasOkButton     = 1;
@@ -96,8 +96,8 @@ namespace tc
 
       long DialogBox::onUpdApply(FX::FXObject *sender, FX::FXSelector, void *ptr)
       {
-         uint32 msg1 = AutoApply()  ? FX::FXWindow::ID_HIDE   : FX::FXWindow::ID_SHOW;
-         uint32 msg2 = IsModified() ? FX::FXWindow::ID_ENABLE : FX::FXWindow::ID_DISABLE;
+         uint32_t msg1 = AutoApply()  ? FX::FXWindow::ID_HIDE   : FX::FXWindow::ID_SHOW;
+         uint32_t msg2 = IsModified() ? FX::FXWindow::ID_ENABLE : FX::FXWindow::ID_DISABLE;
 
          sender->handle(this, MKUINT(msg1, FX::SEL_COMMAND), ptr);
          sender->handle(this, MKUINT(msg2, FX::SEL_COMMAND), ptr);
@@ -107,8 +107,8 @@ namespace tc
 
       long DialogBox::onUpdCancel(FX::FXObject *sender, FX::FXSelector, void *ptr)
       {
-         uint32 msg1 = hasCancelButton == 1 ? FX::FXWindow::ID_SHOW : FX::FXWindow::ID_HIDE;
-         uint32 msg2              = FX::FXWindow::ID_DISABLE;
+         uint32_t msg1 = hasCancelButton == 1 ? FX::FXWindow::ID_SHOW : FX::FXWindow::ID_HIDE;
+         uint32_t msg2              = FX::FXWindow::ID_DISABLE;
          if (!wasModified ) msg2 = FX::FXWindow::ID_ENABLE;
          if (IsModified()) msg2 = FX::FXWindow::ID_ENABLE;
 
@@ -120,7 +120,7 @@ namespace tc
 
       long DialogBox::onUpdAccept(FX::FXObject *sender, FX::FXSelector, void *ptr)
       {
-         uint32 msg = hasOkButton == 1 ? FX::FXWindow::ID_SHOW : FX::FXWindow::ID_HIDE;
+         uint32_t msg = hasOkButton == 1 ? FX::FXWindow::ID_SHOW : FX::FXWindow::ID_HIDE;
          sender->handle(this, MKUINT(msg, FX::SEL_COMMAND), ptr);
 
          return 1;
@@ -128,7 +128,7 @@ namespace tc
 
       bool DialogBox::IsModified()
       {
-         uint32 i;
+         uint32_t i;
          for (i=0; i<m_int_values.size(); i++)
             if (m_int_values[i] != *(m_int_pointers[i])) return true;
 
@@ -165,13 +165,13 @@ namespace tc
          m_string_pointers.clear();
       }
 
-      void DialogBox::AddValue(sint32    &val)
+      void DialogBox::AddValue(int32_t    &val)
       {
          m_int_values.push_back(val);
          m_int_pointers.push_back(&val);
       }
 
-      void DialogBox::AddValue(uint32    &val)
+      void DialogBox::AddValue(uint32_t    &val)
       {
          m_uint_values.push_back(val);
          m_uint_pointers.push_back(&val);
@@ -199,7 +199,7 @@ namespace tc
       {
          if (!IsModified()) return;
 
-         uint32 i;
+         uint32_t i;
          for (i=0; i<m_int_values.size(); i++)
             m_int_values[i] = *(m_int_pointers[i]);
 
@@ -226,7 +226,7 @@ namespace tc
       {
          if (!IsModified()) return;
 
-         uint32 i;
+         uint32_t i;
          for (i=0; i<m_int_values.size(); i++)
          {
             *(m_int_pointers[i]) = m_int_values[i];

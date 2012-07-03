@@ -56,13 +56,13 @@ namespace tc
     */
 
    /** @brief typedef for a byte vector */
-   typedef std::vector<uint8> ByteVector;
-   /** @brief typedef for a uint16 vector */
-   typedef std::vector<uint16> Uint16Vector;
-   /** @brief typedef for a uint32 vector */
-   typedef std::vector<uint32> Uint32Vector;
-   /** @brief typedef for a uint64 vector */
-   typedef std::vector<uint64> Uint64Vector;
+   typedef std::vector<uint8_t> ByteVector;
+   /** @brief typedef for a uint16_t vector */
+   typedef std::vector<uint16_t> Uint16Vector;
+   /** @brief typedef for a uint32_t vector */
+   typedef std::vector<uint32_t> Uint32Vector;
+   /** @brief typedef for a uint64_t vector */
+   typedef std::vector<uint64_t> Uint64Vector;
 
    /** @brief typedef for a string vector */
    typedef std::vector<std::string> StringVector;

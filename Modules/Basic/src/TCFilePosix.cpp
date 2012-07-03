@@ -120,9 +120,9 @@ namespace tc
    }
 
    // Change the mode flags for this file
-   bool file::SetFileAttr(const std::string &file, uint32 attr)
+   bool file::SetFileAttr(const std::string &file, uint32_t attr)
    {
-      sint32 a = 0;
+      int32_t a = 0;
       if (attr && FILEATTR_WRITE == FILEATTR_WRITE) {
          attr = FILEATTR_OWNER_WRITE | FILEATTR_GROUP_WRITE | FILEATTR_EVERYONE_WRITE;
       }
@@ -171,7 +171,7 @@ namespace tc
          return false;
       }
 
-      uint32 buf_sz = 32 * 1024;
+      uint32_t buf_sz = 32 * 1024;
       std::vector<char> buf(buf_sz);
       int infile=0, outfile=0;
       struct stat from_stat;
@@ -236,42 +236,42 @@ namespace tc
    }
 
    // Return time file was last modified
-   uint64 file::GetModificationTime(const std::string &file)
+   uint64_t file::GetModificationTime(const std::string &file)
    {
       struct stat status;
-      return stat(file.c_str(), &status) == 0 ? (uint64)status.st_mtime : 0;
+      return stat(file.c_str(), &status) == 0 ? (uint64_t)status.st_mtime : 0;
    }
 
    // Return time file was last accessed
-   uint64 file::GetLastAccessTime(const std::string &file)
+   uint64_t file::GetLastAccessTime(const std::string &file)
    {
       struct stat status;
-      return stat(file.c_str(), &status) == 0 ? (uint64)status.st_atime : 0;
+      return stat(file.c_str(), &status) == 0 ? (uint64_t)status.st_atime : 0;
    }
 
    // Return time when created
-   uint64 file::GetCreationTime(const std::string &file)
+   uint64_t file::GetCreationTime(const std::string &file)
    {
       struct stat status;
-      return stat(file.c_str(), &status) == 0 ? (uint64)status.st_ctime : 0;
+      return stat(file.c_str(), &status) == 0 ? (uint64_t)status.st_ctime : 0;
    }
 
    // Get file size
-   uint64 file::GetFileSize(const std::string &file)
+   uint64_t file::GetFileSize(const std::string &file)
    {
       struct stat status;
-      return stat(file.c_str(), &status) == 0 ? (uint64)status.st_size : 0;
+      return stat(file.c_str(), &status) == 0 ? (uint64_t)status.st_size : 0;
    }
 
    // get name of file user
    std::string file::GetFileUser(const std::string &file)
    {
       struct stat status;
-      uint32 user_id = stat(file.c_str(), &status) == 0 ? status.st_uid : 0;
+      uint32_t user_id = stat(file.c_str(), &status) == 0 ? status.st_uid : 0;
       struct passwd *pwd = ::getpwuid(user_id);
       if (!pwd)
       {
-         TCERROR("TCBASE", system::GetLastErrorMessage().c_str());
+         TCERRORS("TCBASE", system::GetLastErrorMessage().c_str());
          return "";
       }      
       return pwd->pw_name;
@@ -281,11 +281,11 @@ namespace tc
    std::string file::GetFileGroup(const std::string &file)
    {
       struct stat status;
-      uint32 group_id = stat(file.c_str(), &status) == 0 ? status.st_gid : 0;
+      uint32_t group_id = stat(file.c_str(), &status) == 0 ? status.st_gid : 0;
       struct group *grp = ::getgrgid(group_id);
       if (!grp)
       {
-         TCERROR("TCBASE", system::GetLastErrorMessage().c_str());
+         TCERRORS("TCBASE", system::GetLastErrorMessage().c_str());
          return "";
       }      
       return grp->gr_name;

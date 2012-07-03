@@ -64,7 +64,7 @@ namespace tc
          * @param ip [out] in the same format as in_addr.S_un.S_addr
          * @return number of bytes received
          */
-         virtual uint64 ReadBytesFrom(void* buffer, uint64 size, Address& ip) = 0;
+         virtual uint64_t ReadBytesFrom(void* buffer, uint64_t size, Address& ip) = 0;
 
          virtual ~BroadcastReadSocket() {}
       };
@@ -81,7 +81,7 @@ namespace tc
          * @param ip [in] recipient ip address in the same format as in_addr.S_un.S_addr
          * @param port [in] recipient port number
          */
-         virtual uint64 WriteBytesTo(const void* buffer, uint64 size, const Address& ip, PortNumber port) = 0;
+         virtual uint64_t WriteBytesTo(const void* buffer, uint64_t size, const Address& ip, PortNumber port) = 0;
 
          virtual ~BroadcastWriteSocket() {}
       };

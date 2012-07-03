@@ -87,7 +87,7 @@ namespace tc
        * @param new_value [in] Value to be exchanged with the value pointed to by Target.
        * @return The return value is the prior target value value.
        */
-      TCBASE_API Type Exchange(Type& target, sint32 new_value);
+      TCBASE_API Type Exchange(Type& target, int32_t new_value);
 
       /**
        * @brief The function performs an atomic addition of an increment value to an addend variable.
@@ -97,7 +97,7 @@ namespace tc
        * @param value_to_add [in] Value to be added to the variable pointed to by the Addend parameter.
        * @return The return value is the initial value of the variable pointed to by the Addend parameter.
        */
-      TCBASE_API Type Add(Type& target, sint32 value_to_add);
+      TCBASE_API Type Add(Type& target, int32_t value_to_add);
 
    } // namespace interlocked
 
