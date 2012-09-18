@@ -151,9 +151,19 @@ namespace tc
 
       SoundPtr ManagerImp::CreateSound(const std::string& name, StreamPtr stream)
       {
+         SharedPtr<SoundData> sound_data;
          try
          {
-            SharedPtr<SoundDataMp3> sound_data(new tc::audio::SoundDataMp3(stream));
+            sound_data = SharedPtr<SoundDataMp3>(new tc::audio::SoundDataMp3(stream));
+         }
+
+         catch (std::exception&)
+         {
+            sound_data = SharedPtr<SoundDataWav>(new tc::audio::SoundDataWav(stream));
+         }
+
+         try
+         {
             SoundPtr sound (new SoundImp(sound_data, m_streaming_thread_object));
             m_sound_data_mapper->Add(sound, sound_data);
 

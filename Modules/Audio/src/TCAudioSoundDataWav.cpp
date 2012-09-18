@@ -89,8 +89,11 @@ namespace tc
 
       void SoundDataWav::ProcessStream()
       {
+         m_stream->SetPosition(0, Stream::POSITION_SET);
+
          uint32_t magic_id;
-         m_stream >> magic_id; util::SwapBytes(magic_id);
+         m_stream >> magic_id; 
+         util::SwapBytes(magic_id);
          if (magic_id != 'RIFF')
          {
             throw  Exception("Sound format no RIFF");
@@ -98,16 +101,18 @@ namespace tc
 
          uint32_t chunk_length;
          m_stream >> chunk_length;
-         m_stream >> magic_id; util::SwapBytes(magic_id);
+         m_stream >> magic_id; 
+         util::SwapBytes(magic_id);
          if ( magic_id != 'WAVE')
          {
             throw  Exception("Sound format wrong magic id");
          }
 
          bool data_processed = false;
-         while (data_processed)
+         while (!data_processed)
          {
-            m_stream >> magic_id; util::SwapBytes(magic_id);
+            m_stream >> magic_id; 
+            util::SwapBytes(magic_id);
             m_stream >> chunk_length;
 
             if (magic_id == 'fmt ')
