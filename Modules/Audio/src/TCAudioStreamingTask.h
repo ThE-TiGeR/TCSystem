@@ -36,6 +36,7 @@
 #define _TC_AUDIO_STREAMING_TASK_H_
 
 #include "TCAudioStreamingThread.h"
+#include "TCAudioOpenALHandler.h"
 
 namespace tc
 {
@@ -44,7 +45,7 @@ namespace tc
       class TC_DLL_LOCAL StreamingTask: public StreamingThread::Task
       {
       public:
-         StreamingTask();
+         StreamingTask(OpenALHandlerPtr open_al_handler);
          virtual ~StreamingTask();
 
          virtual ReturnType Execute();
@@ -81,6 +82,7 @@ namespace tc
 
          void UpdateBufferSize(const SoundFormat& format);
       private:
+         OpenALHandlerPtr m_open_al_handler;
          std::vector<StreamingSourcePtr> m_streaming_sources;
 
          uint8_t* m_streaming_buffer;

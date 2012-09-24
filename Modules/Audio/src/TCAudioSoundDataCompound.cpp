@@ -100,7 +100,7 @@ namespace tc
          {
             const SoundFormat& format1 = m_sound_data[0]->GetFormat();
             const SoundFormat& format2 = sound_data->GetFormat();
-            if (memcmp(&format1, &format2, sizeof(SoundFormat)) != 0)
+            if (format1 != format2)
             {
                return false;
             }
@@ -112,8 +112,7 @@ namespace tc
       bool SoundDataCompound::RemoveSoundData(SoundDataPtr sound_data)
       {
          Locker lock(this);
-         std::vector<SoundDataPtr>::iterator it_found =
-            std::find(m_sound_data.begin(), m_sound_data.end(), sound_data);
+         std::vector<SoundDataPtr>::iterator it_found = std::find(m_sound_data.begin(), m_sound_data.end(), sound_data);
          if (it_found == m_sound_data.end())
          {
             return false;

@@ -160,11 +160,14 @@ void PlaySound(const std::string& file_name)
    }
 
    tc::audio::SoundPtr sound = manager->CreateSound(file_name);
-   sound->Play();
-
-   while (sound->IsPlaying())
+   if (sound)
    {
-      tc::system::Sleep(100);
+      sound->Play();
+
+      while (sound->IsPlaying())
+      {
+         tc::system::Sleep(100);
+      }
    }
 }
 

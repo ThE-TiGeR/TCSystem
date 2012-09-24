@@ -141,21 +141,27 @@ namespace tc
             throw  Exception("Sound format wrong chunk length");
          }
 
-         m_stream >> m_sound_format.audio_format;
-         m_stream >> m_sound_format.num_channels;
-         m_stream >> m_sound_format.samples_per_second;
-         m_stream >> m_sound_format.bytes_per_second;
-         m_stream >> m_sound_format.bytes_per_sample;
-         m_stream >> m_sound_format.bits_per_sample;
+         uint16_t audio_format;      
+         uint16_t num_channels;      
+         uint32_t samples_per_second;
+         uint32_t bytes_per_second;  
+         uint16_t bytes_per_sample;  
+         uint16_t bits_per_sample;   
 
-         switch (m_sound_format.audio_format)
+         m_stream >> audio_format;
+         m_stream >> num_channels;
+         m_stream >> samples_per_second;
+         m_stream >> bytes_per_second;
+         m_stream >> bytes_per_sample;
+         m_stream >> bits_per_sample;
+
+         switch (audio_format)
          {
          case 1: /* PCM */
             //                codec = (m_bit_sper_sample == 8 || util::IsLittleEndian()) ?
             //                        _alutCodecLinear : _alutCodecPCM16;
-            if (m_sound_format.bits_per_sample == 8 || util::IsLittleEndian())
+            if (bits_per_sample == 8 || util::IsLittleEndian())
             {
-
             }
             else
             {
@@ -163,7 +169,7 @@ namespace tc
             }
             break;
          case 7: /* uLaw */
-            m_sound_format.bits_per_sample *= 2;
+            bits_per_sample *= 2;
             //                codec = _alutCodecULaw;
             throw  Exception("Unsupported audio format");
             break;
@@ -175,6 +181,10 @@ namespace tc
          {
             throw  Exception("Error setting stream pointer");
          }
+
+         m_sound_format.SetNumChannels(num_channels);
+         m_sound_format.SetSamplesPerSecond(samples_per_second);
+         m_sound_format.SetBitsPerSample(bits_per_sample);
       }
 
       void SoundDataWav::ProcessData(uint32_t /*chunk_length*/)

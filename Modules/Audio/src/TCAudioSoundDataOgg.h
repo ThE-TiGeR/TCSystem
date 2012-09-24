@@ -32,68 +32,45 @@
 //*******************************************************************************
 //  $Id$
 //*******************************************************************************
-#ifndef _TC_AUDIO_UTIL_H_
-#define _TC_AUDIO_UTIL_H_
+#ifndef _TC_AUDIO_SOUND_DATA_OGG_H_
+#define _TC_AUDIO_SOUND_DATA_OGG_H_
 
-#include "TCAudioSoundFormat.h"
+#include "TCAudioSoundData.h"
+#include "TCMTLockable.h"
+#include "TCStream.h"
+
+#include <vorbis/vorbisfile.h>
 
 namespace tc
 {
    namespace audio
    {
-      namespace util
+      class TC_DLL_LOCAL SoundDataOgg: public SoundData,
+                                       protected multi_threading::ObjectLevelLockable<SoundDataOgg>
       {
-         inline ALenum SoundFormat2BufferFormat(const SoundFormat& format)
-         {
-            if (format.GetNumChannels() == 2)
-            {
-               if (format.GetBitsPerSample() == 8)
-               {
-                  return AL_FORMAT_STEREO8;
-               }
-               else if (format.GetBitsPerSample() == 16)
-               {
-                  return AL_FORMAT_STEREO16;
-               }
-            }
-            else if (format.GetNumChannels() == 1)
-            {
-               if (format.GetBitsPerSample() == 8)
-               {
-                  return AL_FORMAT_MONO8;
-               }
-               else if (format.GetBitsPerSample() == 16)
-               {
-                  return AL_FORMAT_MONO16;
-               }
-            }
-            else if (format.GetNumChannels() == 6)
-            {
-               if (format.GetBitsPerSample() == 8)
-               {
-                  return ::alGetEnumValue("AL_FORMAT_51CHN8");
-               }
-               else if (format.GetBitsPerSample() == 16)
-               {
-                  return ::alGetEnumValue("AL_FORMAT_51CHN16");
-               }
-            }
-            else if (format.GetNumChannels() == 8)
-            {
-               if (format.GetBitsPerSample() == 8)
-               {
-                  return ::alGetEnumValue("AL_FORMAT_71CHN8");
-               }
-               else if (format.GetBitsPerSample() == 16)
-               {
-                  return ::alGetEnumValue("AL_FORMAT_71CHN16");
-               }
-            }
+      public:
+         SoundDataOgg(StreamPtr stream);
+         virtual ~SoundDataOgg();
 
-            return AL_NONE;
-         }
-      }
+         virtual const SoundFormat& GetFormat() const;
+         virtual uint64_t GetData(uint64_t num_bytes, uint8_t* buffer);
+         virtual void SetToStart();
+
+      private:
+         static size_t ReadCallback(void *ptr, size_t size, size_t nmemb, void *datasource);
+         static int    SeekCallback(void *datasource, ogg_int64_t offset64, int whence);
+         static long   TellCallback(void *datasource);
+
+      private:
+         SoundFormat m_sound_format;
+         StreamPtr m_stream;
+         mutable OggVorbis_File m_vorbis_file;
+
+         typedef multi_threading::LockerPtr<const SoundDataOgg*> Locker;
+         friend class multi_threading::LockerPtr<const SoundDataOgg*>;
+      };
    }
 }
 
-#endif // _TC_AUDIO_UTIL_H_
+#endif // _TC_AUDIO_SOUND_DATA_OGG_H_
+

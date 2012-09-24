@@ -50,36 +50,30 @@ namespace tc
       class TC_DLL_LOCAL OpenALHandler
       {
       public:
-         static void CreateInstance();
-         static OpenALHandlerPtr GetInstance() {return m_instance;}
-         static void DestroyInstance();
+         OpenALHandler();
+         ~OpenALHandler();
 
-         bool CheckError();
-         void CheckErrorAndThrowException(const char* text);
+         bool CheckError() const;
+         void CheckErrorAndThrowException(const char* text) const;
 
          ALuint GetUnusedSource();
          void ReleaseSource(ALuint source);
 
          ALuint GetUnusedBuffer();
          void ReleaseBuffer(ALuint buffer);
-      private:
-         OpenALHandler();
-         ~OpenALHandler();
 
+      private:
          void OpenDevice();
          void CreateContext();
          void InitListener();
          ALuint CreateNewSource();
          ALuint CreateNewBuffer();
+
       private:
          ALCdevice* m_device;
          ALCcontext* m_context;
          std::vector<ALuint> m_free_buffers;
          std::vector<ALuint> m_free_sources;
-
-         static OpenALHandlerPtr m_instance;
-
-         friend class tc::CheckedDelete;
       };
    }
 }

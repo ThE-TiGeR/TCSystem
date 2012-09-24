@@ -42,6 +42,7 @@
 #include "TCAudioSoundDataMapper.h"
 #include "TCAudioSoundDataWav.h"
 #include "TCAudioSoundDataMp3.h"
+#include "TCAudioSoundDataOgg.h"
 #include "TCAudioStreamingThread.h"
 #include "TCException.h"
 #include "TCFactory.h"
@@ -87,9 +88,13 @@ namespace tc
 
       ManagerImp::ManagerImp()
       {
-         OpenALHandler::CreateInstance();
+         OpenALHandlerPtr open_al_handler(new OpenALHandler);
+         if (!open_al_handler)
+         {
+            throw ExceptionInitError("ManagerImp::ManagerImp, new tc::audio::OpenALHandler failed");
+         }
 
-         m_streaming_thread_object = StreamingThreadPtr(new StreamingThread);
+         m_streaming_thread_object = StreamingThreadPtr(new StreamingThread(open_al_handler));
          if (!m_streaming_thread_object)
          {
             throw ExceptionInitError("ManagerImp::ManagerImp, new tc::audio::StreamingThread failed");
@@ -123,8 +128,6 @@ namespace tc
          m_streaming_thread_object->Stop();
          m_streaming_thread->Join();
          m_streaming_thread = multi_threading::ThreadPtr();
-
-         OpenALHandler::DestroyInstance();
       }
 
       SoundPtr ManagerImp::CreateSound(const std::string& file_name)
@@ -135,8 +138,7 @@ namespace tc
             StreamPtr file = factory::CreateFileStream(file_name, Stream::stream_read, codec);
             if (!file)
             {
-               TCERRORS("TCAUDIO", "ManagerImp::CreateSound open file " << file_name << " failed.");
-               return SoundPtr();
+               throw Exception("Open file failed.");
             }
 
             return CreateSound(file_name::GetName(file_name), file);
@@ -151,19 +153,27 @@ namespace tc
 
       SoundPtr ManagerImp::CreateSound(const std::string& name, StreamPtr stream)
       {
+         char  id[5] = {'\0'};
+         stream->ReadBytes(4, id);
+         stream->SetPosition(0, Stream::POSITION_SET);
+
          SharedPtr<SoundData> sound_data;
          try
          {
-            sound_data = SharedPtr<SoundDataMp3>(new tc::audio::SoundDataMp3(stream));
-         }
+            std::string id_string(id);
+            if (id_string == "RIFF")
+            {
+               sound_data = SharedPtr<SoundDataWav>(new tc::audio::SoundDataWav(stream));
+            }
+            else if (id_string == "OggS")
+            {
+               sound_data = SharedPtr<SoundDataOgg>(new tc::audio::SoundDataOgg(stream));
+            }
+            else
+            {
+               sound_data = SharedPtr<SoundDataMp3>(new tc::audio::SoundDataMp3(stream));
+            }
 
-         catch (std::exception&)
-         {
-            sound_data = SharedPtr<SoundDataWav>(new tc::audio::SoundDataWav(stream));
-         }
-
-         try
-         {
             SoundPtr sound (new SoundImp(sound_data, m_streaming_thread_object));
             m_sound_data_mapper->Add(sound, sound_data);
 

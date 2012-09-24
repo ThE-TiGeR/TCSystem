@@ -59,19 +59,6 @@ namespace tc
          }
       };
 
-
-      OpenALHandlerPtr OpenALHandler::m_instance;
-
-      void OpenALHandler::CreateInstance()
-      {
-         m_instance = OpenALHandlerPtr(new OpenALHandler);
-      }
-
-      void OpenALHandler::DestroyInstance()
-      {
-         m_instance = OpenALHandlerPtr();
-      }
-
       OpenALHandler::OpenALHandler()
       {
          OpenDevice();
@@ -92,12 +79,12 @@ namespace tc
          }
       }
 
-      bool OpenALHandler::CheckError()
+      bool OpenALHandler::CheckError() const
       {
          return ::alGetError() == AL_NO_ERROR;
       }
 
-      void OpenALHandler::CheckErrorAndThrowException(const char* function)
+      void OpenALHandler::CheckErrorAndThrowException(const char* function) const
       {
          ALenum error;
          if ((error = ::alGetError()) != AL_NO_ERROR)

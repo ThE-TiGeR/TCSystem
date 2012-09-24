@@ -67,7 +67,7 @@ namespace tc
          RESPONSE_FAILED
       };
 
-      StreamingThread::StreamingThread()
+      StreamingThread::StreamingThread(OpenALHandlerPtr open_al_handler)
          :m_thread(),
          m_running(),
          m_message_dispatcher(),
@@ -76,16 +76,12 @@ namespace tc
       {
          m_running            = multi_threading::factory::CreateEvent(true, false);
          m_message_dispatcher = multi_threading::factory::CreateMessageDispatcher();
-         m_streaming_task     = SharedPtr<StreamingTask>(new StreamingTask);
+         m_streaming_task     = SharedPtr<StreamingTask>(new StreamingTask(open_al_handler));
 
-         m_message_dispatcher->RegisterMessageCallback<SoundDataMessage>(PLAY_MESSAGE,
-            m_streaming_task, &StreamingTask::OnPlayMessage);
-         m_message_dispatcher->RegisterMessageCallback<SoundDataMessage>(PLAY_MESSAGE,
-            m_streaming_task, &StreamingTask::OnPlayMessage);
-         m_message_dispatcher->RegisterMessageCallback<SoundDataMessage>(PAUSE_MESSAGE, 
-            m_streaming_task, &StreamingTask::OnPauseMessage);
-         m_message_dispatcher->RegisterMessageCallback<SoundDataMessage>(STOP_MESSAGE, 
-            m_streaming_task, &StreamingTask::OnStopMessage);
+         m_message_dispatcher->RegisterMessageCallback<SoundDataMessage>(PLAY_MESSAGE, m_streaming_task, &StreamingTask::OnPlayMessage);
+         m_message_dispatcher->RegisterMessageCallback<SoundDataMessage>(PLAY_MESSAGE, m_streaming_task, &StreamingTask::OnPlayMessage);
+         m_message_dispatcher->RegisterMessageCallback<SoundDataMessage>(PAUSE_MESSAGE, m_streaming_task, &StreamingTask::OnPauseMessage);
+         m_message_dispatcher->RegisterMessageCallback<SoundDataMessage>(STOP_MESSAGE, m_streaming_task, &StreamingTask::OnStopMessage);
 
          AddTask(m_streaming_task);
       }

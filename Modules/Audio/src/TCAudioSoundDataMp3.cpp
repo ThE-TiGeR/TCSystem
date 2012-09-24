@@ -76,6 +76,8 @@ namespace tc
       {
          static Mp3Initializer s_mp3_init;
 
+         m_stream->SetPosition(0, Stream::POSITION_SET);
+
          int ret;
          m_mp3_handle = ::mpg123_new(0, &ret);
          CheckError(ret, "mpg123_new");
@@ -90,27 +92,23 @@ namespace tc
 
          if (encoding & MPG123_ENC_8)
          {
-             m_sound_format.bits_per_sample = 8;
+             m_sound_format.SetBitsPerSample(8);
          }
          else if (encoding & MPG123_ENC_16)
          {
-             m_sound_format.bits_per_sample = 16;
+             m_sound_format.SetBitsPerSample(6);
          }
          else if (encoding & MPG123_ENC_32)
          {
-             m_sound_format.bits_per_sample = 32;
+             m_sound_format.SetBitsPerSample(32);
          }
          else
          {
             throw Exception("Unknown MP3 encoding");
          }
 
-         m_sound_format.num_channels = uint16_t(channels);
-         m_sound_format.samples_per_second = rate;
-         m_sound_format.bytes_per_sample = uint16_t(channels * m_sound_format.bits_per_sample / 8);
-         m_sound_format.bytes_per_second = m_sound_format.samples_per_second * 
-                                           channels *  m_sound_format.bits_per_sample / 8;
-
+         m_sound_format.SetNumChannels(uint16_t(channels));
+         m_sound_format.SetSamplesPerSecond(rate);
       }
 
       SoundDataMp3::~SoundDataMp3()
@@ -127,26 +125,32 @@ namespace tc
          return m_sound_format;
       }
 
-      uint64_t SoundDataMp3::GetData(uint64_t num_bytes, uint8_t* buffer)
+      uint64_t SoundDataMp3::GetData(uint64_t num_bytes_to_read, uint8_t* buffer)
       {
          Locker lock(this);
 
-         std::size_t n_read;
-         CheckError(::mpg123_read(m_mp3_handle, buffer, std::size_t(num_bytes), &n_read), "mpg123_read"); 
-
-         if (n_read < num_bytes && IsLooping())
+         uint64_t bytes_read(0);
+         while  (bytes_read < num_bytes_to_read)
          {
-            CheckError(::mpg123_seek(m_mp3_handle, 0, SEEK_SET), "mpg123_seek");
+            ::size_t n_read(0);
+            CheckError(::mpg123_read(m_mp3_handle, buffer + bytes_read, ::size_t(num_bytes_to_read - bytes_read), &n_read), "mpg123_read"); 
 
-            num_bytes -= n_read;
-            buffer += n_read;
-            std::size_t n;
-            CheckError(::mpg123_read(m_mp3_handle, buffer, std::size_t(num_bytes), &n), "mpg123_read"); 
+            if (n_read == 0) // EOF reached
+            {
+               if (IsLooping())
+               {
+                  SetToStart();
+               }
+               else
+               {
+                  break;
+               }
+            }
 
-            n_read += n;
+            bytes_read += n_read;
          }
 
-         return n_read;
+         return bytes_read;
       }
 
       void SoundDataMp3::SetToStart()
