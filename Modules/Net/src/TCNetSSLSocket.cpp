@@ -130,7 +130,7 @@ namespace tc
 
          uint64_t SslSocket::WriteBytes(const void* buffer_in, uint64_t size)
          {
-            TCTRACES("TCNET", 300, "(" << buffer_in << ", " << size);
+            TCTRACES("TCNET", 300, "(" << uint64_t(buffer_in) << ", " << size);
 
             const char* buffer = static_cast<const char*>(buffer_in);
             uint64_t nbytes_total = 0;
@@ -151,7 +151,7 @@ namespace tc
 
          uint64_t SslSocket::ReadBytes(void* buffer, uint64_t size, const Time& timeout)
          {
-            TCTRACES("TCNET", 300, "(" << buffer << ", " << size);
+            TCTRACES("TCNET", 300, "(" << uint64_t(buffer) << ", " << size);
 
             uint64_t read_bytes = 0;
 
