@@ -47,7 +47,7 @@ namespace tc
    {
       SoundDataWav::SoundDataWav(StreamPtr stream)
          :m_sound_format()
-         ,m_stream(stream)
+         ,m_stream(stream->Clone())
          ,m_start_of_sound_data(0)
       {
          ProcessStream();
@@ -89,8 +89,6 @@ namespace tc
 
       void SoundDataWav::ProcessStream()
       {
-         m_stream->SetPosition(0, Stream::POSITION_SET);
-
          uint32_t magic_id;
          m_stream >> magic_id; 
          util::SwapBytes(magic_id);
@@ -121,7 +119,7 @@ namespace tc
             }
             else if (magic_id == 'data')
             {
-               ProcessData( chunk_length);
+               ProcessData(chunk_length);
                data_processed = true;
             }
             else

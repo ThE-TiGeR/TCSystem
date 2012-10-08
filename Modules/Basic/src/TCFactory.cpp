@@ -132,13 +132,13 @@ namespace tc
       StreamPtr CreateStdOutStream()
       {
          CodecPtr codec(CreateAsciiCodec());
-         return CreateFileStream(stdout, Stream::stream_write, codec);
+         return CreateFileStream(stdout, Stream::STREAM_WRITE, codec);
       }
 
       StreamPtr CreateStdErrorStream()
       {
          CodecPtr codec(CreateAsciiCodec());
-         return CreateFileStream(stderr, Stream::stream_write, codec);
+         return CreateFileStream(stderr, Stream::STREAM_WRITE, codec);
       }
 
       static imp::Rng69069 s_internal_rng(static_cast<uint32_t>(Time::Now().ToMilliSeconds()));

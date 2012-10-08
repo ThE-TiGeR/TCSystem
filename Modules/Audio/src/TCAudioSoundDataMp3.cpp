@@ -71,12 +71,10 @@ namespace tc
 
       SoundDataMp3::SoundDataMp3(StreamPtr stream)
          :m_sound_format(),
-         m_stream(stream),
+         m_stream(stream->Clone()),
          m_mp3_handle(0)
       {
          static Mp3Initializer s_mp3_init;
-
-         m_stream->SetPosition(0, Stream::POSITION_SET);
 
          int ret;
          m_mp3_handle = ::mpg123_new(0, &ret);

@@ -59,6 +59,11 @@ namespace tc
          {
          }
 
+         CodecPtr Clone()
+         {
+            return CodecPtr(new BinaryCodec);
+         }
+
          uint64_t Decode(Stream& stream, int8_t& val)
          {
              return stream.ReadBytes(1, &val);

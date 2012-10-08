@@ -73,6 +73,8 @@ namespace imp
       /** destruct an tc::StringStream object */
       virtual ~StringStream();
 
+      virtual StreamPtr Clone();
+
       virtual bool SetPosition(int64_t, StreamPosition pos);
       virtual uint64_t GetPosition() const;
 
@@ -80,7 +82,7 @@ namespace imp
       virtual uint64_t WriteBytes(uint64_t nBytes, const void *bytes);
 
    private:
-      /** An list arry holding the data */
+      /** A string holding the data */
       std::string& m_string;
       /** current position where to read or write into the memory */
       std::string::size_type m_string_position;

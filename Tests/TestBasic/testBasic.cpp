@@ -606,8 +606,8 @@ static void ConvertPSKCvsToHaushaltsbuchCvs()
    std::string file_name_in("D:/Thomas/Dokumente/Finanzen/PSK Import/PSK_Umsatzliste.csv");
    std::string file_name_out("D:/Thomas/Dokumente/Finanzen/PSK Import/test.csv");
 
-   tc::StreamPtr file_in = tc::factory::CreateFileStream(file_name_in, tc::Stream::stream_read, tc::factory::CreateAsciiCodec());
-   tc::StreamPtr file_out = tc::factory::CreateFileStream(file_name_out, tc::Stream::stream_write, tc::factory::CreateAsciiCodec());
+   tc::StreamPtr file_in = tc::factory::CreateFileStream(file_name_in, tc::Stream::STREAM_READ, tc::factory::CreateAsciiCodec());
+   tc::StreamPtr file_out = tc::factory::CreateFileStream(file_name_out, tc::Stream::STREAM_WRITE, tc::factory::CreateAsciiCodec());
 
    file_out << "konto_nummer;buchungs_datum;betrag;auftraggeber;verwendung;\r\n";
 
@@ -625,7 +625,7 @@ static void ConvertPSKCvsToHaushaltsbuchCvs()
 
 static void GzStreamTest()
 {
-    tc::StreamPtr stream =tc::factory::CreateGzFileStream("test.txt.gz", tc::Stream::stream_write, 
+    tc::StreamPtr stream =tc::factory::CreateGzFileStream("test.txt.gz", tc::Stream::STREAM_WRITE, 
         tc::factory::CreateAsciiCodec());
     stream << "Hallo" << tc::endl;
     stream << "This is a gz test" << tc::endl;
@@ -634,7 +634,7 @@ static void GzStreamTest()
 
 static void Bz2StreamTest()
 {
-    tc::StreamPtr stream =tc::factory::CreateBz2FileStream("test.txt.bz2", tc::Stream::stream_write, 
+    tc::StreamPtr stream =tc::factory::CreateBz2FileStream("test.txt.bz2", tc::Stream::STREAM_WRITE, 
         tc::factory::CreateAsciiCodec());
     stream << "Hallo" << tc::endl;
     stream << "This is a bz2 test" << tc::endl;

@@ -42,51 +42,54 @@
 
 namespace tc
 {
-    namespace imp
-    {
+   namespace imp
+   {
 
-        /**
-        * @addtogroup TC_BASE_IO_IMPL
-        * @{
-        */
+      /**
+      * @addtogroup TC_BASE_IO_IMPL
+      * @{
+      */
 
-        /**
-        * @file
-        * @brief This file provides the definition of tc::GzFileStream
-        *
-        * @author Thomas Goessler
-        */
+      /**
+      * @file
+      * @brief This file provides the definition of tc::GzFileStream
+      *
+      * @author Thomas Goessler
+      */
 
-        /**
-        * @brief Class for reading/writing a gz file
-        *
-        * Just implements the writing and reading of bytes
-        * the rest is done in StreamBase
-        */
-        class TC_DLL_LOCAL GzFileStream: public StreamBase
-        {
-        public:
-            GzFileStream(const std::string &fileName, StreamDirection direction, CodecPtr codec);
-            virtual ~GzFileStream();
+      /**
+      * @brief Class for reading/writing a gz file
+      *
+      * Just implements the writing and reading of bytes
+      * the rest is done in StreamBase
+      */
+      class TC_DLL_LOCAL GzFileStream: public StreamBase
+      {
+      public:
+         GzFileStream(const std::string &fileName, StreamDirection direction, CodecPtr codec);
+         virtual ~GzFileStream();
 
-            virtual bool SetPosition(int64_t, StreamPosition pos);
-            virtual uint64_t GetPosition() const;
+         virtual StreamPtr Clone();
 
-            virtual uint64_t ReadBytes (uint64_t nBytes, void *bytes);
-            virtual uint64_t WriteBytes(uint64_t nBytes, const void *bytes);
-            virtual void Flush();
+         virtual bool SetPosition(int64_t, StreamPosition pos);
+         virtual uint64_t GetPosition() const;
 
-            virtual void CloseStream();
+         virtual uint64_t ReadBytes (uint64_t nBytes, void *bytes);
+         virtual uint64_t WriteBytes(uint64_t nBytes, const void *bytes);
 
-        private:
-            gzFile m_file;
-        };
+         virtual void Flush();
+         virtual void CloseStream();
 
-        /**
-        * @}
-        */
+      private:
+         std::string m_file_name;
+         gzFile m_file;
+      };
 
-    } // namespace imp
+      /**
+      * @}
+      */
+
+   } // namespace imp
 } // namespace tc
 
 #endif // _TC_GZ_FILE_STREAM_H_

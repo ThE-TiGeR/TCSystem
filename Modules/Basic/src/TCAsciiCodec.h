@@ -62,6 +62,8 @@ namespace imp
       AsciiCodec();
       virtual ~AsciiCodec();
 
+      virtual CodecPtr Clone();
+
       virtual uint64_t Decode(Stream& stream, int8_t &val);
       virtual uint64_t Decode(Stream& stream, uint8_t &val);
       virtual uint64_t Decode(Stream& stream, int16_t &val);

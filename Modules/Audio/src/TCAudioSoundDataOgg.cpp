@@ -79,11 +79,9 @@ namespace tc
 
       SoundDataOgg::SoundDataOgg(StreamPtr stream)
          :m_sound_format(),
-         m_stream(stream),
+         m_stream(stream->Clone()),
          m_vorbis_file()
       {
-         m_stream->SetPosition(0, Stream::POSITION_SET);
-
          // Set the proper callback functions
          ov_callbacks callbacks;
          callbacks.read_func  = &ReadCallback;
@@ -106,7 +104,6 @@ namespace tc
       SoundDataOgg::~SoundDataOgg()
       {
          CheckError(ov_clear(&m_vorbis_file), "ov_clear");
-         m_stream->SetPosition(0, Stream::POSITION_SET);
       }
 
       const SoundFormat& SoundDataOgg::GetFormat() const
@@ -119,7 +116,6 @@ namespace tc
       {
          Locker lock(this);
 
-         long n_read(0);
          uint64_t bytes_read(0);
          while  (bytes_read < num_bytes_to_read)
          {

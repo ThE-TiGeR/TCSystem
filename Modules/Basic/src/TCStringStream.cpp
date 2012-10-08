@@ -52,7 +52,7 @@ namespace tc
          m_string(memory),
          m_string_position(0)
       {
-         setStreamDirection(stream_readwrite);
+         SetStreamDirection(STREAM_READ_WRITE);
       }
 
       StringStream::~StringStream()
@@ -68,21 +68,21 @@ namespace tc
          }
 
          // check mode
-         if (!isReading())
+         if (!IsReading())
          {
-            setStatus(error_stream_direction);
+            SetStatus(ERROR_STREAM_DIRECTION);
             return 0;
          }
 
          if (nBytes > std::numeric_limits<std::string::size_type>::max())
          {
-             return 0;
+            return 0;
          }
 
          if (m_string_position == m_string.size())
          {
-             setStatus(error_end_of_stream);
-             return 0;
+            SetStatus(ERROR_END_OF_STREAM);
+            return 0;
          }
 
          if (m_string_position < m_string.size())
@@ -98,13 +98,26 @@ namespace tc
 
       uint64_t StringStream::WriteBytes(uint64_t nBytes, const void *bytes)
       {
+         // check for an error
+         if (Error())
+         {
+            return 0;
+         }
+
+         // check mode
+         if (!IsWriting())
+         {
+            SetStatus(ERROR_STREAM_DIRECTION);
+            return 0;
+         }
+
          if (nBytes > std::numeric_limits<std::string::size_type>::max())
          {
-             return 0;
+            return 0;
          }
 
          m_string.replace(m_string_position, std::string::size_type(nBytes), 
-              std::string::const_pointer(bytes), std::string::size_type(nBytes));
+            std::string::const_pointer(bytes), std::string::size_type(nBytes));
 
          m_string_position += std::string::size_type(nBytes);
 
@@ -149,6 +162,12 @@ namespace tc
       {
          return m_string_position;
       }
+
+      StreamPtr StringStream::Clone()
+      {
+         return StreamPtr(new StringStream(GetCodec()->Clone(), m_string));
+      }
+
    }
 }
 

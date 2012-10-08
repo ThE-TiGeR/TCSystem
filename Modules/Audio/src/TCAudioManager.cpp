@@ -135,7 +135,7 @@ namespace tc
          try
          {
             CodecPtr codec = factory::CreateLittleEndianBinaryCodec();
-            StreamPtr file = factory::CreateFileStream(file_name, Stream::stream_read, codec);
+            StreamPtr file = factory::CreateFileStream(file_name, Stream::STREAM_READ, codec);
             if (!file)
             {
                throw Exception("Open file failed.");
@@ -155,7 +155,6 @@ namespace tc
       {
          char  id[5] = {'\0'};
          stream->ReadBytes(4, id);
-         stream->SetPosition(0, Stream::POSITION_SET);
 
          SharedPtr<SoundData> sound_data;
          try

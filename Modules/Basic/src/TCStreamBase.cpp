@@ -51,7 +51,7 @@ StreamBase::StreamBase(CodecPtr codec)
    ResetStatus();
    m_display_error_messages = true;
 
-   setStreamDirection(stream_dead);
+   SetStreamDirection(STREAM_DEAD);
 }
 
 StreamBase::~StreamBase()
@@ -60,7 +60,7 @@ StreamBase::~StreamBase()
 
 void StreamBase::CloseStream()
 {
-   setStreamDirection(stream_dead);
+   SetStreamDirection(STREAM_DEAD);
 }
 
 void StreamBase::EnableDisplayErrorMessages(bool displ)
@@ -71,15 +71,15 @@ void StreamBase::EnableDisplayErrorMessages(bool displ)
 // -----------------------------------------------------------------
 // status methodes
 // -----------------------------------------------------------------
-void StreamBase::setStatus(int32_t err) const
+void StreamBase::SetStatus(int32_t err) const
 {
    m_status = err;
 
    // if we shoud we display an error message
    if (m_display_error_messages)
    {
-      displayErrorMessage();
-      if (GetStatus() != error_none && system::GetLastError() !=0)
+      DisplayErrorMessage();
+      if (GetStatus() != ERROR_NONE && system::GetLastError() !=0)
       {
          TCERRORS("TCBASE", system::GetLastErrorMessage().c_str());
       }
@@ -88,37 +88,37 @@ void StreamBase::setStatus(int32_t err) const
 
 void StreamBase::ResetStatus()
 {
-   m_status = StreamBase::error_none;
+   m_status = StreamBase::ERROR_NONE;
 }
 
-void StreamBase::displayErrorMessage() const
+void StreamBase::DisplayErrorMessage() const
 {
    switch (GetStatus())
    {
-      case error_stream_open:
+      case ERROR_STREAM_OPEN:
          TCERRORS("TCBASE", "Error opening stream");
        break;
 
-      case error_stream_close:
+      case ERROR_STREAM_CLOSE:
          TCERRORS("TCBASE", "Error closing stream");
        break;
 
-      case error_stream_direction:
+      case ERROR_STREAM_DIRECTION:
          TCERRORS("TCBASE", "Error wrong stream direction");
        break;
 
-      case error_read_from_stream:
+      case ERROR_READ_FROM_STREAM:
          TCERRORS("TCBASE", "Error during read from stream");
          break;
 
-      case error_write_to_stream:
+      case ERROR_WRITE_TO_STREAM:
          TCERRORS("TCBASE", "Error during write to stream");
          break;
 
-      case error_end_of_stream:
+      case ERROR_END_OF_STREAM:
          break;
 
-      case error_set_stream_position:
+      case ERROR_SET_STREAM_POSITION:
          TCERRORS("TCBASE", "Set or get position of stream not supported");
          break;
 

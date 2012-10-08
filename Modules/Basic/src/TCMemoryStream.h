@@ -74,24 +74,16 @@ namespace imp
       /** destruct an TCMemoryStream object */
       virtual ~MemoryStream();
 
+      virtual StreamPtr Clone();
+
       virtual bool SetPosition(int64_t, StreamPosition pos);
       virtual uint64_t GetPosition() const;
 
-      /**
-       * methode for reading the bytes from the stream
-       * @param nBytes number of bytes to read
-       * @param bytes where to store the data which should be read
-       */
       virtual uint64_t ReadBytes(uint64_t nBytes, void *bytes);
-      /**
-       * methode for writing the bytes to the stream
-       * @param nBytes number of bytes to written
-       * @param bytes where the bytes are stored which should be written
-       */
       virtual uint64_t WriteBytes(uint64_t nBytes, const void *bytes);
 
    private:
-      /** An list arry holding the data */
+      /** An list array holding the data */
       ByteVector& m_memory;
       /** current position where to read or write into the memory */
       ByteVector::size_type m_memory_position;

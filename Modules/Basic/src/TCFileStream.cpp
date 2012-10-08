@@ -41,197 +41,208 @@
 
 namespace tc
 {
-namespace imp
-{
-
-FileStream::FileStream(std::FILE *stream, StreamDirection direction, CodecPtr codec)
-:StreamBase(codec),
-m_stream_pointer(0),
-m_is_stream_allocated(false)
-{
-   SetStream(stream, direction);
-}
-
-FileStream::FileStream(const std::string &fileName, StreamDirection direction, CodecPtr codec)
-:StreamBase(codec),
-m_stream_pointer(0),
-m_is_stream_allocated(false)
-{
-   SetStream(fileName, direction);
-}
-
-FileStream::~FileStream()
-{
-   CloseStream();
-}
-
-void FileStream::CloseStream()
-{
-   if (m_is_stream_allocated == true && m_stream_pointer)
+   namespace imp
    {
-      std::fclose(m_stream_pointer);
+
+      FileStream::FileStream(std::FILE *stream, StreamDirection direction, CodecPtr codec)
+         :StreamBase(codec)
+         ,m_stream_pointer(0)
+         ,m_file_name()
+      {
+         SetStream(stream, direction);
+      }
+
+      FileStream::FileStream(const std::string &fileName, StreamDirection direction, CodecPtr codec)
+         :StreamBase(codec)
+         ,m_stream_pointer(0)
+         ,m_file_name(fileName)
+      {
+         SetStream(fileName, direction);
+      }
+
+      FileStream::~FileStream()
+      {
+         CloseStream();
+      }
+
+      void FileStream::CloseStream()
+      {
+         if (!m_file_name.empty() && m_stream_pointer)
+         {
+            std::fclose(m_stream_pointer);
+            m_stream_pointer = 0;
+         }
+
+         StreamBase::CloseStream();
+      }
+
+      void FileStream::SetStream(std::FILE *stream, StreamDirection direction)
+      {
+         CloseStream();
+
+         m_stream_pointer = stream;
+         m_file_name.clear();
+
+         SetStreamDirection(direction);
+      }
+
+      void FileStream::SetStream(const std::string &fileName, StreamDirection direction)
+      {
+         CloseStream();
+
+         FILE* file = 0;
+         if (direction == STREAM_READ)
+         {
+            file = std::fopen(fileName.c_str(), "rb");
+         }
+         else if (direction == STREAM_WRITE)
+         {
+            file = std::fopen(fileName.c_str(), "wb");
+         }
+         else if (direction == STREAM_READ_WRITE)
+         {
+            file = std::fopen(fileName.c_str(), "wb+");
+         }
+
+         if (!file)
+         {
+            TCERRORS("TCBASE", "Error opening file '" << fileName << "'");
+            SetStatus(ERROR_STREAM_OPEN);
+         }
+
+         SetStream(file, direction);
+         m_file_name = fileName;
+      }
+
+
+      uint64_t FileStream::ReadBytes(uint64_t nBytes, void *bytes)
+      {
+         // check for an error
+         if (Error())
+         {
+            return 0;
+         }
+
+         // check mode
+         if (!IsReading())
+         {
+            SetStatus(ERROR_STREAM_DIRECTION);
+            return 0;
+         }
+
+         uint64_t read_bytes = 0;
+         while(read_bytes < nBytes)
+         {
+            std::size_t num = std::fread(static_cast<uint8_t*>(bytes)+read_bytes, 1, 
+               std::size_t(nBytes-read_bytes), m_stream_pointer);
+            if (num <= 0)
+            {
+               if (std::feof(m_stream_pointer))
+               {
+                  SetStatus(ERROR_END_OF_STREAM);
+               }
+               else
+               {
+                  SetStatus(ERROR_READ_FROM_STREAM);
+               }
+               break;
+            }
+            read_bytes += num;
+         }
+
+         return read_bytes;
+      }
+
+      uint64_t FileStream::WriteBytes(uint64_t nBytes, const void *bytes)
+      {
+         if (nBytes == 0)
+         {
+            return 0;
+         }
+
+         // check for an error
+         if (Error())
+         {
+            return 0;
+         }
+
+         // check mode
+         if (!IsWriting())
+         {
+            SetStatus(ERROR_STREAM_DIRECTION);
+            return 0;
+         }
+
+         uint64_t wrote_bytes = 0;
+         while(wrote_bytes < nBytes)
+         {
+            std::size_t num = std::fwrite(static_cast<const uint8_t*>(bytes)+wrote_bytes, 1, 
+               std::size_t(nBytes-wrote_bytes), m_stream_pointer);
+            if (num <= 0)
+            {
+               SetStatus(ERROR_WRITE_TO_STREAM);
+               break;
+            }
+            wrote_bytes += num;
+         }
+
+         return wrote_bytes;
+      }
+
+      void FileStream::Flush()
+      {
+         // check for an error
+         if (Error())
+         {
+            return;
+         }
+
+         // check correct stream direction
+         if (IsWriting())
+         {
+            std::fflush(m_stream_pointer);
+         }
+         else
+         {
+            SetStatus(ERROR_STREAM_DIRECTION);
+         }
+      }
+
+      bool FileStream::SetPosition(int64_t pos, StreamPosition pos_mode)
+      {
+         ResetStatus();
+
+         switch(pos_mode)
+         {
+         case POSITION_SET:
+            return std::fseek(m_stream_pointer, long(pos), SEEK_SET) == 0;
+
+         case POSITION_CURRENT:
+            return std::fseek(m_stream_pointer, long(pos), SEEK_CUR) == 0;
+
+         case POSITION_END:
+            return std::fseek(m_stream_pointer, long(pos), SEEK_END) == 0;
+         }
+
+         return false;
+      }
+
+      uint64_t FileStream::GetPosition() const
+      {
+         return std::ftell(m_stream_pointer);
+      }
+
+      StreamPtr FileStream::Clone()
+      {
+         if (m_file_name.empty())
+         {
+            return StreamPtr(new FileStream(m_stream_pointer, GetStreamDirection(), GetCodec()->Clone()));
+         }
+         else
+         {
+            return StreamPtr(new FileStream(m_file_name, GetStreamDirection(), GetCodec()->Clone()));
+         }
+      }
+
    }
-
-   m_is_stream_allocated = false;
-   m_stream_pointer     = 0;
-
-   StreamBase::CloseStream();
-}
-
-void FileStream::SetStream(std::FILE *stream, StreamDirection direction)
-{
-   CloseStream();
-
-   m_stream_pointer = stream;
-
-   setStreamDirection(direction);
-}
-
-void FileStream::SetStream(const std::string &fileName, StreamDirection direction)
-{
-   CloseStream();
-
-   FILE* file = 0;
-   if (direction == stream_read)
-   {
-      file = std::fopen(fileName.c_str(), "rb");
-   }
-   else if (direction == stream_write)
-   {
-      file = std::fopen(fileName.c_str(), "wb");
-   }
-   else if (direction == stream_readwrite)
-   {
-      file = std::fopen(fileName.c_str(), "wb+");
-   }
-
-   if (!file)
-   {
-      TCERRORS("TCBASE", "Error opening file '" << fileName << "'");
-      setStatus(error_stream_open);
-   }
-
-   SetStream(file, direction);
-   m_is_stream_allocated = true;
-}
-
-
-uint64_t FileStream::ReadBytes(uint64_t nBytes, void *bytes)
-{
-   // check for an error
-   if (Error())
-   {
-      return 0;
-   }
-
-   // check mode
-   if (!isReading())
-   {
-      setStatus(error_stream_direction);
-      return 0;
-   }
-
-   uint64_t read_bytes = 0;
-   while(read_bytes < nBytes)
-   {
-       std::size_t num = std::fread(static_cast<uint8_t*>(bytes)+read_bytes, 1, 
-           std::size_t(nBytes-read_bytes), m_stream_pointer);
-       if (num <= 0)
-       {
-           if (std::feof(m_stream_pointer))
-           {
-               setStatus(error_end_of_stream);
-           }
-           else
-           {
-               setStatus(error_read_from_stream);
-           }
-           break;
-       }
-       read_bytes += num;
-   }
-
-   return read_bytes;
-}
-
-uint64_t FileStream::WriteBytes(uint64_t nBytes, const void *bytes)
-{
-   if (nBytes == 0)
-   {
-      return 0;
-   }
-
-   // check for an error
-   if (Error())
-   {
-      return 0;
-   }
-
-   // check mode
-   if (!isWriting())
-   {
-      setStatus(error_stream_direction);
-      return 0;
-   }
-
-   uint64_t wrote_bytes = 0;
-   while(wrote_bytes < nBytes)
-   {
-       std::size_t num = std::fwrite(static_cast<const uint8_t*>(bytes)+wrote_bytes, 1, 
-           std::size_t(nBytes-wrote_bytes), m_stream_pointer);
-       if (num <= 0)
-       {
-           setStatus(error_write_to_stream);
-           break;
-       }
-       wrote_bytes += num;
-   }
-
-   return wrote_bytes;
-}
-
-void FileStream::Flush()
-{
-   // check for an error
-   if (Error())
-   {
-      return;
-   }
-
-   // check correct stream direction
-   if (isWriting())
-   {
-      std::fflush(m_stream_pointer);
-   }
-   else
-   {
-      setStatus(error_stream_direction);
-   }
-}
-
-bool FileStream::SetPosition(int64_t pos, StreamPosition pos_mode)
-{
-   ResetStatus();
-
-   switch(pos_mode)
-   {
-   case POSITION_SET:
-      return std::fseek(m_stream_pointer, long(pos), SEEK_SET) == 0;
-
-   case POSITION_CURRENT:
-      return std::fseek(m_stream_pointer, long(pos), SEEK_CUR) == 0;
-
-   case POSITION_END:
-      return std::fseek(m_stream_pointer, long(pos), SEEK_END) == 0;
-   }
-
-   return false;
-}
-
-uint64_t FileStream::GetPosition() const
-{
-   return std::ftell(m_stream_pointer);
-}
-
-}
 }

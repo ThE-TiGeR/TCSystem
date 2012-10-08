@@ -95,6 +95,7 @@ namespace imp
        */
       void SetStream(const std::string &fileName, StreamDirection direction);
 
+      virtual StreamPtr Clone();
       virtual bool SetPosition(int64_t, StreamPosition pos);
       virtual uint64_t GetPosition() const;
 
@@ -125,11 +126,8 @@ namespace imp
    protected:
       /** pointer to the stream where to read or write the data */
       std::FILE* m_stream_pointer;
-      /**
-       * is true if the streampointer was allocated by the class
-       * is false if the streampointer was set from outside
-       */
-      bool m_is_stream_allocated;
+      /** holds the name if the file was opened from this object */
+      std::string m_file_name;
    };
 
    /**
