@@ -7,21 +7,21 @@ set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${TC_SYSTEM_BIN_INSTAL
 
 # set our compiler flags
 if (UNIX)
-   set (TC_COMPILE_FLAGS "-fPIC -Wall -Wno-multichar -ggdb -DHAVE_UNIT_TESTS -fvisibility=hidden")
+   set (TC_COMPILE_FLAGS "-fPIC -Wall -Wno-multichar -DHAVE_UNIT_TESTS -fvisibility=hidden -std=c++0x")
    set (TC_COMPILE_FLAGS_DEBUG "-ggdb -DDEBUG")
-   set (TC_COMPILE_FLAGS_RELEASE "-O3 -DNDEBUG")
+   set (TC_COMPILE_FLAGS_RELEASE "-O3 -DNDEBUG -flto")
 
    if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
       set (TC_COMPILE_FLAGS "${TC_COMPILE_FLAGS} -DTCOS_LINUX")
    endif ()
 
    set (TC_EXE_LINK_FLAGS         "")
-   set (TC_EXE_LINK_FLAGS_DEBUG   "")
-   set (TC_EXE_LINK_FLAGS_RELEASE "")
+   set (TC_EXE_LINK_FLAGS_DEBUG   "-ggdb")
+   set (TC_EXE_LINK_FLAGS_RELEASE "-flto")
 
    set (TC_SHARED_LINK_FLAGS         "-Wl,--no-undefined -pthread")
-   set (TC_SHARED_LINK_FLAGS_DEBUG   "")
-   set (TC_SHARED_LINK_FLAGS_RELEASE "")
+   set (TC_SHARED_LINK_FLAGS_DEBUG   "-ggdb")
+   set (TC_SHARED_LINK_FLAGS_RELEASE "-flto")
 endif()
 
 if (WIN32)
