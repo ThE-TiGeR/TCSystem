@@ -45,26 +45,48 @@ namespace tc
       {
          inline ALenum SoundFormat2BufferFormat(const SoundFormat& format)
          {
-            if (format.num_channels == 2)
+            if (format.GetNumChannels() == 2)
             {
-               if (format.bits_per_sample == 8)
+               if (format.GetBitsPerSample() == 8)
                {
                   return AL_FORMAT_STEREO8;
                }
-               else if (format.bits_per_sample == 16)
+               else if (format.GetBitsPerSample() == 16)
                {
                   return AL_FORMAT_STEREO16;
                }
             }
-            else if (format.num_channels == 1)
+            else if (format.GetNumChannels() == 1)
             {
-               if (format.bits_per_sample == 8)
+               if (format.GetBitsPerSample() == 8)
                {
                   return AL_FORMAT_MONO8;
                }
-               else if (format.bits_per_sample == 16)
+               else if (format.GetBitsPerSample() == 16)
                {
                   return AL_FORMAT_MONO16;
+               }
+            }
+            else if (format.GetNumChannels() == 6)
+            {
+               if (format.GetBitsPerSample() == 8)
+               {
+                  return ::alGetEnumValue("AL_FORMAT_51CHN8");
+               }
+               else if (format.GetBitsPerSample() == 16)
+               {
+                  return ::alGetEnumValue("AL_FORMAT_51CHN16");
+               }
+            }
+            else if (format.GetNumChannels() == 8)
+            {
+               if (format.GetBitsPerSample() == 8)
+               {
+                  return ::alGetEnumValue("AL_FORMAT_71CHN8");
+               }
+               else if (format.GetBitsPerSample() == 16)
+               {
+                  return ::alGetEnumValue("AL_FORMAT_71CHN16");
                }
             }
 

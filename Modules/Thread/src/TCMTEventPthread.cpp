@@ -64,7 +64,7 @@ namespace tc
 
          bool EventPthread::Wait()
          {
-            TCTRACE("TCMT", 100, "...");
+            TCTRACES("TCMT", 100, "...");
 
             MutexLocker lock(m_event.condition->GetMutex());
 
@@ -74,24 +74,24 @@ namespace tc
             // reset if manual reset is set
             if (!m_event.manual_reset) m_event.state = false;
 
-            TCTRACE("TCMT", 100, "done.");
+            TCTRACES("TCMT", 100, "done.");
             return true;
          }
 
          bool EventPthread::Try()
          {
-            TCTRACE("TCMT", 100, "...");
+            TCTRACES("TCMT", 100, "...");
 
             MutexLocker lock(m_event.condition->GetMutex());
             if (!m_event.state)
             {
-               TCTRACE("TCMT", 100, "not set.");
+               TCTRACES("TCMT", 100, "not set.");
                return false;
             }
 
             if (!m_event.manual_reset) m_event.state = false;
 
-            TCTRACE("TCMT", 100, "was set.");
+            TCTRACES("TCMT", 100, "was set.");
             return true;
          }
 
@@ -108,14 +108,14 @@ namespace tc
                return Wait();
             }
 
-            TCTRACE1("TCMT", 100, "%d ms ...", millisecs.ToMilliSeconds());
+            TCTRACES("TCMT", 100, millisecs.ToMilliSeconds() << " ms ...");
 
             MutexLocker lock(m_event.condition->GetMutex());
             if (!m_event.state)
             {
                if (!m_event.condition->TryWait(millisecs))
                {
-                  TCTRACE("TCMT", 100, "timeout.");
+                  TCTRACES("TCMT", 100, "timeout.");
                   return false;
                }
             }
@@ -128,7 +128,7 @@ namespace tc
 
             if (!m_event.manual_reset) m_event.state = false;
 
-            TCTRACE("TCMT", 100, "was set.");
+            TCTRACES("TCMT", 100, "was set.");
             return true;
          }
 

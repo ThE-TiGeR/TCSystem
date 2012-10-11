@@ -32,64 +32,45 @@
 //*******************************************************************************
 //  $Id$
 //*******************************************************************************
-#ifndef _TC_GZ_FILE_STREAM_H_
-#define _TC_GZ_FILE_STREAM_H_
+#ifndef _TC_AUDIO_SOUND_DATA_OGG_H_
+#define _TC_AUDIO_SOUND_DATA_OGG_H_
 
-#include "TCStreamBase.h"
+#include "TCAudioSoundData.h"
+#include "TCMTLockable.h"
+#include "TCStream.h"
 
-#include <cstdio>
-#include <zlib.h>
+#include <vorbis/vorbisfile.h>
 
 namespace tc
 {
-   namespace imp
+   namespace audio
    {
-
-      /**
-      * @addtogroup TC_BASE_IO_IMPL
-      * @{
-      */
-
-      /**
-      * @file
-      * @brief This file provides the definition of tc::GzFileStream
-      *
-      * @author Thomas Goessler
-      */
-
-      /**
-      * @brief Class for reading/writing a gz file
-      *
-      * Just implements the writing and reading of bytes
-      * the rest is done in StreamBase
-      */
-      class TC_DLL_LOCAL GzFileStream: public StreamBase
+      class TC_DLL_LOCAL SoundDataOgg: public SoundData,
+                                       protected multi_threading::ObjectLevelLockable<SoundDataOgg>
       {
       public:
-         GzFileStream(const std::string &fileName, StreamDirection direction, CodecPtr codec);
-         virtual ~GzFileStream();
+         SoundDataOgg(StreamPtr stream);
+         virtual ~SoundDataOgg();
 
-         virtual StreamPtr Clone();
-
-         virtual bool SetPosition(int64_t, StreamPosition pos);
-         virtual uint64_t GetPosition() const;
-
-         virtual uint64_t ReadBytes (uint64_t nBytes, void *bytes);
-         virtual uint64_t WriteBytes(uint64_t nBytes, const void *bytes);
-
-         virtual void Flush();
-         virtual void CloseStream();
+         virtual const SoundFormat& GetFormat() const;
+         virtual uint64_t GetData(uint64_t num_bytes, uint8_t* buffer);
+         virtual void SetToStart();
 
       private:
-         std::string m_file_name;
-         gzFile m_file;
+         static size_t ReadCallback(void *ptr, size_t size, size_t nmemb, void *datasource);
+         static int    SeekCallback(void *datasource, ogg_int64_t offset64, int whence);
+         static long   TellCallback(void *datasource);
+
+      private:
+         SoundFormat m_sound_format;
+         StreamPtr m_stream;
+         mutable OggVorbis_File m_vorbis_file;
+
+         typedef multi_threading::LockerPtr<const SoundDataOgg*> Locker;
+         friend class multi_threading::LockerPtr<const SoundDataOgg*>;
       };
+   }
+}
 
-      /**
-      * @}
-      */
+#endif // _TC_AUDIO_SOUND_DATA_OGG_H_
 
-   } // namespace imp
-} // namespace tc
-
-#endif // _TC_GZ_FILE_STREAM_H_

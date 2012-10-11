@@ -40,165 +40,171 @@
 
 namespace tc
 {
-    namespace imp
-    {
-        GzFileStream::GzFileStream(const std::string &fileName, StreamDirection direction, CodecPtr codec)
-            :StreamBase(codec)
-            ,m_file(0)
-        {
-            if (direction == stream_read)
+   namespace imp
+   {
+      GzFileStream::GzFileStream(const std::string &fileName, StreamDirection direction, CodecPtr codec)
+         :StreamBase(codec)
+         ,m_file_name(fileName)
+         ,m_file(0)
+      {
+         if (direction == STREAM_READ)
+         {
+            m_file = ::gzopen(fileName.c_str(), "rb");
+         }
+         else if (direction == STREAM_WRITE)
+         {
+            m_file = ::gzopen(fileName.c_str(), "wb");
+         }
+         else if (direction == STREAM_READ_WRITE)
+         {
+            m_file = ::gzopen(fileName.c_str(), "wb+");
+         }
+
+         if (!m_file)
+         {
+            TCERRORS("TCBASE", "Error opening file '" << fileName << "'");
+            SetStatus(ERROR_STREAM_OPEN);
+         }
+         SetStreamDirection(direction);
+      }
+
+      GzFileStream::~GzFileStream()
+      {
+         CloseStream();
+      }
+
+      void GzFileStream::CloseStream()
+      {
+         if (m_file)
+         {
+            ::gzclose(m_file);
+            m_file = 0;
+         }
+
+         StreamBase::CloseStream();
+      }
+
+      uint64_t GzFileStream::ReadBytes(uint64_t nBytes, void *bytes)
+      {
+         // check for an error
+         if (Error())
+         {
+            return 0;
+         }
+
+         // check mode
+         if (!IsReading())
+         {
+            SetStatus(ERROR_STREAM_DIRECTION);
+            return 0;
+         }
+
+         uint64_t read_bytes = 0;
+         while(read_bytes < nBytes)
+         {
+            int num = ::gzread(m_file, static_cast<uint8_t*>(bytes)+read_bytes, 
+               unsigned(nBytes-read_bytes));
+            if (num <= 0)
             {
-                m_file = ::gzopen(fileName.c_str(), "rb");
+               if (::gzeof(m_file))
+               {
+                  SetStatus(ERROR_END_OF_STREAM);
+               }
+               else
+               {
+                  SetStatus(ERROR_READ_FROM_STREAM);
+               }
+               break;
             }
-            else if (direction == stream_write)
+            read_bytes += num;
+         }
+
+         return read_bytes;
+      }
+
+      uint64_t GzFileStream::WriteBytes(uint64_t nBytes, const void *bytes)
+      {
+         if (nBytes == 0)
+         {
+            return 0;
+         }
+
+         // check for an error
+         if (Error())
+         {
+            return 0;
+         }
+
+         // check mode
+         if (!IsWriting())
+         {
+            SetStatus(ERROR_STREAM_DIRECTION);
+            return 0;
+         }
+
+         uint64_t wrote_bytes = 0;
+         while(wrote_bytes < nBytes)
+         {
+            int num = ::gzwrite(m_file, static_cast<const uint8_t*>(bytes)+wrote_bytes,  
+               unsigned(nBytes-wrote_bytes));
+            if (num <= 0)
             {
-                m_file = ::gzopen(fileName.c_str(), "wb");
+               SetStatus(ERROR_WRITE_TO_STREAM);
+               break;
             }
-            else if (direction == stream_readwrite)
-            {
-                m_file = ::gzopen(fileName.c_str(), "wb+");
-            }
+            wrote_bytes += num;
+         }
 
-            if (!m_file)
-            {
-                TCERRORS("TCBASE", "Error opening file '" << fileName << "'");
-                setStatus(error_stream_open);
-            }
-            setStreamDirection(direction);
-        }
+         return wrote_bytes;
+      }
 
-        GzFileStream::~GzFileStream()
-        {
-            CloseStream();
-        }
+      void GzFileStream::Flush()
+      {
+         // check for an error
+         if (Error())
+         {
+            return;
+         }
 
-        void GzFileStream::CloseStream()
-        {
-            if (m_file)
-            {
-                ::gzclose(m_file);
-                m_file = 0;
-            }
+         // check correct stream direction
+         if (IsWriting())
+         {
+            ::gzflush(m_file, Z_PARTIAL_FLUSH);
+         }
+         else
+         {
+            SetStatus(ERROR_STREAM_DIRECTION);
+         }
+      }
 
-            StreamBase::CloseStream();
-        }
+      bool GzFileStream::SetPosition(int64_t pos, StreamPosition pos_mode)
+      {
+         ResetStatus();
 
-        uint64_t GzFileStream::ReadBytes(uint64_t nBytes, void *bytes)
-        {
-            // check for an error
-            if (Error())
-            {
-                return 0;
-            }
+         switch(pos_mode)
+         {
+         case POSITION_SET:
+            return ::gzseek(m_file, z_off_t(pos), SEEK_SET) == 0;
 
-            // check mode
-            if (!isReading())
-            {
-                setStatus(error_stream_direction);
-                return 0;
-            }
+         case POSITION_CURRENT:
+            return ::gzseek(m_file, z_off_t(pos), SEEK_CUR) == 0;
 
-            uint64_t read_bytes = 0;
-            while(read_bytes < nBytes)
-            {
-                int num = ::gzread(m_file, static_cast<uint8_t*>(bytes)+read_bytes, 
-                    unsigned(nBytes-read_bytes));
-                if (num <= 0)
-                {
-                    if (::gzeof(m_file))
-                    {
-                        setStatus(error_end_of_stream);
-                    }
-                    else
-                    {
-                        setStatus(error_read_from_stream);
-                    }
-                    break;
-                }
-                read_bytes += num;
-            }
+         case POSITION_END:
+            return ::gzseek(m_file, z_off_t(pos), SEEK_END) == 0;
+         }
 
-            return read_bytes;
-        }
+         return false;
+      }
 
-        uint64_t GzFileStream::WriteBytes(uint64_t nBytes, const void *bytes)
-        {
-            if (nBytes == 0)
-            {
-                return 0;
-            }
+      uint64_t GzFileStream::GetPosition() const
+      {
+         return ::gztell(m_file);
+      }
 
-            // check for an error
-            if (Error())
-            {
-                return 0;
-            }
+      StreamPtr GzFileStream::Clone()
+      {
+         return StreamPtr(new GzFileStream(m_file_name, GetStreamDirection(), GetCodec()->Clone()));
+      }
 
-            // check mode
-            if (!isWriting())
-            {
-                setStatus(error_stream_direction);
-                return 0;
-            }
-
-            uint64_t wrote_bytes = 0;
-            while(wrote_bytes < nBytes)
-            {
-                int num = ::gzwrite(m_file, static_cast<const uint8_t*>(bytes)+wrote_bytes,  
-                    unsigned(nBytes-wrote_bytes));
-                if (num <= 0)
-                {
-                    setStatus(error_write_to_stream);
-                    break;
-                }
-                wrote_bytes += num;
-            }
-
-            return wrote_bytes;
-        }
-
-        void GzFileStream::Flush()
-        {
-            // check for an error
-            if (Error())
-            {
-                return;
-            }
-
-            // check correct stream direction
-            if (isWriting())
-            {
-                ::gzflush(m_file, Z_PARTIAL_FLUSH);
-            }
-            else
-            {
-                setStatus(error_stream_direction);
-            }
-        }
-
-        bool GzFileStream::SetPosition(int64_t pos, StreamPosition pos_mode)
-        {
-            ResetStatus();
-
-            switch(pos_mode)
-            {
-            case POSITION_SET:
-                return ::gzseek(m_file, z_off_t(pos), SEEK_SET) == 0;
-
-            case POSITION_CURRENT:
-                return ::gzseek(m_file, z_off_t(pos), SEEK_CUR) == 0;
-
-            case POSITION_END:
-                return ::gzseek(m_file, z_off_t(pos), SEEK_END) == 0;
-            }
-
-            return false;
-        }
-
-        uint64_t GzFileStream::GetPosition() const
-        {
-            return ::gztell(m_file);
-        }
-
-    }
+   }
 }

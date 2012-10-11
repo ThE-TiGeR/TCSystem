@@ -54,6 +54,10 @@ namespace tc
     * @author Thomas Goessler 
     */
 
+   class Stream;
+   /** @brief Shared pointer of an stream object */
+   typedef SharedPtr<Stream> StreamPtr;
+
    /**
     * @brief Base class for all streams
     * implements all operators and prepares methods for reading and writing
@@ -67,24 +71,21 @@ namespace tc
       enum StreamErrorFlags
       {
          /** no error happened */
-         error_none,
+         ERROR_NONE,
          /** Error opening the stream */
-         error_stream_open,
+         ERROR_STREAM_OPEN,
          /** Error closing the stream */
-         error_stream_close,
+         ERROR_STREAM_CLOSE,
          /** Using wrong stream direction */
-         error_stream_direction,
+         ERROR_STREAM_DIRECTION,
          /** end of stream reached */
-         error_end_of_stream,
+         ERROR_END_OF_STREAM,
          /** error during reading of stream */
-         error_read_from_stream,
+         ERROR_READ_FROM_STREAM,
          /** error during writing to stream */
-         error_write_to_stream,
+         ERROR_WRITE_TO_STREAM,
          /** error setting stream position */
-         error_set_stream_position,
-
-         /** Last error flag */
-         error_last
+         ERROR_SET_STREAM_POSITION
       };
 
       /**
@@ -92,25 +93,26 @@ namespace tc
        */
       enum StreamDirection
       {
-         /** stream is not ready for read or write (not open or allready closed */
-         stream_dead,
+         /** stream is not ready for read or write (not open or already closed */
+         STREAM_DEAD,
          /** stream is used for reading */
-         stream_read,
+         STREAM_READ,
          /** stream is used for writing */
-         stream_write,
+         STREAM_WRITE,
          /** stream is used for reading and writing*/
-         stream_readwrite
+         STREAM_READ_WRITE
       };
 
    public:
-      virtual ~Stream() {}
+      /** Clone this stream object */
+      virtual StreamPtr Clone() = 0;
 
       /**
        * @return the error flag
        * defined in TCStream::StreamErrorFlags
        */
       virtual int32_t GetStatus() const = 0;
-      /** Reset the error flag to error_none */
+      /** Reset the error flag to ERROR_NONE */
       virtual void ResetStatus() = 0;
       /** @return False if no error happend else true */
       virtual bool Error() const = 0;
@@ -309,12 +311,11 @@ namespace tc
 
       /** flushes the stream if needed */
       virtual void Flush() = 0;
-      /** Closes the stream and sets the streamdirection to stream_dead */
+      /** Closes the stream and sets the streamdirection to STREAM_DEAD */
       virtual void CloseStream() = 0;
-   };
 
-   /** @brief Shared pointer of an stream object */
-   typedef SharedPtr<Stream> StreamPtr;
+      virtual ~Stream() {}
+   };
 
    /**
     * Flush the stream

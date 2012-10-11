@@ -51,7 +51,7 @@ namespace tc
          m_memory(memory),
          m_memory_position(0)
       {
-         setStreamDirection(stream_readwrite);
+         SetStreamDirection(STREAM_READ_WRITE);
       }
 
       MemoryStream::~MemoryStream()
@@ -60,6 +60,19 @@ namespace tc
 
       uint64_t MemoryStream::ReadBytes(uint64_t num_bytes, void* bytes)
       {
+         // check for an error
+         if (Error())
+         {
+            return 0;
+         }
+
+         // check mode
+         if (!IsReading())
+         {
+            SetStatus(ERROR_STREAM_DIRECTION);
+            return 0;
+         }
+
          if (num_bytes > std::numeric_limits<ByteVector::size_type>::max())
          {
              return 0;
@@ -80,6 +93,19 @@ namespace tc
 
       uint64_t MemoryStream::WriteBytes(uint64_t num_bytes, const void* bytes)
       {
+         // check for an error
+         if (Error())
+         {
+            return 0;
+         }
+
+         // check mode
+         if (!IsWriting())
+         {
+            SetStatus(ERROR_STREAM_DIRECTION);
+            return 0;
+         }
+
          if (num_bytes > std::numeric_limits<ByteVector::size_type>::max())
          {
              return 0;
@@ -154,6 +180,12 @@ namespace tc
       {
          return m_memory_position;
       }
+
+      StreamPtr MemoryStream::Clone()
+      {
+         return StreamPtr(new MemoryStream(GetCodec()->Clone(), m_memory));
+      }
+
    }
 }
 

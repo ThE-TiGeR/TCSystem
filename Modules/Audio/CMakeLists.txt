@@ -1,13 +1,19 @@
 find_package(OpenAL)
 find_Package(MPG123)
+find_Package(OGG)
+find_Package(VORBIS)
+find_Package(VorbisFile)
 
 include_directories (
    inc
    ../Basic/inc
    ../Thread/inc
-   "${OPENAL_INCLUDE_DIR}"
-   "${MPG123_INCLUDE_DIR1}"
-   "${MPG123_INCLUDE_DIR2}"
+   ${OPENAL_INCLUDE_DIR}
+   ${MPG123_INCLUDE_DIR1}
+   ${MPG123_INCLUDE_DIR2}
+   ${OGG_INCLUDE_DIR}
+   ${VORBIS_INCLUDE_DIR}
+   ${VorbisFile_INCLUDE_DIR}
 )
 
 set (TC_AUDIO_PUBLIC_HEADER
@@ -38,6 +44,8 @@ add_library (TCAudio
 	src/TCAudioSoundDataMapper.h
 	src/TCAudioSoundDataMp3.cpp
 	src/TCAudioSoundDataMp3.h
+	src/TCAudioSoundDataOgg.cpp
+	src/TCAudioSoundDataOgg.h
 	src/TCAudioSoundDataMultitrack.cpp
 	src/TCAudioSoundDataMultitrack.h
 	src/TCAudioSoundDataSequence.cpp
@@ -64,6 +72,9 @@ target_link_libraries (TCAudio
     TCBasic
     ${OPENAL_LIBRARY}
     ${MPG123_LIBRARIES}
+    ${VorbisFile_LIBRARY}
+    ${VORBIS_LIBRARY}
+    ${OGG_LIBRARY}
 )
 
 set_target_properties(TCAudio PROPERTIES FOLDER Modules)

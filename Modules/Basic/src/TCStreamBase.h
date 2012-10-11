@@ -74,11 +74,11 @@ namespace imp
       void ResetStatus();
       bool Error() const
       {
-         return GetStatus() != error_none;
+         return GetStatus() != ERROR_NONE;
       }
       bool IsOk() const 
       {
-         return GetStatus() == error_none;
+         return GetStatus() == ERROR_NONE;
       }
       
       bool GetDisplayErrorMessages() const
@@ -127,35 +127,39 @@ namespace imp
    protected:
       /**
        * set the stream error flag
-       * @param err errornumber to set the status
+       * @param err error number to set the status
        */
-      void setStatus(int32_t err) const;
-      /** displays the error messege because of the status */
-      virtual void displayErrorMessage() const;
+      void SetStatus(int32_t err) const;
+      /** displays the error message because of the status */
+      virtual void DisplayErrorMessage() const;
 
       /** @return the stream direction */
-      void setStreamDirection(StreamDirection direction) { m_stream_direction = direction; }
+      void SetStreamDirection(StreamDirection direction) { m_stream_direction = direction; }
       /** @return the stream direction */
-      StreamDirection getStreamDirection() const
+      StreamDirection GetStreamDirection() const
       {
          return m_stream_direction;
       }
       /** @return true if the stream direction is reading */
-      bool isReading() const
+      bool IsReading() const
       {
-         return stream_read == m_stream_direction || isReadingAndWriting();
+         return STREAM_READ == m_stream_direction || IsReadingAndWriting();
       }
       /** @return true if the stream direction is reading */
-      bool isWriting() const
+      bool IsWriting() const
       {
-         return stream_write == m_stream_direction || isReadingAndWriting();
+         return STREAM_WRITE == m_stream_direction || IsReadingAndWriting();
       }
       /** @return true if the stream direction is reading */
-      bool isReadingAndWriting() const
+      bool IsReadingAndWriting() const
       {
-        return stream_readwrite == m_stream_direction;
+        return STREAM_READ_WRITE == m_stream_direction;
       }
-
+      /** @return the pointer to the codec */
+      CodecPtr GetCodec()
+      {
+         return m_codec;
+      }
    private:
       /** Pointer to the codec which is used to de/encode the data */
       CodecPtr m_codec;

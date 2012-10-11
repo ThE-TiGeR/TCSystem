@@ -61,12 +61,12 @@ namespace tc
             uint32_t stack_size,
             ThreadPriority priority)
          {
-            TCTRACE1("TCMT", 1, "%s", thread_name.c_str());
+            TCTRACES("TCMT", 1, thread_name);
 
             ThreadPthread* thread = new ThreadPthread(thread_name, stack_size, priority);
             if (!thread)
             {
-               TCERROR1("TCMT", "%s failed.", thread_name.c_str());
+               TCERRORS("TCMT", thread_name << " failed.");
                return ThreadPtr();
             }
 
@@ -83,11 +83,11 @@ namespace tc
 
             if (!thread->Init())
             {
-               TCERROR1("TCMT", "%s failed.", thread_name.c_str());
+               TCERRORS("TCMT", thread_name << " failed.");
                return ThreadPtr();
             }
 
-            TCTRACE1("TCMT", 1, "%s done.", thread_name.c_str());
+            TCTRACES("TCMT", 5, thread_name << " done.");
             return thread_ptr;
          }
 
@@ -106,7 +106,7 @@ namespace tc
 
          ThreadPthread::~ThreadPthread()
          {
-            TCTRACE1("TCMT", 1, "%s", m_name.c_str());
+            TCTRACES("TCMT", 1, m_name);
          }
 
          bool ThreadPthread::CreateOSThread(InitStruct* init_data)
@@ -118,7 +118,7 @@ namespace tc
             {
                if (::pthread_attr_setstacksize(&attr, (size_t)m_stack_size) != 0)
                {
-                  TCERROR1("TCMT", "%s failed.", m_name.c_str());
+                  TCERRORS("TCMT", m_name << " failed.");
                   return false;
                }
             }
@@ -126,12 +126,12 @@ namespace tc
             if (::pthread_create(&m_handle, &attr, Wrapper, init_data)!= 0)
             {
                ::pthread_attr_destroy(&attr);
-               TCERROR1("TCMT", "%s failed.", m_name.c_str());
+               TCERRORS("TCMT", m_name << " failed.");
                return false;
             }
             ::pthread_attr_destroy(&attr);
 
-            TCTRACE1("TCMT", 2, "%s done.", m_name.c_str());
+            TCTRACES("TCMT", 5, m_name << " done.");
             return true;
          }
 
@@ -140,12 +140,12 @@ namespace tc
             InitStruct* init_data = reinterpret_cast<InitStruct*>(ptr);
             ThreadPthread* thread = static_cast<ThreadPthread*>(init_data->thread);
 
-            return (void*)thread->ThreadRunner(init_data);
+            return thread->ThreadRunner(init_data) ? (void*)(0x1) : (void*)(0x0);
          }
 
          bool ThreadPthread::JoinOS()
          {
-            TCTRACE1("TCMT", 5,"%s", m_name.c_str());
+            TCTRACES("TCMT", 5, m_name);
 
             if (::pthread_join(m_handle, 0) != 0)
             {
@@ -157,11 +157,11 @@ namespace tc
 
          bool ThreadPthread::SetPriorityOS(ThreadPriority priority_in)
          {
-            TCTRACE1("TCMT", 5,"%s", m_name.c_str());
+            TCTRACES("TCMT", 5, m_name);
 
             if (!m_handle)
             {
-               TCERROR1("TCMT", "%s failed.", m_name.c_str());
+               TCERRORS("TCMT", m_name << " failed.");
                return false;
             }
 
@@ -170,8 +170,7 @@ namespace tc
             int32_t error = pthread_getschedparam(m_handle, &policy, &sparam);
             if (error != 0)
             {
-               TCERROR3("TCMT", "%s (error=%d %s) failed.",
-                  m_name.c_str(), error, std::strerror(error));
+               TCERRORS("TCMT", m_name << "(error=" << error << " " << std::strerror(error) << " failed.");
                return false;
             }
 
@@ -179,8 +178,7 @@ namespace tc
             error = ::pthread_setschedparam(m_handle, policy, &sparam);
             if (error != 0)
             {
-               TCERROR3("TCMT", "%s (error=%d %s) failed.",
-                  m_name.c_str(), error, std::strerror(error));
+               TCERRORS("TCMT", m_name << "(error=" << error << " " << std::strerror(error) << " failed.");
                return false;
             }
 
@@ -189,7 +187,7 @@ namespace tc
 
          ThreadPtr ThreadPthread::Self()
          {
-            TCTRACES("TCMT", 10);
+            TCTRACES("TCMT", 10, "");
 
             pthread_t handle = ::pthread_self();
             MutexLocker lock(m_threads_mutex);
@@ -211,7 +209,7 @@ namespace tc
 
          void ThreadPthread::SwitchContext()
          {
-            TCTRACES("TCMT", 10);
+            TCTRACES("TCMT", 10, "");
             ::sched_yield();
          }
 

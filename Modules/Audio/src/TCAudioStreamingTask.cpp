@@ -56,8 +56,9 @@ namespace tc
       const Time STREAMING_TIMEOUT(0, 50 * Time::ONE_MILLI_SECOND_AS_NANO_SECONDS);
       const Time RESPONSE_TIMEOUT(0, 200 * Time::ONE_MILLI_SECOND_AS_NANO_SECONDS);
 
-      StreamingTask::StreamingTask()
+      StreamingTask::StreamingTask(OpenALHandlerPtr open_al_handler)
          :Task(STREAMING_TIMEOUT),
+         m_open_al_handler(open_al_handler),
          m_streaming_sources(),
          m_streaming_buffer(0),
          m_streaming_buffer_size(0),
@@ -115,7 +116,7 @@ namespace tc
 
          // Start playing source
          ::alSourcePlay(streaming_source->m_source);
-         OpenALHandler::GetInstance()->CheckErrorAndThrowException("alSourcePlay");
+         m_open_al_handler->CheckErrorAndThrowException("alSourcePlay");
 
          return true;
       }
@@ -129,7 +130,7 @@ namespace tc
          }
 
          ::alSourcePause(streaming_source->m_source);
-         OpenALHandler::GetInstance()->GetInstance()->CheckErrorAndThrowException("alGetSourcei");
+         m_open_al_handler->CheckErrorAndThrowException("alGetSourcei");
 
          return true;
       }
@@ -171,7 +172,7 @@ namespace tc
          // Request the number of OpenAL Buffers have been processed (played) on the Source
          ALint num_buffers_processed = 0;
          ::alGetSourcei(streaming_source->m_source, AL_BUFFERS_PROCESSED, &num_buffers_processed);
-         OpenALHandler::GetInstance()->GetInstance()->CheckErrorAndThrowException("alGetSourcei");
+         m_open_al_handler->CheckErrorAndThrowException("alGetSourcei");
 
          // Keep a running count of number of buffers processed (for logging purposes only)
          m_total_num_processed_buffers += num_buffers_processed;
@@ -183,7 +184,7 @@ namespace tc
             // Remove the Buffer from the Queue.  (unqueued_buffer contains the Buffer ID for the unqueued Buffer)
             ALuint unqueued_buffer = 0;
             ::alSourceUnqueueBuffers(streaming_source->m_source, 1, &unqueued_buffer);
-            OpenALHandler::GetInstance()->CheckErrorAndThrowException("alSourceUnqueueBuffers");
+            m_open_al_handler->CheckErrorAndThrowException("alSourceUnqueueBuffers");
 
             QueueBuffer(streaming_source, unqueued_buffer);
             num_buffers_processed--;
@@ -195,17 +196,17 @@ namespace tc
          // update volume
          ::alSourcef(streaming_source->m_source,AL_GAIN, 
             static_cast<ALfloat>(streaming_source->m_sound_data->GetVolume()));
-         OpenALHandler::GetInstance()->CheckErrorAndThrowException("alSourcePlay");
+         m_open_al_handler->CheckErrorAndThrowException("alSourcePlay");
 
          // update pitch
          ::alSourcef(streaming_source->m_source,AL_PITCH, 
             static_cast<ALfloat>(streaming_source->m_sound_data->GetPitch()));
-         OpenALHandler::GetInstance()->CheckErrorAndThrowException("alSourcePlay");
+         m_open_al_handler->CheckErrorAndThrowException("alSourcePlay");
 
          // update position (pan)
          ::alSource3f(streaming_source->m_source,AL_POSITION, 
             static_cast<ALfloat>(streaming_source->m_sound_data->GetPan()), 0, 0);
-         OpenALHandler::GetInstance()->CheckErrorAndThrowException("alSourcePlay");
+         m_open_al_handler->CheckErrorAndThrowException("alSourcePlay");
       }
 
       bool StreamingTask::CheckSourceStatus(StreamingSourcePtr streaming_source)
@@ -214,18 +215,18 @@ namespace tc
          // or the Source was starved of audio data, and needs to be restarted.
          ALint state;
          ::alGetSourcei(streaming_source->m_source, AL_SOURCE_STATE, &state);
-         OpenALHandler::GetInstance()->CheckErrorAndThrowException("alGetSourcei");
+         m_open_al_handler->CheckErrorAndThrowException("alGetSourcei");
          if (state != AL_PLAYING && state != AL_PAUSED)
          {
             // If there are Buffers in the Source Queue then the Source was starved of audio
             // data, so needs to be restarted (because there is more audio data to play)
             ALint num_queued_buffers;
             ::alGetSourcei(streaming_source->m_source, AL_BUFFERS_QUEUED, &num_queued_buffers);
-            OpenALHandler::GetInstance()->CheckErrorAndThrowException("alGetSourcei");
+            m_open_al_handler->CheckErrorAndThrowException("alGetSourcei");
             if (num_queued_buffers)
             {
                ::alSourcePlay(streaming_source->m_source);
-               OpenALHandler::GetInstance()->CheckErrorAndThrowException("alSourcePlay");
+               m_open_al_handler->CheckErrorAndThrowException("alSourcePlay");
 
                return true;
             }
@@ -260,20 +261,20 @@ namespace tc
          }
 
          ::alBufferData(buffer_to_queue, util::SoundFormat2BufferFormat(format),
-            m_streaming_buffer, ALsizei(bytes_in_buffer), format.samples_per_second);
-         OpenALHandler::GetInstance()->CheckErrorAndThrowException("alBufferData");
+            m_streaming_buffer, ALsizei(bytes_in_buffer), format.GetSamplesPerSecond());
+         m_open_al_handler->CheckErrorAndThrowException("alBufferData");
 
          ::alSourceQueueBuffers(streaming_source->m_source, 1, &buffer_to_queue);
-         OpenALHandler::GetInstance()->CheckErrorAndThrowException("alSourceQueueBuffers");
+         m_open_al_handler->CheckErrorAndThrowException("alSourceQueueBuffers");
       }
 
       StreamingTask::StreamingSourcePtr StreamingTask::CreateStreamingSource(SoundDataPtr sound_data)
       {
          StreamingSourcePtr streaming_source(new StreamingSource);
-         streaming_source->m_source = OpenALHandler::GetInstance()->GetUnusedSource();
+         streaming_source->m_source = m_open_al_handler->GetUnusedSource();
          for (uint32_t i=0; i<tc::util::ArraySize(streaming_source->m_buffer); i++)
          {
-            streaming_source->m_buffer[i] = OpenALHandler::GetInstance()->GetUnusedBuffer();
+            streaming_source->m_buffer[i] = m_open_al_handler->GetUnusedBuffer();
          }
 
          streaming_source->m_sound_data = sound_data;
@@ -298,15 +299,15 @@ namespace tc
          // Finished playing
          // Stop the Source and clear the Queue
          ::alSourceStop((*streaming_source)->m_source);
-         OpenALHandler::GetInstance()->CheckErrorAndThrowException("alSourceStop");
+         m_open_al_handler->CheckErrorAndThrowException("alSourceStop");
 
          ::alSourcei((*streaming_source)->m_source, AL_BUFFER, 0);
-         OpenALHandler::GetInstance()->CheckErrorAndThrowException("alSourcei");
+         m_open_al_handler->CheckErrorAndThrowException("alSourcei");
 
-         OpenALHandler::GetInstance()->ReleaseSource((*streaming_source)->m_source);
+         m_open_al_handler->ReleaseSource((*streaming_source)->m_source);
          for (uint32_t i=0; i<tc::util::ArraySize((*streaming_source)->m_buffer); i++)
          {
-            OpenALHandler::GetInstance()->ReleaseBuffer((*streaming_source)->m_buffer[i]);
+            m_open_al_handler->ReleaseBuffer((*streaming_source)->m_buffer[i]);
          }
 
          return m_streaming_sources.erase(streaming_source);
@@ -329,10 +330,10 @@ namespace tc
       void StreamingTask::UpdateBufferSize(const SoundFormat& format)
       {
          //uint32_t buffer_size = format.bytes_per_second >> 4;
-         uint32_t buffer_size = format.bytes_per_second >> 2;
+         uint32_t buffer_size = format.GetBytesPerSecond() >> 2;
          // we always force a multiple of 4
          // IMPORTANT : The Buffer Size must be an exact multiple of the BlockAlignment ...
-         buffer_size -= (buffer_size % tc::util::Max(format.bytes_per_sample, uint16_t(4)));
+         buffer_size -= (buffer_size % tc::util::Max(format.GetBytesPerSample(), uint16_t(4)));
 
          //tcout << double(buffer_size)/format.bytes_per_second << "block time" << endl;
 
@@ -376,7 +377,7 @@ namespace tc
 
          ALint state;
          ::alGetSourcei((*found)->m_source, AL_SOURCE_STATE, &state);
-         OpenALHandler::GetInstance()->CheckErrorAndThrowException("alGetSourcei");
+         m_open_al_handler->CheckErrorAndThrowException("alGetSourcei");
          return state == AL_PLAYING;
       }
 
@@ -391,7 +392,7 @@ namespace tc
 
          ALint state;
          ::alGetSourcei((*found)->m_source, AL_SOURCE_STATE, &state);
-         OpenALHandler::GetInstance()->CheckErrorAndThrowException("alGetSourcei");
+         m_open_al_handler->CheckErrorAndThrowException("alGetSourcei");
          return state == AL_PAUSED;
       }
 

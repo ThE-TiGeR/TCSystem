@@ -55,6 +55,10 @@ namespace tc
      * @author Thomas Goessler
      */
 
+    class Codec;
+    /** @brief Shared pointer of an codec object */
+    typedef SharedPtr<Codec> CodecPtr;
+
     /**
      * @brief Base class for all codec
      * method fro encoding and decoding standard types
@@ -63,6 +67,9 @@ namespace tc
     class Codec
     {
     public:
+       /** Clone this codec object */
+       virtual CodecPtr Clone() = 0;
+
        /**
         * Method for reading one signed 8bit integer from the stream
         * @param stream Stream from which to decode the data
@@ -286,9 +293,6 @@ namespace tc
 
        virtual ~Codec() {}
     };
-
-    /** @brief Shared pointer of an codec object */
-    typedef SharedPtr<Codec> CodecPtr;
 
     /**
      * @}

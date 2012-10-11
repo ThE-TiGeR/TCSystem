@@ -47,7 +47,7 @@ namespace tc
    {
       SoundDataWav::SoundDataWav(StreamPtr stream)
          :m_sound_format()
-         ,m_stream(stream)
+         ,m_stream(stream->Clone())
          ,m_start_of_sound_data(0)
       {
          ProcessStream();
@@ -90,7 +90,8 @@ namespace tc
       void SoundDataWav::ProcessStream()
       {
          uint32_t magic_id;
-         m_stream >> magic_id; util::SwapBytes(magic_id);
+         m_stream >> magic_id; 
+         util::SwapBytes(magic_id);
          if (magic_id != 'RIFF')
          {
             throw  Exception("Sound format no RIFF");
@@ -98,16 +99,18 @@ namespace tc
 
          uint32_t chunk_length;
          m_stream >> chunk_length;
-         m_stream >> magic_id; util::SwapBytes(magic_id);
+         m_stream >> magic_id; 
+         util::SwapBytes(magic_id);
          if ( magic_id != 'WAVE')
          {
             throw  Exception("Sound format wrong magic id");
          }
 
          bool data_processed = false;
-         while (data_processed)
+         while (!data_processed)
          {
-            m_stream >> magic_id; util::SwapBytes(magic_id);
+            m_stream >> magic_id; 
+            util::SwapBytes(magic_id);
             m_stream >> chunk_length;
 
             if (magic_id == 'fmt ')
@@ -116,7 +119,7 @@ namespace tc
             }
             else if (magic_id == 'data')
             {
-               ProcessData( chunk_length);
+               ProcessData(chunk_length);
                data_processed = true;
             }
             else
@@ -136,21 +139,27 @@ namespace tc
             throw  Exception("Sound format wrong chunk length");
          }
 
-         m_stream >> m_sound_format.audio_format;
-         m_stream >> m_sound_format.num_channels;
-         m_stream >> m_sound_format.samples_per_second;
-         m_stream >> m_sound_format.bytes_per_second;
-         m_stream >> m_sound_format.bytes_per_sample;
-         m_stream >> m_sound_format.bits_per_sample;
+         uint16_t audio_format;      
+         uint16_t num_channels;      
+         uint32_t samples_per_second;
+         uint32_t bytes_per_second;  
+         uint16_t bytes_per_sample;  
+         uint16_t bits_per_sample;   
 
-         switch (m_sound_format.audio_format)
+         m_stream >> audio_format;
+         m_stream >> num_channels;
+         m_stream >> samples_per_second;
+         m_stream >> bytes_per_second;
+         m_stream >> bytes_per_sample;
+         m_stream >> bits_per_sample;
+
+         switch (audio_format)
          {
          case 1: /* PCM */
             //                codec = (m_bit_sper_sample == 8 || util::IsLittleEndian()) ?
             //                        _alutCodecLinear : _alutCodecPCM16;
-            if (m_sound_format.bits_per_sample == 8 || util::IsLittleEndian())
+            if (bits_per_sample == 8 || util::IsLittleEndian())
             {
-
             }
             else
             {
@@ -158,7 +167,7 @@ namespace tc
             }
             break;
          case 7: /* uLaw */
-            m_sound_format.bits_per_sample *= 2;
+            bits_per_sample *= 2;
             //                codec = _alutCodecULaw;
             throw  Exception("Unsupported audio format");
             break;
@@ -170,6 +179,10 @@ namespace tc
          {
             throw  Exception("Error setting stream pointer");
          }
+
+         m_sound_format.SetNumChannels(num_channels);
+         m_sound_format.SetSamplesPerSecond(samples_per_second);
+         m_sound_format.SetBitsPerSample(bits_per_sample);
       }
 
       void SoundDataWav::ProcessData(uint32_t /*chunk_length*/)

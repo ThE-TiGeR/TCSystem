@@ -35,7 +35,7 @@
 #ifndef _TC_AUDIO_STREAMING_THREAD_H_
 #define _TC_AUDIO_STREAMING_THREAD_H_
 
-#include "TCAudioOpenAL.h"
+#include "TCAudioOpenALHandler.h"
 #include "TCAudioSoundPlayer.h"
 #include "TCMTThread.h"
 #include "TCMTEvent.h"
@@ -101,7 +101,7 @@ namespace tc
          typedef SharedPtr<Task> TaskPtr;
 
       public:
-         StreamingThread();
+         StreamingThread(OpenALHandlerPtr open_al_handler);
          virtual ~StreamingThread();
 
          virtual bool Run();
