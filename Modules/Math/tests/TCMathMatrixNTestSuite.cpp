@@ -36,6 +36,7 @@
 
 #include "TCUnitTestCase.h"
 #include "TCMathMatrixN.h"
+#include "TCMathMatrix4x4.h"
 
 #include "TCNewEnable.h"
 
@@ -45,15 +46,15 @@ namespace tc
    {
       namespace tests
       {
-         typedef MatrixN<int, 5> MatrixType;
+         typedef MatrixN<int, 5, 5> MatrixType;
          static MatrixType GetDefaultMatrix()
          {
             MatrixType val;
-            for (int i=0; i<MatrixType::NUM_COMPONENTS; i++)
+            for (int i=0; i<MatrixType::NUM_COMPONENTS1; i++)
             {
-               for (int j=0; j<MatrixType::NUM_COMPONENTS; j++)
+               for (int j=0; j<MatrixType::NUM_COMPONENTS2; j++)
                {
-                  val(i, j) = i * MatrixType::NUM_COMPONENTS + j;
+                  val(i, j) = i * MatrixType::NUM_COMPONENTS1 + j;
                }
             }
 
@@ -72,9 +73,9 @@ namespace tc
             {
                {
                   MatrixType val(0);
-                  for (int i=0; i<MatrixType::NUM_COMPONENTS; i++)
+                  for (int i=0; i<MatrixType::NUM_COMPONENTS1; i++)
                   {
-                     for (int j=0; j<MatrixType::NUM_COMPONENTS; j++)
+                     for (int j=0; j<MatrixType::NUM_COMPONENTS2; j++)
                      {
                         TCUNIT_ASSERT(val(i, j) == MatrixType::DataType(0));
                      }
@@ -83,7 +84,7 @@ namespace tc
 
                {
                   MatrixType val(27);
-                  for (int i=0; i<MatrixType::NUM_COMPONENTS; i++)
+                  for (int i=0; i<MatrixType::NUM_COMPONENTS1; i++)
                   {
                      for (int j=0; j<i; j++)
                      {
@@ -92,7 +93,7 @@ namespace tc
 
                      TCUNIT_ASSERT(val(i, i) == MatrixType::DataType(27));
 
-                     for (int j=i+1; j<MatrixType::NUM_COMPONENTS; j++)
+                     for (int j=i+1; j<MatrixType::NUM_COMPONENTS2; j++)
                      {
                         TCUNIT_ASSERT(val(i, j) == MatrixType::DataType(0));
                      }
@@ -103,9 +104,9 @@ namespace tc
                   MatrixType val(GetDefaultMatrix());
 
                   MatrixType val1(val);
-                  for (int i=0; i<MatrixType::NUM_COMPONENTS; i++)
+                  for (int i=0; i<MatrixType::NUM_COMPONENTS1; i++)
                   {
-                     for (int j=0; j<MatrixType::NUM_COMPONENTS; j++)
+                     for (int j=0; j<MatrixType::NUM_COMPONENTS2; j++)
                      {
                         TCUNIT_ASSERT(val(i, j) == val(i, j));
                      }
@@ -113,19 +114,19 @@ namespace tc
                }
 
                {
-                  MatrixN<double, MatrixType::NUM_COMPONENTS> val;
-                  for (int i=0; i<MatrixType::NUM_COMPONENTS; i++)
+                  MatrixN<double, MatrixType::NUM_COMPONENTS1, MatrixType::NUM_COMPONENTS2> val;
+                  for (int i=0; i<MatrixType::NUM_COMPONENTS1; i++)
                   {
-                     for (int j=0; j<MatrixType::NUM_COMPONENTS; j++)
+                     for (int j=0; j<MatrixType::NUM_COMPONENTS2; j++)
                      {
-                        val(i, j) = MatrixN<double, MatrixType::NUM_COMPONENTS>::DataType(i);
+                        val(i, j) = MatrixN<double, MatrixType::NUM_COMPONENTS1, MatrixType::NUM_COMPONENTS2>::DataType(i);
                      }
                   }
 
                   MatrixType val1(val);
-                  for (int i=0; i<MatrixType::NUM_COMPONENTS; i++)
+                  for (int i=0; i<MatrixType::NUM_COMPONENTS1; i++)
                   {
-                     for (int j=0; j<MatrixType::NUM_COMPONENTS; j++)
+                     for (int j=0; j<MatrixType::NUM_COMPONENTS2; j++)
                      {
                         TCUNIT_ASSERT(val1(i, j) == MatrixType::DataType(i));
                      }
@@ -150,9 +151,9 @@ namespace tc
                   MatrixType val1;
                   val1 = val;
 
-                  for (int i=0; i<MatrixType::NUM_COMPONENTS; i++)
+                  for (int i=0; i<MatrixType::NUM_COMPONENTS1; i++)
                   {
-                     for (int j=0; j<MatrixType::NUM_COMPONENTS; j++)
+                     for (int j=0; j<MatrixType::NUM_COMPONENTS2; j++)
                      {
                         TCUNIT_ASSERT(val1(i, j) == val(i, j));
                      }
@@ -163,7 +164,7 @@ namespace tc
                   MatrixType val;
                   val = MatrixType::DataType(27);
 
-                  for (int i=0; i<MatrixType::NUM_COMPONENTS; i++)
+                  for (int i=0; i<MatrixType::NUM_COMPONENTS1; i++)
                   {
                      for (int j=0; j<i; j++)
                      {
@@ -172,7 +173,7 @@ namespace tc
 
                      TCUNIT_ASSERT(val(i, i) == MatrixType::DataType(27));
 
-                     for (int j=i+1; j<MatrixType::NUM_COMPONENTS; j++)
+                     for (int j=i+1; j<MatrixType::NUM_COMPONENTS2; j++)
                      {
                         TCUNIT_ASSERT(val(i, j) == MatrixType::DataType(0));
                      }
@@ -198,18 +199,18 @@ namespace tc
                   val += val1;
                   val += val1;
 
-                  for (int i=0; i<MatrixType::NUM_COMPONENTS; i++)
+                  for (int i=0; i<MatrixType::NUM_COMPONENTS1; i++)
                   {
-                     for (int j=0; j<MatrixType::NUM_COMPONENTS; j++)
+                     for (int j=0; j<MatrixType::NUM_COMPONENTS2; j++)
                      {
                         TCUNIT_ASSERT(val(i, j) == val1(i, j)*2);
                      }
                   }
 
                   val = val1 + val1 + val1;
-                  for (int i=0; i<MatrixType::NUM_COMPONENTS; i++)
+                  for (int i=0; i<MatrixType::NUM_COMPONENTS1; i++)
                   {
-                     for (int j=0; j<MatrixType::NUM_COMPONENTS; j++)
+                     for (int j=0; j<MatrixType::NUM_COMPONENTS2; j++)
                      {
                         TCUNIT_ASSERT(val(i, j) == val1(i, j)*3);
                      }
@@ -235,18 +236,18 @@ namespace tc
                   val -= val1;
                   val -= val1;
 
-                  for (int i=0; i<MatrixType::NUM_COMPONENTS; i++)
+                  for (int i=0; i<MatrixType::NUM_COMPONENTS1; i++)
                   {
-                     for (int j=0; j<MatrixType::NUM_COMPONENTS; j++)
+                     for (int j=0; j<MatrixType::NUM_COMPONENTS2; j++)
                      {
                         TCUNIT_ASSERT(val(i, j) == val1(i, j)*-2);
                      }
                   }
 
                   val = val1 - val1 - val1;
-                  for (int i=0; i<MatrixType::NUM_COMPONENTS; i++)
+                  for (int i=0; i<MatrixType::NUM_COMPONENTS1; i++)
                   {
-                     for (int j=0; j<MatrixType::NUM_COMPONENTS; j++)
+                     for (int j=0; j<MatrixType::NUM_COMPONENTS2; j++)
                      {
                         TCUNIT_ASSERT(val(i, j) == -val1(i, j));
                      }
@@ -271,27 +272,27 @@ namespace tc
                   MatrixType val(val1);
                   val *= 7;
 
-                  for (int i=0; i<MatrixType::NUM_COMPONENTS; i++)
+                  for (int i=0; i<MatrixType::NUM_COMPONENTS1; i++)
                   {
-                     for (int j=0; j<MatrixType::NUM_COMPONENTS; j++)
+                     for (int j=0; j<MatrixType::NUM_COMPONENTS2; j++)
                      {
                         TCUNIT_ASSERT(val(i, j) == val1(i, j)*7);
                      }
                   }
 
                   val = val1 * 5;
-                  for (int i=0; i<MatrixType::NUM_COMPONENTS; i++)
+                  for (int i=0; i<MatrixType::NUM_COMPONENTS1; i++)
                   {
-                     for (int j=0; j<MatrixType::NUM_COMPONENTS; j++)
+                     for (int j=0; j<MatrixType::NUM_COMPONENTS2; j++)
                      {
                         TCUNIT_ASSERT(val(i, j) == val1(i, j)*5);
                      }
                   }
 
                   val = 3 * val1;
-                  for (int i=0; i<MatrixType::NUM_COMPONENTS; i++)
+                  for (int i=0; i<MatrixType::NUM_COMPONENTS1; i++)
                   {
-                     for (int j=0; j<MatrixType::NUM_COMPONENTS; j++)
+                     for (int j=0; j<MatrixType::NUM_COMPONENTS2; j++)
                      {
                         TCUNIT_ASSERT(val(i, j) == val1(i, j)*3);
                      }
@@ -315,18 +316,18 @@ namespace tc
                   MatrixType val(val1);
                   val /= 7;
 
-                  for (int i=0; i<MatrixType::NUM_COMPONENTS; i++)
+                  for (int i=0; i<MatrixType::NUM_COMPONENTS1; i++)
                   {
-                     for (int j=0; j<MatrixType::NUM_COMPONENTS; j++)
+                     for (int j=0; j<MatrixType::NUM_COMPONENTS2; j++)
                      {
                         TCUNIT_ASSERT(val(i, j) == val1(i, j)/7);
                      }
                   }
 
                   val = val1 / 7;
-                  for (int i=0; i<MatrixType::NUM_COMPONENTS; i++)
+                  for (int i=0; i<MatrixType::NUM_COMPONENTS1; i++)
                   {
-                     for (int j=0; j<MatrixType::NUM_COMPONENTS; j++)
+                     for (int j=0; j<MatrixType::NUM_COMPONENTS2; j++)
                      {
                         TCUNIT_ASSERT(val(i, j) == val1(i, j)/7);
                      }
@@ -410,7 +411,7 @@ namespace tc
                {
                   MatrixType val1(GetDefaultMatrix());
                   MatrixType val2(GetDefaultMatrix());
-                  val2(MatrixType::NUM_COMPONENTS-1, MatrixType::NUM_COMPONENTS-1) = -1;
+                  val2(MatrixType::NUM_COMPONENTS1-1, MatrixType::NUM_COMPONENTS2-1) = -1;
 
                   TCUNIT_ASSERT(!(val1 <  val2));
                   TCUNIT_ASSERT(!(val1 <= val2));
@@ -421,13 +422,44 @@ namespace tc
                {
                   MatrixType val1(GetDefaultMatrix());
                   MatrixType val2(GetDefaultMatrix());
-                  val1(MatrixType::NUM_COMPONENTS-1, MatrixType::NUM_COMPONENTS-1) = -1;
+                  val1(MatrixType::NUM_COMPONENTS1-1, MatrixType::NUM_COMPONENTS2-1) = -1;
 
                   TCUNIT_ASSERT( (val1 <  val2));
                   TCUNIT_ASSERT( (val1 <= val2));
                   TCUNIT_ASSERT(!(val1 >  val2));
                   TCUNIT_ASSERT(!(val1 >= val2));
                }
+            }
+         };
+
+         class Matrix4x4Translate: public unit::TestCase
+         {
+         public:
+            Matrix4x4Translate()
+               :unit::TestCase("tc::math::tests::Matrix4x4Translate")
+            {
+            }
+
+            virtual void Execute()
+            {
+               Matrix4x4f m;
+               m.Identity();
+
+               TCUNIT_ASSERT(m[3][0] == 0);
+               TCUNIT_ASSERT(m[3][1] == 0);
+               TCUNIT_ASSERT(m[3][2] == 0);
+               TranslateMatrix(m, CoordN<float, 3>(1, 2, 3));
+
+               TCUNIT_ASSERT(m[3][0] == 1);
+               TCUNIT_ASSERT(m[3][1] == 2);
+               TCUNIT_ASSERT(m[3][2] == 3);
+               TranslateMatrix(m, CoordN<float, 3>(-1, -2, -3));
+
+               TCUNIT_ASSERT(m[3][0] == 0);
+               TCUNIT_ASSERT(m[3][1] == 0);
+               TCUNIT_ASSERT(m[3][2] == 0);
+
+               InvertMatrix(m);
             }
          };
 
@@ -442,6 +474,8 @@ namespace tc
             AddTest(unit::Test::Ptr(new MatrixNDivideAssignTest));
             AddTest(unit::Test::Ptr(new MatrixNEqualTest));
             AddTest(unit::Test::Ptr(new MatrixNLessTest));
+
+            AddTest(unit::Test::Ptr(new Matrix4x4Translate));
          }
       }
    }

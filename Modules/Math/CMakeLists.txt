@@ -11,6 +11,7 @@ set (TC_MATH_PUBLIC_HEADER
     inc/TCMathChecksum.h
     inc/TCMathCoordN.h
     inc/TCMathMatrixN.h
+    inc/TCMathMatrix4x4.h
     inc/TCMathCoordUtil.h
     inc/TCMathBox.h
     inc/TCMathFactory.h

@@ -59,11 +59,11 @@ namespace tc
       * @brief Class for handling N values
       * With implementation of all common coordinate or vector operators needed
       */
-      template <typename T, uint32_t SIZE>
-      class MatrixN: public boost::totally_ordered< MatrixN<T, SIZE>,
-         boost::additive       < MatrixN<T, SIZE>,
-         boost::multipliable2  < MatrixN<T, SIZE>, T,
-         boost::dividable2     < MatrixN<T, SIZE>, T
+      template <typename T, uint32_t SIZE1, uint32_t SIZE2>
+      class MatrixN: public boost::totally_ordered< MatrixN<T, SIZE1, SIZE2>,
+         boost::additive       < MatrixN<T, SIZE1, SIZE2>,
+         boost::multipliable2  < MatrixN<T, SIZE1, SIZE2>, T,
+         boost::dividable2     < MatrixN<T, SIZE1, SIZE2>, T
       > > > >
       {
       public:
@@ -71,22 +71,42 @@ namespace tc
          typedef const T* ConstIterator;
          typedef T DataType;
 
-         enum
+         enum SizeTypes
          {
-            NUM_COMPONENTS  = SIZE,
-            ARRAY_DIMENSION = SIZE * SIZE
+            NUM_COMPONENTS1  = SIZE1,
+            NUM_COMPONENTS2  = SIZE1,
+            ARRAY_DIMENSION = SIZE1 * SIZE2
+         };
+
+         enum PredefinedType
+         {
+            ZERO,
+            IDENTITY
          };
 
       public:
          MatrixN()
          {
          }
-         MatrixN(const MatrixN<T, SIZE>& val) 
+
+         explicit MatrixN(PredefinedType init)
+         {
+            if (init == IDENTITY)
+            {
+               Identity();
+            }
+            else
+            {
+               Clear();
+            }
+         }
+
+         MatrixN(const MatrixN& val) 
          {
             (*this) = val;
          }
          template <class T1>
-         explicit MatrixN(const MatrixN<T1, SIZE>& val)
+         explicit MatrixN(const MatrixN<T1, SIZE1, SIZE2>& val)
          {
             const T1* in_data = val.m_data;
             for (T* data=m_data; data<m_data+ARRAY_DIMENSION; ++data, ++in_data)
@@ -99,7 +119,7 @@ namespace tc
             (*this) = val;
          }
 
-         MatrixN<T, SIZE>& operator=(const MatrixN<T, SIZE>& val) 
+         MatrixN<T, SIZE1, SIZE2>& operator=(const MatrixN& val) 
          {
             const T* in_data = val.m_data;
             for (T* data=m_data; data<m_data+ARRAY_DIMENSION; ++data, ++in_data)
@@ -109,14 +129,14 @@ namespace tc
             return *this;
          }
 
-         MatrixN<T, SIZE>& operator=(T val) 
+         MatrixN<T, SIZE1, SIZE2>& operator=(T val) 
          {
             for (T* data=m_data; data<m_data+ARRAY_DIMENSION; ++data)
             {
                *data = T(0);
             }
 
-            for (T* data=m_data; data<m_data+ARRAY_DIMENSION; data+=(SIZE+1))
+            for (T* data=m_data; data<m_data+ARRAY_DIMENSION; data+=(SIZE1+1))
             {
                *data = val;
             }
@@ -126,47 +146,55 @@ namespace tc
 
          const T& operator()(uint32_t i, uint32_t j)const 
          {
-            return m_data[i*SIZE+j];
+            return m_data[i*SIZE1+j];
          }
 
          T& operator()(const uint32_t i, uint32_t j)
          {
-            return m_data[i*SIZE+j];
+            return m_data[i*SIZE1+j];
          }
 
          const T* operator[](uint32_t i) const 
          {
-            return &m_data[i*SIZE];
+            return &m_data[i*SIZE1];
          }
 
          T* operator[](uint32_t i) 
          {
-            return &m_data[i*SIZE];
+            return &m_data[i*SIZE1];
+         }
+
+         void Clear()
+         {
+            for (T* data=m_data; data<m_data+ARRAY_DIMENSION; ++data)
+            {
+               *data = T(0);
+            }
          }
 
          void Identity()
          {
-            for (uint32_t i=0; i<SIZE; i++)
+            for (uint32_t i=0; i<SIZE1; i++)
             {
-               for (uint32_t j=0; j<SIZE; j++)
+               for (uint32_t j=0; j<SIZE2; j++)
                {
-                  m_data[i*SIZE+j] = i == j ? 1 : 0;
+                  m_data[i*SIZE1+j] = i == j ? T(1) : T(0);
                }
             }
          }
 
-         void Transpose(const MatrixN<T, SIZE>& val)
+         void Transpose(const MatrixN& val)
          {
-            for (uint32_t i=0; i<SIZE; i++)
+            for (uint32_t i=0; i<SIZE1; i++)
             {
-               for (uint32_t j=0; j<SIZE; j++)
+               for (uint32_t j=0; j<SIZE2; j++)
                {
-                  m_data[i*SIZE+j] = val.m_data[j*SIZE+i];
+                  m_data[i*SIZE1+j] = val.m_data[j*SIZE1+i];
                }
             }
          }
 
-         MatrixN<T, SIZE> &operator+=(const MatrixN<T, SIZE>& val) 
+         MatrixN<T, SIZE1, SIZE2> &operator+=(const MatrixN& val) 
          {
             const T* in_data = val.m_data;
             for (T* data=m_data; data<m_data+ARRAY_DIMENSION; ++data, ++in_data)
@@ -176,7 +204,7 @@ namespace tc
             return *this;
          }
 
-         MatrixN<T, SIZE> &operator-=(const MatrixN<T, SIZE>& val) 
+         MatrixN<T, SIZE1, SIZE2> &operator-=(const MatrixN& val) 
          {
             const T* in_data = val.m_data;
             for (T* data=m_data; data<m_data+ARRAY_DIMENSION; ++data, ++in_data)
@@ -186,7 +214,7 @@ namespace tc
             return *this;
          }
 
-         MatrixN<T, SIZE> &operator/=(T val) 
+         MatrixN<T, SIZE1, SIZE2> &operator/=(T val) 
          {
             for (T* data=m_data; data<m_data+ARRAY_DIMENSION; ++data)
             {
@@ -195,7 +223,7 @@ namespace tc
             return *this;         
          }
 
-         MatrixN<T, SIZE> &operator*=(T val)
+         MatrixN<T, SIZE1, SIZE2> &operator*=(T val)
          {
             for (T* data=m_data; data<m_data+ARRAY_DIMENSION; ++data)
             {
@@ -204,7 +232,7 @@ namespace tc
             return *this;         
          }
 
-         bool operator==(const MatrixN<T, SIZE>& val) const
+         bool operator==(const MatrixN& val) const
          {
             const T* in_data = val.m_data;
             for (const T* data=m_data; data<m_data+ARRAY_DIMENSION; ++data, ++in_data)
@@ -217,7 +245,7 @@ namespace tc
             return true;
          }
 
-         bool operator<(const MatrixN<T, SIZE>& val) const
+         bool operator<(const MatrixN& val) const
          {
             const T* in_data = val.m_data;
             const T* data = m_data;
@@ -247,7 +275,7 @@ namespace tc
       private:
          T m_data[ARRAY_DIMENSION];
 
-         template <class T1, uint32_t SIZE1> friend class MatrixN;
+         template <class T1, uint32_t SIZEX1, uint32_t SIZEX2> friend class MatrixN;
       };
 
       /**

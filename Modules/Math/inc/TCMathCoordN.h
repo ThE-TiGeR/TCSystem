@@ -125,9 +125,9 @@ namespace tc
             template <class T1>
             explicit CoordN(const T1& val0, const T1& val1, const T1& val2)
             {
-                m_data[0] = val0;
-                m_data[1] = val1;
-                m_data[2] = val2;
+                m_data[0] = T(val0);
+                m_data[1] = T(val1);
+                m_data[2] = T(val2);
                 for (T* data=m_data+3; data<m_data+SIZE; ++data)
                 {
                     *data = 0;
