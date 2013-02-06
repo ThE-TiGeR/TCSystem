@@ -162,7 +162,7 @@ namespace tc
    int8_t wstring::ToSint8(const std::wstring& val)
    {
       int8_t v;
-      if (std::swscanf(val.c_str(), L"%c", &v) != 1)
+      if (std::swscanf(val.c_str(), L"%hc", &v) != 1)
       {
          return 0;
       }
@@ -173,7 +173,7 @@ namespace tc
    uint8_t wstring::ToUint8(const std::wstring& val)
    {
       uint8_t v;
-      if (std::swscanf(val.c_str(), L"%c", &v) != 1)
+      if (std::swscanf(val.c_str(), L"%hc", &v) != 1)
       {
          return 0;
       }
