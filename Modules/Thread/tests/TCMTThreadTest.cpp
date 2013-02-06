@@ -75,7 +75,7 @@ namespace tc
                     TCUNIT_ASSERT(m_thread_handle);
                     TCUNIT_ASSERT(m_thread_handle->Start(ThreadObjectPtr(this, NoDelete())));
 
-//                     uint32 thread_id = m_thread_handle->GetID();
+//                     uint32_t thread_id = m_thread_handle->GetID();
 //                     TCUNIT_ASSERT(m_thread_handle == GetThreadHandle(thread_id));
 
                     TCUNIT_ASSERT(m_thread_start_event->Set());
@@ -182,9 +182,9 @@ namespace tc
 //                     try
 //                     {
 //                         void* msg = 0x0;
-//                         uint32 msg_id = 0;
-//                         const uint32 all_ids[] = {TEST_MESSAGE_ID1, TEST_MESSAGE_ID2, TEST_MESSAGE_ID3, TEST_MESSAGE_ID4};
-//                         uint32 num_all_ids = util::ArraySize(all_ids);
+//                         uint32_t msg_id = 0;
+//                         const uint32_t all_ids[] = {TEST_MESSAGE_ID1, TEST_MESSAGE_ID2, TEST_MESSAGE_ID3, TEST_MESSAGE_ID4};
+//                         uint32_t num_all_ids = util::ArraySize(all_ids);
 // 
 //                         {
 //                             TCUNIT_ASSERT(Message::Get(TEST_MESSAGE_ID1, &msg) == Message::MSG_RECEIVED);

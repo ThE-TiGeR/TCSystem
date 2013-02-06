@@ -182,9 +182,9 @@
 #  define TC_SINT64_FORMAT   "I64d"
    /** @brief  Defines the wformat which should be used for sint64 data type */
 #  define TC_SINT64_WFORMAT L"I64d"
-   /** @brief  Defines the format which should be used for uint64 data type */
+   /** @brief  Defines the format which should be used for uint64_t data type */
 #  define TC_UINT64_FORMAT   "I64u"
-   /** @brief  Defines the wformat which should be used for uint64 data type */
+   /** @brief  Defines the wformat which should be used for uint64_t data type */
 #  define TC_UINT64_WFORMAT L"I64u"
 
    /**
@@ -195,12 +195,12 @@
    *
    * Instead:
    * @code
-   * uint64 val = 0xffffffffffffffff;
+   * uint64_t val = 0xffffffffffffffff;
    * @endcode
    *
    * Use:
    * @code
-   * uint64 val = UINT64_VAL(0xffffffffffffffff);
+   * uint64_t val = UINT64_VAL(0xffffffffffffffff);
    * @endcode
    *
    * This will automatically add the correct integer literal for the 64bit value
