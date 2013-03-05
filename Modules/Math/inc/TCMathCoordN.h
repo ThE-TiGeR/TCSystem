@@ -134,6 +134,20 @@ namespace tc
                 }
             }
 
+            /** Init components from three (Coord4D) */
+            template <class T1>
+            explicit CoordN(const T1& val0, const T1& val1, const T1& val2, const T1& val3)
+            {
+               m_data[0] = T(val0);
+               m_data[1] = T(val1);
+               m_data[2] = T(val2);
+               m_data[3] = T(val3);
+               for (T* data=m_data+4; data<m_data+SIZE; ++data)
+               {
+                  *data = 0;
+               }
+            }
+
             /** Copy constructor */
             CoordN(const CoordN& coord)
             {

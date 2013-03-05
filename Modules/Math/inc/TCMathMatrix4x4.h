@@ -75,6 +75,82 @@ namespace tc
          m[2][0]*=scale[2]; m[2][1]*=scale[2]; m[2][2]*=scale[2]; m[2][3]*=scale[2];
       }
 
+      // Obtain local x axis of quaternion
+      template <typename T>
+      CoordN<T, 3> GetXAxis(const CoordN<T, 4>& r) 
+      {
+         T ty = 2*r[1];
+         T tz = 2*r[2];
+         return CoordN<T, 3>(T(1.0-ty*r[1]-tz*r[2]), T(ty*r[0]+tz*r[3]), T(tz*r[0]-ty*r[3]));
+      }
+
+      // Obtain local y axis quaternion
+      template <typename T>
+      CoordN<T, 3> GetYAxis(const CoordN<T, 4>& r)
+      {
+         T tx = 2*r[0];
+         T tz = 2*r[2];
+         return CoordN<T, 3>(T(tx*r[1]-tz*r[3]), T(1.0-tx*r[0]-tz*r[2]), T(tz*r[1]+tx*r[3]));
+      }
+
+
+      // Obtain local z axis quaternion
+      template <typename T>
+      CoordN<T, 3> GetZAxis(const CoordN<T, 4>& r)
+      {
+         T tx = 2*r[0];
+         T ty = 2*r[1];
+         return CoordN<T, 3>(T(tx*r[2]+ty*r[3]), T(ty*r[2]-tx*r[3]), T(1.0-tx*r[0]-ty*r[1]));
+      }
+
+      template <typename T>
+      MatrixN<T, 3, 3> ToRotationMatrix(const CoordN<T, 4>& r)
+      {
+         CoordN<T, 3> x(GetXAxis(r));
+         CoordN<T, 3> y(GetYAxis(r));
+         CoordN<T, 3> z(GetZAxis(r));
+
+         MatrixN<T, 3, 3> m;
+         m[0][0] = x[0];
+         m[0][1] = x[1];
+         m[0][2] = x[2];
+         m[1][0] = y[0];
+         m[1][1] = y[1];
+         m[1][2] = y[2];
+         m[2][0] = z[0];
+         m[2][1] = z[1];
+         m[2][2] = z[2];
+
+         return m;
+      }
+
+      template <typename T>
+      void RotateMatrix(MatrixN<T, 4, 4>& m, const CoordN<T, 4>& q)
+      {
+         T x,y,z;
+
+         // Get rotation matrix
+         MatrixN<T, 3, 3> r(ToRotationMatrix(q));
+
+         // Pre-multiply
+         x=m[0][0]; y=m[1][0]; z=m[2][0];
+         m[0][0]=x*r[0][0]+y*r[0][1]+z*r[0][2];
+         m[1][0]=x*r[1][0]+y*r[1][1]+z*r[1][2];
+         m[2][0]=x*r[2][0]+y*r[2][1]+z*r[2][2];
+         x=m[0][1]; y=m[1][1]; z=m[2][1];
+         m[0][1]=x*r[0][0]+y*r[0][1]+z*r[0][2];
+         m[1][1]=x*r[1][0]+y*r[1][1]+z*r[1][2];
+         m[2][1]=x*r[2][0]+y*r[2][1]+z*r[2][2];
+         x=m[0][2]; y=m[1][2]; z=m[2][2];
+         m[0][2]=x*r[0][0]+y*r[0][1]+z*r[0][2];
+         m[1][2]=x*r[1][0]+y*r[1][1]+z*r[1][2];
+         m[2][2]=x*r[2][0]+y*r[2][1]+z*r[2][2];
+         x=m[0][3]; y=m[1][3]; z=m[2][3];
+         m[0][3]=x*r[0][0]+y*r[0][1]+z*r[0][2];
+         m[1][3]=x*r[1][0]+y*r[1][1]+z*r[1][2];
+         m[2][3]=x*r[2][0]+y*r[2][1]+z*r[2][2];
+      }
+
       template <typename T>
       MatrixN<T, 4, 4> InvertMatrix(const MatrixN<T, 4, 4>& m)
       {

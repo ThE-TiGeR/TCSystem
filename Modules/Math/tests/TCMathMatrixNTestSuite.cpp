@@ -459,6 +459,7 @@ namespace tc
                TCUNIT_ASSERT(m[3][1] == 0);
                TCUNIT_ASSERT(m[3][2] == 0);
 
+               RotateMatrix(m, CoordN<float, 4>(0, 0, 0, 1));
                InvertMatrix(m);
             }
          };
