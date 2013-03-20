@@ -55,31 +55,31 @@ namespace tc
       * @{
       */
 
-      template <typename T, uint32 SIZE>
+      template <typename T, uint32_t SIZE>
       double AreaOfTriangle(const CoordN<T, SIZE> &p1, const CoordN<T, SIZE> &p2, const CoordN<T, SIZE> &p3)
       {
          return .5 * ((p2-p1) ^ (p3-p1));
       }
 
-      template <typename T, uint32 SIZE>
+      template <typename T, uint32_t SIZE>
       double EdgeLengthOfTriangle(const CoordN<T, SIZE> &p1, const CoordN<T, SIZE> &p2, const CoordN<T, SIZE> &p3)
       { 
          return (p2-p1).Length() + (p3-p1).Length() + (p2-p3).Length();
       }
 
-      template <typename T, uint32 SIZE>
+      template <typename T, uint32_t SIZE>
       double EdgeLength2OfTriangle(const CoordN<T, SIZE> &p1, const CoordN<T, SIZE> &p2, const CoordN<T, SIZE> &p3)
       { 
          return (p2-p1).Length2() + (p3-p1).Length2() + (p2-p3).Length2(); 
       }
 
-      template <typename T, uint32 SIZE>
+      template <typename T, uint32_t SIZE>
       inline const CoordN<T, SIZE> NormalOfTriangle(const CoordN<T, SIZE> &p1, const CoordN<T, SIZE> &p2, const CoordN<T, SIZE> &p3)
       { 
          return (p1-p2)^(p1-p3);
       }
 
-      template <typename T, uint32 SIZE>
+      template <typename T, uint32_t SIZE>
       double RatioOfTriangle(const CoordN<T, SIZE> &p1, const CoordN<T, SIZE> &p2, const CoordN<T, SIZE> &p3)
       {
          return 6.92820323 * AreaOfTriangle(p1,p2,p3) / EdgeLength2OfTriangle(p1,p2,p3);
