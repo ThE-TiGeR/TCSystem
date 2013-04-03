@@ -71,6 +71,14 @@ namespace tc
          {
          }
 
+         /** @brief Copy an existing box of different coord type */
+         template <class T1>
+         Box(const Box<T1>& box)
+            :m_min(box.m_min),
+            m_max(box.m_max)
+         {
+         }
+
          /**
           * @brief Construct a box out of minimum and maximum coordinate
           *
@@ -225,6 +233,8 @@ namespace tc
       private:
          COORD_TYPE m_min;
          COORD_TYPE m_max;
+
+         template <class T1> friend class Box;
       };
 
       template <class COORD_TYPE>
