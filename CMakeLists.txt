@@ -46,6 +46,11 @@ install(FILES "${PROJECT_BINARY_DIR}/TCSystemAudio.pc" DESTINATION "lib/pkgconfi
 
 enable_testing()
 
+find_package(Boost)
+include_directories(
+   ${Boost_INCLUDE_DIRS}
+)
+
 add_subdirectory (Modules)
 add_subdirectory (Tests)
 add_subdirectory (Programs)

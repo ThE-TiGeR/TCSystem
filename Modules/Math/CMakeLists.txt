@@ -1,9 +1,7 @@
-find_package(Boost)
 
 include_directories(
     inc
     ../Basic/inc
-    ${Boost_INCLUDE_DIRS}
 )
 
 set (TC_MATH_PUBLIC_HEADER

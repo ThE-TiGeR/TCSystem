@@ -1,7 +1,6 @@
 find_package(FOX)
 find_package(OpenGL)
 find_package(GLext)
-find_package(Boost)
 
 set (TC_OPENGL_PUBLIC_HEADER
     inc/TCOpenGL.h
@@ -51,7 +50,6 @@ include_directories (
    ../Math/inc
    ${FOX_INCLUDE_DIRS}
    ${GLEXT_INCLUDE_DIR}
-   ${Boost_INCLUDE_DIRS}
    ${OPENGL_INCLUDE_DIR}
 )
 
