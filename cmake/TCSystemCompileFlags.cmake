@@ -6,7 +6,15 @@ set (CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${TC_SYSTEM_LIB_INSTAL
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${TC_SYSTEM_BIN_INSTALL_DIR})
 
 # set our compiler flags
-if (UNIX)
+if (ANDROID)
+   set (TC_COMPILE_FLAGS "-DTCOS_ANDROID -Wall -Wno-multichar -DHAVE_UNIT_TESTS -fvisibility=hidden -std=c++0x")
+   set (TC_COMPILE_FLAGS_DEBUG "")
+   set (TC_COMPILE_FLAGS_RELEASE "")
+
+   set (CATFemHex_EXE_LINK_FLAGS         "")
+   set (CATFemHex_EXE_LINK_FLAGS_DEBUG   "")
+   set (CATFemHex_EXE_LINK_FLAGS_RELEASE "")
+elseif (UNIX)
    set (TC_COMPILE_FLAGS "-fPIC -Wall -Wno-multichar -DHAVE_UNIT_TESTS -fvisibility=hidden -std=c++0x")
    set (TC_COMPILE_FLAGS_DEBUG "-ggdb -DDEBUG")
    set (TC_COMPILE_FLAGS_RELEASE "-O3 -DNDEBUG -flto")

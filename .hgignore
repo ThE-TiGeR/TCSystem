@@ -3,3 +3,4 @@ build_win32
 build_linux
 build
 build_win64
+build_android
