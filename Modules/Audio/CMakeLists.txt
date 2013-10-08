@@ -9,8 +9,6 @@ include_directories (
    ../Basic/inc
    ../Thread/inc
    ${OPENAL_INCLUDE_DIR}
-   ${MPG123_INCLUDE_DIR1}
-   ${MPG123_INCLUDE_DIR2}
    ${OGG_INCLUDE_DIR}
    ${VORBIS_INCLUDE_DIR}
    ${VorbisFile_INCLUDE_DIR}
@@ -24,7 +22,7 @@ set (TC_AUDIO_PUBLIC_HEADER
     inc/TCAudioSoundFormat.h
 )
 
-add_library (TCAudio
+set (TC_AUDIO_SOURCE_FILES
 	src/TCAudioChangePanTask.cpp
 	src/TCAudioChangePanTask.h
 	src/TCAudioChangePitchTask.cpp
@@ -42,7 +40,6 @@ add_library (TCAudio
 	src/TCAudioSoundDataCompound.cpp
 	src/TCAudioSoundDataCompound.h
 	src/TCAudioSoundDataMapper.h
-	src/TCAudioSoundDataMp3.cpp
 	src/TCAudioSoundDataMp3.h
 	src/TCAudioSoundDataOgg.cpp
 	src/TCAudioSoundDataOgg.h
@@ -64,6 +61,23 @@ add_library (TCAudio
 	src/TCAudioStreamingThread.cpp
 	src/TCAudioStreamingThread.h
 	src/TCAudioUtil.h
+)
+
+if (MPG123_FOUND)
+    include_directories (
+       ${MPG123_INCLUDE_DIR1}
+       ${MPG123_INCLUDE_DIR2}
+    )
+    set (TC_AUDIO_SOURCE_FILES
+        ${TC_AUDIO_SOURCE_FILES}
+        src/TCAudioSoundDataMp3.cpp
+    )
+else()
+    set(MPG123_LIBRARIES "")
+endif()
+
+add_library (TCAudio
+    ${TC_AUDIO_SOURCE_FILES}
     ${TC_AUDIO_PUBLIC_HEADER}
 )
 

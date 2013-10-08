@@ -70,6 +70,7 @@ namespace tc
          typedef T* Iterator;
          typedef const T* ConstIterator;
          typedef T DataType;
+         typedef ptrdiff_t DifferenceType;
 
          enum SizeTypes
          {
@@ -144,22 +145,22 @@ namespace tc
             return *this;
          }
 
-         const T& operator()(uint32_t i, uint32_t j)const 
+         const T& operator()(DifferenceType i, DifferenceType j)const 
          {
             return m_data[i*SIZE1+j];
          }
 
-         T& operator()(const uint32_t i, uint32_t j)
+         T& operator()(DifferenceType i, DifferenceType j)
          {
             return m_data[i*SIZE1+j];
          }
 
-         const T* operator[](uint32_t i) const 
+         const T* operator[](DifferenceType i) const 
          {
             return &m_data[i*SIZE1];
          }
 
-         T* operator[](uint32_t i) 
+         T* operator[](DifferenceType i) 
          {
             return &m_data[i*SIZE1];
          }

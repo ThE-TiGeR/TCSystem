@@ -44,8 +44,10 @@
 
 #include "TCNewEnable.h"
 
-#ifdef _MSC_VER
+#if defined _MSC_VER
 #define os_snprintf _snprintf
+#elif defined TCOS_ANDROID
+#define os_snprintf ::snprintf
 #else
 #define os_snprintf std::snprintf
 #endif

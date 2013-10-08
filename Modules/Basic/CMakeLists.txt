@@ -147,6 +147,7 @@ add_library (TCBasic
 
 if (MSVC)
    target_link_libraries (TCBasic iphlpapi.lib)
+elseif (ANDROID)
 elseif (UNIX)
    target_link_libraries (TCBasic -lrt)
 endif ()

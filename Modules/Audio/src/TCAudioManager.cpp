@@ -41,7 +41,9 @@
 #include "TCAudioSoundMultitrackImp.h"
 #include "TCAudioSoundDataMapper.h"
 #include "TCAudioSoundDataWav.h"
+#ifdef HAVE_MPG123
 #include "TCAudioSoundDataMp3.h"
+#endif
 #include "TCAudioSoundDataOgg.h"
 #include "TCAudioStreamingThread.h"
 #include "TCException.h"
@@ -170,7 +172,11 @@ namespace tc
             }
             else
             {
+#ifdef HAVE_MPG123
                sound_data = SharedPtr<SoundDataMp3>(new tc::audio::SoundDataMp3(stream));
+#else
+               throw Exception(std::string("Unsupported sound format(") + id + ")");
+#endif
             }
 
             SoundPtr sound (new SoundImp(sound_data, m_streaming_thread_object));

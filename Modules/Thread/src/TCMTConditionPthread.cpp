@@ -84,7 +84,7 @@ namespace tc
          bool ConditionPthread::TryWait(const Time& timeout)
          {
             Time time = Time::Now() + timeout;
-            timespec t = {time.Seconds(), time.NanoSeconds()};
+            timespec t = {time_t(time.Seconds()), time_t(time.NanoSeconds())};
             int32_t rc;
 
             do

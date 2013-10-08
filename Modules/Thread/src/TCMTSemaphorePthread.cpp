@@ -151,7 +151,7 @@ namespace tc
          bool SemaphorePthread::TryWait(const Time& timeout)
          {
             Time time = Time::Now() + timeout;
-            timespec t = {time.Seconds(), time.NanoSeconds()};
+            timespec t = {time_t(time.Seconds()), time_t(time.NanoSeconds())};
 
             while (::sem_timedwait(m_semaphore, &t) != 0)
             {

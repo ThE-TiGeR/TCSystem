@@ -63,6 +63,8 @@ namespace tc
          int len = _vsnprintf(elem, size, format, arguments);
 #elif defined TCOS_CYGWIN
          int len = vsnprintf(elem, size, format, arguments);
+#elif defined TCOS_ANDROID
+         int len = vsnprintf(elem, size, format, arguments);
 #else
          int len = std::vsnprintf(elem, size, format, arguments);
 #endif

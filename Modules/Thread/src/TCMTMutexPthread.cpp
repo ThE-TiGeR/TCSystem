@@ -121,8 +121,12 @@ namespace tc
 
          bool MutexPthread::TryLock(const Time& timeout)
          {
+#if TCOS_ANDROID
+            ::perror("::pthread_mutex_timedlock not implemented");
+            return false;        
+#else
             Time time = Time::Now() + timeout;
-            timespec t = {time.Seconds(), time.NanoSeconds()};
+            timespec t = {time_t(time.Seconds()), time_t(time.NanoSeconds())};
 
             if (::pthread_mutex_timedlock(&m_mutex, &t) != 0)
             {
@@ -136,6 +140,7 @@ namespace tc
             }
 
             return true;
+#endif
          }
 
          bool MutexPthread::UnLock()

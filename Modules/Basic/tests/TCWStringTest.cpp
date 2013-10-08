@@ -47,9 +47,10 @@
 #ifdef _MSC_VER
 #define snprintf ::_snprintf
 #define snwprintf ::_snwprintf
-#endif
-
-#ifdef TCOS_LINUX
+#elif defined TCOS_ANDROID
+#   define snwprintf ::swprintf
+#   define vsnwprintf  ::vswprintf
+#elif defined TCOS_LINUX
 #   define snwprintf std::swprintf
 #   define vsnwprintf  std::vswprintf
 #endif

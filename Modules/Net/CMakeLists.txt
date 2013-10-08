@@ -1,15 +1,13 @@
 find_package(OpenSSL)
 
+include_directories(
+	inc
+    ../Basic/inc
+    ../Thread/inc
+)
 if (OPENSSL_FOUND)
 	include_directories(
-		inc
-        ../Basic/inc
-        ../Thread/inc
 		${OPENSSL_INCLUDE_DIR}
-	)
-else ()
-	include_directories(
-		inc
 	)
 endif ()
 
