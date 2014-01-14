@@ -56,7 +56,10 @@ namespace tc
    public:
       Mutex()
       {
+#pragma warning(push)
+#pragma warning(suppress: 28125)
          ::InitializeCriticalSection(&m_critical);
+#pragma warning(pop)
       }
       ~Mutex()
       {

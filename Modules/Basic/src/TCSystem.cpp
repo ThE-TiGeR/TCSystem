@@ -193,11 +193,10 @@ namespace tc
    std::string system::GetOSName()
    {
 #if TCOS_WINDOWS || TCOS_WINCE_40
-      OSVERSIONINFO info;
+      OSVERSIONINFOEX info;
       std::memset((void*)&info, 0, sizeof(info));
-
-      info.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
-      ::GetVersionEx(&info);
+	  info.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
+	  ::VerifyVersionInfo(&info, 0, 0);
 
       //VER_PLATFORM_TCOS_WINDOWS_WINDOWS
       if (info.dwPlatformId == VER_PLATFORM_WIN32_NT)
@@ -232,11 +231,10 @@ namespace tc
       char ver[SYS_CHAR_LEN];
 
 #if TCOS_WINDOWS || TCOS_WINCE_40
-      OSVERSIONINFO info;
-      std::memset((void*)&info, 0, sizeof(info));
-
-      info.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
-      GetVersionEx(&info);
+	  OSVERSIONINFOEX info;
+	  std::memset((void*)&info, 0, sizeof(info));
+	  info.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
+	  ::VerifyVersionInfo(&info, 0, 0);
 
       string::Snprintf(ver, util::ArraySize(ver), "%d.%.d.%d (%s)", info.dwMajorVersion,
          info.dwMinorVersion,
@@ -492,7 +490,7 @@ namespace tc
    {
       uint64_t dt;
 #if defined(TCOS_WINDOWS) || defined(TCOS_WINCE_40)
-      dt = GetTickCount() / CLOCKS_PER_SEC * 1000 - timeIn;
+      dt = GetTickCount64() / CLOCKS_PER_SEC * 1000 - timeIn;
 #elif defined(TCOS_CRAY) || defined(TCOS_FUJITSU)
       dt = clock() / CLOCKS_PER_SEC * 1000 - timeIn;
 #else

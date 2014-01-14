@@ -41,19 +41,27 @@
 
 #if TC_USE_MEM_CHECK
 
-void *operator new(size_t size) TC_NEW_THROW
+#ifndef _Ret_notnull_
+#define _Ret_notnull_
+#endif
+
+#ifndef _Post_writable_byte_size_
+#define _Post_writable_byte_size_(SIZE)
+#endif
+
+_Ret_notnull_ _Post_writable_byte_size_(size) void* TC_CRT_DECL operator new(size_t size) TC_NEW_THROW
 {
    return tc::system::GetInstance()->Alloc(static_cast<tc::uint32_t>(size), "unknown new", 0);
 }
-void *operator new[](size_t size) TC_NEW_THROW
+void* TC_CRT_DECL operator new[](size_t size) TC_NEW_THROW
 {
    return tc::system::GetInstance()->Alloc(static_cast<tc::uint32_t>(size), "unknown new[]", 1);
 }
-void *operator new(size_t size, const char *fileName, int line) TC_NEW_THROW
+void* TC_CRT_DECL operator new(size_t size, const char *fileName, int line) TC_NEW_THROW
 {
    return tc::system::GetInstance()->Alloc(static_cast<tc::uint32_t>(size), fileName, line);
 }
-void *operator new[](size_t size, const char *fileName, int line) TC_NEW_THROW
+void* TC_CRT_DECL operator new[](size_t size, const char *fileName, int line) TC_NEW_THROW
 {
    return tc::system::GetInstance()->Alloc(static_cast<tc::uint32_t>(size), fileName, line);
 }

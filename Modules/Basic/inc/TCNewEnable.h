@@ -80,15 +80,9 @@
 #  define TC_DEL_THROW   __THROWSPEC_NULL
 #  define TC_CRT_DECL
 #elif TCOS_WINDOWS
-#  if _MSC_VER
-#    define TC_NEW_THROW   _THROW1(std::bad_alloc)
-#    define TC_DEL_THROW   _THROW0()
-#    define TC_CRT_DECL    __cdecl
-#  else
-#    define TC_NEW_THROW
-#    define TC_DEL_THROW
-#    define TC_CRT_DECL
-#  endif
+#  define TC_NEW_THROW   _THROW1(std::bad_alloc)
+#  define TC_DEL_THROW   _THROW0()
+#  define TC_CRT_DECL    __CRTDECL
 #else
 #  define TC_NEW_THROW
 #  define TC_DEL_THROW

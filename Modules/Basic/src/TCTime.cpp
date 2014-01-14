@@ -137,7 +137,7 @@ namespace tc
       }
       else
       {
-         time = Time::FromMilliSeconds(::GetTickCount());
+         time = Time::FromMilliSeconds(::GetTickCount64());
       }
 #else
       struct timespec ts;
