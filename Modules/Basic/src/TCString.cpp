@@ -360,4 +360,19 @@ namespace tc
       return StringImp::VPrint(fmt , arguments);
    }
 
+   uint32_t string::HexToUint32(const std::string& text)
+   {
+      int64_t val = 0;
+      if (std::sscanf(text.c_str(),"%x",&val) != 1)
+      {
+         return 0;
+      }
+      if (val > std::numeric_limits<uint32_t>::max() ||
+         val < std::numeric_limits<uint32_t>::min())
+      {
+         return 0;
+      }
+
+      return static_cast<uint32_t>(val);
+   }
 }
