@@ -41,6 +41,7 @@
 #include "TCOutput.h"
 #include "TCSystem.h"
 #include "TCUtil.h"
+#include "TCWString.h"
 
 #include <windows.h>
 #include <winbase.h>
@@ -56,94 +57,103 @@
 
 namespace tc
 {
-   bool file::ChangeDirectory(const std::string& directory)
+   bool file::ChangeDirectory(const std::string& directory_in)
    {
-      if (directory.empty())
+      if (directory_in.empty())
       {
          return false;
       }
-      return ::SetCurrentDirectoryA(directory.c_str()) == TRUE;
+      std::wstring directory(wstring::ToString(directory_in));
+      return ::SetCurrentDirectoryW(directory.c_str()) == TRUE;
    }
 
    std::string file::GetDirectory()
    {
-      char buffer[512] = "";
-      if (!::GetCurrentDirectoryA(static_cast<DWORD>(util::ArraySize(buffer)), buffer))
+      wchar_t buffer[1024] = L"";
+      if (!::GetCurrentDirectoryW(static_cast<DWORD>(util::ArraySize(buffer)), buffer))
       {
          return "";
       }
 
-      return buffer;
+      return wstring::ToString(buffer);
    }
 
-   bool file::Exists(const std::string & file)
+   bool file::Exists(const std::string & file_in)
    {
-      DWORD atts = ::GetFileAttributesA(file.c_str());
+      std::wstring file(wstring::ToString(file_in));
+      DWORD atts = ::GetFileAttributesW(file.c_str());
 
       return atts != 0xFFFFFFFF;
    }
 
    // Check whether its a directory
-   bool file::IsDirectory(const std::string & file)
+   bool file::IsDirectory(const std::string & file_in)
    {
-      DWORD atts = ::GetFileAttributesA(file.c_str());
+      std::wstring file(wstring::ToString(file_in));
+      DWORD atts = ::GetFileAttributesW(file.c_str());
 
       return (atts != 0xFFFFFFFF) && (atts & FILE_ATTRIBUTE_DIRECTORY);
    }
 
    // Check whether its a file
-   bool file::IsFile(const std::string & file)
+   bool file::IsFile(const std::string & file_in)
    {
-      DWORD atts = ::GetFileAttributesA(file.c_str());
+      std::wstring file(wstring::ToString(file_in));
+      DWORD atts = ::GetFileAttributesW(file.c_str());
 
       return (atts != 0xFFFFFFFF) && !(atts & FILE_ATTRIBUTE_DIRECTORY);
    }
 
    // Return 1 if file is readable
-   bool file::IsReadable(const std::string &file)
+   bool file::IsReadable(const std::string &file_in)
    {
-      DWORD atts = ::GetFileAttributesA(file.c_str());
+      std::wstring file(wstring::ToString(file_in));
+      DWORD atts = ::GetFileAttributesW(file.c_str());
 
       return (atts != 0xFFFFFFFF) && !(atts & FILE_WRITE_ATTRIBUTES);
    }
 
    // Return 1 if file is writeable
-   bool file::IsWriteable(const std::string &file)
+   bool file::IsWriteable(const std::string &file_in)
    {
-      DWORD atts = ::GetFileAttributesA(file.c_str());
+      std::wstring file(wstring::ToString(file_in));
+      DWORD atts = ::GetFileAttributesW(file.c_str());
 
       return (atts != 0xFFFFFFFF) && (atts & FILE_WRITE_ATTRIBUTES);
    }
 
    // Return 1 if file is executable
-   bool file::IsExecutable(const std::string &file)
+   bool file::IsExecutable(const std::string &file_in)
    {
-      DWORD atts = ::GetFileAttributesA(file.c_str());
+      std::wstring file(wstring::ToString(file_in));
+      DWORD atts = ::GetFileAttributesW(file.c_str());
 
       return (atts != 0xFFFFFFFF) && (atts & FILE_EXECUTE);
    }
 
    // Change the mode flags for this file
-   bool file::SetFileAttr(const std::string &file, uint32_t attr)
+   bool file::SetFileAttr(const std::string &file_in, uint32_t attr)
    {
-      attr &= (FILEATTR_READONLY | FILEATTR_ARCHIVE | FILEATTR_SYSTEM | FILEATTR_HIDDEN) ;
-      return SetFileAttributesA(file.c_str(), attr) == TRUE ? true : false;
+      std::wstring file(wstring::ToString(file_in));
+      attr &= (FILEATTR_READONLY | FILEATTR_ARCHIVE | FILEATTR_SYSTEM | FILEATTR_HIDDEN);
+      return SetFileAttributesW(file.c_str(), attr) == TRUE ? true : false;
    }
 
-   bool file::Remove(const std::string & file)
+   bool file::Remove(const std::string & file_in)
    {
-      if (!Exists(file))
+      if (!Exists(file_in))
       {
          return false;
       }
 
-      if (IsDirectory(file))
+      std::wstring file(wstring::ToString(file_in));
+      if (IsDirectory(file_in))
       {
-         return ::RemoveDirectoryA(file.c_str()) == TRUE;
+         return ::RemoveDirectoryW(file.c_str()) == TRUE;
       }
       else
       {
-         return ::DeleteFileA(file.c_str()) == TRUE;
+         return ::DeleteFileW(file.c_str()) == TRUE;
       }
    }
 
@@ -167,18 +177,18 @@ namespace tc
       return 0;
    }
 
-   bool file::Copy(const std::string& source, const std::string& dest,
-      SharedPtr<Progress> progress)
+   bool file::Copy(const std::string& source_in, const std::string& dest_in, SharedPtr<Progress> progress)
    {
-      if (!IsFile(source))
+      std::wstring source(wstring::ToString(source_in));
+      if (!IsFile(source_in))
       {
          return false;
       }
 
+      std::wstring dest(wstring::ToString(dest_in));
       if (progress)
       {
-         if (::CopyFileExA(source.c_str(), dest.c_str(), 
-            &CopyProgress, &progress, 0, 0) != 0)
+         if (::CopyFileExW(source.c_str(), dest.c_str(), &CopyProgress, &progress, 0, 0) != 0)
          {
             progress->OnCurrentStatus(100);
             return true;
@@ -191,39 +201,44 @@ namespace tc
       }
       else
       {
-         return ::CopyFileExA(source.c_str(), dest.c_str(), 0, 0, 0, 0) != 0;
+         return ::CopyFileExW(source.c_str(), dest.c_str(), 0, 0, 0, 0) != 0;
       }
    }
 
-   bool file::Move(const std::string& source, const std::string& dest)
+   bool file::Move(const std::string& source_in, const std::string& dest_in)
    {
-      if (!IsFile(source))
+      if (!IsFile(source_in))
       {
          return false;
       }
 
-      return ::MoveFileExA(source.c_str(), dest.c_str(), 
+      std::wstring source(wstring::ToString(source_in));
+      std::wstring dest(wstring::ToString(dest_in));
+      return ::MoveFileExW(source.c_str(), dest.c_str(),
          MOVEFILE_COPY_ALLOWED|MOVEFILE_REPLACE_EXISTING|MOVEFILE_WRITE_THROUGH) == TRUE;
    }
 
-   bool file::CreateDir(const std::string& path)
+   bool file::CreateDir(const std::string& path_in)
    {
-      if (path.empty()) return false;
+      if (path_in.empty()) return false;
 
-      return ::CreateDirectoryA(path.c_str(), 0) == TRUE;
+      std::wstring path(wstring::ToString(path_in));
+      return ::CreateDirectoryW(path.c_str(), 0) == TRUE;
    }
 
-   bool file::RemoveDir(const std::string& path)
+   bool file::RemoveDir(const std::string& path_in)
    {
-      if (path.empty()) return false;
+      if (path_in.empty()) return false;
 
-      return :: RemoveDirectoryA(path.c_str()) == TRUE;
+      std::wstring path(wstring::ToString(path_in));
+      return ::RemoveDirectoryW(path.c_str()) == TRUE;
    }
 
    // Return time file was last modified
-   uint64_t file::GetModificationTime(const std::string &file)
+   uint64_t file::GetModificationTime(const std::string &file_in)
    {
-      HANDLE f = ::CreateFileA(file.c_str(),
+      std::wstring file(wstring::ToString(file_in));
+      HANDLE f = ::CreateFileW(file.c_str(),
          FILE_READ_ATTRIBUTES,
          FILE_SHARE_READ,
          0,
@@ -250,9 +265,10 @@ namespace tc
    }
 
    // Return time file was last accessed
-   uint64_t file::GetLastAccessTime(const std::string &file)
+   uint64_t file::GetLastAccessTime(const std::string &file_in)
    {
-      HANDLE f = ::CreateFileA(file.c_str(),
+      std::wstring file(wstring::ToString(file_in));
+      HANDLE f = ::CreateFileW(file.c_str(),
          FILE_READ_ATTRIBUTES,
          FILE_SHARE_READ,
          0,
@@ -279,9 +295,10 @@ namespace tc
    }
 
    // Return time when created
-   uint64_t file::GetCreationTime(const std::string &file)
+   uint64_t file::GetCreationTime(const std::string &file_in)
    {
-      HANDLE f = ::CreateFileA(file.c_str(),
+      std::wstring file(wstring::ToString(file_in));
+      HANDLE f = ::CreateFileW(file.c_str(),
          FILE_READ_ATTRIBUTES,
          FILE_SHARE_READ,
          0,
@@ -308,9 +325,10 @@ namespace tc
    }
 
    // Get file size
-   uint64_t file::GetFileSize(const std::string &file)
+   uint64_t file::GetFileSize(const std::string &file_in)
    {
-      HANDLE f = ::CreateFileA(file.c_str(),
+      std::wstring file(wstring::ToString(file_in));
+      HANDLE f = ::CreateFileW(file.c_str(),
          FILE_READ_ATTRIBUTES,
          FILE_SHARE_READ,
          0,
@@ -335,10 +353,11 @@ namespace tc
       return ltime.QuadPart;
    }
 
-   static std::string Win32FileInformation(const std::string &file, SECURITY_INFORMATION info_type)
+   static std::string Win32FileInformation(const std::string &file_in, SECURITY_INFORMATION info_type)
    {
+      std::wstring file(wstring::ToString(file_in));
       // Get the handle of the file object.
-      HANDLE hFile = CreateFileA(
+      HANDLE hFile = CreateFileW(
          file.c_str(),
          FILE_READ_ATTRIBUTES,
          FILE_SHARE_READ,

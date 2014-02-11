@@ -36,6 +36,7 @@
 #include "TCFileStream.h"
 
 #include "TCOutput.h"
+#include "TCWString.h"
 
 #include "TCNewEnable.h"
 
@@ -93,15 +94,30 @@ namespace tc
          FILE* file = 0;
          if (direction == STREAM_READ)
          {
+#ifdef TCOS_WINDOWS
+            std::wstring wfileName(wstring::ToString(fileName));
+            file = _wfopen(wfileName.c_str(), L"rb");
+#else
             file = std::fopen(fileName.c_str(), "rb");
+#endif
          }
          else if (direction == STREAM_WRITE)
          {
+#ifdef TCOS_WINDOWS
+            std::wstring wfileName(wstring::ToString(fileName));
+            file = _wfopen(wfileName.c_str(), L"wb");
+#else
             file = std::fopen(fileName.c_str(), "wb");
+#endif
          }
          else if (direction == STREAM_READ_WRITE)
          {
+#ifdef TCOS_WINDOWS
+            std::wstring wfileName(wstring::ToString(fileName));
+            file = _wfopen(wfileName.c_str(), L"wb+");
+#else
             file = std::fopen(fileName.c_str(), "wb+");
+#endif
          }
 
          if (!file)
