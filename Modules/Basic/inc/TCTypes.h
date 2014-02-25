@@ -55,28 +55,28 @@ namespace tc
     */
 
    /** @brief typedef for 8bit signed int */
-   typedef std::int8_t int8_t;
+   using std::int8_t;
    /** @brief typedef for 16bit signed int */
-   typedef std::int16_t int16_t;
+   using std::int16_t;
    /** @brief typedef for singned int 32bit */
-   typedef std::int32_t int32_t;
+   using std::int32_t;
    /** typedef for 64bi signed int */
-   typedef std::int64_t int64_t;
+   using std::int64_t;
 
    /** @brief typedef for 8bit unsigned int */
-   typedef std::uint8_t uint8_t;
+   using std::uint8_t;
    /** @brief typedef for 16bit unsigned int */
-   typedef std::uint16_t uint16_t;
+   using std::uint16_t;
    /** @brief typedef for 32bit unsigned int*/
-   typedef std::uint32_t uint32_t;
+   using std::uint32_t;
    /** @brief typedef for 64bit unsigned int */
-   typedef std::uint64_t uint64_t;
+   using std::uint64_t;
 
    // typedef for 32bit float does not need to be defined -> is float
    // typedef for 64bit float does not need to be defined -> is double
    // signed char 8bit does not need to be defined -> is char
 
-   typedef std::size_t size_t;
+   using std::size_t;
 #ifdef TCOS_64BIT
    typedef int64_t ssize_t;
 #else
