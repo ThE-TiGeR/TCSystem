@@ -435,7 +435,7 @@ namespace tc
       std::string file;
 
       HANDLE findFile;
-      WIN32_FIND_DATAA findData;
+      WIN32_FIND_DATAW findData;
       std::string search_dir;
       if (searchExtension.empty())
       {
@@ -445,12 +445,13 @@ namespace tc
       {
          search_dir = file_name::AddFileNameAndPath("*." + searchExtension, searchDirectory);
       }
-      findFile = ::FindFirstFileA(search_dir.c_str(), &findData);
+      std::wstring wsearch_dir = wstring::ToString(search_dir);
+      findFile = ::FindFirstFileW(wsearch_dir.c_str(), &findData);
       if (findFile == INVALID_HANDLE_VALUE) return fileList;
 
       do
       {
-         file = findData.cFileName;
+         file = wstring::ToString(findData.cFileName);
          if (file_name::GetName(file) == "." || file_name::GetName(file) == "..")
          {
             continue;
@@ -458,7 +459,7 @@ namespace tc
 
          fileList.push_back(file);
       }
-      while (::FindNextFileA(findFile, &findData));
+      while (::FindNextFileW(findFile, &findData));
 
       ::FindClose(findFile);
       return fileList;
@@ -470,7 +471,7 @@ namespace tc
       const std::string& searchExtension)
    {
       HANDLE findFile;
-      WIN32_FIND_DATAA findData;
+      WIN32_FIND_DATAW findData;
       std::string search_dir;
       if (searchExtension.empty())
       {
@@ -480,13 +481,14 @@ namespace tc
       {
          search_dir = file_name::AddFileNameAndPath("*." + searchExtension, searchDirectory);
       }
-      findFile = ::FindFirstFileA(search_dir.c_str(), &findData);
+      std::wstring wsearch_dir = wstring::ToString(search_dir);
+      findFile = ::FindFirstFileW(wsearch_dir.c_str(), &findData);
       if (findFile == INVALID_HANDLE_VALUE) return;
 
       do
       {
          FileInfo file_info;
-         file_info.name = findData.cFileName;
+         file_info.name = wstring::ToString(findData.cFileName);
          if (file_name::GetName(file_info.name) == "." || 
              file_name::GetName(file_info.name) == "..")
          {
@@ -504,7 +506,7 @@ namespace tc
          file_info.file_size = file_size.QuadPart;
          file_infos.push_back(file_info);
       }
-      while (::FindNextFileA(findFile, &findData));
+      while (::FindNextFileW(findFile, &findData));
 
       ::FindClose(findFile);
    }
