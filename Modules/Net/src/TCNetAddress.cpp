@@ -319,6 +319,11 @@ namespace tc
          return m_address->s_addr != address.m_address->s_addr;
       }
 
+      bool Address::operator<(const Address& address) const
+      {
+         return m_address->s_addr < address.m_address->s_addr;
+      }
+
       Address Address::GetLocalAddress()
       {
          static Address s_local_address("");
