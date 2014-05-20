@@ -142,6 +142,12 @@ namespace tc
 
          ReadWriteSocketPtr Accept(SocketPtr socket, Address& ip)
          {
+            PortNumber port;
+            return Accept(socket, ip, port);
+         }
+
+         ReadWriteSocketPtr Accept(SocketPtr socket, Address& ip, PortNumber& port)
+         {
             sockaddr_in s_address;
             imp::AddrLength sockaddr_size = sizeof(s_address);
 
@@ -156,6 +162,7 @@ namespace tc
 
             imp::util::SetTcpNoDelay(s, true);
             ip = s_address;
+            port = ::ntohs(s_address.sin_port);
 
             return ReadWriteSocketPtr(new imp::SocketImp(s));
          }

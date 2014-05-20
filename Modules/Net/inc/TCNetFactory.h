@@ -130,7 +130,15 @@ namespace tc
          * @return The new opened socket
          */
          TCNET_API ReadWriteSocketPtr Accept(SocketPtr socket, Address& ip_addr);
-
+         /**
+         * @brief Accepts new socket connection on the opened socket
+         *
+         * @param socket Opened Listen socket on which to accept the new connection
+         * @param ip_addr [out]ip address of remote site
+         * @param port [out]port number of remote site
+         * @return The new opened socket
+         */
+         TCNET_API ReadWriteSocketPtr Accept(SocketPtr socket, Address& ip, PortNumber& port);
          /**
          * @short Create a socket server object
          */
