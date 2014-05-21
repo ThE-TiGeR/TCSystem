@@ -30,63 +30,75 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id$
+//  $Id: $
 //*******************************************************************************
-#ifndef _TCBASE_TYPES_H_
-#define _TCBASE_TYPES_H_
+#ifndef _TC_SHARED_PTR_FROM_THIS_H_
+#define _TC_SHARED_PTR_FROM_THIS_H_
 
-#include "TCDefines.h"
+#include "TCWeakPtr.h"
 
-#include <cstdint>
-#include <cstddef>
+#include "TCNewEnable.h"
 
 namespace tc
 {
    /**
-    * @addtogroup TC_BASE
-    * @{
-    */
+   * @addtogroup TC_BASE
+   * @{
+   */
 
    /**
-    * @file
-    * @brief This file provides the definition of global data types
-    *
-    * @author Thomas Goessler
-    */
+   * @file
+   * This header file provides the definition of the class tc::SharedPtrFromThis.
+   */
 
-   /** @brief typedef for 8bit signed int */
-   using std::int8_t;
-   /** @brief typedef for 16bit signed int */
-   using std::int16_t;
-   /** @brief typedef for singned int 32bit */
-   using std::int32_t;
-   /** typedef for 64bi signed int */
-   using std::int64_t;
+   /**
+   * A class that provides derived classes with access to a SharedPtr to the current instance.
+   * This can for example be passed to observers as an indication of the source of an event.
+   *
+   * @author Thomas Goessler
+   */
 
-   /** @brief typedef for 8bit unsigned int */
-   using std::uint8_t;
-   /** @brief typedef for 16bit unsigned int */
-   using std::uint16_t;
-   /** @brief typedef for 32bit unsigned int*/
-   using std::uint32_t;
-   /** @brief typedef for 64bit unsigned int */
-   using std::uint64_t;
+   template<class T> class SharedPtr;
+   template<class T> class WeakPtr;
 
-   // typedef for 32bit float does not need to be defined -> is float
-   // typedef for 64bit float does not need to be defined -> is double
-   // signed char 8bit does not need to be defined -> is char
+   template<class T>
+   class SharedPtrFromThis
+   {
+   public:
+      /** Initializes the internal WeakPtr. Is called when the first SharedPtr to the instance is created. */
+      void InternalInitSharedPtrFromThis(WeakPtr<T> p) const
+      {
+         if (m_this.IsExpired())
+         {
+            m_this = p;
+         }
+      }
 
-   using std::size_t;
-#ifdef TCOS_64BIT
-   typedef int64_t ssize_t;
-#else
-   typedef int32_t ssize_t;
+   protected:
+      /** Retrieves a valid SharedPtr to the current instance. */
+      SharedPtr<T> GetSharedPtrFromThis()
+      {
+         SharedPtr<T> ret = m_this.Lock();
+         return ret;
+      }
+
+      /** Retrieves a valid SharedPtr to the current instance if used on a const object. */
+      SharedPtr<const T> GetSharedPtrFromThis() const
+      {
+         SharedPtr<const T> ret = m_this.Lock();
+         return ret;
+      }
+
+   private:
+      mutable WeakPtr<T> m_this;
+   };
+
+   /**
+   * @}
+   */
+
+} // namespace tc
+
+#include "TCNewDisable.h"
+
 #endif
-
-} // namespac tc
-
-/**
- * @}
- */
-
-#endif // _TCBASE_TYPES_H_

@@ -90,6 +90,8 @@ namespace tc
       TCBASE_API int16_t ToSint16(const std::string& text);
       TCBASE_API int8_t  ToSint8(const std::string& text);
 
+      TCBASE_API uint32_t HexToUint32(const std::string& text);
+
       TCBASE_API double ToDouble(const std::string& text);
       TCBASE_API float ToFloat(const std::string& text);
 

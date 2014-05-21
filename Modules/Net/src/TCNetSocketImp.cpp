@@ -86,7 +86,7 @@ namespace tc
             int nbytes = ::recv(m_socket, (char*)buffer, int(size), 0);
             if(nbytes == 0 || nbytes == socket_error)
             {
-               util::PrintSocketError("net::imp::SocketImp::ReceiveBytes, recv failed", true);
+               util::PrintSocketError("net::imp::SocketImp::ReceiveBytes, recv failed", nbytes == socket_error);
                Close();
                return 0;
             }
@@ -172,7 +172,7 @@ namespace tc
                 reinterpret_cast<sockaddr*>(&s_address),  &sockaddr_size);
             if(nbytes == 0 || nbytes == socket_error)
             {
-               util::PrintSocketError("net::imp::SocketImp::ReceiveBytesFrom, recvfrom failed", true);
+               util::PrintSocketError("net::imp::SocketImp::ReceiveBytesFrom, recvfrom failed", nbytes == socket_error);
                Close();
                return 0;
             }
@@ -196,8 +196,7 @@ namespace tc
                int nbytes = ::send(m_socket, buffer, int(size-nbytes_total), 0);
                if(nbytes == 0 || nbytes == socket_error)
                {
-                  util::PrintSocketError(
-                     "net::imp::SocketImp::SendBytes, send failed", true);
+                  util::PrintSocketError("net::imp::SocketImp::SendBytes, send failed", true);
                   Close();
                   return 0;
                }

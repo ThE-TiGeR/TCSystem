@@ -42,6 +42,7 @@
 namespace tc
 {
    template<class T> class SharedPtr;
+   template<class T> class SharedPtrFromThis;
    template<class T> class WeakPtr;
 
    /**
@@ -60,6 +61,15 @@ namespace tc
    template<> struct SharedPtrTraits<void> { typedef void Reference; };
    template<> struct SharedPtrTraits<const void> { typedef void Reference; };
    template<> struct SharedPtrTraits<const volatile void> { typedef void Reference; };
+
+   template <class T1, class T2> 
+   void inline InitializeSharedFromThis(SharedPtr<T1>* ptr, SharedPtrFromThis<T2>* sft)
+   {
+      sft->InternalInitSharedPtrFromThis(*ptr);
+   }
+   void inline InitializeSharedFromThis(...)
+   {
+   }
 
    /**
     * A class whose instances act like pointers that manage their reference count automatically.
@@ -92,11 +102,11 @@ namespace tc
 
       /** Construct the object pointing to a specified object */
       template <class N_PTR>
-      explicit SharedPtr(N_PTR* ptr):m_ptr(ptr), m_count(ptr, CheckedDelete()) {}
+      explicit SharedPtr(N_PTR* ptr):m_ptr(ptr), m_count(ptr, CheckedDelete()) { InitializeSharedFromThis(this, ptr); }
 
       /** Construct the object pointing to a specified object + deleter */
       template <class N_PTR, class DELETER>
-      SharedPtr(N_PTR* ptr, DELETER deleter):m_ptr(ptr), m_count(ptr, deleter) {}
+      SharedPtr(N_PTR* ptr, DELETER deleter) : m_ptr(ptr), m_count(ptr, deleter) { InitializeSharedFromThis(this, ptr); }
 
       /** Construct the object pointing to a specified std::auto_ptr */
       template <class N_PTR>

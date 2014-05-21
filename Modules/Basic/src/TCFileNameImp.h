@@ -36,9 +36,12 @@
 #include "TCTypes.h"
 
 #include <cctype>
+#include <cwctype>
+#include <locale>
 
 namespace tc
 {
+
    template <typename STRING_TYPE, typename FILE_NAME_TRAITS, typename STRING_TRAITS>
    class FileNameImpTmpl
    {
@@ -164,7 +167,7 @@ namespace tc
 #else
          return (IsPathSeperator(file[0]) && 
             (file[1]=='\0' || (IsPathSeperator(file[1]) && file[2]=='\0'))) || 
-            (std::isalpha(static_cast<int>(file[0])) && 
+            (std::iswalpha(static_cast<int>(file[0])) &&
             file[1]==':' && 
             (file[2]=='\0' || (IsPathSeperator(file[2]) && file[3]=='\0')));
 #endif
@@ -222,7 +225,7 @@ namespace tc
 #ifdef TCOS_WINDOWS
             if(!((IsPathSeperator(base[0]) && 
                (bp==0 || (IsPathSeperator(base[1]) && bp==1))) || 
-               (std::isalpha(static_cast<int>(base[0])) && 
+               (std::iswalpha(static_cast<int>(base[0])) &&
                base[1]==':' && (bp==1 || (IsPathSeperator(base[2]) && bp==2)))))
 #else
             if(!(IsPathSeperator(base[0]) && bp==0))
@@ -280,7 +283,7 @@ namespace tc
                   while(IsPathSeperator(result[q])) q++;
                }
             }
-            else if(std::isalpha(static_cast<int>(result[q])) && result[q+1]==':')
+            else if (std::iswalpha(static_cast<int>(result[q])) && result[q + 1] == ':')
             {
                result[p++]=result[q++]; result[p++]=':'; q++;
                if(IsPathSeperator(result[q]))
@@ -350,5 +353,6 @@ namespace tc
          }
          return STRING_TYPE();
       }
+
    };
 }

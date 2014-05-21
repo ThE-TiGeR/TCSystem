@@ -111,6 +111,7 @@ namespace tc
          // operators for comparing the net address
          bool operator==(const Address&) const;
          bool operator!=(const Address&) const;
+         bool operator<(const Address&) const;
 
          /**
          * inits an net address because of the hostname
