@@ -152,6 +152,9 @@ namespace tc
                      break;
                   }
 
+               case Message::MSG_ID_QUIT:
+                  break;
+
                default:
                   TCERRORS("TCMT", m_name << " Received unknown message " << message->GetMessageId());
                   break;
