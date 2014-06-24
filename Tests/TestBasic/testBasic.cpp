@@ -603,8 +603,8 @@ static void ProcessCsvLine(const std::string& line, tc::StreamPtr file_out)
 
 static void ConvertPSKCvsToHaushaltsbuchCvs()
 {
-   std::string file_name_in("D:/Thomas/Dokumente/Finanzen/PSK Import/PSK_Umsatzliste.csv");
-   std::string file_name_out("D:/Thomas/Dokumente/Finanzen/PSK Import/test.csv");
+   std::string file_name_in("PSK_Umsatzliste.csv");
+   std::string file_name_out("test.csv");
 
    tc::StreamPtr file_in = tc::factory::CreateFileStream(file_name_in, tc::Stream::STREAM_READ, tc::factory::CreateAsciiCodec());
    tc::StreamPtr file_out = tc::factory::CreateFileStream(file_name_out, tc::Stream::STREAM_WRITE, tc::factory::CreateAsciiCodec());
