@@ -8,7 +8,7 @@
 //    *     *         *   *      *   * * *     * * *
 //    *      ***   ***    *     **   **   **   *   *
 //                        *
-// see http://sourceforge.net/projects/tcsystem/ for details.
+// see https://bitbucket.org/the____tiger/tcsystem for details.
 // Copyright (C) 2003 - 2007 Thomas Goessler (the____tiger@hotmail.com)
 //************************************************************
 //

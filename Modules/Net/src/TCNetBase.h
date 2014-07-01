@@ -9,8 +9,8 @@
 //    *      ***   ***    *     **   **   **   *   *
 //                        *
 //*******************************************************************************
-// see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
+// see https://bitbucket.org/the____tiger/tcsystem for details.
+// Copyright (C) 2003 - 2014 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.

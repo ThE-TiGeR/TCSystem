@@ -9,8 +9,8 @@
 //    *      ***   ***    *     **   **   **   *   *
 //                        *
 //*******************************************************************************
-// see http://sourceforge.net/projects/tcsystem/ for details.
-// Copyright (C) 2003 - 2012 Thomas Goessler. All Rights Reserved. 
+// see https://bitbucket.org/the____tiger/tcsystem for details.
+// Copyright (C) 2003 - 2014 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -112,9 +112,9 @@
 /** @brief The Version string + TCSystem string */
 #define TCPRODUCT_ID_STR TCPRODUCT_STR "(" TCVERSION_STR ")"
 /** @brief The Homepage of TCSystem */
-#define TCHOMPAGE       "http://sourceforge.net/projects/tcsystem/"
+#define TCHOMPAGE       "https://bitbucket.org/the____tiger/tcsystem"
 /** @brief The copyright string*/
-#define TCCOPYRIGHT     "Copyright (C) 2003 - 2012 Thomas Goessler. All rights reserved"
+#define TCCOPYRIGHT     "Copyright (C) 2003 - 2014 Thomas Goessler. All rights reserved"
 
 // ---------------------------------------------------------------
 // For DLL´s
