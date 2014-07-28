@@ -162,7 +162,7 @@ namespace tc
 
             imp::util::SetTcpNoDelay(s, true);
             ip = s_address;
-            port = ::ntohs(s_address.sin_port);
+            port = ntohs(s_address.sin_port);
 
             return ReadWriteSocketPtr(new imp::SocketImp(s));
          }

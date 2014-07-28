@@ -363,7 +363,7 @@ namespace tc
    uint32_t string::HexToUint32(const std::string& text)
    {
       int64_t val = 0;
-      if (std::sscanf(text.c_str(),"%x",&val) != 1)
+      if (std::sscanf(text.c_str(),"%lx",&val) != 1)
       {
          return 0;
       }
