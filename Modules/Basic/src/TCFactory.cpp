@@ -76,47 +76,60 @@ namespace tc
          return CodecPtr(new imp::AsciiCodec);
       }
 
-      StreamPtr CreateFileStream(const std::string &fileName, 
-                                 Stream::StreamDirection direction,
-                                 CodecPtr codec)
+      StreamPtr CreateFileStream(const std::string &fileName,
+         Stream::StreamDirection direction,
+         CodecPtr codec)
       {
          StreamPtr stream(new imp::FileStream(fileName, direction, codec));
          if (!stream->IsOk())
          {
             return StreamPtr();
          }
-         
+
          return stream;
       }
 
-      StreamPtr CreateFileStream(std::FILE* stream, 
-                                 Stream::StreamDirection direction, 
-                                 CodecPtr codec)
+      StreamPtr CreateFileStream(std::FILE* stream,
+         Stream::StreamDirection direction,
+         CodecPtr codec)
       {
          return StreamPtr(new imp::FileStream(stream, direction, codec));
       }
 
+#ifdef HAVE_ZLIB
       StreamPtr CreateGzFileStream(const std::string &fileName, Stream::StreamDirection direction, CodecPtr codec)
       {
-          StreamPtr stream(new imp::GzFileStream(fileName, direction, codec));
-          if (!stream->IsOk())
-          {
-              return StreamPtr();
-          }
-
-          return stream;
+         StreamPtr stream(new imp::GzFileStream(fileName, direction, codec));
+         if (!stream->IsOk())
+         {
+            return StreamPtr();
+         }
+         return stream;
       }
+#else
+      StreamPtr CreateGzFileStream(const std::string&, Stream::StreamDirection, CodecPtr)
+      {
+         return StreamPtr();
+      }
+#endif
 
+#ifdef HAVE_BZIP2
       StreamPtr CreateBz2FileStream(const std::string &fileName, Stream::StreamDirection direction, CodecPtr codec)
       {
-          StreamPtr stream(new imp::Bz2FileStream(fileName, direction, codec));
-          if (!stream->IsOk())
-          {
-              return StreamPtr();
-          }
+         StreamPtr stream(new imp::Bz2FileStream(fileName, direction, codec));
+         if (!stream->IsOk())
+         {
+            return StreamPtr();
+         }
 
-          return stream;
+         return stream;
       }
+#else
+      StreamPtr CreateBz2FileStream(const std::string&, Stream::StreamDirection, CodecPtr)
+      {
+         return StreamPtr();
+      }
+#endif
 
       StreamPtr CreateMemoryStream(CodecPtr codec, ByteVector& memory)
       {

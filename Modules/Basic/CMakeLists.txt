@@ -1,11 +1,17 @@
-find_package(BZip2)
-find_package(ZLIB)
 
-include_directories (
-   inc
-   "${BZIP2_INCLUDE_DIR}"
-   "${ZLIB_INCLUDE_DIRS}"
-)
+find_package(BZip2)
+if (BZIP2_FOUND)
+	include_directories(${BZIP2_INCLUDE_DIR})
+	add_definitions(-DHAVE_BZIP2)
+endif ()
+
+find_package(ZLIB)
+if (ZLIB_FOUND)
+	include_directories(${ZLIB_INCLUDE_DIRS})
+	add_definitions(-DHAVE_ZLIB)
+endif ()
+
+include_directories(inc)
 
 set (TC_BASIC_PUBLIC_HEADER
 	inc/TCApplication.h
@@ -152,7 +158,12 @@ elseif (UNIX)
    target_link_libraries (TCBasic -lrt)
 endif ()
 
-target_link_libraries (TCBasic ${BZIP2_LIBRARIES} ${ZLIB_LIBRARIES})
+if (ZLIB_FOUND)
+    target_link_libraries (TCBasic ${ZLIB_LIBRARIES})
+endif ()
+if (BZIP2_FOUND)
+    target_link_libraries (TCBasic ${BZIP2_LIBRARIES})
+endif ()
 
 set_target_properties(TCBasic PROPERTIES FOLDER Modules)
 set_target_properties(TCBasic PROPERTIES COMPILE_DEFINITIONS "TCBASE_EXPORTS")
