@@ -67,8 +67,20 @@ namespace tc
          virtual ~PrintTarget() {}
       };
 
-	  /** typedef for a print target object */
-	  typedef SharedPtr<PrintTarget> PrintTargetPtr;
+      /** typedef for a print target shared pointer */
+      typedef SharedPtr<PrintTarget> PrintTargetPtr;
+
+      class PrintFormatter
+      {
+      public:
+         virtual std::string Print(const char* module, uint32_t level, const char* function, uint32_t line_number) = 0;
+
+         /** @brief Virtual destructor for the interface */
+         virtual ~PrintFormatter() {}
+      };
+
+	  /** typedef for a formatter shared pointer */
+      typedef SharedPtr<PrintFormatter> PrintFormatterPtr;
 
       /**
        * Method for setting the trace level
@@ -81,8 +93,10 @@ namespace tc
        */
       TCBASE_API int32_t GetTraceLevel();
 
-      /** @brief Set the print target object for printing errors, earnigs, info and traces */
-      TCBASE_API void SetOuputTarget(PrintTargetPtr error_target);
+      /** @brief Set the print target object for printing errors, warnings, info and traces */
+      TCBASE_API void SetOuputTarget(PrintTargetPtr output_target);
+      /** @brief Set the print formatter object for printing errors, warnings, info and traces */
+      TCBASE_API void SetOuputFormatter(PrintFormatterPtr output_formatter);
 
       /** @brief Set the print target object for printing errors */
       TCBASE_API void SetErrorTarget(PrintTargetPtr error_target);

@@ -47,11 +47,44 @@ namespace tc
 {
    namespace output
    {
+      class DefaultPrintFormatter: public PrintFormatter
+      {
+      public:
+         DefaultPrintFormatter(const char* type)
+            :m_type(type)
+         {
+         }
+
+         virtual std::string Print(const char* module, uint32_t level, const char* function, uint32_t line_number)
+         {
+            std::string s;
+            if (level == 0)
+            {
+               s = m_type + string::Print("(%s, %6s), %s(%u): ", system::GetDate().c_str(), module, function, line_number);
+            }
+            else
+            {
+               s = m_type + string::Print("(%s, %6s[% 4d]), %s(%u): ", system::GetDate().c_str(), module, level, function, line_number);
+            }
+
+            return s;
+         }
+
+      private:
+         std::string m_type;
+      };
+
       static int32_t s_trace_level = 10;
       static PrintTargetPtr s_error_target;
       static PrintTargetPtr s_warning_target;
       static PrintTargetPtr s_info_target;
       static PrintTargetPtr s_trace_target;
+
+      
+      static PrintFormatterPtr s_error_formatter(new DefaultPrintFormatter("%E"));
+      static PrintFormatterPtr s_warning_formatter(new DefaultPrintFormatter("%W"));
+      static PrintFormatterPtr s_info_formatter(new DefaultPrintFormatter("%I"));
+      static PrintFormatterPtr s_trace_formatter(new DefaultPrintFormatter("%T"));
 
       void SetTraceLevel(int32_t level)
       {
@@ -92,8 +125,7 @@ namespace tc
       void Error(const char* module, const char* function, 
          uint32_t line_number, const char* format, ...)
       {
-         std::string s = string::Print("%%E(%s, %6s), %s(%u): ", 
-            system::GetDate().c_str(), module, function, line_number);
+         std::string s = s_error_formatter->Print(module, 0, function, line_number);
 
          va_list arguments;
          va_start(arguments, format);
@@ -114,8 +146,7 @@ namespace tc
       void Warning(const char* module, const char* function, 
          uint32_t line_number, const char* format, ...)
       {
-         std::string s = string::Print("%%W(%s, %6s), %s(%u): ", 
-            system::GetDate().c_str(), module, function, line_number);
+         std::string s = s_warning_formatter->Print(module, 0, function, line_number);
 
          va_list arguments;
          va_start(arguments, format);
@@ -136,8 +167,7 @@ namespace tc
       void Info(const char* module, const char* function, 
          uint32_t line_number, const char* format, ...)
       {
-         std::string s = string::Print("%%I(%s, %6s), %s(%u): ", 
-            system::GetDate().c_str(), module, function, line_number);
+         std::string s = s_info_formatter->Print(module, 0, function, line_number);
 
          va_list arguments;
          va_start(arguments, format);
@@ -160,8 +190,7 @@ namespace tc
       {
          if (level < s_trace_level)
          {
-            std::string s = string::Print("%%T(%s, %6s[% 4d]), %s(%u): ", 
-               system::GetDate().c_str(), module, level, function, line_number);
+            std::string s = s_trace_formatter->Print(module, level, function, line_number);
 
             va_list arguments;
             va_start(arguments, format);
@@ -179,5 +208,14 @@ namespace tc
             }
          }
       }
+
+      void SetOuputFormatter(PrintFormatterPtr output_formatter)
+      {
+         s_error_formatter = output_formatter;
+         s_info_formatter = output_formatter;
+         s_warning_formatter = output_formatter;
+         s_trace_formatter = output_formatter;
+      }
+
    }
 }
