@@ -301,8 +301,6 @@ private:
 
 static void RunSocketTest(int narg, char** argv)
 {
-   tc::Time time = tc::Time::Since(tc::Time::Now());
-
    bool use_proxy = false;
    std::string user_name = "gg\\g017421";
    std::string passwd = "thom1234";
@@ -434,7 +432,7 @@ static void RunUDPTest()
    server->Start(true);
 
    tc::net::BroadcastWriteSocketPtr bs = tc::net::factory::CreateUdpBroadcastSocket();
-   for (tc::uint32_t i=0; i<100, bs->IsOpened(); i++)
+   for (tc::uint32_t i=0; i<100 && bs->IsOpened(); i++)
    {
       std::string test("hello world");
       bs->WriteBytesTo(test.c_str(), test.length()+1, tc::net::Address::GetAnyAddress(), 8042);

@@ -74,7 +74,8 @@ namespace tc
          //          OV_ENOTAUDIO  -135
          //          OV_EBADPACKET -136
          //          OV_EBADLINK   -137
-         //          OV_ENOSEEK    -138
+         //          OV_ENOSEEK    -138
+
       }
 
       SoundDataOgg::SoundDataOgg(StreamPtr stream)

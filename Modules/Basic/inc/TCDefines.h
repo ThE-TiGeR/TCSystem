@@ -244,6 +244,16 @@
 
 #endif
 
+#ifdef TCOS_WINDOWS 
+#  define TC_DISABLE_COMPILER_WARNINGS() __pragma(warning(push, 0))
+#  define TC_POP_COMPILER_WARNINGS() __pragma(warning(pop))
+#else
+#  define TC_DISABLE_COMPILER_WARNINGS() _Pragma("GCC diagnostic push") \
+   _Pragma("GCC diagnostic ignored \"-Wall\"") \
+   _Pragma("GCC diagnostic ignored \"-Wunused-variable\"")
+#  define TC_POP_COMPILER_WARNINGS() _Pragma("GCC diagnostic pop")
+#endif
+
 /**
  * @}
  */

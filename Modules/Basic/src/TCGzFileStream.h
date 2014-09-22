@@ -93,5 +93,5 @@ namespace tc
    } // namespace imp
 } // namespace tc
 
-#endif HAVE_ZLIB
+#endif // HAVE_ZLIB
 #endif // _TC_GZ_FILE_STREAM_H_

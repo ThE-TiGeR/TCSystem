@@ -39,6 +39,7 @@
 #include "TCMTLockable.h"
 #include "TCStream.h"
 
+#define OV_EXCLUDE_STATIC_CALLBACKS
 #include <vorbis/vorbisfile.h>
 
 namespace tc

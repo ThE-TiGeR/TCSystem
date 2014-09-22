@@ -93,5 +93,5 @@ namespace tc
    } // namespace imp
 } // namespace tc
 
-#endif HAVE_BZIP2
+#endif // HAVE_BZIP2
 #endif // _TC_BZ2_FILE_STREAM_H_

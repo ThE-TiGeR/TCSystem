@@ -363,10 +363,15 @@ namespace tc
    uint32_t string::HexToUint32(const std::string& text)
    {
       int64_t val = 0;
-      if (std::sscanf(text.c_str(),"%lx",&val) != 1)
+#ifdef TCOS_WINDOWS
+      if (std::sscanf(text.c_str(),"%I64x",&val) != 1)
+#else
+      if (std::sscanf(text.c_str(), "%llx", &val) != 1)
+#endif
       {
          return 0;
       }
+
       if (val > std::numeric_limits<uint32_t>::max() ||
          val < std::numeric_limits<uint32_t>::min())
       {
