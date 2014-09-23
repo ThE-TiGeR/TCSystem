@@ -59,7 +59,7 @@ namespace tc
 #pragma warning(push)
 #pragma warning(suppress: 28125)
          ::InitializeCriticalSection(&m_critical);
-#pragma warning(pop)
+TC_POP_COMPILER_WARNINGS();
       }
       ~Mutex()
       {
