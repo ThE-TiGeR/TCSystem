@@ -277,6 +277,10 @@ namespace tc
             // init read set
             fd_set read_set;
             FD_ZERO(&read_set);
+            fd_set write_set;
+            FD_ZERO(&write_set);
+            fd_set except_set;
+            FD_ZERO(&except_set);
 
             // add all existing connections
             // and get max id
@@ -284,8 +288,7 @@ namespace tc
             uint32_t i;
             for (i=0; i<m_sockets.size(); i++)
             {
-               if (m_sockets[i] &&
-                  m_sockets[i]->IsOpened())
+               if (m_sockets[i] && m_sockets[i]->IsOpened())
                {
 #ifdef _MSC_VER
                   // disable warning warning C4127: conditional expression is constant
@@ -303,19 +306,15 @@ namespace tc
             {
                struct timeval timeout = {0, SELECT_TIMEOUT * 1000};
 
-               int32_t s = ::select(static_cast<int32_t>(max_id + 1),
-                  &read_set, 0, 0, &timeout);
+               int32_t s = ::select(static_cast<int32_t>(max_id + 1), &read_set, &write_set, &except_set, &timeout);
                if (s > 0)
                {
                   for (i=0; i<m_sockets.size(); i++)
                   {
-                     if (m_sockets[i] &&
-                        m_sockets[i]->IsOpened())
+                     if (m_sockets[i] && m_sockets[i]->IsOpened())
                      {
-                        if (m_sockets[i] &&
-                           FD_ISSET(m_sockets[i]->GetSocket(), &read_set))
+                        if (m_sockets[i] && FD_ISSET(m_sockets[i]->GetSocket(), &read_set))
                         {
-                           //tcdebug << "read set " << m_sockets[i]->GetSocket() << endl;
                            m_receivers[i]->OnNewData(m_sockets[i]);
                         }
                      }
@@ -323,17 +322,17 @@ namespace tc
                }
                else if (s == 0)
                {
+#ifndef TCOS_ANDROID
 #ifdef TCOS_WINDOWS
                   int error = ::WSAGetLastError();
-                  std::string error_str = system::GetLastErrorMessage();
 #else
                   int error = system::GetLastError();
-                  std::string error_str = system::GetLastErrorMessage();
 #endif
                   if (error != 0)
                   {
-                     TCERRORS("TCNET", "select error " << error_str);
+                     TCERRORS("TCNET", "select error " << error << "(" << system::GetErrorMessage(error) << ")");
                   }
+#endif
                }
                else if (s < 0)
                {

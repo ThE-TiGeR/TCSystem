@@ -133,11 +133,13 @@ namespace tc
                struct protoent *p = 0;
                if (!protocol.empty())
                {
+#ifndef TCOS_ANDROID
                   p = ::getprotobyname(protocol.c_str());
                   if (!p)
                   {
                      return static_cast<SocketId>(invalid_socket);
                   }
+#endif
                }
 
                SocketId id = static_cast<SocketId>(::socket(AF_INET, type, p ? p -> p_proto : 0));
