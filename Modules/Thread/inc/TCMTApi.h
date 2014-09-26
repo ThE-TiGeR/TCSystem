@@ -58,7 +58,11 @@
    /**
     * @brief define for exporting or importing classes and functions from the TC::MT dll
     */
-#  define TCMT_API TC_IMPORT_DLL
+#  ifdef TC_COMPILE_STATIC_LIBS
+#     define TCMT_API
+#  else
+#     define TCMT_API TC_IMPORT_DLL
+#endif
 #endif
 
 /**

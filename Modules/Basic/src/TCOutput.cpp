@@ -125,7 +125,7 @@ namespace tc
       void Error(const char* module, const char* function, 
          uint32_t line_number, const char* format, ...)
       {
-         std::string s = s_error_formatter->Print(module, 0, function, line_number);
+         std::string s = s_error_formatter ? s_error_formatter->Print(module, 0, function, line_number) : "";
 
          va_list arguments;
          va_start(arguments, format);
@@ -146,7 +146,7 @@ namespace tc
       void Warning(const char* module, const char* function, 
          uint32_t line_number, const char* format, ...)
       {
-         std::string s = s_warning_formatter->Print(module, 0, function, line_number);
+         std::string s = s_warning_formatter ? s_warning_formatter->Print(module, 0, function, line_number) : "";
 
          va_list arguments;
          va_start(arguments, format);
@@ -167,7 +167,7 @@ namespace tc
       void Info(const char* module, const char* function, 
          uint32_t line_number, const char* format, ...)
       {
-         std::string s = s_info_formatter->Print(module, 0, function, line_number);
+         std::string s = s_info_formatter ? s_info_formatter->Print(module, 0, function, line_number) : "";
 
          va_list arguments;
          va_start(arguments, format);
@@ -190,7 +190,7 @@ namespace tc
       {
          if (level < s_trace_level)
          {
-            std::string s = s_trace_formatter->Print(module, level, function, line_number);
+            std::string s = s_trace_formatter? s_trace_formatter->Print(module, level, function, line_number) : "";
 
             va_list arguments;
             va_start(arguments, format);

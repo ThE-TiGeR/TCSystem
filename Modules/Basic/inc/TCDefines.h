@@ -120,13 +120,8 @@
 // For DLL´s
 // ---------------------------------------------------------------
 #ifdef _MSC_VER
-#  ifdef TC_COMPILE_STATIC_LIBS
-#    define TC_EXPORT_DLL
-#    define TC_IMPORT_DLL
-#  else
-#    define TC_EXPORT_DLL __declspec(dllexport)
-#    define TC_IMPORT_DLL __declspec(dllimport)
-#  endif
+#  define TC_EXPORT_DLL __declspec(dllexport)
+#  define TC_IMPORT_DLL __declspec(dllimport)
 #  define TC_DLL_LOCAL
 #elif defined __GNUC__
 #  if __GNUC__ >= 4
@@ -154,7 +149,11 @@
 #ifdef TCBASE_EXPORTS
 #  define TCBASE_API TC_EXPORT_DLL
 #else
-#  define TCBASE_API TC_IMPORT_DLL
+#  ifdef TC_COMPILE_STATIC_LIBS
+#     define TCBASE_API
+#  else
+#     define TCBASE_API TC_IMPORT_DLL
+#endif
 #endif
 
 /**

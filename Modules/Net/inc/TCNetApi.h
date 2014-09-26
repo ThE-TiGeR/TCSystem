@@ -51,14 +51,17 @@
  * out of an dll. otherwise for importing.
  * @author Thomas Goessler
  */
-
 #ifdef TCNET_EXPORTS
 #  define TCNET_API TC_EXPORT_DLL
 #else
    /**
     * @brief define for exporting or importing classes and functions from the TC::Net dll
     */
-#  define TCNET_API TC_IMPORT_DLL
+#  ifdef TC_COMPILE_STATIC_LIBS
+#     define TCNET_API
+#  else
+#     define TCNET_API TC_IMPORT_DLL
+#endif
 #endif
 
 /**
