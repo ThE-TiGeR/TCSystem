@@ -42,6 +42,7 @@
 #include "TCMTMutex.h"
 #include "TCMTOS.h"
 #include "TCOutput.h"
+#include "TCString.h"
 
 #include "TCNewEnable.h"
 
@@ -51,9 +52,6 @@ namespace tc
    {
       namespace imp
       {
-         static ThreadWin32 s_main_thread("main", ::GetCurrentThread(), ::GetCurrentThreadId());
-         static ThreadPtr s_main_thread_ptr(&s_main_thread, tc::NoDelete());
-
          ThreadPtr ThreadWin32::Create(const std::string& thread_name,
             uint32_t stack_size,
             ThreadPriority priority)
@@ -182,7 +180,10 @@ namespace tc
                }
             }
 
-            return s_main_thread_ptr;
+            ThreadPtr thread_ptr(new ThreadWin32(string::ToString(uint64_t(id)), ::GetCurrentThread(), id));
+            m_threads.push_back(thread_ptr);
+
+            return thread_ptr;
          }
 
          void ThreadWin32::SwitchContext()
