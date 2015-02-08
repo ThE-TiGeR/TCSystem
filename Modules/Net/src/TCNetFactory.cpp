@@ -63,7 +63,7 @@ namespace tc
 
          ReadWriteSocketPtr Connect(const Address& ip_addr, PortNumber port, Protocol protocol)
          {
-            SocketId s = imp::util::CreateSocket(SOCK_STREAM, Protocol2String(protocol));
+            SocketId s = imp::util::CreateSocket(protocol == TCP ? SOCK_STREAM : SOCK_DGRAM, Protocol2String(protocol));
             if (s == imp::invalid_socket)
             {
                return ReadWriteSocketPtr();
