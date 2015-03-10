@@ -4,3 +4,4 @@ build_linux
 build
 build_win64
 build_android
+build_qt
