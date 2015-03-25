@@ -42,6 +42,7 @@
 #include "TCMTMutex.h"
 #include "TCMTOS.h"
 #include "TCOutput.h"
+#include "TCString.h"
 
 #include <algorithm>
 #include <cstring>
@@ -204,7 +205,7 @@ namespace tc
             ThreadPtr thread_ptr(new ThreadPthread(string::ToString(uint64_t(handle)), handle));
             m_threads.push_back(thread_ptr);
 
-            return s_main_thread_ptr;
+            return thread_ptr;
          }
 
          void ThreadPthread::SwitchContext()
