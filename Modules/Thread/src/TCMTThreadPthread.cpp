@@ -42,6 +42,7 @@
 #include "TCMTMutex.h"
 #include "TCMTOS.h"
 #include "TCOutput.h"
+#include "TCString.h"
 
 #include <algorithm>
 #include <cstring>
@@ -54,9 +55,6 @@ namespace tc
    {
       namespace imp
       {
-         static ThreadPthread s_main_thread("main", ::pthread_self());
-         static ThreadPtr s_main_thread_ptr(&s_main_thread, tc::NoDelete());
-
          ThreadPtr ThreadPthread::Create(const std::string& thread_name,
             uint32_t stack_size,
             ThreadPriority priority)
@@ -204,7 +202,10 @@ namespace tc
                }
             }
 
-            return s_main_thread_ptr;
+            ThreadPtr thread_ptr(new ThreadPthread(string::ToString(uint64_t(handle)), handle));
+            m_threads.push_back(thread_ptr);
+
+            return thread_ptr;
          }
 
          void ThreadPthread::SwitchContext()
