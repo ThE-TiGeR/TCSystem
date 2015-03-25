@@ -79,12 +79,11 @@ namespace tc
       static PrintTargetPtr s_warning_target;
       static PrintTargetPtr s_info_target;
       static PrintTargetPtr s_trace_target;
-
       
-      static PrintFormatterPtr s_error_formatter(new DefaultPrintFormatter("%E"));
-      static PrintFormatterPtr s_warning_formatter(new DefaultPrintFormatter("%W"));
-      static PrintFormatterPtr s_info_formatter(new DefaultPrintFormatter("%I"));
-      static PrintFormatterPtr s_trace_formatter(new DefaultPrintFormatter("%T"));
+      static PrintFormatterPtr s_error_formatter;
+      static PrintFormatterPtr s_warning_formatter;
+      static PrintFormatterPtr s_info_formatter;
+      static PrintFormatterPtr s_trace_formatter;
 
       void SetTraceLevel(int32_t level)
       {
@@ -125,7 +124,8 @@ namespace tc
       void Error(const char* module, const char* function, 
          uint32_t line_number, const char* format, ...)
       {
-         std::string s = s_error_formatter ? s_error_formatter->Print(module, 0, function, line_number) : "";
+         PrintFormatterPtr formatter = s_error_formatter ? s_error_formatter : PrintFormatterPtr(new DefaultPrintFormatter("%E"));
+         std::string s = formatter->Print(module, 0, function, line_number);
 
          va_list arguments;
          va_start(arguments, format);
@@ -146,7 +146,8 @@ namespace tc
       void Warning(const char* module, const char* function, 
          uint32_t line_number, const char* format, ...)
       {
-         std::string s = s_warning_formatter ? s_warning_formatter->Print(module, 0, function, line_number) : "";
+         PrintFormatterPtr formatter = s_warning_formatter ? s_warning_formatter : PrintFormatterPtr(new DefaultPrintFormatter("%W"));
+         std::string s = formatter->Print(module, 0, function, line_number);
 
          va_list arguments;
          va_start(arguments, format);
@@ -167,7 +168,8 @@ namespace tc
       void Info(const char* module, const char* function, 
          uint32_t line_number, const char* format, ...)
       {
-         std::string s = s_info_formatter ? s_info_formatter->Print(module, 0, function, line_number) : "";
+         PrintFormatterPtr formatter = s_info_formatter ? s_info_formatter : PrintFormatterPtr(new DefaultPrintFormatter("%I"));
+         std::string s = formatter->Print(module, 0, function, line_number);
 
          va_list arguments;
          va_start(arguments, format);
@@ -190,7 +192,8 @@ namespace tc
       {
          if (level < s_trace_level)
          {
-            std::string s = s_trace_formatter? s_trace_formatter->Print(module, level, function, line_number) : "";
+            PrintFormatterPtr formatter = s_trace_formatter ? s_trace_formatter : PrintFormatterPtr(new DefaultPrintFormatter("%T"));
+            std::string s = formatter->Print(module, level, function, line_number);
 
             va_list arguments;
             va_start(arguments, format);
