@@ -29,7 +29,7 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //----------------------------------------------------------------------
-//  $Id$
+//  $Id: TCMathMatrixNTestSuite.cpp,v 8cdc96e922c0 2013/03/05 22:20:17 thomas $
 //----------------------------------------------------------------------
 #ifdef HAVE_UNIT_TESTS
 #include "TCMathMatrixNTestSuite.h"

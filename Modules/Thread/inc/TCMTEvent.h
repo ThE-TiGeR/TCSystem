@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id$
+//  $Id: TCMTEvent.h,v 19a9fe061077 2014/07/01 18:05:17 thomas $
 //*******************************************************************************
 
 #ifndef _TC_MT_EVENT_H_

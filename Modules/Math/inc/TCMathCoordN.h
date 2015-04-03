@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id$
+//  $Id: TCMathCoordN.h,v 8cdc96e922c0 2013/03/05 22:20:17 thomas $
 //*******************************************************************************
 
 #ifndef _TCCOORDN_H_

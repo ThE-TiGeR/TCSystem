@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id$
+//  $Id: TCOpenGLTexture2D.cpp,v 0048256f023c 2012/03/29 22:03:34 thomas $
 //*******************************************************************************
 
 #include "TCOpenGLTexture2D.h"
@@ -47,8 +47,8 @@ namespace tc
    {
       Texture2D::Texture2D(const std::string& name)
          :Object2D(name)
-         ,m_texture_id(0)
          ,m_size()
+         ,m_texture_id(0)
       {
       }
 

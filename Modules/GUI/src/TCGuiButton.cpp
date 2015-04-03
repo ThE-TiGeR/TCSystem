@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id$
+//  $Id: TCGuiButton.cpp,v c0056a2f47c7 2012/07/03 21:05:30 thomas $
 //*******************************************************************************
 
 #include "TCGuiButton.h"

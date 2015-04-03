@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id$
+//  $Id: TCMathTriangleUtil.h,v e6d4122f120b 2013/03/20 22:58:59 thomas $
 //*******************************************************************************
 
 #ifndef _TC_MATH_TRIANGLE_UTIL_H_

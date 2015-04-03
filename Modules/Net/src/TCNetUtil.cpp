@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id$
+//  $Id: TCNetUtil.cpp,v 5104760d9002 2014/09/26 18:20:17 thomas $
 //*******************************************************************************
 
 #include "TCNetUtil.h"

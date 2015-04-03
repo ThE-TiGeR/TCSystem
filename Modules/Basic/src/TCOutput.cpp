@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id$
+//  $Id: TCOutput.cpp,v 37aa72a6dc4a 2015/03/25 22:03:44 thomas $
 //*******************************************************************************
 
 #include "TCOutput.h"

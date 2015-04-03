@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id$
+//  $Id: TCFactory.cpp,v 43c905f64cb9 2014/09/05 21:36:04 thomas $
 //*******************************************************************************
 
 #include "TCFactory.h"

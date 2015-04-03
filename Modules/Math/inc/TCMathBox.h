@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id$
+//  $Id: TCMathBox.h,v d8463fc094c7 2013/04/03 22:28:58 thomas $
 //*******************************************************************************
 
 #ifndef _TC_MATH_BOX_H_

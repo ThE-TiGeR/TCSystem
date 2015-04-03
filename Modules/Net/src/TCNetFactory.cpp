@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id$
+//  $Id: TCNetFactory.cpp,v 5456c370b6d3 2015/02/08 20:39:02 thomas $
 //*******************************************************************************
 
 #include "TCNetFactory.h"

@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id$
+//  $Id: TCAudioSoundDataMp3.cpp,v 0282dfff03ce 2012/10/08 20:46:40 thomas $
 //*******************************************************************************
 
 #include "TCAudioSoundDataMp3.h"

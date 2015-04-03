@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id$
+//  $Id: TCAudioSoundFormat.h,v 89939db0b777 2012/09/24 21:17:18 thomas $
 //*******************************************************************************
 #ifndef _TC_AUDIO_SOUND_FORMAT_H_
 #define _TC_AUDIO_SOUND_FORMAT_H_

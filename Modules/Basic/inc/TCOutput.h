@@ -29,7 +29,7 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //----------------------------------------------------------------------
-//  $Id$
+//  $Id: TCOutput.h,v b8c6fe8666eb 2014/09/15 21:38:48 thomas $
 //----------------------------------------------------------------------
 
 #ifndef _TC_OUTPUT_H_

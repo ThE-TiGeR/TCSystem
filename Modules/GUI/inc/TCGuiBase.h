@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id$
+//  $Id: TCGuiBase.h,v 177d39511c9f 2012/03/05 21:59:43 Thomas $
 //*******************************************************************************
 
 #ifndef _TCGUI_BASE_H_

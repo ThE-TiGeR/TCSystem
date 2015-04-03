@@ -29,7 +29,7 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //----------------------------------------------------------------------
-//  $Id$
+//  $Id: TCStringTest.h,v 19a9fe061077 2014/07/01 18:05:17 thomas $
 //----------------------------------------------------------------------
 #ifndef _TC_STRING_TEST_H_
 #define _TC_STRING_TEST_H_

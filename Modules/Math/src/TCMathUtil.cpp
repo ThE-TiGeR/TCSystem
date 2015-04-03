@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id$
+//  $Id: TCMathUtil.cpp,v e7bcafd0e98f 2012/04/01 09:06:48 thomas $
 //*******************************************************************************
 
 #include "TCMathUtil.h"

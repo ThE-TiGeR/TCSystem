@@ -30,7 +30,7 @@
 // License along with this library; if not, write to the Free Software       
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
 //*******************************************************************************
-//  $Id$
+//  $Id: TCAudioManager.cpp,v 176932047f05 2013/10/08 20:08:34 thomas $
 //*******************************************************************************
 
 #include "TCAudioManager.h"

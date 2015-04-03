@@ -29,7 +29,7 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //----------------------------------------------------------------------
-//  $Id$
+//  $Id: TCMathTestSuite.cpp,v a33a555a5a40 2012/02/01 22:48:18 Thomas $
 //----------------------------------------------------------------------
 #ifdef HAVE_UNIT_TESTS
 #include "TCMathTestSuite.h"
