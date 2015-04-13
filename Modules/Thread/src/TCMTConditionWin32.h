@@ -33,8 +33,8 @@
 //  $Id: TCMTConditionWin32.h,v 19a9fe061077 2014/07/01 18:05:17 thomas $
 //*******************************************************************************
 
-#ifndef _TC_MT_CONDITION_PTHREAD_H_
-#define _TC_MT_CONDITION_PTHREAD_H_
+#ifndef _TC_MT_CONDITION_WIN32_H_
+#define _TC_MT_CONDITION_WIN32_H_
 
 #include "TCMTCondition.h"
 #include "TCMTMutexWin32.h"
@@ -108,4 +108,4 @@ namespace imp
 } // namespace multi_threading
 } // namespace tc
 
-#endif // _TC_MT_CONDITION_PTHREAD_H_
+#endif // _TC_MT_CONDITION_WIN32_H_

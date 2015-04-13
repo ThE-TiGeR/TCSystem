@@ -37,6 +37,7 @@
 #define _TC_SYSTEM_H_
 
 #include "TCSharedPtr.h"
+#include "TCTime.h"
 
 #include <string>
 #include <vector>
@@ -84,9 +85,9 @@ namespace tc
       * Suspends the process for specified time if supported by the system
       * otherwise it just waits specified time by checking the wall time
       *
-      * @param milli_seconds Number of milli seconds to wait
+      * @param time Time to wait
       */
-      TCBASE_API void Sleep(uint64_t milli_seconds);
+      TCBASE_API void Sleep(const Time& time);
 
       /** @return The date information stored in a string */
       TCBASE_API std::string  GetDate();

@@ -110,7 +110,7 @@ bool RunAudioTest()
 
    while (sequence1->IsPlaying())
    {
-      tc::system::Sleep(100);
+      tc::system::Sleep(tc::Time::FromMilliSeconds(100));
    }
 
    manager->DeleteSound(sequence1);
@@ -166,7 +166,7 @@ void PlaySound(const std::string& file_name)
 
       while (sound->IsPlaying())
       {
-         tc::system::Sleep(100);
+         tc::system::Sleep(tc::Time::FromMilliSeconds(100));
       }
    }
 }
