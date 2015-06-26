@@ -103,7 +103,7 @@ namespace tc
                Time next_time_out;
                TaskPtr next_task = GetNextTask(next_time_out);
                multi_threading::MessagePtr message;
-               multi_threading::Message::ReturnValue ret_val = multi_threading::Message::MSG_RECEIVE_TIMEOUT;
+               multi_threading::Message::ReturnValue ret_val = multi_threading::Message::ReturnValue::MSG_RECEIVE_TIMEOUT;
                if (next_time_out > Time::Zero())
                {
                   ret_val = m_thread->WaitThreadMessage(message, next_time_out);
@@ -111,9 +111,9 @@ namespace tc
 
                switch(ret_val)
                {
-               case multi_threading::Message::MSG_RECEIVE_TIMEOUT:
+               case multi_threading::Message::ReturnValue::MSG_RECEIVE_TIMEOUT:
                   {
-                     if (next_task->Execute() == Task::TASK_FINISHED)
+                     if (next_task->Execute() == Task::ReturnType::TASK_FINISHED)
                      {
                         RemoveTask(next_task);
                      }
@@ -122,7 +122,7 @@ namespace tc
                   }
                   break;
 
-               case multi_threading::Message::MSG_RECEIVED:
+               case multi_threading::Message::ReturnValue::MSG_RECEIVED:
                   if (!m_message_dispatcher->DispatchMessage(message))
                   {
                      message->GetSenderThread()->SendThreadMessage(
@@ -137,11 +137,11 @@ namespace tc
                   message = multi_threading::MessagePtr();
                   break;
 
-               case multi_threading::Message::MSG_QUIT_RECEIVED:
+               case multi_threading::Message::ReturnValue::MSG_QUIT_RECEIVED:
                   run = false;
                   break;
 
-               case multi_threading::Message::MSG_RECEIVE_FAILED:
+               case multi_threading::Message::ReturnValue::MSG_RECEIVE_FAILED:
                   throw Exception("WaitThreadMessage failed");
 
                }

@@ -54,16 +54,16 @@ namespace tc
                     multi_threading::MessagePtr message;
                     switch (thread->WaitThreadMessage(message))
                     {
-                    case multi_threading::Message::MSG_RECEIVED:
+                    case multi_threading::Message::ReturnValue::MSG_RECEIVED:
                         {
                             CommandMessage::Ptr c_message(CommandMessage::Ptr::StaticCast(message));
                             c_message->Execute();
                         }
                         break;
 
-                    case multi_threading::Message::MSG_RECEIVE_FAILED:
-                    case multi_threading::Message::MSG_RECEIVE_TIMEOUT:
-                    case multi_threading::Message::MSG_QUIT_RECEIVED:
+                    case multi_threading::Message::ReturnValue::MSG_RECEIVE_FAILED:
+                    case multi_threading::Message::ReturnValue::MSG_RECEIVE_TIMEOUT:
+                    case multi_threading::Message::ReturnValue::MSG_QUIT_RECEIVED:
                         running = false;
                         break;
                     }

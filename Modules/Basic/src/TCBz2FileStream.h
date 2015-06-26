@@ -67,12 +67,12 @@ namespace tc
       class TC_DLL_LOCAL Bz2FileStream: public StreamBase
       {
       public:
-         Bz2FileStream(const std::string &fileName, StreamDirection direction, CodecPtr codec);
+         Bz2FileStream(const std::string &fileName, Direction direction, CodecPtr codec);
          virtual ~Bz2FileStream();
 
          virtual StreamPtr Clone();
 
-         virtual bool SetPosition(int64_t, StreamPosition pos);
+         virtual bool SetPosition(int64_t, Position pos);
          virtual uint64_t GetPosition() const;
 
          virtual uint64_t ReadBytes (uint64_t nBytes, void *bytes);

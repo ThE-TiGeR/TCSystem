@@ -78,11 +78,11 @@ namespace tc
 
          ThreadBase::ThreadBase(const std::string& thread_name,
             uint32_t stack_size,
-            ThreadPriority priority)
+            Priority priority)
             :m_name(thread_name),
             m_priority(priority),
             m_stack_size(stack_size),
-            m_state(STATE_NEW)
+            m_state(State::NEW)
          {
             TCTRACES("TCMT", 1, m_name << "(" << m_threads.size() << ")");
          }
@@ -126,13 +126,13 @@ namespace tc
          {
             TCTRACES("TCMT", 3, m_name << " ...");
 
-            m_state = STATE_RUNNING;
+            m_state = State::RUNNING;
             init_data->event->Set();
 
             MessagePtr message;
 
-            while (m_state == STATE_RUNNING &&
-               WaitThreadMessage(message) != Message::MSG_RECEIVE_FAILED)
+            while (m_state == State::RUNNING &&
+               WaitThreadMessage(message) != Message::ReturnValue::MSG_RECEIVE_FAILED)
             {
                TCTRACES("TCMT", 50, m_name << " Received message " << message->GetMessageId());
                switch(message->GetMessageId())
@@ -140,7 +140,7 @@ namespace tc
                case StopThreadMessage::MESSAGE_ID:
                   {
                      TCTRACES("TCMT", 4, m_name << "Stop.");
-                     m_state = STATE_TERMINATED;
+                     m_state = State::TERMINATED;
                   }
                   break;
 
@@ -163,7 +163,7 @@ namespace tc
                message = MessagePtr();
             }
 
-            m_state = STATE_TERMINATED;
+            m_state = State::TERMINATED;
 
             // remove me from the list of created threads
             m_threads_mutex->Lock();
@@ -223,15 +223,15 @@ namespace tc
 
          bool ThreadBase::IsRunning() const
          { 
-            return GetState() == STATE_RUNNING;
+            return GetState() == State::RUNNING;
          }
 
          bool ThreadBase::IsTerminated() const
          { 
-            return GetState() == STATE_TERMINATED;
+            return GetState() == State::TERMINATED;
          }
 
-         bool ThreadBase::SetPriority(ThreadPriority priority_in)
+         bool ThreadBase::SetPriority(Priority priority_in)
          {
             TCTRACES("TCMT", 5, m_name << " ...");
 
@@ -247,7 +247,7 @@ namespace tc
             return true;
          }
 
-         ThreadBase::ThreadState ThreadBase::GetState()const
+         ThreadBase::State ThreadBase::GetState()const
          {
             TCTRACES("TCMT", 10, m_name << " ...");
             Locker lock(const_cast<ThreadBase*>(this));
@@ -255,7 +255,7 @@ namespace tc
             return m_state;
          }
 
-         ThreadBase::ThreadPriority ThreadBase::GetPriority()const
+         ThreadBase::Priority ThreadBase::GetPriority()const
          {
             TCTRACES("TCMT", 10, m_name << " ...");
             Locker lock(const_cast<ThreadBase*>(this));
@@ -290,7 +290,7 @@ namespace tc
                uint32_t(Message::MSG_ID_UNKNOWN),
                message);
 
-            if (ret == Message::MSG_RECEIVE_FAILED)
+            if (ret == Message::ReturnValue::MSG_RECEIVE_FAILED)
             {
                TCERRORS("TCMT", m_name << " failed.");
                return ret;
@@ -323,7 +323,7 @@ namespace tc
          Message::ReturnValue ThreadBase::SendSyncThreadMessage(MessagePtr message)
          {
             TCTRACES("TCMT", 50, m_name << " ...");
-            Message::ReturnValue ret = Message::MSG_RECEIVE_FAILED;
+            Message::ReturnValue ret = Message::ReturnValue::MSG_RECEIVE_FAILED;
             if (SendThreadMessage(message))
             {
                SharedPtr<ThreadBase> thread = SharedPtr<ThreadBase>::StaticCast(message->GetSenderThread());
@@ -331,13 +331,13 @@ namespace tc
                MessagePtr ret_message;
                ret = thread->m_message_queue.GetMessage(message->GetMessageId(),
                   message->GetMessageId(), ret_message);
-               if (ret == Message::MSG_RECEIVED)
+               if (ret == Message::ReturnValue::MSG_RECEIVED)
                {
-                  ret = ret_message->GetReplyId() == message->GetReplyId() ? Message::MSG_RECEIVED : Message::MSG_RECEIVE_FAILED;
+                  ret = ret_message->GetReplyId() == message->GetReplyId() ? Message::ReturnValue::MSG_RECEIVED : Message::ReturnValue::MSG_RECEIVE_FAILED;
                }
             }
 
-            TCTRACES("TCMT", 50, m_name << " done(" << ret << ").");
+            TCTRACES("TCMT", 50, m_name << " done(" << static_cast<int>(ret) << ").");
             return ret;
          }
 

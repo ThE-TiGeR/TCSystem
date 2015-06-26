@@ -60,7 +60,7 @@ namespace tc
       * @author Thomas Goessler
       */
 
-      enum Protocol
+      enum class Protocol
       {
          UDP,
          TCP

@@ -64,11 +64,11 @@ namespace multi_threading
    namespace factory
    {
        /** Creation mode for shared objects */
-       enum CreationMode
+       enum class CreationMode
        {
-           CRM_ALWAYS,
-           CRM_WHEN_NOT_EXISTS,
-           CRM_WHEN_EXISTS
+           ALWAYS,
+           WHEN_NOT_EXISTS,
+           WHEN_EXISTS
        };
 
       /**
@@ -81,7 +81,7 @@ namespace multi_threading
        */
       TCMT_API ThreadPtr CreateThread(const std::string& thread_name,
                                       uint32_t stack_size=0,
-                                      Thread::ThreadPriority priority=Thread::PRIORITY_NORMAL);
+                                      Thread::Priority priority=Thread::Priority::NORMAL);
 
       /**
        * @brief Create a command execution thread object
@@ -94,7 +94,7 @@ namespace multi_threading
        */
       TCMT_API ThreadPtr CreateCommandExecutionThread(const std::string& thread_name,
                                                       uint32_t stack_size=0,
-                                                      Thread::ThreadPriority priority=Thread::PRIORITY_NORMAL);
+                                                      Thread::Priority priority=Thread::Priority::NORMAL);
 
       /**
        * @brief Create a message dispatcher object
@@ -124,7 +124,7 @@ namespace multi_threading
       * @param mode How to create the mutex
       * @return A shared pointer of the created mutex
       */
-      TCMT_API MutexPtr CreateMutex(const std::string& shared_name, bool locked=false, CreationMode mode=CRM_ALWAYS);
+      TCMT_API MutexPtr CreateMutex(const std::string& shared_name, bool locked=false, CreationMode mode=CreationMode::ALWAYS);
 
       /** 
        * @brief Construct an event object
@@ -144,7 +144,7 @@ namespace multi_threading
        * @param initial_value The initial value of the semaphore
        * @param mode How to create the mutex
        */
-      TCMT_API SemaphorePtr CreateSemaphore(const std::string& shared_name, uint32_t initial_value, CreationMode mode=CRM_ALWAYS);
+      TCMT_API SemaphorePtr CreateSemaphore(const std::string& shared_name, uint32_t initial_value, CreationMode mode=CreationMode::ALWAYS);
 
       /**
        * @brief construct a Condition variable

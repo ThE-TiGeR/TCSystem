@@ -77,25 +77,25 @@ namespace tc
             {
                Message::ReturnValue ret = GetMessageFromQueue(msg_id_start, msg_id_end,
                   message, true);
-               if (ret != Message::MSG_RECEIVE_FAILED)
+               if (ret != Message::ReturnValue::MSG_RECEIVE_FAILED)
                {
                   return ret;
                }
             }while (m_new_message_event->Wait());
 
-            return Message::MSG_RECEIVE_FAILED;
+            return Message::ReturnValue::MSG_RECEIVE_FAILED;
          }
 
          Message::ReturnValue MessageQueue::GetMessage(uint32_t msg_id_start, uint32_t msg_id_end,
             MessagePtr& message, const Time& timeout)
          {
             Time start_time = Time::Now();
-            Message::ReturnValue ret = Message::MSG_RECEIVE_FAILED;
+            Message::ReturnValue ret = Message::ReturnValue::MSG_RECEIVE_FAILED;
 
-            while (ret == Message::MSG_RECEIVE_FAILED)
+            while (ret == Message::ReturnValue::MSG_RECEIVE_FAILED)
             {
                ret = GetMessageFromQueue(msg_id_start, msg_id_end, message, true);
-               if (ret == Message::MSG_RECEIVE_FAILED)
+               if (ret == Message::ReturnValue::MSG_RECEIVE_FAILED)
                {
                   Time ellapsed_time = Time::Since(start_time);
                   if (ellapsed_time < timeout)
@@ -104,7 +104,7 @@ namespace tc
                   }
                   else
                   {
-                     ret = Message::MSG_RECEIVE_TIMEOUT;
+                     ret = Message::ReturnValue::MSG_RECEIVE_TIMEOUT;
                   }
                }
             }
@@ -121,7 +121,7 @@ namespace tc
          Message::ReturnValue MessageQueue::GetMessageFromQueue(uint32_t msg_id_start, uint32_t msg_id_end,
             MessagePtr& message, bool remove)
          {
-            Message::ReturnValue ret = Message::MSG_RECEIVE_FAILED;
+            Message::ReturnValue ret = Message::ReturnValue::MSG_RECEIVE_FAILED;
 
             Locker lock(this);
             if (m_messages.size() == 0)
@@ -134,19 +134,19 @@ namespace tc
             {
                if ((*it_msg)->GetMessageId() == Message::MSG_ID_QUIT)
                {
-                  ret = Message::MSG_QUIT_RECEIVED;
+                  ret = Message::ReturnValue::MSG_QUIT_RECEIVED;
                   break;
                }
                else if (msg_id_start == Message::MSG_ID_UNKNOWN ||
                   ((*it_msg)->GetMessageId() >= msg_id_start &&
                   (*it_msg)->GetMessageId() <= msg_id_end))
                {
-                  ret = Message::MSG_RECEIVED;
+                  ret = Message::ReturnValue::MSG_RECEIVED;
                   break;
                }
             }
 
-            if (ret == Message::MSG_RECEIVE_FAILED)
+            if (ret == Message::ReturnValue::MSG_RECEIVE_FAILED)
             {
                return ret;
             }

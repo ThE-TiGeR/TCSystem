@@ -240,7 +240,7 @@ namespace tc
       void Create(const Settings& settings)
       {
          StreamPtr out = factory::CreateFileStream(settings.m_file_name,
-            Stream::STREAM_WRITE, factory::CreateAsciiCodec());
+            Stream::Direction::WRITE, factory::CreateAsciiCodec());
          RngPtr rng = factory::Create69069Rng();
 
          std::vector< SharedPtr<MathCalculation> > calculations;

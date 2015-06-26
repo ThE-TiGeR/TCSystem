@@ -102,7 +102,7 @@ namespace tc
             throw ExceptionInitError("ManagerImp::ManagerImp, new tc::audio::StreamingThread failed");
          }
 
-         m_streaming_thread = multi_threading::factory::CreateThread("TCAudioStreamingThread", 0 , multi_threading::Thread::PRIORITY_HIGH);
+         m_streaming_thread = multi_threading::factory::CreateThread("TCAudioStreamingThread", 0 , multi_threading::Thread::Priority::HIGH);
          if (!m_streaming_thread)
          {
             throw ExceptionInitError("ManagerImp::ManagerImp, tc::multi_threading::factory::CreateThread(TCAudioStreamingThread) failed");
@@ -137,7 +137,7 @@ namespace tc
          try
          {
             CodecPtr codec = factory::CreateLittleEndianBinaryCodec();
-            StreamPtr file = factory::CreateFileStream(file_name, Stream::STREAM_READ, codec);
+            StreamPtr file = factory::CreateFileStream(file_name, Stream::Direction::READ, codec);
             if (!file)
             {
                throw Exception("Open file failed.");

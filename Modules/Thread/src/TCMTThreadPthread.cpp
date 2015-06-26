@@ -57,7 +57,7 @@ namespace tc
       {
          ThreadPtr ThreadPthread::Create(const std::string& thread_name,
             uint32_t stack_size,
-            ThreadPriority priority)
+            Priority priority)
          {
             TCTRACES("TCMT", 1, thread_name);
 
@@ -90,14 +90,14 @@ namespace tc
          }
 
          ThreadPthread::ThreadPthread(const std::string& thread_name,
-            uint32_t stack_size, ThreadPriority priority)
+            uint32_t stack_size, Priority priority)
             :ThreadBase(thread_name, stack_size, priority),
             m_handle(0)
          {
          }
 
          ThreadPthread::ThreadPthread(const std::string& thread_name, pthread_t handle)
-            :ThreadBase(thread_name, 0, PRIORITY_NORMAL),
+            :ThreadBase(thread_name, 0, Priority::NORMAL),
             m_handle(handle)
          {
          }
@@ -153,7 +153,7 @@ namespace tc
             return true;
          }
 
-         bool ThreadPthread::SetPriorityOS(ThreadPriority priority_in)
+         bool ThreadPthread::SetPriorityOS(Priority priority_in)
          {
             TCTRACES("TCMT", 5, m_name);
 
@@ -214,7 +214,7 @@ namespace tc
             ::sched_yield();
          }
 
-         int32_t ThreadPthread::GetPriority(ThreadPriority pri)
+         int32_t ThreadPthread::GetPriority(Priority pri)
          {
             static bool priorities_setup = false;
             static int32_t lowest_priority = 0;
@@ -243,15 +243,15 @@ namespace tc
 
             switch (pri)
             {
-            case PRIORITY_LOWEST:
+            case Priority::LOWEST:
                return lowest_priority;
-            case PRIORITY_LOW:
+            case Priority::LOW:
                return (normal_priority + lowest_priority)/2;
-            case PRIORITY_HIGH:
+            case Priority::HIGH:
                return (normal_priority + highest_priority)/2;
-            case PRIORITY_HIGHEST:
+            case Priority::HIGHEST:
                return highest_priority;
-            case PRIORITY_NORMAL:
+            case Priority::NORMAL:
             default:
                return normal_priority;
             }

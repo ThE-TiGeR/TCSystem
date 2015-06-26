@@ -115,37 +115,37 @@ namespace tc
                 {
                     {
                         SemaphorePtr m = factory::CreateSemaphore("SemaphoreSharedCreateTest",
-                            0, factory::CRM_ALWAYS);
+                            0, factory::CreationMode::ALWAYS);
                         TCUNIT_ASSERT(m);
                     }
 
                     {
                         SemaphorePtr m = factory::CreateSemaphore("SemaphoreSharedCreateTest",
-                            0, factory::CRM_WHEN_NOT_EXISTS);
+                            0, factory::CreationMode::WHEN_NOT_EXISTS);
                         TCUNIT_ASSERT(m);
                     }
 
                     {
                         SemaphorePtr m = factory::CreateSemaphore("SemaphoreSharedCreateTest",
-                            0, factory::CRM_WHEN_EXISTS);
+                            0, factory::CreationMode::WHEN_EXISTS);
                         TCUNIT_ASSERT(!m);
                     }
 
                     {
                         SemaphorePtr m1 = factory::CreateSemaphore("SemaphoreSharedCreateTest",
-                            0, factory::CRM_ALWAYS);
+                            0, factory::CreationMode::ALWAYS);
                         TCUNIT_ASSERT(m1);
                         SemaphorePtr m2 = factory::CreateSemaphore("SemaphoreSharedCreateTest",
-                            0, factory::CRM_WHEN_EXISTS);
+                            0, factory::CreationMode::WHEN_EXISTS);
                         TCUNIT_ASSERT(m2);
                     }
 
                     {
                         SemaphorePtr m1 = factory::CreateSemaphore("SemaphoreSharedCreateTest",
-                            0, factory::CRM_ALWAYS);
+                            0, factory::CreationMode::ALWAYS);
                         TCUNIT_ASSERT(m1);
                         SemaphorePtr m2 = factory::CreateSemaphore("SemaphoreSharedCreateTest",
-                            0, factory::CRM_WHEN_NOT_EXISTS);
+                            0, factory::CreationMode::WHEN_NOT_EXISTS);
                         TCUNIT_ASSERT(!m2);
                     }
                 }
@@ -163,7 +163,7 @@ namespace tc
                 {
                     {
                         SemaphorePtr m = factory::CreateSemaphore("SemaphoreSharedPostWaitTest",
-                            0, factory::CRM_ALWAYS);
+                            0, factory::CreationMode::ALWAYS);
                         TCUNIT_ASSERT(m);
                         TCUNIT_ASSERT(m->Post());
                         TCUNIT_ASSERT(m->Wait());
@@ -171,7 +171,7 @@ namespace tc
 
                     {
                         SemaphorePtr m = factory::CreateSemaphore("SemaphoreSharedPostWaitTest",
-                            1, factory::CRM_ALWAYS);
+                            1, factory::CreationMode::ALWAYS);
                         TCUNIT_ASSERT(m);
                         TCUNIT_ASSERT(m->Wait());
                         TCUNIT_ASSERT(m->Post());
@@ -180,7 +180,7 @@ namespace tc
 
                     {
                         SemaphorePtr m = factory::CreateSemaphore("SemaphoreSharedPostWaitTest",
-                            1, factory::CRM_ALWAYS);
+                            1, factory::CreationMode::ALWAYS);
                         TCUNIT_ASSERT(m);
                         TCUNIT_ASSERT(m->Try());
                         TCUNIT_ASSERT(m->Post());
@@ -188,7 +188,7 @@ namespace tc
 
                     {
                         SemaphorePtr m = factory::CreateSemaphore("SemaphoreSharedPostWaitTest",
-                            0, factory::CRM_ALWAYS);
+                            0, factory::CreationMode::ALWAYS);
                         TCUNIT_ASSERT(m);
                         Time start_time = Time::NowMonotonic();
                         TCUNIT_ASSERT(!m->TryWait(Time::FromMilliSeconds(100)));

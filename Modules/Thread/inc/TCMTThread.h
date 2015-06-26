@@ -68,25 +68,25 @@ namespace multi_threading
    {
    public:
       /** The priorities we can give the thread */
-      enum ThreadPriority 
+      enum class Priority 
       {
-         PRIORITY_LOWEST,
-         PRIORITY_LOW,
-         PRIORITY_NORMAL,
-         PRIORITY_HIGH,
-         PRIORITY_HIGHEST
+         LOWEST,
+         LOW,
+         NORMAL,
+         HIGH,
+         HIGHEST
       };
 
       /** enumeration the different states the thread can have */
-      enum ThreadState 
+      enum class State 
       {
          /// thread object exists but thread hasn't started yet.
-         STATE_NEW,        
+         NEW,        
          /// thread is running.
-         STATE_RUNNING,
+         RUNNING,
          /// thread has terminated but storage has not
          /// been reclaimed (i.e. waiting to be joined).
-         STATE_TERMINATED  
+         TERMINATED  
       };
 
    public:
@@ -111,9 +111,9 @@ namespace multi_threading
       virtual bool IsTerminated() const = 0;
 
       /** @brief Set the priority of the thread. */
-      virtual bool SetPriority(ThreadPriority priority) = 0;
+      virtual bool SetPriority(Priority priority) = 0;
       /** @return The thread's priority. */
-      virtual ThreadPriority GetPriority() const = 0;
+      virtual Priority GetPriority() const = 0;
 
       /**
        * Sending Messages between threads

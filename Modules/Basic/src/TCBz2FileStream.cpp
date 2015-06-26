@@ -43,20 +43,20 @@ namespace tc
 {
    namespace imp
    {
-      Bz2FileStream::Bz2FileStream(const std::string &fileName, StreamDirection direction, CodecPtr codec)
+      Bz2FileStream::Bz2FileStream(const std::string &fileName, Direction direction, CodecPtr codec)
          :StreamBase(codec)
          ,m_file_name(fileName)
          ,m_file(0)
       {
-         if (direction == STREAM_READ)
+         if (direction == Direction::READ)
          {
             m_file = ::BZ2_bzopen(fileName.c_str(), "rb");
          }
-         else if (direction == STREAM_WRITE)
+         else if (direction == Direction::WRITE)
          {
             m_file = ::BZ2_bzopen(fileName.c_str(), "wb");
          }
-         else if (direction == STREAM_READ_WRITE)
+         else if (direction == Direction::READ_WRITE)
          {
             m_file = ::BZ2_bzopen(fileName.c_str(), "wb+");
          }
@@ -64,7 +64,7 @@ namespace tc
          if (!m_file)
          {
             TCERRORS("TCBASE", "Error opening file '" << fileName << "'");
-            SetStatus(ERROR_STREAM_OPEN);
+            SetStatus(Error::STREAM_OPEN);
          }
          SetStreamDirection(direction);
       }
@@ -88,7 +88,7 @@ namespace tc
       uint64_t Bz2FileStream::ReadBytes(uint64_t nBytes, void *bytes)
       {
          // check for an error
-         if (Error())
+         if (HasError())
          {
             return 0;
          }
@@ -96,7 +96,7 @@ namespace tc
          // check mode
          if (!IsReading())
          {
-            SetStatus(ERROR_STREAM_DIRECTION);
+            SetStatus(Error::STREAM_DIRECTION);
             return 0;
          }
 
@@ -111,11 +111,11 @@ namespace tc
                BZ2_bzerror(m_file, &error_num);
                if (error_num == BZ_STREAM_END)
                {
-                  SetStatus(ERROR_END_OF_STREAM);
+                  SetStatus(Error::END_OF_STREAM);
                }
                else
                {
-                  SetStatus(ERROR_READ_FROM_STREAM);
+                  SetStatus(Error::READ_FROM_STREAM);
                }
                break;
             }
@@ -133,7 +133,7 @@ namespace tc
          }
 
          // check for an error
-         if (Error())
+         if (HasError())
          {
             return 0;
          }
@@ -141,7 +141,7 @@ namespace tc
          // check mode
          if (!IsWriting())
          {
-            SetStatus(ERROR_STREAM_DIRECTION);
+            SetStatus(Error::STREAM_DIRECTION);
             return 0;
          }
 
@@ -152,7 +152,7 @@ namespace tc
                int(nBytes-wrote_bytes));
             if (num <= 0)
             {
-               SetStatus(ERROR_WRITE_TO_STREAM);
+               SetStatus(Error::WRITE_TO_STREAM);
                break;
             }
             wrote_bytes += num;
@@ -164,7 +164,7 @@ namespace tc
       void Bz2FileStream::Flush()
       {
          // check for an error
-         if (Error())
+         if (HasError())
          {
             return;
          }
@@ -176,19 +176,19 @@ namespace tc
          }
          else
          {
-            SetStatus(ERROR_STREAM_DIRECTION);
+            SetStatus(Error::STREAM_DIRECTION);
          }
       }
 
-      bool Bz2FileStream::SetPosition(int64_t, StreamPosition)
+      bool Bz2FileStream::SetPosition(int64_t, Position)
       {
-         SetStatus(ERROR_SET_STREAM_POSITION);
+         SetStatus(Error::SET_STREAM_POSITION);
          return false;
       }
 
       uint64_t Bz2FileStream::GetPosition() const
       {
-         SetStatus(ERROR_SET_STREAM_POSITION);
+         SetStatus(Error::SET_STREAM_POSITION);
          return 0;
       }
 

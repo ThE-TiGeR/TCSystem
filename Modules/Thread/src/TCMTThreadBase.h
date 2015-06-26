@@ -65,7 +65,7 @@ namespace tc
          {
          public:
             ThreadBase(const std::string& thread_name,
-               uint32_t stack_size, Thread::ThreadPriority priority);
+               uint32_t stack_size, Thread::Priority priority);
             virtual ~ThreadBase();
 
             bool Start(ThreadObjectPtr object_to_start);
@@ -74,8 +74,8 @@ namespace tc
             bool IsRunning() const;
             bool IsTerminated() const;
 
-            bool SetPriority(ThreadPriority priority);
-            ThreadPriority GetPriority() const;
+            bool SetPriority(Priority priority);
+            Priority GetPriority() const;
 
             bool SendThreadMessage(MessagePtr message);
             Message::ReturnValue SendSyncThreadMessage(MessagePtr message);
@@ -96,7 +96,7 @@ namespace tc
             /** create the os dependent thread */
             virtual bool CreateOSThread(InitStruct* init_data) = 0;
             virtual bool JoinOS() = 0;
-            virtual bool SetPriorityOS(ThreadPriority priority) = 0;
+            virtual bool SetPriorityOS(Priority priority) = 0;
 
          protected:
             /**
@@ -106,16 +106,16 @@ namespace tc
             bool Init();
 
             /** @return thread state (invalid, new, running or terminated). */
-            ThreadState GetState() const;
+            State GetState() const;
 
             /** Holds the name of the thread */
             std::string m_name;
             /** The current priority of this thread */
-            ThreadPriority m_priority;
+            Priority m_priority;
             /** The current stack size of this thread */
             uint32_t m_stack_size;
             /** The current state of the thread */
-            ThreadState m_state;
+            State m_state;
             /** pointer to the message queue of the thread */
             MessageQueue m_message_queue;
 

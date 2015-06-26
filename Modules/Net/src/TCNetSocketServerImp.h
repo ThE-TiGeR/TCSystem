@@ -123,10 +123,7 @@ namespace imp
       /** pointer to the thread object of this server */
       multi_threading::ThreadPtr m_server_thread;
 
-      enum
-      {
-         SELECT_TIMEOUT = 300 ///< Timeout in milliseconds for the select method
-      };
+      static const uint64_t SELECT_TIMEOUT = 300; ///< Timeout in milliseconds for the select method
 
       Time m_current_timeout;
       bool m_running;

@@ -195,12 +195,12 @@ namespace tc
       protected:
          virtual StreamPtr CreateWriteStream()
          {
-            return factory::CreateFileStream(m_file_name, Stream::STREAM_WRITE, this->CreateCodec());
+            return factory::CreateFileStream(m_file_name, Stream::Direction::WRITE, this->CreateCodec());
          }
 
          virtual StreamPtr CreateReadStream()
          {
-            return factory::CreateFileStream(m_file_name, Stream::STREAM_READ, this->CreateCodec());
+            return factory::CreateFileStream(m_file_name, Stream::Direction::READ, this->CreateCodec());
          }
 
          virtual void teardown()
@@ -224,12 +224,12 @@ namespace tc
       protected:
          virtual StreamPtr CreateWriteStream()
          {
-            return factory::CreateGzFileStream(m_file_name, Stream::STREAM_WRITE, this->CreateCodec());
+            return factory::CreateGzFileStream(m_file_name, Stream::Direction::WRITE, this->CreateCodec());
          }
 
          virtual StreamPtr CreateReadStream()
          {
-            return factory::CreateGzFileStream(m_file_name, Stream::STREAM_READ, this->CreateCodec());
+            return factory::CreateGzFileStream(m_file_name, Stream::Direction::READ, this->CreateCodec());
          }
 
          virtual void teardown()
@@ -253,12 +253,12 @@ namespace tc
       protected:
          virtual StreamPtr CreateWriteStream()
          {
-            return factory::CreateBz2FileStream(m_file_name, Stream::STREAM_WRITE, this->CreateCodec());
+            return factory::CreateBz2FileStream(m_file_name, Stream::Direction::WRITE, this->CreateCodec());
          }
 
          virtual StreamPtr CreateReadStream()
          {
-            return factory::CreateBz2FileStream(m_file_name, Stream::STREAM_READ, this->CreateCodec());
+            return factory::CreateBz2FileStream(m_file_name, Stream::Direction::READ, this->CreateCodec());
          }
 
          virtual void teardown()

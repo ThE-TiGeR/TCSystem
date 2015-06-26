@@ -48,7 +48,7 @@ namespace tc
       class Image
       {
       public:
-         Image(const char* _id, const char* _lang_id, const uint8_t* _image_data, ImageHandler::ImageType _type=ImageHandler::BITMAP)
+         Image(const char* _id, const char* _lang_id, const uint8_t* _image_data, ImageHandler::ImageType _type = ImageHandler::ImageType::BITMAP)
          :id(_id), lang_id(_lang_id), image_data(_image_data), type(_type), icon(0)
          {
          }
@@ -79,7 +79,7 @@ namespace tc
             util::FreeMemoryOfStlContainer(m_images);
          }
 
-         virtual void AddImageData(const char* _id, const char* _lang_id, const uint8_t* _image_data, ImageType image_type=BITMAP)
+         virtual void AddImageData(const char* _id, const char* _lang_id, const uint8_t* _image_data, ImageType image_type = ImageType::BITMAP)
          {
             SharedPtr<Image> image(new Image(_id, _lang_id, _image_data, image_type));
             m_images.insert(std::make_pair(std::string(_id), image));
@@ -99,13 +99,13 @@ namespace tc
             {
                switch(image_it->second->type)
                {
-               case BITMAP:
+               case ImageType::BITMAP:
                   image_it->second->icon = 
                      new FX::FXBMPIcon(FX::FXApp::instance(), image_it->second->image_data,
                      0, FX::IMAGE_NEAREST);
                   image_it->second->icon->blend(FX::FXApp::instance()->getBaseColor());
                   break;
-               case GIF:
+               case ImageType::GIF:
                   image_it->second->icon = 
                      new FX::FXGIFIcon(FX::FXApp::instance(), image_it->second->image_data,
                      0, FX::IMAGE_NEAREST);

@@ -101,11 +101,11 @@ namespace tc
          {
             switch(mode)
             {
-            case factory::CRM_ALWAYS:
+            case factory::CreationMode::ALWAYS:
                m_semaphore = ::sem_open(shared_name.c_str(), O_CREAT, S_IRWXU, initial);
                m_name = shared_name;
                break;
-            case factory::CRM_WHEN_EXISTS:
+            case factory::CreationMode::WHEN_EXISTS:
                m_semaphore = ::sem_open(shared_name.c_str(), O_CREAT|O_EXCL, S_IRWXU, initial);
                // if unable to open it allready exists so it is ok
                if (m_semaphore == SEM_FAILED)
@@ -118,7 +118,7 @@ namespace tc
                   m_semaphore = SEM_FAILED;
                }
                break;
-            case factory::CRM_WHEN_NOT_EXISTS:
+            case factory::CreationMode::WHEN_NOT_EXISTS:
                m_semaphore = ::sem_open(shared_name.c_str(), O_CREAT|O_EXCL, S_IRWXU, initial);
                m_name = shared_name;
                break;

@@ -74,7 +74,7 @@ namespace tc
 
             virtual ~Task() {}
 
-            enum ReturnType
+            enum class ReturnType
             {
                TASK_OK,
                TASK_FINISHED,

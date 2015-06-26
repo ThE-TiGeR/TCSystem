@@ -67,8 +67,8 @@ static void ConvertPSKCvsToHaushaltsbuchCvs()
    std::string file_name_in("PSK_Umsatzliste.csv");
    std::string file_name_out("PSK_Import.csv");
 
-   tc::StreamPtr file_in = tc::factory::CreateFileStream(file_name_in, tc::Stream::STREAM_READ, tc::factory::CreateAsciiCodec());
-   tc::StreamPtr file_out = tc::factory::CreateFileStream(file_name_out, tc::Stream::STREAM_WRITE, tc::factory::CreateAsciiCodec());
+   tc::StreamPtr file_in = tc::factory::CreateFileStream(file_name_in, tc::Stream::Direction::READ, tc::factory::CreateAsciiCodec());
+   tc::StreamPtr file_out = tc::factory::CreateFileStream(file_name_out, tc::Stream::Direction::WRITE, tc::factory::CreateAsciiCodec());
 
    file_out << "konto_nummer;buchungs_datum;betrag;auftraggeber;verwendung;\r\n";
 

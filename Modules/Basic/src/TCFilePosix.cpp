@@ -123,26 +123,26 @@ namespace tc
    bool file::SetFileAttr(const std::string &file, uint32_t attr)
    {
       int32_t a = 0;
-      if (attr && FILEATTR_WRITE == FILEATTR_WRITE) {
-         attr = FILEATTR_OWNER_WRITE | FILEATTR_GROUP_WRITE | FILEATTR_EVERYONE_WRITE;
+      if (attr && FileAttributes::WRITE == FileAttributes::WRITE) {
+         attr = FileAttributes::OWNER_WRITE | FileAttributes::GROUP_WRITE | FileAttributes::EVERYONE_WRITE;
       }
-      if (attr && FILEATTR_READONLY == FILEATTR_READONLY) {
-         attr = FILEATTR_OWNER_READ | FILEATTR_GROUP_READ | FILEATTR_EVERYONE_READ;
+      if (attr && FileAttributes::READONLY == FileAttributes::READONLY) {
+         attr = FileAttributes::OWNER_READ | FileAttributes::GROUP_READ | FileAttributes::EVERYONE_READ;
       }
-      if (attr && FILEATTR_EXECUTE == FILEATTR_EXECUTE) {
-         attr |= FILEATTR_OWNER_EXEC | FILEATTR_GROUP_EXEC | FILEATTR_EVERYONE_EXEC;
+      if (attr && FileAttributes::EXECUTE == FileAttributes::EXECUTE) {
+         attr |= FileAttributes::OWNER_EXEC | FileAttributes::GROUP_EXEC | FileAttributes::EVERYONE_EXEC;
       }
-      if (attr && FILEATTR_OWNER_WRITE == FILEATTR_OWNER_WRITE) a |= S_IWUSR;
-      if (attr && FILEATTR_GROUP_WRITE == FILEATTR_GROUP_WRITE) a |= S_IWGRP;
-      if (attr && FILEATTR_EVERYONE_WRITE == FILEATTR_EVERYONE_WRITE) a |= S_IWOTH;
+      if (attr && FileAttributes::OWNER_WRITE == FileAttributes::OWNER_WRITE) a |= S_IWUSR;
+      if (attr && FileAttributes::GROUP_WRITE == FileAttributes::GROUP_WRITE) a |= S_IWGRP;
+      if (attr && FileAttributes::EVERYONE_WRITE == FileAttributes::EVERYONE_WRITE) a |= S_IWOTH;
 
-      if (attr && FILEATTR_OWNER_READ == FILEATTR_OWNER_READ) a |= S_IRUSR;
-      if (attr && FILEATTR_GROUP_READ == FILEATTR_GROUP_READ) a |= S_IRGRP;
-      if (attr && FILEATTR_EVERYONE_READ == FILEATTR_EVERYONE_READ) a |= S_IROTH;
+      if (attr && FileAttributes::OWNER_READ == FileAttributes::OWNER_READ) a |= S_IRUSR;
+      if (attr && FileAttributes::GROUP_READ == FileAttributes::GROUP_READ) a |= S_IRGRP;
+      if (attr && FileAttributes::EVERYONE_READ == FileAttributes::EVERYONE_READ) a |= S_IROTH;
 
-      if (attr && FILEATTR_OWNER_EXEC == FILEATTR_OWNER_EXEC) a |= S_IXUSR;
-      if (attr && FILEATTR_GROUP_EXEC == FILEATTR_GROUP_EXEC) a |= S_IXGRP;
-      if (attr && FILEATTR_EVERYONE_EXEC == FILEATTR_EVERYONE_EXEC) a |= S_IXOTH;
+      if (attr && FileAttributes::OWNER_EXEC == FileAttributes::OWNER_EXEC) a |= S_IXUSR;
+      if (attr && FileAttributes::GROUP_EXEC == FileAttributes::GROUP_EXEC) a |= S_IXGRP;
+      if (attr && FileAttributes::EVERYONE_EXEC == FileAttributes::EVERYONE_EXEC) a |= S_IXOTH;
 
       return file!="" && chmod(file.c_str(), a)==0;
    }

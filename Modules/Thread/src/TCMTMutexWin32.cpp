@@ -84,13 +84,13 @@ namespace tc
 
             switch(mode)
             {
-            case factory::CRM_ALWAYS:
+            case factory::CreationMode::ALWAYS:
                status = true;
                break;
-            case factory::CRM_WHEN_EXISTS:
+            case factory::CreationMode::WHEN_EXISTS:
                status = error == ERROR_ALREADY_EXISTS;
                break;
-            case factory::CRM_WHEN_NOT_EXISTS:
+            case factory::CreationMode::WHEN_NOT_EXISTS:
                status = error != ERROR_ALREADY_EXISTS;
                break;
             }

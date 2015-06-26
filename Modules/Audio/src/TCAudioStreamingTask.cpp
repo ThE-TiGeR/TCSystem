@@ -85,7 +85,7 @@ namespace tc
                                ", Time = " << ellapsed);
 #endif
 
-         return TASK_OK;
+         return ReturnType::TASK_OK;
       }
 
       bool StreamingTask::OnPlayMessage(SharedPtr<SoundDataMessage> message)

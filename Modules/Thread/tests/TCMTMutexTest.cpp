@@ -103,37 +103,37 @@ namespace tc
                 {
                     {
                         MutexPtr m = factory::CreateMutex("MutexSharedCreateTest",
-                            false, factory::CRM_ALWAYS);
+                            false, factory::CreationMode::ALWAYS);
                         TCUNIT_ASSERT(m);
                     }
 
                     {
                         MutexPtr m = factory::CreateMutex("MutexSharedCreateTest",
-                            false, factory::CRM_WHEN_NOT_EXISTS);
+                            false, factory::CreationMode::WHEN_NOT_EXISTS);
                         TCUNIT_ASSERT(m);
                     }
 
                     {
                         MutexPtr m = factory::CreateMutex("MutexSharedCreateTest",
-                            false, factory::CRM_WHEN_EXISTS);
+                            false, factory::CreationMode::WHEN_EXISTS);
                         TCUNIT_ASSERT(!m);
                     }
 
                     {
                         MutexPtr m1 = factory::CreateMutex("MutexSharedCreateTest",
-                            false, factory::CRM_ALWAYS);
+                            false, factory::CreationMode::ALWAYS);
                         TCUNIT_ASSERT(m1);
                         MutexPtr m2 = factory::CreateMutex("MutexSharedCreateTest",
-                            false, factory::CRM_WHEN_EXISTS);
+                            false, factory::CreationMode::WHEN_EXISTS);
                         TCUNIT_ASSERT(m2);
                     }
 
                     {
                         MutexPtr m1 = factory::CreateMutex("MutexSharedCreateTest",
-                            false, factory::CRM_ALWAYS);
+                            false, factory::CreationMode::ALWAYS);
                         TCUNIT_ASSERT(m1);
                         MutexPtr m2 = factory::CreateMutex("MutexSharedCreateTest",
-                            false, factory::CRM_WHEN_NOT_EXISTS);
+                            false, factory::CreationMode::WHEN_NOT_EXISTS);
                         TCUNIT_ASSERT(!m2);
                     }
                 }
@@ -151,7 +151,7 @@ namespace tc
                 {
                     {
                         MutexPtr m = factory::CreateMutex("MutexSharedLockUnlockTest",
-                            false, factory::CRM_ALWAYS);
+                            false, factory::CreationMode::ALWAYS);
                         TCUNIT_ASSERT(m);
                         TCUNIT_ASSERT(m->Lock());
                         TCUNIT_ASSERT(m->UnLock());
@@ -159,7 +159,7 @@ namespace tc
 
                     {
                         MutexPtr m = factory::CreateMutex("MutexSharedLockUnlockTest",
-                            true, factory::CRM_ALWAYS);
+                            true, factory::CreationMode::ALWAYS);
                         TCUNIT_ASSERT(m);
                         TCUNIT_ASSERT(m->UnLock());
                         TCUNIT_ASSERT(m->Lock());
@@ -168,7 +168,7 @@ namespace tc
 
                     {
                         MutexPtr m = factory::CreateMutex("MutexSharedLockUnlockTest",
-                            false, factory::CRM_ALWAYS);
+                            false, factory::CreationMode::ALWAYS);
                         TCUNIT_ASSERT(m);
                         TCUNIT_ASSERT(m->TryLock());
                         TCUNIT_ASSERT(m->UnLock());
@@ -176,7 +176,7 @@ namespace tc
 
                     {
                         MutexPtr m = factory::CreateMutex("MutexSharedLockUnlockTest",
-                            false, factory::CRM_ALWAYS);
+                            false, factory::CreationMode::ALWAYS);
                         TCUNIT_ASSERT(m);
                         TCUNIT_ASSERT(m->TryLock(Time::FromMilliSeconds(100)));
                         TCUNIT_ASSERT(m->UnLock());

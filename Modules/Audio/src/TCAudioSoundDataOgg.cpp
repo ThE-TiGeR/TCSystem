@@ -182,18 +182,18 @@ namespace tc
       {
          SoundDataOgg* ogg  = reinterpret_cast<SoundDataOgg*>(datasource);
 
-         Stream::StreamPosition pos = Stream::POSITION_SET;
+         Stream::Position pos = Stream::Position::SET;
 
          switch(whence)
          {
          case 0:
-            pos = Stream::POSITION_SET;
+            pos = Stream::Position::SET;
             break;
          case 1:
-            pos =  Stream::POSITION_CURRENT;
+            pos =  Stream::Position::CURRENT;
             break;
          case 2:
-            pos = Stream::POSITION_END;
+            pos = Stream::Position::END;
             break;
          default:
             return -1;

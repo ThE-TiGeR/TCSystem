@@ -68,39 +68,46 @@ namespace tc
       /**
        * Enumeration which defines the TCStream error flags
        */
-      enum StreamErrorFlags
+	  enum class Error
       {
          /** no error happened */
-         ERROR_NONE,
+         NONE,
          /** Error opening the stream */
-         ERROR_STREAM_OPEN,
+         STREAM_OPEN,
          /** Error closing the stream */
-         ERROR_STREAM_CLOSE,
+         STREAM_CLOSE,
          /** Using wrong stream direction */
-         ERROR_STREAM_DIRECTION,
+         STREAM_DIRECTION,
          /** end of stream reached */
-         ERROR_END_OF_STREAM,
+         END_OF_STREAM,
          /** error during reading of stream */
-         ERROR_READ_FROM_STREAM,
+         READ_FROM_STREAM,
          /** error during writing to stream */
-         ERROR_WRITE_TO_STREAM,
+         WRITE_TO_STREAM,
          /** error setting stream position */
-         ERROR_SET_STREAM_POSITION
+         SET_STREAM_POSITION
       };
 
       /**
        * enumeration which defines different stream directions
        */
-      enum StreamDirection
+      enum class Direction
       {
          /** stream is not ready for read or write (not open or already closed */
-         STREAM_DEAD,
+         DEAD,
          /** stream is used for reading */
-         STREAM_READ,
+         READ,
          /** stream is used for writing */
-         STREAM_WRITE,
+         WRITE,
          /** stream is used for reading and writing*/
-         STREAM_READ_WRITE
+         READ_WRITE
+      };
+
+      enum class Position
+      {
+         SET,
+         CURRENT,
+         END,
       };
 
    public:
@@ -111,11 +118,11 @@ namespace tc
        * @return the error flag
        * defined in TCStream::StreamErrorFlags
        */
-      virtual int32_t GetStatus() const = 0;
+	  virtual Error GetStatus() const = 0;
       /** Reset the error flag to ERROR_NONE */
       virtual void ResetStatus() = 0;
       /** @return False if no error happend else true */
-      virtual bool Error() const = 0;
+      virtual bool HasError() const = 0;
       /** @return True if no error happend else false */
       virtual bool IsOk() const = 0;
 
@@ -125,14 +132,8 @@ namespace tc
        */
       virtual void EnableDisplayErrorMessages(bool displ) = 0;
 
-      enum StreamPosition
-      {
-         POSITION_SET,
-         POSITION_CURRENT,
-         POSITION_END,
-      };
       /** Set the current position of the stream where to read or write */
-      virtual bool SetPosition(int64_t, StreamPosition pos) = 0;
+      virtual bool SetPosition(int64_t, Position pos) = 0;
       /** Get the current position of the stream */
       virtual uint64_t GetPosition() const = 0;
 
@@ -311,7 +312,7 @@ namespace tc
 
       /** flushes the stream if needed */
       virtual void Flush() = 0;
-      /** Closes the stream and sets the streamdirection to STREAM_DEAD */
+      /** Closes the stream and sets the streamdirection to StreamDirection::DEAD */
       virtual void CloseStream() = 0;
 
       virtual ~Stream() {}

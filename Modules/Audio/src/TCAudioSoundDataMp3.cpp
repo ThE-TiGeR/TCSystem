@@ -175,17 +175,17 @@ namespace tc
       {
          SoundDataMp3* mp3_data = (SoundDataMp3*)h;
          StreamPtr stream = mp3_data->m_stream;
-         Stream::StreamPosition pos = Stream::POSITION_CURRENT;
+         Stream::Position pos = Stream::Position::CURRENT;
          switch(origin)
          {
          case SEEK_SET:
-            pos = Stream::POSITION_SET;
+            pos = Stream::Position::SET;
             break;
          case SEEK_CUR:
-            pos = Stream::POSITION_CURRENT;
+            pos = Stream::Position::CURRENT;
             break;
          case SEEK_END:
-            pos = Stream::POSITION_END;
+            pos = Stream::Position::END;
             break;
          }
 

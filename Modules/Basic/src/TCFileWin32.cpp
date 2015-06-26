@@ -135,7 +135,10 @@ namespace tc
    bool file::SetFileAttr(const std::string &file_in, uint32_t attr)
    {
       std::wstring file(wstring::ToString(file_in));
-      attr &= (FILEATTR_READONLY | FILEATTR_ARCHIVE | FILEATTR_SYSTEM | FILEATTR_HIDDEN);
+      attr &= (static_cast<uint32_t>(FileAttributes::READONLY) | 
+         static_cast<uint32_t>(FileAttributes::ARCHIVE) | 
+         static_cast<uint32_t>(FileAttributes::SYSTEM) |
+         static_cast<uint32_t>(FileAttributes::HIDDEN));
       return SetFileAttributesW(file.c_str(), attr) == TRUE ? true : false;
    }
 

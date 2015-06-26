@@ -70,7 +70,7 @@ namespace tc
          uint64_t n_read = m_stream->ReadBytes(num_bytes, buffer);
          if (n_read < num_bytes && IsLooping())
          {
-            m_stream->SetPosition(m_start_of_sound_data, Stream::POSITION_SET);
+            m_stream->SetPosition(m_start_of_sound_data, Stream::Position::SET);
             num_bytes -= n_read;
             n_read += m_stream->ReadBytes(num_bytes, buffer);
          }
@@ -81,7 +81,7 @@ namespace tc
       void SoundDataWav::SetToStart()
       {
          Locker lock(this);
-         if (!m_stream->SetPosition(m_start_of_sound_data, Stream::POSITION_SET))
+         if (!m_stream->SetPosition(m_start_of_sound_data, Stream::Position::SET))
          {
             throw Exception("Error setting stream pointer");
          }
@@ -124,7 +124,7 @@ namespace tc
             }
             else
             {
-               if (!m_stream->SetPosition(chunk_length, Stream::POSITION_CURRENT))
+               if (!m_stream->SetPosition(chunk_length, Stream::Position::CURRENT))
                {
                   throw Exception("Error setting stream pointer");
                }
@@ -175,7 +175,7 @@ namespace tc
             throw  Exception("Unsupported audio format");
          }
 
-         if (!m_stream->SetPosition(chunk_length - 16, Stream::POSITION_CURRENT))
+         if (!m_stream->SetPosition(chunk_length - 16, Stream::Position::CURRENT))
          {
             throw  Exception("Error setting stream pointer");
          }

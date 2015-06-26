@@ -91,19 +91,16 @@ namespace tc
          static const Color GRAY;
 
          /** Color constants */
-         enum ColorConstant
-         {
-            /** the default green component of the color */
-            DEFAULT_RED = 1,
-            /** the default green component of the color */
-            DEFAULT_GREEN = 1,
-            /** the default blue component of the color */
-            DEFAULT_BLUE = 1,
-            /** the default alpha component of the color */
-            DEFAULT_ALPHA = 1,
-            /** the maximum value of an R,G,B color component */
-            MAX_COLOR_COMPONENT = 1,
-         };
+         /** the default green component of the color */
+         static const int DEFAULT_RED = 1;
+         /** the default green component of the color */
+         static const int DEFAULT_GREEN = 1;
+         /** the default blue component of the color */
+         static const int DEFAULT_BLUE = 1;
+         /** the default alpha component of the color */
+         static const int DEFAULT_ALPHA = 1;
+         /** the maximum value of an R,G,B color component */
+         static const int MAX_COLOR_COMPONENT = 1;
 
       public:
          /**
@@ -310,7 +307,7 @@ namespace tc
 
       typedef std::vector<Color> ColorVector;
 
-      /** Compare two colorss */
+      /** Compare two colors */
       inline bool operator==(const Color& a, const Color& b) 
       {
          return (a.GetRed()   == b.GetRed() && 

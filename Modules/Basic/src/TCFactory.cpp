@@ -77,7 +77,7 @@ namespace tc
       }
 
       StreamPtr CreateFileStream(const std::string &fileName,
-         Stream::StreamDirection direction,
+         Stream::Direction direction,
          CodecPtr codec)
       {
          StreamPtr stream(new imp::FileStream(fileName, direction, codec));
@@ -90,14 +90,14 @@ namespace tc
       }
 
       StreamPtr CreateFileStream(std::FILE* stream,
-         Stream::StreamDirection direction,
+         Stream::Direction direction,
          CodecPtr codec)
       {
          return StreamPtr(new imp::FileStream(stream, direction, codec));
       }
 
 #ifdef HAVE_ZLIB
-      StreamPtr CreateGzFileStream(const std::string &fileName, Stream::StreamDirection direction, CodecPtr codec)
+      StreamPtr CreateGzFileStream(const std::string &fileName, Stream::Direction direction, CodecPtr codec)
       {
          StreamPtr stream(new imp::GzFileStream(fileName, direction, codec));
          if (!stream->IsOk())
@@ -107,14 +107,14 @@ namespace tc
          return stream;
       }
 #else
-      StreamPtr CreateGzFileStream(const std::string&, Stream::StreamDirection, CodecPtr)
+      StreamPtr CreateGzFileStream(const std::string&, Stream::Direction, CodecPtr)
       {
          return StreamPtr();
       }
 #endif
 
 #ifdef HAVE_BZIP2
-      StreamPtr CreateBz2FileStream(const std::string &fileName, Stream::StreamDirection direction, CodecPtr codec)
+      StreamPtr CreateBz2FileStream(const std::string &fileName, Stream::Direction direction, CodecPtr codec)
       {
          StreamPtr stream(new imp::Bz2FileStream(fileName, direction, codec));
          if (!stream->IsOk())
@@ -125,7 +125,7 @@ namespace tc
          return stream;
       }
 #else
-      StreamPtr CreateBz2FileStream(const std::string&, Stream::StreamDirection, CodecPtr)
+      StreamPtr CreateBz2FileStream(const std::string&, Stream::Direction, CodecPtr)
       {
          return StreamPtr();
       }
@@ -145,13 +145,13 @@ namespace tc
       StreamPtr CreateStdOutStream()
       {
          CodecPtr codec(CreateAsciiCodec());
-         return CreateFileStream(stdout, Stream::STREAM_WRITE, codec);
+         return CreateFileStream(stdout, Stream::Direction::WRITE, codec);
       }
 
       StreamPtr CreateStdErrorStream()
       {
          CodecPtr codec(CreateAsciiCodec());
-         return CreateFileStream(stderr, Stream::STREAM_WRITE, codec);
+         return CreateFileStream(stderr, Stream::Direction::WRITE, codec);
       }
 
       static imp::Rng69069 s_internal_rng(static_cast<uint32_t>(Time::Now().ToMilliSeconds()));

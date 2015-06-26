@@ -91,7 +91,7 @@ namespace tc
        * @return Shared pointer to the stream
        */
       TCBASE_API StreamPtr CreateFileStream(std::FILE* stream, 
-                                            Stream::StreamDirection direction, 
+                                            Stream::Direction direction, 
                                             CodecPtr codec);
       /**
        * @brief Create an file stream
@@ -101,7 +101,7 @@ namespace tc
        * @return Shared pointer to the stream
        */
       TCBASE_API StreamPtr CreateFileStream(const std::string &fileName,
-                                            Stream::StreamDirection direction,
+                                            Stream::Direction direction,
                                             CodecPtr codec);
 
       /**
@@ -112,7 +112,7 @@ namespace tc
        * @return Shared pointer to the stream
        */
       TCBASE_API StreamPtr CreateGzFileStream(const std::string &fileName,
-                                            Stream::StreamDirection direction,
+                                            Stream::Direction direction,
                                             CodecPtr codec);
 
       /**
@@ -123,7 +123,7 @@ namespace tc
        * @return Shared pointer to the stream
        */
       TCBASE_API StreamPtr CreateBz2FileStream(const std::string &fileName,
-                                            Stream::StreamDirection direction,
+                                            Stream::Direction direction,
                                             CodecPtr codec);
 
       /**

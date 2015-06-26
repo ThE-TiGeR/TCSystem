@@ -79,7 +79,7 @@ namespace tc
             ARRAY_DIMENSION = SIZE1 * SIZE2
          };
 
-         enum PredefinedType
+         enum class PredefinedType
          {
             ZERO,
             IDENTITY
@@ -92,7 +92,7 @@ namespace tc
 
          explicit MatrixN(PredefinedType init)
          {
-            if (init == IDENTITY)
+            if (init == PredefinedType::IDENTITY)
             {
                Identity();
             }

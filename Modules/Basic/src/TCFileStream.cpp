@@ -45,7 +45,7 @@ namespace tc
    namespace imp
    {
 
-      FileStream::FileStream(std::FILE *stream, StreamDirection direction, CodecPtr codec)
+      FileStream::FileStream(std::FILE *stream, Direction direction, CodecPtr codec)
          :StreamBase(codec)
          ,m_stream_pointer(0)
          ,m_file_name()
@@ -53,7 +53,7 @@ namespace tc
          SetStream(stream, direction);
       }
 
-      FileStream::FileStream(const std::string &fileName, StreamDirection direction, CodecPtr codec)
+      FileStream::FileStream(const std::string &fileName, Direction direction, CodecPtr codec)
          :StreamBase(codec)
          ,m_stream_pointer(0)
          ,m_file_name(fileName)
@@ -77,7 +77,7 @@ namespace tc
          StreamBase::CloseStream();
       }
 
-      void FileStream::SetStream(std::FILE *stream, StreamDirection direction)
+      void FileStream::SetStream(std::FILE *stream, Direction direction)
       {
          CloseStream();
 
@@ -87,12 +87,12 @@ namespace tc
          SetStreamDirection(direction);
       }
 
-      void FileStream::SetStream(const std::string &fileName, StreamDirection direction)
+      void FileStream::SetStream(const std::string &fileName, Direction direction)
       {
          CloseStream();
 
          FILE* file = 0;
-         if (direction == STREAM_READ)
+         if (direction == Direction::READ)
          {
 #ifdef TCOS_WINDOWS
             std::wstring wfileName(wstring::ToString(fileName));
@@ -101,7 +101,7 @@ namespace tc
             file = std::fopen(fileName.c_str(), "rb");
 #endif
          }
-         else if (direction == STREAM_WRITE)
+         else if (direction == Direction::WRITE)
          {
 #ifdef TCOS_WINDOWS
             std::wstring wfileName(wstring::ToString(fileName));
@@ -110,7 +110,7 @@ namespace tc
             file = std::fopen(fileName.c_str(), "wb");
 #endif
          }
-         else if (direction == STREAM_READ_WRITE)
+         else if (direction == Direction::READ_WRITE)
          {
 #ifdef TCOS_WINDOWS
             std::wstring wfileName(wstring::ToString(fileName));
@@ -123,7 +123,7 @@ namespace tc
          if (!file)
          {
             TCERRORS("TCBASE", "Error opening file '" << fileName << "'");
-            SetStatus(ERROR_STREAM_OPEN);
+			SetStatus(Error::STREAM_OPEN);
          }
 
          SetStream(file, direction);
@@ -134,7 +134,7 @@ namespace tc
       uint64_t FileStream::ReadBytes(uint64_t nBytes, void *bytes)
       {
          // check for an error
-         if (Error())
+         if (HasError())
          {
             return 0;
          }
@@ -142,7 +142,7 @@ namespace tc
          // check mode
          if (!IsReading())
          {
-            SetStatus(ERROR_STREAM_DIRECTION);
+			 SetStatus(Error::STREAM_DIRECTION);
             return 0;
          }
 
@@ -155,11 +155,11 @@ namespace tc
             {
                if (std::feof(m_stream_pointer))
                {
-                  SetStatus(ERROR_END_OF_STREAM);
+				   SetStatus(Error::END_OF_STREAM);
                }
                else
                {
-                  SetStatus(ERROR_READ_FROM_STREAM);
+				   SetStatus(Error::READ_FROM_STREAM);
                }
                break;
             }
@@ -177,7 +177,7 @@ namespace tc
          }
 
          // check for an error
-         if (Error())
+         if (HasError())
          {
             return 0;
          }
@@ -185,7 +185,7 @@ namespace tc
          // check mode
          if (!IsWriting())
          {
-            SetStatus(ERROR_STREAM_DIRECTION);
+			 SetStatus(Error::STREAM_DIRECTION);
             return 0;
          }
 
@@ -196,7 +196,7 @@ namespace tc
                std::size_t(nBytes-wrote_bytes), m_stream_pointer);
             if (num <= 0)
             {
-               SetStatus(ERROR_WRITE_TO_STREAM);
+				SetStatus(Error::WRITE_TO_STREAM);
                break;
             }
             wrote_bytes += num;
@@ -208,7 +208,7 @@ namespace tc
       void FileStream::Flush()
       {
          // check for an error
-         if (Error())
+         if (HasError())
          {
             return;
          }
@@ -220,23 +220,23 @@ namespace tc
          }
          else
          {
-            SetStatus(ERROR_STREAM_DIRECTION);
+			 SetStatus(Error::STREAM_DIRECTION);
          }
       }
 
-      bool FileStream::SetPosition(int64_t pos, StreamPosition pos_mode)
+      bool FileStream::SetPosition(int64_t pos, Position pos_mode)
       {
          ResetStatus();
 
          switch(pos_mode)
          {
-         case POSITION_SET:
+         case Position::SET:
             return std::fseek(m_stream_pointer, long(pos), SEEK_SET) == 0;
 
-         case POSITION_CURRENT:
+         case Position::CURRENT:
             return std::fseek(m_stream_pointer, long(pos), SEEK_CUR) == 0;
 
-         case POSITION_END:
+         case Position::END:
             return std::fseek(m_stream_pointer, long(pos), SEEK_END) == 0;
          }
 

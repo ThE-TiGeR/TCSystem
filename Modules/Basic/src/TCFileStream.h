@@ -71,13 +71,13 @@ namespace imp
        * @param stream the pointer to the stream
        * @param direction defines how to open the file @see TCStream::stream direction
        */
-      FileStream(std::FILE* stream, StreamDirection direction, CodecPtr codec);
+      FileStream(std::FILE* stream, Direction direction, CodecPtr codec);
       /**
        * construct an TCAscciStreamObject with an filename and the stream direction
        * @param fileName name of the file which to open
        * @param direction defines how to open the file @see TCStream::stream direction
        */
-      FileStream(const std::string &fileName, StreamDirection direction, CodecPtr codec);
+      FileStream(const std::string &fileName, Direction direction, CodecPtr codec);
 
       virtual ~FileStream();
 
@@ -87,16 +87,16 @@ namespace imp
        * @param stream the pointer to the stream
        * @param direction defines how to the stream was opened @see TCStream::stream direction
        */
-      void SetStream(std::FILE *stream, StreamDirection direction);
+      void SetStream(std::FILE *stream, Direction direction);
       /**
        * set a new stream with an filename and the stream direction
        * @param fileName name of the file which to open
        * @param direction defines how to open the file @see TCStream::stream direction
        */
-      void SetStream(const std::string &fileName, StreamDirection direction);
+      void SetStream(const std::string &fileName, Direction direction);
 
       virtual StreamPtr Clone();
-      virtual bool SetPosition(int64_t, StreamPosition pos);
+      virtual bool SetPosition(int64_t, Position pos);
       virtual uint64_t GetPosition() const;
 
       /**

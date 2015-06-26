@@ -74,15 +74,8 @@ namespace multi_threading
          MSG_ID_UNKNOWN    = 0xffffffff  ///< Undefined message id, for getting all messages
       };
 
-      /** @brief Predefined timeout values for getting messages */
-      enum TimeOut
-      {
-         TIMEOUT_NO = 0,
-         TIMEOUT_INFINITE = 0xffffffff
-      };
-
       /** @brief Return values of the Get message methodes */
-      enum ReturnValue
+      enum class ReturnValue
       {
          MSG_RECEIVE_FAILED = 0,
          MSG_RECEIVE_TIMEOUT = 1,

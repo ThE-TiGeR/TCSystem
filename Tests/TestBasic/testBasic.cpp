@@ -366,7 +366,7 @@ static void RunSocketTest(int narg, char** argv)
       TCTRACES("TestBasic", 5,"connecting ... ");
       if (use_proxy)
       {
-         socket = tc::net::factory::Connect(tc::net::Address("BSISAP05"), 3128, tc::net::TCP);
+         socket = tc::net::factory::Connect(tc::net::Address("BSISAP05"), 3128, tc::net::Protocol::TCP);
          if (!socket)
          {
             TCTRACES("TestBasic", 5,"failed connecting");
@@ -376,7 +376,7 @@ static void RunSocketTest(int narg, char** argv)
       }
       else
       {
-         socket = tc::net::factory::Connect(tc::net::Address(host_name[idx]), port[idx], tc::net::TCP);
+         socket = tc::net::factory::Connect(tc::net::Address(host_name[idx]), port[idx], tc::net::Protocol::TCP);
          if (!socket)
          {
             TCTRACES("TestBasic", 5,"failed connecting");
@@ -542,7 +542,7 @@ static void TestFindPassword()
 
 static void GzStreamTest()
 {
-    tc::StreamPtr stream =tc::factory::CreateGzFileStream("test.txt.gz", tc::Stream::STREAM_WRITE, 
+    tc::StreamPtr stream =tc::factory::CreateGzFileStream("test.txt.gz", tc::Stream::Direction::WRITE, 
         tc::factory::CreateAsciiCodec());
     stream << "Hallo" << tc::endl;
     stream << "This is a gz test" << tc::endl;
@@ -551,7 +551,7 @@ static void GzStreamTest()
 
 static void Bz2StreamTest()
 {
-    tc::StreamPtr stream =tc::factory::CreateBz2FileStream("test.txt.bz2", tc::Stream::STREAM_WRITE, 
+    tc::StreamPtr stream =tc::factory::CreateBz2FileStream("test.txt.bz2", tc::Stream::Direction::WRITE, 
         tc::factory::CreateAsciiCodec());
     stream << "Hallo" << tc::endl;
     stream << "This is a bz2 test" << tc::endl;

@@ -68,7 +68,7 @@ namespace imp
        */
       static ThreadPtr Create(const std::string& thread_name,
                               uint32_t stack_size,
-                              ThreadPriority priority);
+                              Priority priority);
       /**
        * @return  the calling thread's Thread object.
        *          If the calling thread is not the main thread and
@@ -81,18 +81,18 @@ namespace imp
 
    public:
       ThreadPthread(const std::string& thread_name,
-                  uint32_t stack_size, ThreadPriority priority);
+                  uint32_t stack_size, Priority priority);
       ThreadPthread(const std::string& thread_name, pthread_t handle);
       virtual ~ThreadPthread();
 
    protected:
       virtual bool CreateOSThread(InitStruct* init_data);
       virtual bool JoinOS();
-      virtual bool SetPriorityOS(ThreadPriority priority);
+      virtual bool SetPriorityOS(Priority priority);
 
    private:
       /** @brief Get OS dependent thread priority because of ThreadPriority */
-      static int32_t GetPriority(ThreadPriority priority);
+      static int32_t GetPriority(Priority priority);
       static void* Wrapper(void* ptr);
 
    private:

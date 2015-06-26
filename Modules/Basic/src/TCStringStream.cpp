@@ -52,7 +52,7 @@ namespace tc
          m_string(memory),
          m_string_position(0)
       {
-         SetStreamDirection(STREAM_READ_WRITE);
+         SetStreamDirection(Direction::READ_WRITE);
       }
 
       StringStream::~StringStream()
@@ -62,7 +62,7 @@ namespace tc
       uint64_t StringStream::ReadBytes(uint64_t nBytes, void *bytes)
       {
          // check for an error
-         if (Error())
+         if (HasError())
          {
             return 0;
          }
@@ -70,7 +70,7 @@ namespace tc
          // check mode
          if (!IsReading())
          {
-            SetStatus(ERROR_STREAM_DIRECTION);
+		      SetStatus(Error::STREAM_DIRECTION);
             return 0;
          }
 
@@ -81,7 +81,7 @@ namespace tc
 
          if (m_string_position == m_string.size())
          {
-            SetStatus(ERROR_END_OF_STREAM);
+            SetStatus(Error::END_OF_STREAM);
             return 0;
          }
 
@@ -99,7 +99,7 @@ namespace tc
       uint64_t StringStream::WriteBytes(uint64_t nBytes, const void *bytes)
       {
          // check for an error
-         if (Error())
+         if (HasError())
          {
             return 0;
          }
@@ -107,7 +107,7 @@ namespace tc
          // check mode
          if (!IsWriting())
          {
-            SetStatus(ERROR_STREAM_DIRECTION);
+            SetStatus(Error::STREAM_DIRECTION);
             return 0;
          }
 
@@ -124,15 +124,15 @@ namespace tc
          return nBytes;
       }
 
-      bool StringStream::SetPosition(int64_t pos, StreamPosition pos_mode)
+      bool StringStream::SetPosition(int64_t pos, Position pos_mode)
       {
          switch(pos_mode)
          {
-         case POSITION_SET:
+         case Position::SET:
             m_string_position = std::string::size_type(pos);
             break;
 
-         case POSITION_CURRENT:
+         case Position::CURRENT:
             if (pos > 0)
             {
                m_string_position += std::string::size_type(pos);
@@ -143,7 +143,7 @@ namespace tc
             }
             break;
 
-         case POSITION_END:
+         case Position::END:
             if (pos > 0)
             {
                m_string_position = m_string.size() + std::string::size_type(pos);

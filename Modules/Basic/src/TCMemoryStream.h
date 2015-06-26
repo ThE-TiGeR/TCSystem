@@ -76,7 +76,7 @@ namespace imp
 
       virtual StreamPtr Clone();
 
-      virtual bool SetPosition(int64_t, StreamPosition pos);
+      virtual bool SetPosition(int64_t, Position pos);
       virtual uint64_t GetPosition() const;
 
       virtual uint64_t ReadBytes(uint64_t nBytes, void *bytes);

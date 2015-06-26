@@ -58,12 +58,12 @@ namespace tc
 
          static const char* Protocol2String(Protocol protocol)
          {
-            return s_protocol_2_string[protocol];
+            return s_protocol_2_string[static_cast<int>(protocol)];
          }
 
          ReadWriteSocketPtr Connect(const Address& ip_addr, PortNumber port, Protocol protocol)
          {
-            SocketId s = imp::util::CreateSocket(protocol == TCP ? SOCK_STREAM : SOCK_DGRAM, Protocol2String(protocol));
+            SocketId s = imp::util::CreateSocket(protocol == Protocol::TCP ? SOCK_STREAM : SOCK_DGRAM, Protocol2String(protocol));
             if (s == imp::invalid_socket)
             {
                return ReadWriteSocketPtr();
@@ -89,7 +89,7 @@ namespace tc
 
          static SharedPtr<imp::SocketImp> CreateListenSocket(PortNumber port, uint32_t connections, Protocol protocol, const Address& ip_addr)
          {
-            SocketId s = imp::util::CreateSocket(protocol == TCP ? SOCK_STREAM : SOCK_DGRAM, Protocol2String(protocol));
+            SocketId s = imp::util::CreateSocket(protocol == Protocol::TCP ? SOCK_STREAM : SOCK_DGRAM, Protocol2String(protocol));
             if (s == imp::invalid_socket)
             {
                return SharedPtr<imp::SocketImp>();
@@ -110,7 +110,7 @@ namespace tc
                return SharedPtr<imp::SocketImp>();
             }
 
-            if (protocol != UDP)
+            if (protocol != Protocol::UDP)
             {
                if (::listen(s, connections) == SOCKET_ERROR)
                {
@@ -126,12 +126,12 @@ namespace tc
 
          SocketPtr CreateTcpListenSocket(PortNumber port, uint32_t connections, const Address& ip_addr)
          {
-            return ReadWriteSocketPtr(CreateListenSocket(port, connections, TCP, ip_addr));
+            return ReadWriteSocketPtr(CreateListenSocket(port, connections, Protocol::TCP, ip_addr));
          }
 
          BroadcastReadSocketPtr CreateUdpListenSocket(PortNumber port, uint32_t connections, const Address& ip_addr)
          {
-            return CreateListenSocket(port, connections, UDP, ip_addr);
+            return CreateListenSocket(port, connections, Protocol::UDP, ip_addr);
          }
 
          ReadWriteSocketPtr Accept(SocketPtr socket)
@@ -169,7 +169,7 @@ namespace tc
 
          BroadcastWriteSocketPtr CreateUdpBroadcastSocket()
          {
-            SocketId s = imp::util::CreateSocket(SOCK_DGRAM, Protocol2String(UDP));
+            SocketId s = imp::util::CreateSocket(SOCK_DGRAM, Protocol2String(Protocol::UDP));
             if (s == imp::invalid_socket)
             {
                return BroadcastWriteSocketPtr();

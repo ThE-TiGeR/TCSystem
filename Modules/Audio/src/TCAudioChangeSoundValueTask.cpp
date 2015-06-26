@@ -66,13 +66,13 @@ namespace tc
          {
             m_change_value_duration = Time::Zero();
             ApplyNewValueOnSoundData(m_sound_data, m_end_value);
-            return TASK_FINISHED;
+            return ReturnType::TASK_FINISHED;
          }
 
          m_execution_time += diff_time;
          ApplyNewValueOnSoundData(m_sound_data, GetCurrentValue());
 
-         return TASK_OK;
+         return ReturnType::TASK_OK;
       }
 
       double ChangeSoundValueTask::GetCurrentValue()

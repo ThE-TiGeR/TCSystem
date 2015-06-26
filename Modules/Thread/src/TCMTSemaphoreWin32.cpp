@@ -76,11 +76,11 @@ namespace tc
 
             switch(mode)
             {
-            case factory::CRM_ALWAYS:
+            case factory::CreationMode::ALWAYS:
                return true;
-            case factory::CRM_WHEN_EXISTS:
+            case factory::CreationMode::WHEN_EXISTS:
                return error == ERROR_ALREADY_EXISTS;
-            case factory::CRM_WHEN_NOT_EXISTS:
+            case factory::CreationMode::WHEN_NOT_EXISTS:
                return error != ERROR_ALREADY_EXISTS;
             }
 

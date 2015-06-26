@@ -67,18 +67,18 @@ namespace imp
       /** destruct an TCStreamBase object */
       virtual ~StreamBase();
 
-      int32_t GetStatus() const
+	  Error GetStatus() const
       {
          return m_status;
       }
       void ResetStatus();
-      bool Error() const
+      bool HasError() const
       {
-         return GetStatus() != ERROR_NONE;
+         return GetStatus() != Error::NONE;
       }
       bool IsOk() const 
       {
-         return GetStatus() == ERROR_NONE;
+		  return GetStatus() == Error::NONE;
       }
       
       bool GetDisplayErrorMessages() const
@@ -129,31 +129,31 @@ namespace imp
        * set the stream error flag
        * @param err error number to set the status
        */
-      void SetStatus(int32_t err) const;
+	  void SetStatus(Error err) const;
       /** displays the error message because of the status */
       virtual void DisplayErrorMessage() const;
 
       /** @return the stream direction */
-      void SetStreamDirection(StreamDirection direction) { m_stream_direction = direction; }
+      void SetStreamDirection(Direction direction) { m_stream_direction = direction; }
       /** @return the stream direction */
-      StreamDirection GetStreamDirection() const
+      Direction GetStreamDirection() const
       {
          return m_stream_direction;
       }
       /** @return true if the stream direction is reading */
       bool IsReading() const
       {
-         return STREAM_READ == m_stream_direction || IsReadingAndWriting();
+         return Direction::READ == m_stream_direction || IsReadingAndWriting();
       }
       /** @return true if the stream direction is reading */
       bool IsWriting() const
       {
-         return STREAM_WRITE == m_stream_direction || IsReadingAndWriting();
+         return Direction::WRITE == m_stream_direction || IsReadingAndWriting();
       }
       /** @return true if the stream direction is reading */
       bool IsReadingAndWriting() const
       {
-        return STREAM_READ_WRITE == m_stream_direction;
+        return Direction::READ_WRITE == m_stream_direction;
       }
       /** @return the pointer to the codec */
       CodecPtr GetCodec()
@@ -164,9 +164,9 @@ namespace imp
       /** Pointer to the codec which is used to de/encode the data */
       CodecPtr m_codec;
       /** defines the direction of the stream */
-      StreamDirection m_stream_direction;
+      Direction m_stream_direction;
       /** stores the error of the last operation */
-      mutable int32_t m_status;
+	  mutable Error m_status;
       /** true if we should write out error messages else false */
       bool m_display_error_messages;
    };

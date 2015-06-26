@@ -51,7 +51,7 @@ namespace tc
          m_memory(memory),
          m_memory_position(0)
       {
-         SetStreamDirection(STREAM_READ_WRITE);
+         SetStreamDirection(Direction::READ_WRITE);
       }
 
       MemoryStream::~MemoryStream()
@@ -61,7 +61,7 @@ namespace tc
       uint64_t MemoryStream::ReadBytes(uint64_t num_bytes, void* bytes)
       {
          // check for an error
-         if (Error())
+         if (HasError())
          {
             return 0;
          }
@@ -69,7 +69,7 @@ namespace tc
          // check mode
          if (!IsReading())
          {
-            SetStatus(ERROR_STREAM_DIRECTION);
+            SetStatus(Error::STREAM_DIRECTION);
             return 0;
          }
 
@@ -94,7 +94,7 @@ namespace tc
       uint64_t MemoryStream::WriteBytes(uint64_t num_bytes, const void* bytes)
       {
          // check for an error
-         if (Error())
+         if (HasError())
          {
             return 0;
          }
@@ -102,7 +102,7 @@ namespace tc
          // check mode
          if (!IsWriting())
          {
-            SetStatus(ERROR_STREAM_DIRECTION);
+            SetStatus(Error::STREAM_DIRECTION);
             return 0;
          }
 
@@ -131,7 +131,7 @@ namespace tc
          return num_bytes;
       }
 
-      bool MemoryStream::SetPosition(int64_t pos, StreamPosition pos_mode)
+      bool MemoryStream::SetPosition(int64_t pos, Position pos_mode)
       {
          if (uint64_t(util::Abs(pos)) > std::numeric_limits<ByteVector::size_type>::max())
          {
@@ -140,11 +140,11 @@ namespace tc
 
          switch(pos_mode)
          {
-         case POSITION_SET:
+         case Position::SET:
             m_memory_position = ByteVector::size_type(pos);
             break;
 
-         case POSITION_CURRENT:
+         case Position::CURRENT:
             if (pos > 0)
             {
                m_memory_position += ByteVector::size_type(pos);
@@ -155,7 +155,7 @@ namespace tc
             }
             break;
 
-         case POSITION_END:
+         case Position::END:
             if (pos > 0)
             {
                m_memory_position = m_memory.size() + ByteVector::size_type(pos);

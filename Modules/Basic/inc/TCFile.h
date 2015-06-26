@@ -61,25 +61,25 @@ namespace tc
     */
    namespace file
    {
-      enum FileAttributes
+      enum FileAttributes: uint32_t
       {
-         FILEATTR_OWNER_WRITE          = 0x00000001,
-         FILEATTR_OWNER_READ           = 0x00000002,
-         FILEATTR_OWNER_EXEC           = 0x00000004,
-         FILEATTR_GROUP_WRITE          = 0x00000008,
-         FILEATTR_GROUP_READ           = 0x00000010,
-         FILEATTR_GROUP_EXEC           = 0x00000020,
-         FILEATTR_EVERYONE_WRITE       = 0x00000040,
-         FILEATTR_EVERYONE_READ        = 0x00000080,
-         FILEATTR_EVERYONE_EXEC        = 0x00000100,
+         OWNER_WRITE          = 0x00000001,
+         OWNER_READ           = 0x00000002,
+         OWNER_EXEC           = 0x00000004,
+         GROUP_WRITE          = 0x00000008,
+         GROUP_READ           = 0x00000010,
+         GROUP_EXEC           = 0x00000020,
+         EVERYONE_WRITE       = 0x00000040,
+         EVERYONE_READ        = 0x00000080,
+         EVERYONE_EXEC        = 0x00000100,
 
-         FILEATTR_READONLY             = 0x00000200,
-         FILEATTR_ARCHIVE              = 0x00000400,
-         FILEATTR_SYSTEM               = 0x00000800,
-         FILEATTR_HIDDEN               = 0x00001000,
+         READONLY             = 0x00000200,
+         ARCHIVE              = 0x00000400,
+         SYSTEM               = 0x00000800,
+         HIDDEN               = 0x00001000,
 
-         FILEATTR_WRITE                = 0x00002000,
-         FILEATTR_EXECUTE              = 0x00004000
+         WRITE                = 0x00002000,
+         EXECUTE              = 0x00004000
 
       };
 

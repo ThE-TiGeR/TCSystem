@@ -77,19 +77,19 @@ namespace tc
          public:
             Report(TestCase::CPtr c, const Failure& f)
                : testcase_(c),
-               type_(T_FAILURE),
+               type_(Type::FAILURE),
                failure_(f) {}
             Report(TestCase::CPtr c, const std::string& m)
                : testcase_(c),
-               type_(T_ERROR),
+               type_(Type::ERROR),
                failure_(std::string(), std::string(), 0),
                message_(m) {}
             void print(std::ostream&) const;
          private:
-            enum Type 
+            enum class Type 
             {
-               T_FAILURE,
-               T_ERROR
+               FAILURE,
+               ERROR
             };
             TestCase::CPtr testcase_;
             Type type_;

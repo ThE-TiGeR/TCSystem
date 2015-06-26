@@ -43,20 +43,20 @@ namespace tc
 {
    namespace imp
    {
-      GzFileStream::GzFileStream(const std::string &fileName, StreamDirection direction, CodecPtr codec)
+      GzFileStream::GzFileStream(const std::string &fileName, Direction direction, CodecPtr codec)
          :StreamBase(codec)
          ,m_file_name(fileName)
          ,m_file(0)
       {
-         if (direction == STREAM_READ)
+         if (direction == Direction::READ)
          {
             m_file = ::gzopen(fileName.c_str(), "rb");
          }
-         else if (direction == STREAM_WRITE)
+         else if (direction == Direction::WRITE)
          {
             m_file = ::gzopen(fileName.c_str(), "wb");
          }
-         else if (direction == STREAM_READ_WRITE)
+         else if (direction == Direction::READ_WRITE)
          {
             m_file = ::gzopen(fileName.c_str(), "wb+");
          }
@@ -64,7 +64,7 @@ namespace tc
          if (!m_file)
          {
             TCERRORS("TCBASE", "Error opening file '" << fileName << "'");
-            SetStatus(ERROR_STREAM_OPEN);
+            SetStatus(Error::STREAM_OPEN);
          }
          SetStreamDirection(direction);
       }
@@ -88,7 +88,7 @@ namespace tc
       uint64_t GzFileStream::ReadBytes(uint64_t nBytes, void *bytes)
       {
          // check for an error
-         if (Error())
+         if (HasError())
          {
             return 0;
          }
@@ -96,7 +96,7 @@ namespace tc
          // check mode
          if (!IsReading())
          {
-            SetStatus(ERROR_STREAM_DIRECTION);
+            SetStatus(Error::STREAM_DIRECTION);
             return 0;
          }
 
@@ -109,11 +109,11 @@ namespace tc
             {
                if (::gzeof(m_file))
                {
-                  SetStatus(ERROR_END_OF_STREAM);
+                  SetStatus(Error::END_OF_STREAM);
                }
                else
                {
-                  SetStatus(ERROR_READ_FROM_STREAM);
+                  SetStatus(Error::READ_FROM_STREAM);
                }
                break;
             }
@@ -131,7 +131,7 @@ namespace tc
          }
 
          // check for an error
-         if (Error())
+         if (HasError())
          {
             return 0;
          }
@@ -139,7 +139,7 @@ namespace tc
          // check mode
          if (!IsWriting())
          {
-            SetStatus(ERROR_STREAM_DIRECTION);
+            SetStatus(Error::STREAM_DIRECTION);
             return 0;
          }
 
@@ -150,7 +150,7 @@ namespace tc
                unsigned(nBytes-wrote_bytes));
             if (num <= 0)
             {
-               SetStatus(ERROR_WRITE_TO_STREAM);
+               SetStatus(Error::WRITE_TO_STREAM);
                break;
             }
             wrote_bytes += num;
@@ -162,7 +162,7 @@ namespace tc
       void GzFileStream::Flush()
       {
          // check for an error
-         if (Error())
+         if (HasError())
          {
             return;
          }
@@ -174,23 +174,23 @@ namespace tc
          }
          else
          {
-            SetStatus(ERROR_STREAM_DIRECTION);
+            SetStatus(Error::STREAM_DIRECTION);
          }
       }
 
-      bool GzFileStream::SetPosition(int64_t pos, StreamPosition pos_mode)
+      bool GzFileStream::SetPosition(int64_t pos, Position pos_mode)
       {
          ResetStatus();
 
          switch(pos_mode)
          {
-         case POSITION_SET:
+         case Position::SET:
             return ::gzseek(m_file, z_off_t(pos), SEEK_SET) == 0;
 
-         case POSITION_CURRENT:
+         case Position::CURRENT:
             return ::gzseek(m_file, z_off_t(pos), SEEK_CUR) == 0;
 
-         case POSITION_END:
+         case Position::END:
             return ::gzseek(m_file, z_off_t(pos), SEEK_END) == 0;
          }
 

@@ -58,17 +58,12 @@ namespace tc
    class TCBASE_API Time
    {
    public:
-      enum Consts
-      {
-         ONE_SECOND_AS_MILLI_SECONDS      = 1000,
-         ONE_SECOND_AS_MICRO_SECONDS      = ONE_SECOND_AS_MILLI_SECONDS * 1000,
-         ONE_SECOND_AS_NANO_SECONDS       = ONE_SECOND_AS_MICRO_SECONDS * 1000,
-
-         ONE_MILLI_SECOND_AS_MICRO_SECONDS = 1000,
-         ONE_MILLI_SECOND_AS_NANO_SECONDS  = ONE_MILLI_SECOND_AS_MICRO_SECONDS * 1000,
-
-         ONE_MICRO_SECOND_AS_NANO_SECONDS = 1000
-      };
+      static const uint64_t ONE_SECOND_AS_MILLI_SECONDS = 1000;
+      static const uint64_t ONE_SECOND_AS_MICRO_SECONDS = ONE_SECOND_AS_MILLI_SECONDS * 1000;
+      static const uint64_t ONE_SECOND_AS_NANO_SECONDS = ONE_SECOND_AS_MICRO_SECONDS * 1000;
+      static const uint64_t ONE_MILLI_SECOND_AS_MICRO_SECONDS = 1000;
+      static const uint64_t ONE_MILLI_SECOND_AS_NANO_SECONDS = ONE_MILLI_SECOND_AS_MICRO_SECONDS * 1000;
+      static const uint64_t ONE_MICRO_SECOND_AS_NANO_SECONDS = 1000;
 
    public:
       /** Create a Time object with specified seconds */

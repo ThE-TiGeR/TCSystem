@@ -54,7 +54,7 @@ namespace tc
       {
          ThreadPtr ThreadWin32::Create(const std::string& thread_name,
             uint32_t stack_size,
-            ThreadPriority priority)
+            Priority priority)
          {
             TCTRACES("TCMT", 1, thread_name);
 
@@ -87,7 +87,7 @@ namespace tc
          }
 
          ThreadWin32::ThreadWin32(const std::string& thread_name,
-            uint32_t stack_size, Thread::ThreadPriority priority)
+            uint32_t stack_size, Thread::Priority priority)
             :ThreadBase(thread_name, stack_size, priority),
             m_handle(0),
             m_thread_id(0)
@@ -95,7 +95,7 @@ namespace tc
          }
 
          ThreadWin32::ThreadWin32(const std::string& thread_name, void* handle, unsigned long id)
-            :ThreadBase(thread_name, 0, PRIORITY_NORMAL),
+            :ThreadBase(thread_name, 0, Priority::NORMAL),
             m_handle(handle),
             m_thread_id(id)
          {
@@ -145,7 +145,7 @@ namespace tc
             return true;
          }
 
-         bool ThreadWin32::SetPriorityOS(ThreadPriority priority_in)
+         bool ThreadWin32::SetPriorityOS(Priority priority_in)
          {
             if (!m_handle)
             {
@@ -192,24 +192,24 @@ namespace tc
             ::Sleep(0);
          }
 
-         int32_t ThreadWin32::GetPriority(ThreadPriority pri)
+         int32_t ThreadWin32::GetPriority(Priority pri)
          {
             switch (pri)
             {
-            case PRIORITY_LOWEST:
+            case Priority::LOWEST:
                return THREAD_PRIORITY_LOWEST;
 
-            case PRIORITY_LOW:
+            case Priority::LOW:
                return THREAD_PRIORITY_BELOW_NORMAL;
 
-            case PRIORITY_NORMAL:
+            case Priority::NORMAL:
             default:
                return THREAD_PRIORITY_NORMAL;
 
-            case PRIORITY_HIGH:
+            case Priority::HIGH:
                return THREAD_PRIORITY_ABOVE_NORMAL;
 
-            case PRIORITY_HIGHEST:
+            case Priority::HIGHEST:
                return THREAD_PRIORITY_HIGHEST;
             }
          }

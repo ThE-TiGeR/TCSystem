@@ -47,17 +47,17 @@ namespace {
 class indent
 {
 public:
-    indent(size_t num) : num_(num) {}
-    size_t num() const { return num_; }
+   indent(size_t num) : num_(num) {}
+   size_t num() const { return num_; }
 private:
-    size_t num_;
+   size_t num_;
 };
 static std::ostream& operator<<(std::ostream& o, const indent& i)
 {
-    size_t num = i.num();
-    while (num--)
-        o << "  ";
-    return o;
+   size_t num = i.num();
+   while (num--)
+      o << "  ";
+   return o;
 }
 
 }
@@ -65,129 +65,132 @@ static std::ostream& operator<<(std::ostream& o, const indent& i)
 namespace tc {
 namespace unit {
 
-void TreeTestResult::Report::print(std::ostream& o) const
-{
-    switch (type_) {
-        case T_FAILURE: {
-            o << "  Failure: " << testcase_->Name() << ": "
-              << failure_.FailedCondition()
-              << " (" << failure_.Filename() << ':' << failure_.Line() << ')';
-            break;
-        }
-        case T_ERROR: {
-            o << "  Error:   " << testcase_->Name() << ": " << message_;
-            break;
-        }
-    }
-    o << '\n';
-}
+   void TreeTestResult::Report::print(std::ostream& o) const
+   {
+      switch (type_)
+      {
+      case Type::FAILURE:
+      {
+         o << "  Failure: " << testcase_->Name() << ": "
+            << failure_.FailedCondition()
+            << " (" << failure_.Filename() << ':' << failure_.Line() << ')';
+         break;
+      }
+      case Type::ERROR:
+      {
+         o << "  Error:   " << testcase_->Name() << ": " << message_;
+         break;
+      }
+      }
+      o << '\n';
+   }
 
-TreeTestResult::TreeTestResult(std::ostream& ostream)
-: ostream_(ostream),
-  cur_failure(std::string(), std::string(), 0),
-  p_cur_failure(0),
-  p_cur_error(0),
-  num_suites_entered_(0),
-  num_tests_run_(0),
-  num_success_(0),
-  num_failure_(0),
-  num_error_(0),
-  num_assertion_(0),
-  unclean_test_() {}
+   TreeTestResult::TreeTestResult(std::ostream& ostream)
+      : ostream_(ostream),
+      cur_failure(std::string(), std::string(), 0),
+      p_cur_failure(0),
+      p_cur_error(0),
+      num_suites_entered_(0),
+      num_tests_run_(0),
+      num_success_(0),
+      num_failure_(0),
+      num_error_(0),
+      num_assertion_(0),
+      unclean_test_() {}
 
-void TreeTestResult::EnterSuite(TestSuite::CPtr s)
-{
-    num_suites_entered_++;
-    ostream_ << indent(suite_stack_.size()) << "+ " << s->Name() << '\n';
-    suite_stack_.push(s);
-}
+   void TreeTestResult::EnterSuite(TestSuite::CPtr s)
+   {
+      num_suites_entered_++;
+      ostream_ << indent(suite_stack_.size()) << "+ " << s->Name() << '\n';
+      suite_stack_.push(s);
+   }
 
-void TreeTestResult::LeaveSuite(TestSuite::CPtr /*s*/)
-{
-    assert(suite_stack_.size() != 0);
-    suite_stack_.pop();
-}
+   void TreeTestResult::LeaveSuite(TestSuite::CPtr /*s*/)
+   {
+      assert(suite_stack_.size() != 0);
+      suite_stack_.pop();
+   }
 
-void TreeTestResult::EnterTest(TestCase::CPtr c)
-{
-    num_tests_run_++;
-    ostream_ << indent(suite_stack_.size()) << "- " << c->Name() << "...";
-}
+   void TreeTestResult::EnterTest(TestCase::CPtr c)
+   {
+      num_tests_run_++;
+      ostream_ << indent(suite_stack_.size()) << "- " << c->Name() << "...";
+   }
 
-void TreeTestResult::LeaveTest(TestCase::CPtr c)
-{
-    if (p_cur_error) {
-        num_error_++;
-        reports_.push_back(Report(c, *p_cur_error));
-        ostream_ << "error";
-    }
-    else if (p_cur_failure) {
-        num_failure_++;
-        reports_.push_back(Report(c, *p_cur_failure));
-        ostream_ << "failed";
-    }
-    else {
-        num_success_++;
-        ostream_ << "ok";
-    }
+   void TreeTestResult::LeaveTest(TestCase::CPtr c)
+   {
+      if (p_cur_error) {
+         num_error_++;
+         reports_.push_back(Report(c, *p_cur_error));
+         ostream_ << "error";
+      }
+      else if (p_cur_failure) {
+         num_failure_++;
+         reports_.push_back(Report(c, *p_cur_failure));
+         ostream_ << "failed";
+      }
+      else {
+         num_success_++;
+         ostream_ << "ok";
+      }
 
-    ostream_ << '\n';
-    p_cur_failure = 0;
-    p_cur_error = 0;
-}
+      ostream_ << '\n';
+      p_cur_failure = 0;
+      p_cur_error = 0;
+   }
 
-void TreeTestResult::AddSuccess(TestCase::CPtr) {}
+   void TreeTestResult::AddSuccess(TestCase::CPtr) {}
 
-void TreeTestResult::AddFailure(TestCase::CPtr, const Failure& f)
-{
-    cur_failure = f;
-    p_cur_failure = &cur_failure;
-}
+   void TreeTestResult::AddFailure(TestCase::CPtr, const Failure& f)
+   {
+      cur_failure = f;
+      p_cur_failure = &cur_failure;
+   }
 
-void TreeTestResult::AddError(TestCase::CPtr, const std::string& message)
-{
-    cur_error = message;
-    p_cur_error = &cur_error;
-}
+   void TreeTestResult::AddError(TestCase::CPtr, const std::string& message)
+   {
+      cur_error = message;
+      p_cur_error = &cur_error;
+   }
 
-void TreeTestResult::UncleanAlarm(TestCase::CPtr t)
-{
-    unclean_test_ = t;
-}
+   void TreeTestResult::UncleanAlarm(TestCase::CPtr t)
+   {
+      unclean_test_ = t;
+   }
 
 
-void TreeTestResult::print_summary() const
-{
-    ostream_ << "------------------------\n";
+   void TreeTestResult::print_summary() const
+   {
+      ostream_ << "------------------------\n";
 
-    if (unclean_test_) {
-        ostream_ << "ALARM: environment has not been cleared\n";
-        ostream_ << "       " << unclean_test_->Name() << '\n';
-        ostream_ << "------------------------\n";
-    }
-    
-    ostream_ << "#Success:          " << num_success_ << '\n';
-    ostream_ << "#Failures:         " << num_failure_ << '\n';
-    ostream_ << "#Errors:           " << num_error_ << '\n';
-    ostream_ << "#Tests run:        " << num_tests_run_ << '\n';
-    ostream_ << "#Suites entered:   " << num_suites_entered_ << '\n';
-    ostream_ << "#Asserts entered:  " << num_assertion_ << '\n';
-    ostream_ << "------------------------\n";
+      if (unclean_test_) {
+         ostream_ << "ALARM: environment has not been cleared\n";
+         ostream_ << "       " << unclean_test_->Name() << '\n';
+         ostream_ << "------------------------\n";
+      }
 
-    if (!ok()) {
-        ostream_ << "Details follow ...\n";
-        ostream_ << "------------------------\n";
-        for (Reports::const_iterator i = reports_.begin();
-             i != reports_.end();
-             ++i)
+      ostream_ << "#Success:          " << num_success_ << '\n';
+      ostream_ << "#Failures:         " << num_failure_ << '\n';
+      ostream_ << "#Errors:           " << num_error_ << '\n';
+      ostream_ << "#Tests run:        " << num_tests_run_ << '\n';
+      ostream_ << "#Suites entered:   " << num_suites_entered_ << '\n';
+      ostream_ << "#Asserts entered:  " << num_assertion_ << '\n';
+      ostream_ << "------------------------\n";
+
+      if (!ok()) {
+         ostream_ << "Details follow ...\n";
+         ostream_ << "------------------------\n";
+         for (Reports::const_iterator i = reports_.begin();
+            i != reports_.end();
+            ++i)
             i->print(ostream_);
-    }
-}
+      }
+   }
 
-void TreeTestResult::AddAssertion( TestCase::CPtr )
-{
-    num_assertion_++;
-}
+   void TreeTestResult::AddAssertion(TestCase::CPtr)
+   {
+      num_assertion_++;
+   }
 
 }
 }

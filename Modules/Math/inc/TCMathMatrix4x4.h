@@ -154,7 +154,7 @@ namespace tc
       template <typename T>
       MatrixN<T, 4, 4> InvertMatrix(const MatrixN<T, 4, 4>& m)
       {
-         MatrixN<T, 4, 4> r(MatrixN<T, 4, 4>::IDENTITY);
+         MatrixN<T, 4, 4> r(MatrixN<T, 4, 4>::PredefinedType::IDENTITY);
          MatrixN<T, 4, 4> x(m);
 
          T pvv,t;

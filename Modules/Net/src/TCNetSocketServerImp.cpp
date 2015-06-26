@@ -198,7 +198,7 @@ namespace tc
             while (m_running)
             {
                if (m_server_thread->WaitThreadMessage(message, m_current_timeout) !=
-                  multi_threading::Message::MSG_RECEIVE_FAILED)
+                  multi_threading::Message::ReturnValue::MSG_RECEIVE_FAILED)
                {
                   if (!HandleMessage(message))
                   {
