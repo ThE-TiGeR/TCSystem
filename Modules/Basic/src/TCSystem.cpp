@@ -355,32 +355,29 @@ namespace tc
 #endif
    }
 
-   void system::Sleep(uint64_t millisec)
+   void system::Sleep(const Time& time)
    {
 #if TCOS_WINDOWS || TCOS_WINCE_40
 #define MAX_SLEEP_MILLI_SECONDS 0xffffffe   // 2**32-2
-      if (millisec <= MAX_SLEEP_MILLI_SECONDS)
+      if (time.ToMilliSeconds() <= MAX_SLEEP_MILLI_SECONDS)
       {
-         ::Sleep(static_cast<DWORD>(millisec));
+         ::Sleep(static_cast<DWORD>(time.ToMilliSeconds()));
          return;
       }
 
-      uint64_t no_of_max_sleeps = millisec / MAX_SLEEP_MILLI_SECONDS;
+      uint64_t no_of_max_sleeps = time.ToMilliSeconds() / MAX_SLEEP_MILLI_SECONDS;
       for (uint64_t i = 0; i < no_of_max_sleeps; i++)
       {
          ::Sleep(MAX_SLEEP_MILLI_SECONDS);
       }
 
-      ::Sleep(static_cast<DWORD>(millisec % MAX_SLEEP_MILLI_SECONDS));
-#elif TCOS_CRAY || TCOS_FUJITSU
-      uint64_t t = GetWallTime();
-      while (GetWallTime(t) < millisec);
+      ::Sleep(static_cast<DWORD>(time.ToMilliSeconds() % MAX_SLEEP_MILLI_SECONDS));
 #else
       timespec rqts;
       timespec remain;
 
-      rqts.tv_sec  = millisec / 1000;
-      rqts.tv_nsec = (millisec % 1000)* 1000000;
+      rqts.tv_sec  = time.ToMilliSeconds() / 1000;
+      rqts.tv_nsec = (time.ToMilliSeconds() % 1000)* 1000000;
       while (nanosleep(&rqts, &remain))
       {
          rqts.tv_nsec = remain.tv_nsec;

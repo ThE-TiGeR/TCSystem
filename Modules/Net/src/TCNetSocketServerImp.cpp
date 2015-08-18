@@ -342,7 +342,7 @@ namespace tc
             }
             else
             {
-               system::Sleep(SELECT_TIMEOUT);
+               system::Sleep(Time::FromMilliSeconds(SELECT_TIMEOUT));
             }
 
             return true;

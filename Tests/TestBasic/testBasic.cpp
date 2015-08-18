@@ -436,7 +436,7 @@ static void RunUDPTest()
    {
       std::string test("hello world");
       bs->WriteBytesTo(test.c_str(), test.length()+1, tc::net::Address::GetAnyAddress(), 8042);
-      tc::system::Sleep(1000);
+      tc::system::Sleep(tc::Time::FromMilliSeconds(1000));
    }
 
    server->RemoveSocket(socket);
