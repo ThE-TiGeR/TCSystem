@@ -192,11 +192,7 @@ namespace tc
        inline void Clear()
        {
            m_data.clear();
-           m_data.reserve(m_size);
-           for (uint32_t i=0; i<m_size; i++)
-           {
-               m_data.push_back(std::vector< _Element >());
-           }
+           m_data.resize(m_size, std::vector< _Element >());
        }
 
        /**
@@ -285,11 +281,11 @@ namespace tc
        /** Get all keys in the hash table */
        void GetAllKeys(std::vector< KEY_TYPE >& keys)
        {
-           for (uint32_t i=0; i<m_data.size(); i++)
+           for (const auto& elements : m_data)
            {
-               for (uint32_t j=0; j<m_data[i].size(); j++)
+               for (const auto& elem : elements)
                {
-                   keys.push_back(m_data[i][j].key_value);
+                   keys.push_back(elem.key_value);
                }
            }
        }
@@ -297,12 +293,12 @@ namespace tc
        /** Get all keys in the hash table */
        void GetAllKeysAndValues(std::vector< KEY_TYPE >& keys, std::vector< MAP_TYPE >& values)
        {
-           for (uint32_t i=0; i<m_data.size(); i++)
+           for (const auto& elements : m_data)
            {
-               for (uint32_t j=0; j<m_data[i].size(); j++)
+               for (const auto& elem : elements)
                {
-                   keys.push_back(m_data[i][j].key_value);
-                   values.push_back(m_data[i][j].map_value);
+                   keys.push_back(elem.key_value);
+                   values.push_back(elem.map_value);
                }
            }
        }
@@ -318,9 +314,9 @@ namespace tc
            numEmptyLists = 0;
            maxListLength = 0;
            avgListLength = 0;
-           for (uint32_t i = 0; i < m_data.size(); i++)
+           for (const auto& elements : m_data)
            {
-               uint32_t thisListLength = m_data[i].size();
+               uint32_t thisListLength = elements.size();
                if (thisListLength == 0) numEmptyLists++;
                if (maxListLength < thisListLength) maxListLength = thisListLength;
                avgListLength += thisListLength;

@@ -349,9 +349,9 @@ namespace tc
        uint64_t size;
        stream >> size;
        values.resize(typename std::vector<T>::size_type(size));
-       for (typename std::vector<T>::iterator it=values.begin(); it!=values.end(); ++it)
+       for (auto& val : values)
        {
-           stream >> *it;
+           stream >> val;
        }
        return stream;
    }
@@ -368,9 +368,9 @@ namespace tc
    inline StreamPtr operator<<(StreamPtr stream, const std::vector<T>& values)
    {
        stream << static_cast<uint64_t>(values.size()) << space;
-       for (typename std::vector<T>::const_iterator it=values.begin(); it!=values.end(); ++it)
+       for (const auto& val : values)
        {
-           stream << *it << space;
+           stream << val << space;
        }
        return stream;
    }

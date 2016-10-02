@@ -123,7 +123,7 @@ namespace tc
          if (!file)
          {
             TCERRORS("TCBASE", "Error opening file '" << fileName << "'");
-			SetStatus(Error::STREAM_OPEN);
+            SetStatus(Error::STREAM_OPEN);
          }
 
          SetStream(file, direction);
@@ -142,7 +142,7 @@ namespace tc
          // check mode
          if (!IsReading())
          {
-			 SetStatus(Error::STREAM_DIRECTION);
+             SetStatus(Error::STREAM_DIRECTION);
             return 0;
          }
 
@@ -155,11 +155,11 @@ namespace tc
             {
                if (std::feof(m_stream_pointer))
                {
-				   SetStatus(Error::END_OF_STREAM);
+                   SetStatus(Error::END_OF_STREAM);
                }
                else
                {
-				   SetStatus(Error::READ_FROM_STREAM);
+                   SetStatus(Error::READ_FROM_STREAM);
                }
                break;
             }
@@ -185,7 +185,7 @@ namespace tc
          // check mode
          if (!IsWriting())
          {
-			 SetStatus(Error::STREAM_DIRECTION);
+             SetStatus(Error::STREAM_DIRECTION);
             return 0;
          }
 
@@ -196,7 +196,7 @@ namespace tc
                std::size_t(nBytes-wrote_bytes), m_stream_pointer);
             if (num <= 0)
             {
-				SetStatus(Error::WRITE_TO_STREAM);
+                SetStatus(Error::WRITE_TO_STREAM);
                break;
             }
             wrote_bytes += num;
@@ -220,7 +220,7 @@ namespace tc
          }
          else
          {
-			 SetStatus(Error::STREAM_DIRECTION);
+             SetStatus(Error::STREAM_DIRECTION);
          }
       }
 
