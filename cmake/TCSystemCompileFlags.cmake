@@ -7,7 +7,7 @@ set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${TC_SYSTEM_BIN_INSTAL
 
 if (BUILD_SHARED_LIBS)
 else ()
-   set (TC_COMPILE_FLAGS "${TC_COMPILE_FLAGS} -DTC_COMPILE_STATIC_LIBS")
+   set (TC_COMPILE_CFLAGS "${TC_COMPILE_CFLAGS} -DTC_COMPILE_STATIC_LIBS")
 endif ()
 
 # set our compiler flags
@@ -21,14 +21,14 @@ if (ANDROID)
    set (CATFemHex_EXE_LINK_FLAGS_DEBUG   "")
    set (CATFemHex_EXE_LINK_FLAGS_RELEASE "")
 elseif (UNIX)
+   if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
+      set (TC_COMPILE_CFLAGS "${TC_COMPILE_CFLAGS} -DTCOS_LINUX")
+   endif ()
+
    set (TC_COMPILE_CFLAGS "${TC_COMPILE_CFLAGS} -fPIC -Wall -Wno-multichar -DHAVE_UNIT_TESTS -fvisibility=hidden")
    set (TC_COMPILE_CXXFLAGS "${TC_COMPILE_CFLAGS} -std=c++0x")
    set (TC_COMPILE_FLAGS_DEBUG "-ggdb -DDEBUG")
    set (TC_COMPILE_FLAGS_RELEASE "-O3 -DNDEBUG -flto")
-
-   if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
-      set (TC_COMPILE_FLAGS "${TC_COMPILE_FLAGS} -DTCOS_LINUX")
-   endif ()
 
    set (TC_EXE_LINK_FLAGS         "")
    set (TC_EXE_LINK_FLAGS_DEBUG   "-ggdb")
