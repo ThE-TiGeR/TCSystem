@@ -10,10 +10,14 @@ else ()
    set (TC_COMPILE_CFLAGS "${TC_COMPILE_CFLAGS} -DTC_COMPILE_STATIC_LIBS")
 endif ()
 
+if (DEFINED TC_USE_MEM_CHECK)
+   set (TC_COMPILE_CFLAGS "${TC_COMPILE_CFLAGS} -DTC_USE_MEM_CHECK=${TC_USE_MEM_CHECK}")
+endif()
+
 # set our compiler flags
 if (ANDROID)
    set (TC_COMPILE_CFLAGS "${TC_COMPILE_CFLAGS} -DTCOS_ANDROID -Wall -Wno-multichar -DHAVE_UNIT_TESTS -fvisibility=hidden")
-   set (TC_COMPILE_CXXFLAGS "${TC_COMPILE_CFLAGS} -std=c++0x")
+   set (TC_COMPILE_CXXFLAGS "${TC_COMPILE_CFLAGS} -std=c++14 -fexceptions")
    set (TC_COMPILE_FLAGS_DEBUG "-ggdb -DDEBUG")
    set (TC_COMPILE_FLAGS_RELEASE "-O3 -DNDEBUG")
 
@@ -26,7 +30,7 @@ elseif (UNIX)
    endif ()
 
    set (TC_COMPILE_CFLAGS "${TC_COMPILE_CFLAGS} -fPIC -Wall -Wno-multichar -DHAVE_UNIT_TESTS -fvisibility=hidden")
-   set (TC_COMPILE_CXXFLAGS "${TC_COMPILE_CFLAGS} -std=c++0x")
+   set (TC_COMPILE_CXXFLAGS "${TC_COMPILE_CFLAGS} -std=c++11")
    set (TC_COMPILE_FLAGS_DEBUG "-ggdb -DDEBUG")
    set (TC_COMPILE_FLAGS_RELEASE "-O3 -DNDEBUG -flto")
 
@@ -41,6 +45,12 @@ elseif (WIN32)
    set (TC_COMPILE_CFLAGS         "${TC_COMPILE_CFLAGS} /DHAVE_UNIT_TESTS /EHsc /W4 /D_WIN32_WINNT=0x0600 /D_SCL_SECURE_NO_WARNINGS /D_CRT_SECURE_NO_WARNINGS /Gm- /MP")
    set (TC_COMPILE_FLAGS_DEBUG   "/DDEBUG /FR")
    set (TC_COMPILE_FLAGS_RELEASE "/DNDEBUG /Ox /Ob2 /Ot /Oi /GL /GS- /fp:fast /D_SECURE_SCL=0")
+
+   if (BUILD_SHARED_LIBS)
+   else ()
+      set (TC_COMPILE_FLAGS_DEBUG "${TC_COMPILE_FLAGS_DEBUG} /MTd")
+      set (TC_COMPILE_FLAGS_RELEASE "${TC_COMPILE_FLAGS_RELEASE} /MT")
+   endif ()
    
    if (TC_NO_UNICODE)
    else()

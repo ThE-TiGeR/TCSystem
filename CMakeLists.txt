@@ -13,7 +13,7 @@ SET(TCSystem_VERSION
 SET(PACKAGE_VERSION
   "${TCSystem_VERSION_MAJOR}.${TCSystem_VERSION_MINOR}.${TCSystem_VERSION_PATCH}")
 # This setting of SOVERSION assumes that any API change
-# will increment either the minor or major version number of openjpeg
+# will increment either the minor or major version number of TCSystem
 SET(TCSystem_LIBRARY_PROPERTIES
   VERSION   "${TCSystem_VERSION_MAJOR}.${TCSystem_VERSION_MINOR}.${TCSystem_VERSION_PATCH}"
   SOVERSION "${TCSystem_VERSION_MAJOR}.${TCSystem_VERSION_MINOR}"
@@ -46,13 +46,15 @@ install(FILES "${PROJECT_BINARY_DIR}/TCSystemAudio.pc" DESTINATION "lib/pkgconfi
 
 enable_testing()
 
-find_package(Boost)
-include_directories(
-   ${Boost_INCLUDE_DIRS}
-)
+if (NOT TCSYSTEM_BASIC)
+  find_package(Boost)
+  include_directories(${Boost_INCLUDE_DIRS})
+endif()
 
 add_subdirectory (Modules)
-add_subdirectory (Tests)
-add_subdirectory (Programs)
-add_subdirectory (doc)
+if (NOT TCSYSTEM_BASIC)
+  add_subdirectory (Tests)
+  add_subdirectory (Programs)
+  add_subdirectory (doc)
+endif()
 
