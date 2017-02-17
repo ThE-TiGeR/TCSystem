@@ -1,15 +1,19 @@
 
-find_package(BZip2)
-if (BZIP2_FOUND)
+if (NOT TCSYSTEM_NO_BZIB2)
+  find_package(BZip2)
+  if (BZIP2_FOUND)
 	include_directories(${BZIP2_INCLUDE_DIR})
 	add_definitions(-DHAVE_BZIP2)
-endif ()
+  endif()
+endif()
 
-find_package(ZLIB)
-if (ZLIB_FOUND)
+if (NOT TCSYSTEM_NO_ZLIB)
+  find_package(ZLIB)
+  if (ZLIB_FOUND)
 	include_directories(${ZLIB_INCLUDE_DIRS})
 	add_definitions(-DHAVE_ZLIB)
-endif ()
+  endif()
+endif()
 
 include_directories(inc)
 
