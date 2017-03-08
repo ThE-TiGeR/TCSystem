@@ -93,7 +93,7 @@ namespace tc
                while(port == 0)
                {
                   port = static_cast<PortNumber>(rng->GetRandomNumber(1, 65536));
-                  SocketId id = CreateSocket(SOCK_STREAM, 0);
+                  SocketId id = CreateSocket(SOCK_STREAM, "tcp");
 
                   SocketAddress ssa;
                   std::memset(&ssa, 0, sizeof(ssa));

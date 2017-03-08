@@ -538,7 +538,9 @@ namespace tc
             }
             ::glFinish();
             ::glFlush();
+#ifdef TCTRACE_ENABLE
             Time total_time = Time::Now() - draw_start_time;
+#endif
             TCTRACES("open_gl", 0, "Current fps = " << 1000.0f/(total_time.ToMilliSeconds()+1));
             DetectOpenGLerror();
 

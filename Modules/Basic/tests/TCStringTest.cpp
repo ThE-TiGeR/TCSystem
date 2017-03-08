@@ -215,7 +215,7 @@ namespace tc
 
          // convert from double
          {
-            char tmp_string[100];
+            char tmp_string[100]{};
             os_snprintf(tmp_string, 100, "%lf", 0.123456);
             TCUNIT_ASSERT(string::ToString(0.123456)    == tmp_string);
             os_snprintf(tmp_string, 100, "%lf", -0.123456);
