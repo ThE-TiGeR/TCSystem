@@ -226,7 +226,7 @@ namespace tc
 
          // convert from double
          {
-            wchar_t tmp_string[100];
+            wchar_t tmp_string[100]{};
             snwprintf(tmp_string, 100, L"%lf", 0.123456);
             TCUNIT_ASSERT(wstring::ToString(0.123456)    == tmp_string);
             snwprintf(tmp_string, 100, L"%lf", -0.123456);

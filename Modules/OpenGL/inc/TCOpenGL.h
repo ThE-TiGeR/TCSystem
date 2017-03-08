@@ -40,6 +40,7 @@
 #include "TCOpenGLApi.h"
 
 #define FX_NO_GLOBAL_NAMESPACE
+#define FLOAT_MATH_FUNCTIONS
 #include <fx.h>
 #include <fx3d.h>
 

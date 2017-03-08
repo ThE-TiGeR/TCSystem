@@ -362,10 +362,11 @@ namespace tc
 
    uint32_t string::HexToUint32(const std::string& text)
    {
-      int64_t val = 0;
 #ifdef TCOS_WINDOWS
+      int64_t val = 0;
       if (std::sscanf(text.c_str(),"%I64x",&val) != 1)
 #else
+      uint64_t val = 0;
       if (std::sscanf(text.c_str(), "%llx", &val) != 1)
 #endif
       {

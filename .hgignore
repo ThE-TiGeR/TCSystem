@@ -1,7 +1,7 @@
 syntax: glob
-build_win32
-build_linux
-build
-build_win64
-build_android
-build_qt
+build\win32
+build\linux
+build\win64
+build\android
+build\qt
+.vs
