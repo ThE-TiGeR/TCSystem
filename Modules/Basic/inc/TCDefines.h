@@ -119,21 +119,23 @@
 // ---------------------------------------------------------------
 // For DLL´s
 // ---------------------------------------------------------------
-#ifdef _MSC_VER
-#  define TC_EXPORT_DLL __declspec(dllexport)
-#  define TC_IMPORT_DLL __declspec(dllimport)
-#  define TC_DLL_LOCAL
-#elif defined __GNUC__
-#  if __GNUC__ >= 4
-#     define TC_DLL_LOCAL  __attribute__ ((visibility("hidden")))
-#     define TC_EXPORT_DLL __attribute__ ((visibility("default")))
-#  elif __GNUC__ >= 3
-#     define TC_EXPORT_DLL __attribute__ ((visibility("default")))
-#  else
+#ifndef TC_COMPILE_STATIC_LIBS
+#  ifdef _MSC_VER
+#    define TC_EXPORT_DLL __declspec(dllexport)
+#    define TC_IMPORT_DLL __declspec(dllimport)
+#    define TC_DLL_LOCAL
+#  elif defined __GNUC__
+#    if __GNUC__ >= 4
+#       define TC_DLL_LOCAL  __attribute__ ((visibility("hidden")))
+#       define TC_EXPORT_DLL __attribute__ ((visibility("default")))
+#    elif __GNUC__ >= 3
+#       define TC_EXPORT_DLL __attribute__ ((visibility("default")))
+#    else
 #      error unsupported gnu compiler
+#    endif
+#  else
+#    error unsupported compiler
 #  endif
-#else
-#      error unsupported compiler
 #endif
 
 #ifndef TC_DLL_LOCAL
@@ -149,11 +151,7 @@
 #ifdef TCBASE_EXPORTS
 #  define TCBASE_API TC_EXPORT_DLL
 #else
-#  ifdef TC_COMPILE_STATIC_LIBS
-#     define TCBASE_API
-#  else
-#     define TCBASE_API TC_IMPORT_DLL
-#endif
+#  define TCBASE_API TC_IMPORT_DLL
 #endif
 
 /**

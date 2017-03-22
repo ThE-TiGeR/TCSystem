@@ -67,6 +67,33 @@ set (TC_BASIC_PUBLIC_HEADER
 	inc/TCUnitTreeTestResult.h
 	inc/TCUnitTreeTestRunner.h
 )
+if (TCSYSTEM_TESTS)
+  set (TEST_FILES
+	src/TCUnitSimpleTestResult.cpp
+	src/TCUnitTestCase.cpp
+	src/TCUnitTestSuite.cpp
+	src/TCUnitTreeTestResult.cpp
+	src/TCUnitTreeTestRunner.cpp
+
+	tests/TCWStringTest.h
+	tests/TCBasicTestSuite.cpp
+	tests/TCBasicTestSuite.h
+	tests/TCFileNameTest.cpp
+	tests/TCFileNameTest.h
+	tests/TCHashTableTest.cpp
+	tests/TCHashTableTest.h
+	tests/TCStreamTest.cpp
+	tests/TCStreamTest.h
+	tests/TCStringTest.cpp
+	tests/TCStringTest.h
+	tests/TCTimeTest.cpp
+	tests/TCTimeTest.h
+	tests/TCUtilTest.cpp
+	tests/TCUtilTest.h
+	tests/TCWFileNameTest.cpp
+	tests/TCWFileNameTest.h
+	tests/TCWStringTest.cpp)
+endif()
 
 add_library (TCBasic
 	src/TCApplication.cpp
@@ -119,34 +146,12 @@ add_library (TCBasic
 	src/TCStringTraits.h
 	src/TCSystem.cpp
 	src/TCTime.cpp
-	src/TCUnitSimpleTestResult.cpp
-	src/TCUnitTestCase.cpp
-	src/TCUnitTestSuite.cpp
-	src/TCUnitTreeTestResult.cpp
-	src/TCUnitTreeTestRunner.cpp
 	src/TCUtil.cpp
 	src/TCWFileName.cpp
 	src/TCWstring.cpp
 	src/TCWStringTraits.h
-	tests/TCWStringTest.h
-	tests/TCBasicTestSuite.cpp
-	tests/TCBasicTestSuite.h
-	tests/TCFileNameTest.cpp
-	tests/TCFileNameTest.h
-	tests/TCHashTableTest.cpp
-	tests/TCHashTableTest.h
-	tests/TCStreamTest.cpp
-	tests/TCStreamTest.h
-	tests/TCStringTest.cpp
-	tests/TCStringTest.h
-	tests/TCTimeTest.cpp
-	tests/TCTimeTest.h
-	tests/TCUtilTest.cpp
-	tests/TCUtilTest.h
-	tests/TCWFileNameTest.cpp
-	tests/TCWFileNameTest.h
-	tests/TCWStringTest.cpp	
 	${TC_BASIC_PUBLIC_HEADER}
+	${TEST_FILES}
 
 	../../cmake/TCSystemCompileFlags.cmake
 	../../cmake/FindFOX.cmake

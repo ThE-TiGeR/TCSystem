@@ -24,14 +24,15 @@ set (TC_MATH_SOURCE
 	src/TCMD5.h
 )
 
-set (TC_MATH_TEST_FILES
+if (TCSYSTEM_TESTS)
+  set (TC_MATH_TEST_FILES
     tests/TCMathTestSuite.h
     tests/TCMathTestSuite.cpp
     tests/TCMathCoordNTestSuite.h
     tests/TCMathCoordNTestSuite.cpp
     tests/TCMathMatrixNTestSuite.h
-    tests/TCMathMatrixNTestSuite.cpp
-)
+    tests/TCMathMatrixNTestSuite.cpp)
+endif()
 
 add_library (TCMath
         ${TC_MATH_SOURCE}

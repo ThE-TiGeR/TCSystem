@@ -23,6 +23,15 @@ set (TC_NET_PUBLIC_HEADER
     inc/TCNetTypes.h
 )
 
+if (TCSYSTEM_TESTS)
+  set (TC_NET_TESTS
+	tests/TCNetAddressTest.cpp
+	tests/TCNetAddressTest.h
+	tests/TCNetTestSuit.cpp
+	tests/TCNetTestSuite.h
+  )
+endif()
+
 add_library (TCNet
 	src/TCNetAddress.cpp
 	src/TCNetBase.cpp
@@ -39,11 +48,8 @@ add_library (TCNet
 	src/TCNetSslSocket.h
 	src/TCNetUtil.cpp
 	src/TCNetUtil.h
-	tests/TCNetAddressTest.cpp
-	tests/TCNetAddressTest.h
-	tests/TCNetTestSuit.cpp
-	tests/TCNetTestSuite.h
 	${TC_NET_PUBLIC_HEADER}
+	${TC_NET_TESTS}
 )
 
 if (OPENSSL_FOUND)

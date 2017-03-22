@@ -8,20 +8,35 @@ set (TCSystem_VERSION_MAJOR 2)
 set (TCSystem_VERSION_MINOR 1)
 set (TCSystem_VERSION_PATCH 0)
 
-SET(TCSystem_VERSION
+set(TCSystem_VERSION
   "${TCSystem_VERSION_MAJOR}.${TCSystem_VERSION_MINOR}.${TCSystem_VERSION_PATCH}")
-SET(PACKAGE_VERSION
+set(PACKAGE_VERSION
   "${TCSystem_VERSION_MAJOR}.${TCSystem_VERSION_MINOR}.${TCSystem_VERSION_PATCH}")
 # This setting of SOVERSION assumes that any API change
 # will increment either the minor or major version number of TCSystem
-SET(TCSystem_LIBRARY_PROPERTIES
+set(TCSystem_LIBRARY_PROPERTIES
   VERSION   "${TCSystem_VERSION_MAJOR}.${TCSystem_VERSION_MINOR}.${TCSystem_VERSION_PATCH}"
   SOVERSION "${TCSystem_VERSION_MAJOR}.${TCSystem_VERSION_MINOR}"
 )
 
-SET(CPACK_PACKAGE_VERSION_MAJOR "${TCSystem_VERSION_MAJOR}")
-SET(CPACK_PACKAGE_VERSION_MINOR "${TCSystem_VERSION_MINOR}")
-SET(CPACK_PACKAGE_VERSION_PATCH "${TCSystem_VERSION_PATCH}")
+option(TCSYSTEM_ALL "Enable/Disable building all libs" TRUE)
+option(TCSYSTEM_TESTS "Enable/Disable building tests" TRUE)
+option(TCSYSTEM_PROGS "Enable/Disable building programs" TRUE)
+option(TCSYSTEM_NO_BOOST "Enable/Disable usage of boost" FALSE)
+option(TCSYSTEM_NO_BZIB2 "Enable/Disable usage of boost" FALSE)
+option(TCSYSTEM_NO_ZLIB "Enable/Disable usage of boost" FALSE)
+
+option(TCSYSTEM_BASIC "Enable/Disable building basic lib" FALSE)
+option(TCSYSTEM_MATH "Enable/Disable building basic lib" FALSE)
+option(TCSYSTEM_NET "Enable/Disable building basic lib" FALSE)
+option(TCSYSTEM_AUDIO "Enable/Disable building basic lib" FALSE)
+option(TCSYSTEM_THREAD "Enable/Disable building basic lib" FALSE)
+
+
+
+set(CPACK_PACKAGE_VERSION_MAJOR "${TCSystem_VERSION_MAJOR}")
+set(CPACK_PACKAGE_VERSION_MINOR "${TCSystem_VERSION_MINOR}")
+set(CPACK_PACKAGE_VERSION_PATCH "${TCSystem_VERSION_PATCH}")
 include (CPack)
 
 set (CMAKE_MODULE_PATH ${TCSystem_SOURCE_DIR}/cmake)
@@ -46,15 +61,17 @@ install(FILES "${PROJECT_BINARY_DIR}/TCSystemAudio.pc" DESTINATION "lib/pkgconfi
 
 enable_testing()
 
-if (NOT TCSYSTEM_BASIC)
+if (NOT TCSYSTEM_NO_BOOST)
   find_package(Boost)
   include_directories(${Boost_INCLUDE_DIRS})
 endif()
 
-add_subdirectory (Modules)
-if (NOT TCSYSTEM_BASIC)
-  add_subdirectory (Tests)
-  add_subdirectory (Programs)
-  add_subdirectory (doc)
+add_subdirectory(Modules)
+if (TCSYSTEM_TESTS)
+  add_subdirectory(Tests)
 endif()
+if (TCSYSTEM_PROGS)
+  add_subdirectory(Programs)
+endif()
+add_subdirectory(doc)
 

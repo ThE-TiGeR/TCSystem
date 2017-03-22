@@ -21,6 +21,21 @@ set (TC_THREAD_PUBLIC_HEADER
     inc/TCMTThreadObject.h
 )
 
+if (TCSYSTEM_TESTS)
+  set (TC_THREAD_TESTS
+	tests/TCMTThreadTestSuite.h
+	tests/TCMTEventTest.cpp
+	tests/TCMTEventTest.h
+	tests/TCMTMutexTest.cpp
+	tests/TCMTMutexTest.h
+	tests/TCMTSemaphoreTest.cpp
+	tests/TCMTSemaphoreTest.h
+	tests/TCMTThreadTest.cpp
+	tests/TCMTThreadTest.h
+	tests/TCMTThreadTestSuite.cpp
+  )
+endif()
+
 add_library (TCThread
 	src/TCMTCommandExecutionThread.h
 	src/TCMTConditionPthread.cpp
@@ -52,17 +67,8 @@ add_library (TCThread
 	src/TCMTThreadPthread.h
 	src/TCMTThreadWin32.cpp
 	src/TCMTThreadWin32.h
-	tests/TCMTThreadTestSuite.h
-	tests/TCMTEventTest.cpp
-	tests/TCMTEventTest.h
-	tests/TCMTMutexTest.cpp
-	tests/TCMTMutexTest.h
-	tests/TCMTSemaphoreTest.cpp
-	tests/TCMTSemaphoreTest.h
-	tests/TCMTThreadTest.cpp
-	tests/TCMTThreadTest.h
-	tests/TCMTThreadTestSuite.cpp
 	${TC_THREAD_PUBLIC_HEADER}
+	${TC_THREAD_TESTS}
 )
 
 target_link_libraries(TCThread
