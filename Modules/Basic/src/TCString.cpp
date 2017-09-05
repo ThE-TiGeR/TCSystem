@@ -366,7 +366,7 @@ namespace tc
       int64_t val = 0;
       if (std::sscanf(text.c_str(),"%I64x",&val) != 1)
 #else
-      uint64_t val = 0;
+       int64_t val = 0;
       if (std::sscanf(text.c_str(), "%llx", &val) != 1)
 #endif
       {
