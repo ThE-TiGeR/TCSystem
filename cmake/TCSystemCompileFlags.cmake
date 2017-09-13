@@ -16,8 +16,10 @@ endif()
 
 # set our compiler flags
 if (ANDROID)
+   string (REPLACE "-fno-exceptions" "" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
+   string (REPLACE "-fno-rtti" "" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
    set (TC_COMPILE_CFLAGS "${TC_COMPILE_CFLAGS} -DTCOS_ANDROID -Wall -Wno-multichar -DHAVE_UNIT_TESTS -fvisibility=hidden")
-   set (TC_COMPILE_CXXFLAGS "${TC_COMPILE_CFLAGS} -std=c++14 -fexceptions")
+   set (TC_COMPILE_CXXFLAGS "${TC_COMPILE_CFLAGS} -std=c++14 -fexceptions -frtti")
    set (TC_COMPILE_FLAGS_DEBUG "-ggdb -DDEBUG")
    set (TC_COMPILE_FLAGS_RELEASE "-O3 -DNDEBUG")
 
