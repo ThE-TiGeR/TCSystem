@@ -20,6 +20,7 @@ set(TCSystem_LIBRARY_PROPERTIES
 )
 
 option(TCSYSTEM_ALL "Enable/Disable building all libs" TRUE)
+option(TCSYSTEM_DOC "Enable/Disable building of doxygen" TRUE)
 option(TCSYSTEM_TESTS "Enable/Disable building tests" TRUE)
 option(TCSYSTEM_PROGS "Enable/Disable building programs" TRUE)
 option(TCSYSTEM_NO_BOOST "Enable/Disable usage of boost" FALSE)
@@ -44,7 +45,9 @@ include(TCSystemCompileFlags)
 
 set (CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${TC_SYSTEM_LIB_INSTALL_DIR})
 set (CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${TC_SYSTEM_LIB_INSTALL_DIR})
-set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${TC_SYSTEM_BIN_INSTALL_DIR})
+if (NOT CMAKE_RUNTIME_OUTPUT_DIRECTORY)
+  set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${TC_SYSTEM_BIN_INSTALL_DIR})
+endif()
 
 # global properties
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
@@ -73,5 +76,7 @@ endif()
 if (TCSYSTEM_PROGS)
   add_subdirectory(Programs)
 endif()
-add_subdirectory(doc)
+if (TCSYSTEM_DOC)
+  add_subdirectory(doc)
+endif()
 
