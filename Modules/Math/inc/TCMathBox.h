@@ -54,7 +54,7 @@ namespace tc
       template <class COORD_TYPE>
       class Box
       {
-      private:
+      public:
          typedef COORD_TYPE CoordType;
          typedef typename COORD_TYPE::DataType DataType;
 
