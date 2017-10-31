@@ -1,23 +1,22 @@
-cmake_minimum_required (VERSION 2.6)
+cmake_minimum_required (VERSION 3.0)
 
-project (TCSystem)
+project (TCSystem VERSION 2.1.0 LANGUAGES CXX)
 
 #-----------------------------------------------------------------------------
 # TCSYSTEM version number, useful for packaging and doxygen doc:
-set (TCSystem_VERSION_MAJOR 2)
-set (TCSystem_VERSION_MINOR 1)
-set (TCSystem_VERSION_PATCH 0)
+set (TCSystem_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
+set (TCSystem_VERSION_MINOR ${PROJECT_VERSION_MINOR})
+set (TCSystem_VERSION_PATCH ${PROJECT_VERSION_PATCH})
+set (TCSystem_VERSION ${PROJECT_VERSION})
+set (PACKAGE_VERSION ${PROJECT_VERSION})
 
-set(TCSystem_VERSION
-  "${TCSystem_VERSION_MAJOR}.${TCSystem_VERSION_MINOR}.${TCSystem_VERSION_PATCH}")
-set(PACKAGE_VERSION
-  "${TCSystem_VERSION_MAJOR}.${TCSystem_VERSION_MINOR}.${TCSystem_VERSION_PATCH}")
 # This setting of SOVERSION assumes that any API change
 # will increment either the minor or major version number of TCSystem
 set(TCSystem_LIBRARY_PROPERTIES
   VERSION   "${TCSystem_VERSION_MAJOR}.${TCSystem_VERSION_MINOR}.${TCSystem_VERSION_PATCH}"
   SOVERSION "${TCSystem_VERSION_MAJOR}.${TCSystem_VERSION_MINOR}"
 )
+message(STATUS "Creating ${PROJECT_NAME} Version ${TCSystem_VERSION}")
 
 option(TCSYSTEM_ALL "Enable/Disable building all libs" TRUE)
 option(TCSYSTEM_DOC "Enable/Disable building of doxygen" TRUE)
