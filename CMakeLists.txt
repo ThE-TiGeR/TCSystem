@@ -18,6 +18,8 @@ set(TCSystem_LIBRARY_PROPERTIES
 )
 message(STATUS "Creating ${PROJECT_NAME} Version ${TCSystem_VERSION}")
 
+option(TCSYSTEM_STATIC "Build static libs" FALSE)
+
 option(TCSYSTEM_ALL "Enable/Disable building all libs" TRUE)
 option(TCSYSTEM_DOC "Enable/Disable building of doxygen" TRUE)
 option(TCSYSTEM_TESTS "Enable/Disable building tests" TRUE)
