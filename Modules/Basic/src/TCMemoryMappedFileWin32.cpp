@@ -57,7 +57,7 @@ namespace tc
       UnmapFromMemory();
    }
 
-   uint32_t MemoryMappedFileWin32::GetSize() const
+   uint64_t MemoryMappedFileWin32::GetSize() const
    {
       return m_size;
    }
@@ -87,39 +87,45 @@ namespace tc
 
    bool MemoryMappedFileWin32::MapToMemory(const std::wstring& fileName, bool readonly, uint32_t size)
    {
-      m_file = ::CreateFileW(fileName.c_str(),
-         readonly ? GENERIC_READ : (GENERIC_READ | GENERIC_WRITE),
-         readonly ? FILE_SHARE_READ : 0, 
-         0, readonly ? OPEN_EXISTING : OPEN_ALWAYS,
-         FILE_ATTRIBUTE_NORMAL, 0);
-
+       m_file = ::CreateFile2(fileName.c_str(),
+                              readonly ? GENERIC_READ : (GENERIC_READ | GENERIC_WRITE),
+                              readonly ? FILE_SHARE_READ : 0,
+                              readonly ? OPEN_EXISTING : OPEN_ALWAYS,
+                              0);
       if (m_file == INVALID_HANDLE_VALUE)
       {
          return false;
       }
 
-      m_file_map = ::CreateFileMapping(m_file, 
-         0, (readonly ? PAGE_READONLY : PAGE_READWRITE),
-         0, size, 0);           
-
+      m_file_map = ::CreateFileMappingFromApp(m_file,
+                                              0,
+                                              (readonly ? PAGE_READONLY : PAGE_READWRITE),
+                                              size,
+                                              0);
       if (m_file_map == 0)
       {
          return false;
       }
 
-      m_data = ::MapViewOfFile(
-         m_file_map,
-         (readonly ? FILE_MAP_READ : FILE_MAP_WRITE),
-         0,         
-         0,         
-         0);        
+      m_data = ::MapViewOfFileFromApp(
+          m_file_map,
+          (readonly ? FILE_MAP_READ : FILE_MAP_WRITE),
+          0,
+          0);
 
       if (m_data == 0)
       {
          return false;
       }
 
-      m_size = ::GetFileSize(m_file, 0);
+      LARGE_INTEGER high_size;
+      DWORD low_size = ::GetFileSizeEx(m_file, &high_size);
+      if (low_size == INVALID_FILE_SIZE)
+      {
+          return false;
+      }
+
+      m_size = high_size.QuadPart;
       m_readonly = readonly;
 
       return true;

@@ -19,6 +19,8 @@ set(TCSystem_LIBRARY_PROPERTIES
 message(STATUS "Creating ${PROJECT_NAME} Version ${TCSystem_VERSION}")
 
 option(TCSYSTEM_STATIC "Build static libs" FALSE)
+option(TCSYSTEM_UWP_APP "Build for windows universal app" FALSE)
+
 
 option(TCSYSTEM_ALL "Enable/Disable building all libs" TRUE)
 option(TCSYSTEM_DOC "Enable/Disable building of doxygen" TRUE)

@@ -51,6 +51,7 @@
 #   include <winsock.h>
 #   include <iphlpapi.h>
 #elif TCOS_WINDOWS
+#define SECURITY_WIN32
 #   include <windows.h>
 #   include <winbase.h>
 #   include <io.h>
@@ -63,6 +64,7 @@
 #   include <fcntl.h>
 #   include <winsock2.h>
 #   include <iphlpapi.h>
+#   include <security.h>
 #elif TCOS_FUJITSU
 #   include <sys/types.h>
 #   include <sys/resource.h>
@@ -172,13 +174,17 @@ namespace tc
 #ifdef TCOS_WINCE_40
       return "";
 #elif TCOS_WINDOWS
+#ifndef TC_WINDOWS_UWP
       char name[SYS_CHAR_LEN];
       unsigned long len = SYS_CHAR_LEN;
 
-      if (::GetUserNameA(name, &len))
+      if (::GetUserNameExA(NameSamCompatible, name, &len))
       {
          return name;
       }
+#else
+       return "";
+#endif
 #else
       struct passwd *pwd = ::getpwuid(::geteuid());
       if (pwd)
@@ -193,10 +199,13 @@ namespace tc
    std::string system::GetOSName()
    {
 #if TCOS_WINDOWS || TCOS_WINCE_40
-      OSVERSIONINFOEX info;
+#ifdef TC_WINDOWS_UWP
+       return "Windows UWP";
+#else
+       OSVERSIONINFOEX info;
       std::memset((void*)&info, 0, sizeof(info));
-	  info.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
-	  ::VerifyVersionInfo(&info, 0, 0);
+      info.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
+      ::VerifyVersionInfo(&info, 0, 0);
 
       //VER_PLATFORM_TCOS_WINDOWS_WINDOWS
       if (info.dwPlatformId == VER_PLATFORM_WIN32_NT)
@@ -214,6 +223,7 @@ namespace tc
       if (info.dwPlatformId == VER_PLATFORM_WIN32_CE)
          return "Windows CE";
 #endif
+#endif
 #else
       struct utsname unamedata;
       std::memset((void*)&unamedata, 0, sizeof(unamedata));
@@ -228,18 +238,20 @@ namespace tc
 
    std::string system::GetOSVersion()
    {
-      char ver[SYS_CHAR_LEN];
+       char ver[SYS_CHAR_LEN]{};
 
 #if TCOS_WINDOWS || TCOS_WINCE_40
-	  OSVERSIONINFOEX info;
-	  std::memset((void*)&info, 0, sizeof(info));
-	  info.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
-	  ::VerifyVersionInfo(&info, 0, 0);
+#ifndef TC_WINDOWS_UWP
+      OSVERSIONINFOEX info;
+      std::memset((void*)&info, 0, sizeof(info));
+      info.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
+      ::VerifyVersionInfo(&info, 0, 0);
 
       string::Snprintf(ver, util::ArraySize(ver), "%d.%.d.%d (%s)", info.dwMajorVersion,
          info.dwMinorVersion,
          info.dwBuildNumber,
          info.szCSDVersion);
+#endif
 #else
       struct utsname unamedata;
       std::memset((void*)&unamedata, 0, sizeof(unamedata));
@@ -515,6 +527,9 @@ namespace tc
    bool system::GetNetworkDeviceInfos(std::vector<NetworkDeviceInfo>& infos)
    {
 #if TCOS_WINDOWS
+       infos.clear();
+#ifndef TC_WINDOWS_UWP
+
       ULONG size = 0;
       ::GetAdaptersInfo( 0, &size);
       IP_ADAPTER_INFO* adapters = (IP_ADAPTER_INFO*)new uint8_t[size];
@@ -543,6 +558,7 @@ namespace tc
       }
 
       delete[] (uint8_t*)adapters;
+#endif
 #else
       for (int ed=0; ed<10; ed++)
       {

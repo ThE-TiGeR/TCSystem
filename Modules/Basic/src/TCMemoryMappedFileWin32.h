@@ -63,7 +63,7 @@ namespace tc
       MemoryMappedFileWin32();
       virtual ~MemoryMappedFileWin32();
 
-      virtual uint32_t GetSize() const;
+      virtual uint64_t GetSize() const;
       virtual uint8_t* GetData();
       virtual const uint8_t* GetReadOnlyData() const;
 
@@ -79,7 +79,7 @@ namespace tc
 
    private:
       /** Size of the mapped data */
-      uint32_t m_size;
+      uint64_t m_size;
       /** Pointer to the mapped data */
       void* m_data;
       /** Handle of the file */

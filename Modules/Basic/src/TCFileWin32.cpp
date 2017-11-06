@@ -241,12 +241,10 @@ namespace tc
    uint64_t file::GetModificationTime(const std::string &file_in)
    {
       std::wstring file(wstring::ToString(file_in));
-      HANDLE f = ::CreateFileW(file.c_str(),
+      HANDLE f = ::CreateFile2(file.c_str(),
          FILE_READ_ATTRIBUTES,
          FILE_SHARE_READ,
-         0,
          OPEN_EXISTING,
-         FILE_ATTRIBUTE_NORMAL,
          0);
       if (f == INVALID_HANDLE_VALUE)
       {
@@ -271,13 +269,11 @@ namespace tc
    uint64_t file::GetLastAccessTime(const std::string &file_in)
    {
       std::wstring file(wstring::ToString(file_in));
-      HANDLE f = ::CreateFileW(file.c_str(),
-         FILE_READ_ATTRIBUTES,
-         FILE_SHARE_READ,
-         0,
-         OPEN_EXISTING,
-         FILE_ATTRIBUTE_NORMAL,
-         0);
+      HANDLE f = ::CreateFile2(file.c_str(),
+                               FILE_READ_ATTRIBUTES,
+                               FILE_SHARE_READ,
+                               OPEN_EXISTING,
+                               0);
       if (f == INVALID_HANDLE_VALUE)
       {
          return 0;
@@ -301,13 +297,11 @@ namespace tc
    uint64_t file::GetCreationTime(const std::string &file_in)
    {
       std::wstring file(wstring::ToString(file_in));
-      HANDLE f = ::CreateFileW(file.c_str(),
-         FILE_READ_ATTRIBUTES,
-         FILE_SHARE_READ,
-         0,
-         OPEN_EXISTING,
-         FILE_ATTRIBUTE_NORMAL,
-         0);
+      HANDLE f = ::CreateFile2(file.c_str(),
+                               FILE_READ_ATTRIBUTES,
+                               FILE_SHARE_READ,
+                               OPEN_EXISTING,
+                               0);
       if (f == INVALID_HANDLE_VALUE)
       {
          return 0;
@@ -331,44 +325,35 @@ namespace tc
    uint64_t file::GetFileSize(const std::string &file_in)
    {
       std::wstring file(wstring::ToString(file_in));
-      HANDLE f = ::CreateFileW(file.c_str(),
-         FILE_READ_ATTRIBUTES,
-         FILE_SHARE_READ,
-         0,
-         OPEN_EXISTING,
-         FILE_ATTRIBUTE_NORMAL,
-         0);
+      HANDLE f = ::CreateFile2(file.c_str(),
+                               FILE_READ_ATTRIBUTES,
+                               FILE_SHARE_READ,
+                               OPEN_EXISTING,
+                               0);
       if (f == INVALID_HANDLE_VALUE)
       {
          return 0;
       }
 
-      DWORD high_size = 0;
-      DWORD low_size = ::GetFileSize(f, &high_size);
+      LARGE_INTEGER high_size;
+      DWORD low_size = ::GetFileSizeEx(f, &high_size);
       if (low_size == INVALID_FILE_SIZE)
       {
          return 0;
       }
 
-      LARGE_INTEGER ltime;
-      ltime.LowPart  = low_size;
-      ltime.HighPart = high_size;
-      return ltime.QuadPart;
+      return high_size.QuadPart;
    }
 
    static std::string Win32FileInformation(const std::string &file_in, SECURITY_INFORMATION info_type)
    {
       std::wstring file(wstring::ToString(file_in));
       // Get the handle of the file object.
-      HANDLE hFile = CreateFileW(
-         file.c_str(),
-         FILE_READ_ATTRIBUTES,
-         FILE_SHARE_READ,
-         0,
-         OPEN_EXISTING,
-         FILE_ATTRIBUTE_NORMAL,
-         0);
-
+      HANDLE hFile = ::CreateFile2(file.c_str(),
+                               FILE_READ_ATTRIBUTES,
+                               FILE_SHARE_READ,
+                               OPEN_EXISTING,
+                               0);
       // Check GetLastError for CreateFile error code.
       if (hFile == INVALID_HANDLE_VALUE)
       {

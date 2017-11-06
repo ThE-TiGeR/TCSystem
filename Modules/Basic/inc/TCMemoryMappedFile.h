@@ -66,7 +66,7 @@ namespace tc
    {
    public:
       /** @return Returns the size of the memory mapped file*/
-      virtual uint32_t GetSize() const = 0;
+      virtual uint64_t GetSize() const = 0;
 
       /** @return Returns a pointer to the mapped data. If read only then 0 */
       virtual uint8_t* GetData() = 0;
