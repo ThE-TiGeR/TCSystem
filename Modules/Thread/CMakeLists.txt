@@ -36,7 +36,7 @@ if (TCSYSTEM_TESTS)
   )
 endif()
 
-add_library (TCThread
+add_library (TCThread  ${TCSYSTEM_LIB_TYPE}
 	src/TCMTCommandExecutionThread.h
 	src/TCMTConditionPthread.cpp
 	src/TCMTConditionPthread.h

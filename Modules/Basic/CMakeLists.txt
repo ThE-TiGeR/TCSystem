@@ -95,7 +95,7 @@ if (TCSYSTEM_TESTS)
 	tests/TCWStringTest.cpp)
 endif()
 
-add_library (TCBasic
+add_library (TCBasic ${TCSYSTEM_LIB_TYPE}
 	src/TCApplication.cpp
 	src/TCAsciiCodec.cpp
 	src/TCAsciiCodec.h

@@ -68,6 +68,12 @@ if (TCSYSTEM_ENABLE_INSTALL)
   install(FILES "${PROJECT_BINARY_DIR}/TCSystemAudio.pc" DESTINATION "lib/pkgconfig" COMPONENT dev)
  endif()
 
+if (TCSYSTEM_STATIC)
+  set (TCSYSTEM_LIB_TYPE STATIC)
+else()
+  set (TCSYSTEM_LIB_TYPE SHARED)
+endif()
+
 if (TCSYSTEM_TESTS)
   enable_testing()
 endif()
