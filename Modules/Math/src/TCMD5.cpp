@@ -121,7 +121,7 @@ void MD5Init(MD5Context * md5_context)
    account for the presence of each of the characters inBuf[0..inLen-1]
    in the message whose digest is being computed.
  */
-static void MD5Update(MD5Context * md5_context, const uint8_t *inBuf, uint32_t inLen)
+static void MD5Update(MD5Context * md5_context, const uint8_t *inBuf, uint64_t inLen)
 {
    uint32_t in[16];
    int32_t mdi;
@@ -305,7 +305,7 @@ MD5::~MD5()
    md5_context = 0;
 }
 
-void MD5::Append(const uint8_t *data, uint32_t len)
+void MD5::Append(const uint8_t *data, uint64_t len)
 {
    MD5Update(md5_context, data, len);
 }

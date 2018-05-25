@@ -72,7 +72,7 @@ namespace imp
        * @param data The data to append to the calculation
        * @param len The length of the data to append
        */
-      virtual void Append(const uint8_t *data, uint32_t len);
+      virtual void Append(const uint8_t *data, uint64_t len);
       
       /** @short Get the calculated hash string */
       virtual std::string GetHashString() const;
