@@ -425,6 +425,7 @@ namespace tc
          (LPSTR) &lpMsgBuf,
          0, 0 );
 
+#pragma warning(suppress: 6102)
       std::string message = lpMsgBuf;
       message = string::Replace(message, '\r', ' ');
       message = string::Replace(message, '\n', ' ');

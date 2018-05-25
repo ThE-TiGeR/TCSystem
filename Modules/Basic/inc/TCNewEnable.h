@@ -89,9 +89,17 @@
 #  define TC_CRT_DECL
 #endif
 
+#ifndef _Ret_notnull_
+#define _Ret_notnull_
+#endif
+
+#ifndef _Post_writable_byte_size_
+#define _Post_writable_byte_size_(SIZE)
+#endif
+
 // __cdecl
-void* TC_CRT_DECL operator new(std::size_t size) TC_NEW_THROW;
-void* TC_CRT_DECL operator new[](std::size_t size) TC_NEW_THROW;
+_Ret_notnull_ _Post_writable_byte_size_(size) void* TC_CRT_DECL operator new(std::size_t size) TC_NEW_THROW;
+_Ret_notnull_ _Post_writable_byte_size_(size) void* TC_CRT_DECL operator new[](std::size_t size) TC_NEW_THROW;
 void* TC_CRT_DECL operator new(std::size_t size, const char *fileName, int line) TC_NEW_THROW;
 void* TC_CRT_DECL operator new[](std::size_t size, const char *fileName, int line) TC_NEW_THROW;
 

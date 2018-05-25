@@ -161,7 +161,7 @@ add_library (TCBasic ${TCSYSTEM_LIB_TYPE}
 )
 
 if (MSVC)
-   target_link_libraries (TCBasic iphlpapi.lib)
+   target_link_libraries (TCBasic iphlpapi.lib Secur32.lib)
 elseif (ANDROID)
 elseif (UNIX)
    target_link_libraries (TCBasic -lrt)
