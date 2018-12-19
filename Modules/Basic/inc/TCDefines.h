@@ -243,7 +243,9 @@
 
 #ifdef TCOS_WINDOWS 
 #  define TC_DISABLE_COMPILER_WARNINGS() __pragma(warning(push, 0)) \
-   __pragma(warning(disable: 4308))
+   __pragma(warning(disable: 4308)) \
+   __pragma(warning(disable: 4702))
+
 #  define TC_POP_COMPILER_WARNINGS() __pragma(warning(pop))
 #else
 #  define TC_DISABLE_COMPILER_WARNINGS() _Pragma("GCC diagnostic push") \
