@@ -278,12 +278,12 @@ namespace tc
             /** @return The square length of the vector */
             double Length2() const 
             { 
-                double len = 0;
+                T len = {};
                 for (const T* data=m_data; data<m_data+SIZE; ++data)
                 {
                     len += (*data) * (*data);
                 }
-                return len;
+                return static_cast<double>(len);
             }
 
             /** @return The length of the vector */
