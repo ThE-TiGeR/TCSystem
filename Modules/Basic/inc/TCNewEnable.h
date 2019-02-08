@@ -56,10 +56,10 @@
 #  endif
 
 #else
-#  ifdef TC_USE_MEM_CHECK
-#     undef TC_USE_MEM_CHECK
+
+#  ifndef TC_USE_MEM_CHECK
+#     define TC_USE_MEM_CHECK 0
 #  endif
-#  define TC_USE_MEM_CHECK 0
 
 #endif
 
