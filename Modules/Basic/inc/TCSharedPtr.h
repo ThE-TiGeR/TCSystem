@@ -108,10 +108,6 @@ namespace tc
       template <class N_PTR, class DELETER>
       SharedPtr(N_PTR* ptr, DELETER deleter) : m_ptr(ptr), m_count(ptr, deleter) { InitializeSharedFromThis(this, ptr); }
 
-      /** Construct the object pointing to a specified std::auto_ptr */
-      template <class N_PTR>
-      SharedPtr(std::auto_ptr<N_PTR>& ptr):m_ptr(ptr.get()), m_count(ptr, CheckedDelete()) {}
-
       /** Construct the object pointing to a specified weak pointer */
       template<class N_PTR>
       explicit SharedPtr(const WeakPtr<N_PTR>& ptr):m_ptr(ptr.m_ptr), m_count(ptr.m_count) {}

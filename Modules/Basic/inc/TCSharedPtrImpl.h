@@ -178,14 +178,6 @@ namespace tc
          m_count = new imp::SharedPtrCountType<PTR_TYPE, DELETER>(ptr, deleter);
       }
 
-      /** Construct with auto pointer and creates an pointer specific counter */
-      template <class PTR_TYPE, class DELETER>
-      SharedPtrCount(std::auto_ptr<PTR_TYPE>& ptr, DELETER deleter)
-      {
-         m_count = new imp::SharedPtrCountType<PTR_TYPE, DELETER>(ptr.get(), deleter);
-         ptr.release();
-      }
-
       /** Copy constructor */
       explicit SharedPtrCount(const SharedPtrCount& count)
          :m_count(count.m_count)

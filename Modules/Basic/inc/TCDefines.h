@@ -60,7 +60,9 @@
 #  define TCOS_WINDOWS 1
 #endif
 #define TCOS_32BIT 1
-#define NOMINMAX
+#ifndef NOMINMAX
+#  define NOMINMAX 1
+#endif
 #endif
 
 // define TCOS_WINDOWS if WIN32
@@ -70,7 +72,9 @@
 #  define TCOS_WINDOWS 1
 #endif
 #define TCOS_64BIT 1
-#define NOMINMAX
+#ifndef NOMINMAX
+#  define NOMINMAX 1
+#endif
 #endif
 
 // We only support windows ce 4.*
