@@ -112,16 +112,14 @@ namespace tc
         return WFileNameImp::Simplify(file);
     }
 
-    void wfile_name::GetDirectoriesOfFileName(const std::wstring& file_name,
-        std::vector<std::wstring>& directories)
+    std::vector<std::wstring> wfile_name::GetDirectoriesOfFileName(const std::wstring& file_name)
     {
-        wstring::Split(GetPath(file_name).c_str(), WFileNameTraits::PATH_SEPERATOR, directories);
+        return wstring::Split(GetPath(file_name).c_str(), WFileNameTraits::PATH_SEPERATOR);
     }
 
-    void wfile_name::GetDirectoriesOfPath(const std::wstring& path,
-        std::vector<std::wstring>& directories)
+    std::vector<std::wstring> wfile_name::GetDirectoriesOfPath(const std::wstring& path)
     {
-        wstring::Split(Simplify(path).c_str(), WFileNameTraits::PATH_SEPERATOR, directories);
+        return wstring::Split(Simplify(path).c_str(), WFileNameTraits::PATH_SEPERATOR);
     }
 
     const wchar_t* wfile_name::GetPathSeparator()

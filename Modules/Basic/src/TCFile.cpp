@@ -50,8 +50,7 @@ namespace tc
       {
          if (path.empty()) return false;
 
-         std::vector< std::string > directories;
-         file_name::GetDirectoriesOfPath(path, directories);
+         std::vector< std::string > directories(file_name::GetDirectoriesOfPath(path));
 
          std::string current_dir;
          if (path[0] == file_name::GetPathSeparator()[0]) current_dir = file_name::GetPathSeparator();

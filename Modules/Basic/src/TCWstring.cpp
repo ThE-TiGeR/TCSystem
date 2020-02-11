@@ -274,15 +274,14 @@ namespace tc
       return WStringImp::Split(text, split, part1, part2);
    }
 
-   bool wstring::Split(const std::wstring& text, const std::wstring& limiter,
-      std::vector< std::wstring >& data)
+   std::vector<std::wstring> wstring::Split(const std::wstring& text, const std::wstring& limiter)
    {
-      return WStringImp::Split(text, limiter, data);
+      return WStringImp::Split(text, limiter);
    }
 
-   void wstring::Join(const std::vector<std::wstring>& texts, const std::wstring& limiter, std::wstring& text)
+   std::wstring wstring::Join(const std::vector<std::wstring>& texts, const std::wstring& limiter)
    {
-      WStringImp::Join(texts, limiter, text);
+      return WStringImp::Join(texts, limiter);
    }
 
    std::wstring wstring::TrimmSpaces(const std::wstring& text)

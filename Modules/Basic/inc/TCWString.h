@@ -98,10 +98,8 @@ namespace tc
 
       TCBASE_API bool Split(const std::wstring& text, const std::wstring& split,
                  std::wstring& text1, std::wstring& text2);
-      TCBASE_API bool Split(const std::wstring& text, const std::wstring& split,
-                 std::vector<std::wstring>& texts);
-      TCBASE_API void Join(const std::vector<std::wstring>& texts, const std::wstring& split,
-                std::wstring& text);
+      TCBASE_API std::vector<std::wstring> Split(const std::wstring& text, const std::wstring& split);
+      TCBASE_API std::wstring Join(const std::vector<std::wstring>& texts, const std::wstring& split);
 
       TCBASE_API std::wstring Replace(const std::wstring& text, wchar_t c1, wchar_t c2);
       TCBASE_API std::wstring Replace(const std::wstring& text, const std::wstring& text1, const std::wstring& text2);

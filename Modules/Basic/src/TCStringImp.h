@@ -98,11 +98,9 @@ namespace tc
          return true;
       }
 
-      static bool Split(const STRING_CLASS& text, const STRING_CLASS& limiter,
-         std::vector< STRING_CLASS >& data)
+      static std::vector<STRING_CLASS> Split(const STRING_CLASS& text, const STRING_CLASS& limiter)
       {
-         // delete old data array
-         data.clear();
+         std::vector<STRING_CLASS> data;
 
          size_type pos1 = text.find_first_not_of(limiter);
          while (pos1 != STRING_CLASS::npos)
@@ -116,13 +114,13 @@ namespace tc
             pos1 = text.find_first_not_of(limiter, pos2);
          }
 
-         return data.size() != 0;
+         return data;
       }
 
-      static void Join(const std::vector<STRING_CLASS>& texts, const STRING_CLASS& limiter, STRING_CLASS& text)
+      static STRING_CLASS Join(const std::vector<STRING_CLASS>& texts, const STRING_CLASS& limiter)
       {
-         typename std::vector<STRING_CLASS>::const_iterator it;
-         for (it=texts.begin(); it!=texts.end();)
+         STRING_CLASS text;
+         for (auto it=texts.begin(); it!=texts.end();)
          {
             text += *it;
             if (++it != texts.end())
@@ -130,6 +128,8 @@ namespace tc
                text += limiter;
             }
          }
+
+         return text;
       }
 
       static STRING_CLASS DeleteBlanksAndTabsAtBorder(const STRING_CLASS& text_in)

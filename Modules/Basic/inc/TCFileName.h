@@ -167,10 +167,8 @@ namespace tc
       */
       TCBASE_API std::string Simplify(const std::string& file);
 
-      TCBASE_API void GetDirectoriesOfFileName(const std::string& file_name, 
-          std::vector<std::string>& directories);
-      TCBASE_API void GetDirectoriesOfPath(const std::string& path, 
-          std::vector<std::string>& directories);
+      TCBASE_API std::vector<std::string> GetDirectoriesOfFileName(const std::string& file_name);
+      TCBASE_API std::vector<std::string> GetDirectoriesOfPath(const std::string& path);
    } // namespace file_name
 
    /**
