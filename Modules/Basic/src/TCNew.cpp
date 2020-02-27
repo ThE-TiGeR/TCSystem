@@ -41,12 +41,12 @@ namespace tc
 {
    Heap* system::GetInstance()
    {
-      static HeapCrtlib s_crt_lib_heap;
+      static auto s_crt_lib_heap = new (malloc(sizeof(HeapCrtlib))) HeapCrtlib;
 #if TC_USE_MEM_CHECK
-      static DebugHeap s_debug_heap(s_crt_lib_heap);
-      return &s_debug_heap;
+      static auto s_debug_heap = new (malloc(sizeof(DebugHeap))) DebugHeap(*s_crt_lib_heap);
+      return s_debug_heap;
 #else
-      return &s_crt_lib_heap;
+      return s_crt_lib_heap;
 #endif
    }
 }
