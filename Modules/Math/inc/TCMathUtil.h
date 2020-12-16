@@ -41,6 +41,7 @@
 
 #include <cmath>
 #include <limits>
+#include <vector>
 
 #undef PI
 
@@ -223,9 +224,28 @@ namespace math
 
    /** compare double or float value with its specified system epsilon */
    template <class T>
-   bool Compare(const T& val1, const T& val2)
+   bool AreApproximatelyEqual(const T& val1, const T& val2, T epsilon_factor = 1)
    {
-      return Abs(val1 - val2) > std::numeric_limits<T>::epsilon();
+      return Abs(val1 - val2) <= std::numeric_limits<T>::epsilon() * epsilon_factor;
+   }
+
+   /** compare double or float value with its specified system epsilon */
+   template <class T>
+   bool AreApproximatelyEqual(const std::vector<T>& val1, const std::vector<T>& val2, T epsilon_factor=1)
+   {
+   	   if (val1.size() != val2.size())
+   	   {
+           return false;
+   	   }
+   	
+	   for (auto idx=0; idx < val1.size(); idx++)
+	   {
+		   if (!AreApproximatelyEqual(val1[idx], val2[idx], epsilon_factor))
+		   {
+               return false;
+		   }
+	   }
+       return true;
    }
 
    /**
