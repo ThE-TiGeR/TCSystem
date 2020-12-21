@@ -54,6 +54,7 @@ set (TC_BASIC_PUBLIC_HEADER
 	inc/TCUtil.h
 	inc/TCValue.h
 	inc/TCWeakPtr.h
+	inc/TCWFile.h
 	inc/TCWFileName.h
 	inc/TCWString.h
 	inc/TCUnitApi.h
@@ -147,7 +148,9 @@ add_library (TCBasic ${TCSYSTEM_LIB_TYPE}
 	src/TCSystem.cpp
 	src/TCTime.cpp
 	src/TCUtil.cpp
+	src/TCWFile.cpp
 	src/TCWFileName.cpp
+	src/TCWFileWin32.cpp
 	src/TCWstring.cpp
 	src/TCWStringTraits.h
 	${TC_BASIC_PUBLIC_HEADER}

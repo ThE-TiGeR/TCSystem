@@ -37,10 +37,7 @@
 
 #include "TCFileName.h"
 #include "TCOutput.h"
-#include "TCSystem.h"
 #include "TCUtil.h"
-
-#include "TCNewEnable.h"
 
 namespace tc
 {

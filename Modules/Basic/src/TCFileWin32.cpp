@@ -43,17 +43,18 @@
 #include "TCUtil.h"
 #include "TCWString.h"
 
-#include <windows.h>
-#include <winbase.h>
-#include <accctrl.h>
-#include <aclapi.h>
+#include <Windows.h>
+#include <WinBase.h>
+#include <AccCtrl.h>
+#include <AclAPI.h>
+#if TC_WINDOWS_UWP
+#include <fileapifromapp.h>
+#endif
 
 #undef CreateDir
 #undef GetUserName
 #undef CreateFile
 #undef GetClassName
-
-#include "TCNewEnable.h"
 
 namespace tc
 {
@@ -63,7 +64,7 @@ namespace tc
       {
          return false;
       }
-      std::wstring directory(wstring::ToString(directory_in));
+      auto directory(wstring::ToString(directory_in));
       return ::SetCurrentDirectoryW(directory.c_str()) == TRUE;
    }
 
@@ -78,68 +79,88 @@ namespace tc
       return wstring::ToString(buffer);
    }
 
-   bool file::Exists(const std::string & file_in)
-   {
-      std::wstring file(wstring::ToString(file_in));
-      DWORD atts = ::GetFileAttributesW(file.c_str());
+#undef GetFileAttributes
 
-      return atts != 0xFFFFFFFF;
+   static WIN32_FILE_ATTRIBUTE_DATA GetFileAttributeData(const std::string& file_in)
+   {
+      auto file(wstring::ToString(file_in));
+      const auto levels = GetFileExInfoStandard;
+      WIN32_FILE_ATTRIBUTE_DATA attribute_data;
+      ZeroMemory(&attribute_data, sizeof(attribute_data));
+      attribute_data.dwFileAttributes = INVALID_FILE_ATTRIBUTES;
+#if TC_WINDOWS_UWP
+      if (::GetFileAttributesExFromAppW(file.c_str(), levels, &attribute_data))
+      {
+         return attribute_data;
+      }
+#else
+      if (::GetFileAttributesExW(file.c_str(), levels, &attribute_data))
+      {
+         return attribute_data;
+      }
+#endif
+      return attribute_data;
+   }
+
+   static DWORD GetFileAttributes(const std::string& file)
+   {
+      return GetFileAttributeData(file).dwFileAttributes;
+   }
+
+
+   bool file::Exists(const std::string & file)
+   {
+      return GetFileAttributes(file) != INVALID_FILE_ATTRIBUTES;
    }
 
    // Check whether its a directory
-   bool file::IsDirectory(const std::string & file_in)
+   bool file::IsDirectory(const std::string & file)
    {
-      std::wstring file(wstring::ToString(file_in));
-      DWORD atts = ::GetFileAttributesW(file.c_str());
-
-      return (atts != 0xFFFFFFFF) && (atts & FILE_ATTRIBUTE_DIRECTORY);
+      const auto atts = GetFileAttributes(file);
+      return (atts != INVALID_FILE_ATTRIBUTES) && (atts & FILE_ATTRIBUTE_DIRECTORY);
    }
 
    // Check whether its a file
-   bool file::IsFile(const std::string & file_in)
+   bool file::IsFile(const std::string & file)
    {
-      std::wstring file(wstring::ToString(file_in));
-      DWORD atts = ::GetFileAttributesW(file.c_str());
-
-      return (atts != 0xFFFFFFFF) && !(atts & FILE_ATTRIBUTE_DIRECTORY);
+      const auto atts = GetFileAttributes(file);
+      return (atts != INVALID_FILE_ATTRIBUTES) && !(atts & FILE_ATTRIBUTE_DIRECTORY);
    }
 
    // Return 1 if file is readable
-   bool file::IsReadable(const std::string &file_in)
+   bool file::IsReadable(const std::string &file)
    {
-      std::wstring file(wstring::ToString(file_in));
-      DWORD atts = ::GetFileAttributesW(file.c_str());
-
-      return (atts != 0xFFFFFFFF) && !(atts & FILE_WRITE_ATTRIBUTES);
+      const auto atts = GetFileAttributes(file);
+      return (atts != INVALID_FILE_ATTRIBUTES) && !(atts & FILE_WRITE_ATTRIBUTES);
    }
 
    // Return 1 if file is writeable
-   bool file::IsWriteable(const std::string &file_in)
+   bool file::IsWriteable(const std::string &file)
    {
-      std::wstring file(wstring::ToString(file_in));
-      DWORD atts = ::GetFileAttributesW(file.c_str());
-
-      return (atts != 0xFFFFFFFF) && (atts & FILE_WRITE_ATTRIBUTES);
+      const auto atts = GetFileAttributes(file);
+      return (atts != INVALID_FILE_ATTRIBUTES) && (atts & FILE_WRITE_ATTRIBUTES);
    }
 
    // Return 1 if file is executable
-   bool file::IsExecutable(const std::string &file_in)
+   bool file::IsExecutable(const std::string &file)
    {
-      std::wstring file(wstring::ToString(file_in));
-      DWORD atts = ::GetFileAttributesW(file.c_str());
-
-      return (atts != 0xFFFFFFFF) && (atts & FILE_EXECUTE);
+      const auto atts = GetFileAttributes(file);
+      return (atts != INVALID_FILE_ATTRIBUTES) && (atts & FILE_EXECUTE);
    }
 
    // Change the mode flags for this file
    bool file::SetFileAttr(const std::string &file_in, uint32_t attr)
    {
-      std::wstring file(wstring::ToString(file_in));
+      auto file(wstring::ToString(file_in));
       attr &= (static_cast<uint32_t>(FileAttributes::READONLY) | 
          static_cast<uint32_t>(FileAttributes::ARCHIVE) | 
          static_cast<uint32_t>(FileAttributes::SYSTEM) |
          static_cast<uint32_t>(FileAttributes::HIDDEN));
-      return SetFileAttributesW(file.c_str(), attr) == TRUE ? true : false;
+#if TC_WINDOWS_UWP
+      return ::SetFileAttributesFromAppW(file.c_str(), attr) == TRUE;
+#else
+      return SetFileAttributesW(file.c_str(), attr) == TRUE;
+#endif
    }
 
    bool file::Remove(const std::string & file_in)
@@ -149,14 +170,22 @@ namespace tc
          return false;
       }
 
-      std::wstring file(wstring::ToString(file_in));
+      auto file(wstring::ToString(file_in));
       if (IsDirectory(file_in))
       {
+#if TC_WINDOWS_UWP
+         return ::RemoveDirectoryFromAppW(file.c_str()) == TRUE;
+#else
          return ::RemoveDirectoryW(file.c_str()) == TRUE;
+#endif
       }
       else
       {
+#if TC_WINDOWS_UWP
+         return ::DeleteFileFromAppW(file.c_str()) == TRUE;
+#else
          return ::DeleteFileW(file.c_str()) == TRUE;
+#endif
       }
    }
 
@@ -172,23 +201,26 @@ namespace tc
       LPVOID lpData
       )
    {
-      SharedPtr<file::Progress> progress(*(SharedPtr<file::Progress>*)lpData);
-      double val = (double)(TotalFileSize.QuadPart/TotalBytesTransferred.QuadPart) * 100;
+      auto progress(*static_cast<SharedPtr<file::Progress>*>(lpData));
+      auto val = static_cast<double>(TotalFileSize.QuadPart) / TotalBytesTransferred.QuadPart * 100.0;
 
-      progress->OnCurrentStatus(uint32_t(val));
+      progress->OnCurrentStatus(static_cast<uint32_t>(val));
 
       return 0;
    }
 
    bool file::Copy(const std::string& source_in, const std::string& dest_in, SharedPtr<Progress> progress)
    {
-      std::wstring source(wstring::ToString(source_in));
       if (!IsFile(source_in))
       {
          return false;
       }
 
-      std::wstring dest(wstring::ToString(dest_in));
+      auto source(wstring::ToString(source_in));
+      auto dest(wstring::ToString(dest_in));
+#if TC_WINDOWS_UWP
+      return ::CopyFileFromAppW(source.c_str(), dest.c_str(), FALSE) == TRUE;
+#else
       if (progress)
       {
          if (::CopyFileExW(source.c_str(), dest.c_str(), &CopyProgress, &progress, 0, 0) != 0)
@@ -206,6 +238,7 @@ namespace tc
       {
          return ::CopyFileExW(source.c_str(), dest.c_str(), 0, 0, 0, 0) != 0;
       }
+#endif
    }
 
    bool file::Move(const std::string& source_in, const std::string& dest_in)
@@ -215,145 +248,125 @@ namespace tc
          return false;
       }
 
-      std::wstring source(wstring::ToString(source_in));
-      std::wstring dest(wstring::ToString(dest_in));
+      auto source(wstring::ToString(source_in));
+      auto dest(wstring::ToString(dest_in));
+#if TC_WINDOWS_UWP
+      return ::MoveFileFromAppW(source.c_str(), dest.c_str());
+#else
       return ::MoveFileExW(source.c_str(), dest.c_str(),
          MOVEFILE_COPY_ALLOWED|MOVEFILE_REPLACE_EXISTING|MOVEFILE_WRITE_THROUGH) == TRUE;
+#endif
    }
 
    bool file::CreateDir(const std::string& path_in)
    {
-      if (path_in.empty()) return false;
+      if (path_in.empty())
+      {
+         return false;
+      }
 
-      std::wstring path(wstring::ToString(path_in));
-      return ::CreateDirectoryW(path.c_str(), 0) == TRUE;
+      auto path(wstring::ToString(path_in));
+#if TC_WINDOWS_UWP
+      return ::CreateDirectoryFromAppW(path.c_str(), nullptr) == TRUE;
+#else
+      return ::CreateDirectoryW(path.c_str(), nullptr) == TRUE;
+#endif
    }
 
    bool file::RemoveDir(const std::string& path_in)
    {
-      if (path_in.empty()) return false;
+      if (path_in.empty())
+      {
+         return false;
+      }
 
-      std::wstring path(wstring::ToString(path_in));
+      auto path(wstring::ToString(path_in));
+#if TC_WINDOWS_UWP
+      return ::RemoveDirectoryFromAppW(path.c_str()) == TRUE;
+#else
       return ::RemoveDirectoryW(path.c_str()) == TRUE;
+#endif
    }
 
    // Return time file was last modified
-   uint64_t file::GetModificationTime(const std::string &file_in)
+   uint64_t file::GetModificationTime(const std::string &file)
    {
-      std::wstring file(wstring::ToString(file_in));
-      HANDLE f = ::CreateFile2(file.c_str(),
-         FILE_READ_ATTRIBUTES,
-         FILE_SHARE_READ,
-         OPEN_EXISTING,
-         0);
-      if (f == INVALID_HANDLE_VALUE)
+      const auto attribute_data = GetFileAttributeData(file);
+      if (attribute_data.dwFileAttributes == INVALID_FILE_ATTRIBUTES)
       {
          return 0;
       }
-
-      FILETIME ftime;
-      if (!::GetFileTime(f, 0, 0, &ftime))
-      {
-         ::CloseHandle(f);
-         return 0;
-      }
-      ::CloseHandle(f);
 
       ULARGE_INTEGER ltime;
-      ltime.LowPart  = ftime.dwLowDateTime;
-      ltime.HighPart = ftime.dwHighDateTime;
+      ltime.LowPart  = attribute_data.ftLastWriteTime.dwLowDateTime;
+      ltime.HighPart = attribute_data.ftLastWriteTime.dwHighDateTime;
       return ltime.QuadPart;
    }
 
    // Return time file was last accessed
-   uint64_t file::GetLastAccessTime(const std::string &file_in)
+   uint64_t file::GetLastAccessTime(const std::string &file)
    {
-      std::wstring file(wstring::ToString(file_in));
-      HANDLE f = ::CreateFile2(file.c_str(),
-                               FILE_READ_ATTRIBUTES,
-                               FILE_SHARE_READ,
-                               OPEN_EXISTING,
-                               0);
-      if (f == INVALID_HANDLE_VALUE)
+      const auto attribute_data = GetFileAttributeData(file);
+      if (attribute_data.dwFileAttributes == INVALID_FILE_ATTRIBUTES)
       {
          return 0;
       }
-
-      FILETIME ftime;
-      if (!::GetFileTime(f, 0, &ftime, 0))
-      {
-         ::CloseHandle(f);
-         return 0;
-      }
-      ::CloseHandle(f);
 
       ULARGE_INTEGER ltime;
-      ltime.LowPart  = ftime.dwLowDateTime;
-      ltime.HighPart = ftime.dwHighDateTime;
+      ltime.LowPart  = attribute_data.ftLastAccessTime.dwLowDateTime;
+      ltime.HighPart = attribute_data.ftLastAccessTime.dwHighDateTime;
       return ltime.QuadPart;
    }
 
    // Return time when created
-   uint64_t file::GetCreationTime(const std::string &file_in)
+   uint64_t file::GetCreationTime(const std::string &file)
    {
-      std::wstring file(wstring::ToString(file_in));
-      HANDLE f = ::CreateFile2(file.c_str(),
-                               FILE_READ_ATTRIBUTES,
-                               FILE_SHARE_READ,
-                               OPEN_EXISTING,
-                               0);
-      if (f == INVALID_HANDLE_VALUE)
+      const auto attribute_data = GetFileAttributeData(file);
+      if (attribute_data.dwFileAttributes == INVALID_FILE_ATTRIBUTES)
       {
          return 0;
       }
-
-      FILETIME ftime;
-      if (!::GetFileTime(f, &ftime, 0, 0))
-      {
-         ::CloseHandle(f);
-         return 0;
-      }
-      ::CloseHandle(f);
 
       ULARGE_INTEGER ltime;
-      ltime.LowPart  = ftime.dwLowDateTime;
-      ltime.HighPart = ftime.dwHighDateTime;
+      ltime.LowPart  = attribute_data.ftCreationTime.dwLowDateTime;
+      ltime.HighPart = attribute_data.ftCreationTime.dwHighDateTime;
       return ltime.QuadPart;
    }
 
    // Get file size
-   uint64_t file::GetFileSize(const std::string &file_in)
+   uint64_t file::GetFileSize(const std::string &file)
    {
-      std::wstring file(wstring::ToString(file_in));
-      HANDLE f = ::CreateFile2(file.c_str(),
-                               FILE_READ_ATTRIBUTES,
-                               FILE_SHARE_READ,
-                               OPEN_EXISTING,
-                               0);
-      if (f == INVALID_HANDLE_VALUE)
+      const auto attribute_data = GetFileAttributeData(file);
+      if (attribute_data.dwFileAttributes == INVALID_FILE_ATTRIBUTES)
       {
          return 0;
       }
 
-      LARGE_INTEGER high_size;
-      DWORD low_size = ::GetFileSizeEx(f, &high_size);
-      if (low_size == INVALID_FILE_SIZE)
-      {
-         return 0;
-      }
+      ULARGE_INTEGER size;
+      size.LowPart = attribute_data.nFileSizeLow;
+      size.HighPart = attribute_data.nFileSizeHigh;
 
-      return high_size.QuadPart;
+      return size.QuadPart;
    }
 
    static std::string Win32FileInformation(const std::string &file_in, SECURITY_INFORMATION info_type)
    {
-      std::wstring file(wstring::ToString(file_in));
+      auto file(wstring::ToString(file_in));
+#if TC_WINDOWS_UWP
+      auto hFile = ::CreateFile2FromAppW(file.c_str(),
+                                         FILE_READ_ATTRIBUTES,
+                                         FILE_SHARE_READ,
+                                         OPEN_EXISTING,
+                                         nullptr);
+
+#else
       // Get the handle of the file object.
       HANDLE hFile = ::CreateFile2(file.c_str(),
                                FILE_READ_ATTRIBUTES,
                                FILE_SHARE_READ,
                                OPEN_EXISTING,
-                               0);
+                               nullptr);
+#endif
       // Check GetLastError for CreateFile error code.
       if (hFile == INVALID_HANDLE_VALUE)
       {
@@ -362,32 +375,30 @@ namespace tc
       }
 
       // Allocate memory for the SID structure.
-      PSID pSidOwner = (PSID)GlobalAlloc(GMEM_FIXED, sizeof(PSID));
+      auto pSidOwner = static_cast<PSID>(GlobalAlloc(GMEM_FIXED, sizeof(PSID)));
 
       // Allocate memory for the security descriptor structure.
-      PSECURITY_DESCRIPTOR pSD = 0;
-      pSD = (PSECURITY_DESCRIPTOR)::GlobalAlloc(GMEM_FIXED,sizeof(PSECURITY_DESCRIPTOR));
+      auto p_sd = static_cast<PSECURITY_DESCRIPTOR>(::GlobalAlloc(GMEM_FIXED, sizeof(PSECURITY_DESCRIPTOR)));
 
       // Get the owner SID of the file.
       // Check GetLastError for GetSecurityInfo error condition.
       if (GetSecurityInfo(hFile, SE_FILE_OBJECT, info_type,
-         &pSidOwner, 0, 0, 0, &pSD) != ERROR_SUCCESS)
+         &pSidOwner, nullptr, nullptr, nullptr, &p_sd) != ERROR_SUCCESS)
       {
          TCERRORS("TCBASE", system::GetLastErrorMessage().c_str());
          return "";
       }
       ::CloseHandle(hFile);
-      hFile = INVALID_HANDLE_VALUE;
-      ::GlobalFree(pSD);
+      ::GlobalFree(p_sd);
 
-      SID_NAME_USE eUse = SidTypeUnknown;
+      auto eUse = SidTypeUnknown;
       char AcctName[256];
       char DomainName[256];
-      DWORD dwAcctName = static_cast<DWORD>(util::ArraySize(AcctName));
-      DWORD dwDomainName = static_cast<DWORD>(util::ArraySize(DomainName));
+      auto dwAcctName = static_cast<DWORD>(util::ArraySize(AcctName));
+      auto dwDomainName = static_cast<DWORD>(util::ArraySize(DomainName));
       // call to LookupAccountSid to get the account name.
       if (!LookupAccountSidA(
-         0,                          // name of local or remote computer
+         nullptr,                          // name of local or remote computer
          pSidOwner,                     // security identifier
          AcctName,                      // account name buffer
          &dwAcctName,                   // size of account name buffer 
@@ -415,15 +426,11 @@ namespace tc
       return Win32FileInformation(file, GROUP_SECURITY_INFORMATION);
    }
 
-   std::vector < std::string >
-   file::GetFileListOfDirectory(const std::string & searchDirectory,
+   std::vector<std::string> file::GetFileListOfDirectory(const std::string & searchDirectory,
                                 const std::string & searchExtension)
    {
       std::vector < std::string > fileList;
-      std::string file;
 
-      HANDLE findFile;
-      WIN32_FIND_DATAW findData;
       std::string search_dir;
       if (searchExtension.empty())
       {
@@ -433,13 +440,27 @@ namespace tc
       {
          search_dir = file_name::AddFileNameAndPath("*." + searchExtension, searchDirectory);
       }
-      std::wstring wsearch_dir = wstring::ToString(search_dir);
-      findFile = ::FindFirstFileW(wsearch_dir.c_str(), &findData);
-      if (findFile == INVALID_HANDLE_VALUE) return fileList;
+
+      const auto wsearch_dir = wstring::ToString(search_dir);
+      WIN32_FIND_DATAW find_data;
+      const FINDEX_INFO_LEVELS info_levels = FindExInfoBasic;
+      const FINDEX_SEARCH_OPS search_ops = FindExSearchNameMatch;
+      const DWORD additional = FIND_FIRST_EX_CASE_SENSITIVE | FIND_FIRST_EX_LARGE_FETCH;
+#if TC_WINDOWS_UWP
+      auto find_file = ::FindFirstFileExFromAppW(wsearch_dir.c_str(), info_levels, &find_data,
+                                                         search_ops, nullptr, additional);
+#else
+      auto find_file = ::FindFirstFileExW(wsearch_dir.c_str(), info_levels, &find_data,
+         search_ops, nullptr, additional);
+#endif
+      if (find_file == INVALID_HANDLE_VALUE)
+      {
+         return fileList;
+      }
 
       do
       {
-         file = wstring::ToString(findData.cFileName);
+         auto file = wstring::ToString(find_data.cFileName);
          if (file_name::GetName(file) == "." || file_name::GetName(file) == "..")
          {
             continue;
@@ -447,18 +468,17 @@ namespace tc
 
          fileList.push_back(file);
       }
-      while (::FindNextFileW(findFile, &findData));
+      while (::FindNextFileW(find_file, &find_data));
 
-      ::FindClose(findFile);
+      ::FindClose(find_file);
       return fileList;
    }
 
    
-   void file::GetFileInfosOfDirectory(std::vector < FileInfo >& file_infos,
+   void file::GetFileInfosOfDirectory(std::vector<FileInfo>& file_infos,
       const std::string & searchDirectory,
       const std::string& searchExtension)
    {
-      HANDLE findFile;
       WIN32_FIND_DATAW findData;
       std::string search_dir;
       if (searchExtension.empty())
@@ -469,9 +489,22 @@ namespace tc
       {
          search_dir = file_name::AddFileNameAndPath("*." + searchExtension, searchDirectory);
       }
-      std::wstring wsearch_dir = wstring::ToString(search_dir);
-      findFile = ::FindFirstFileW(wsearch_dir.c_str(), &findData);
-      if (findFile == INVALID_HANDLE_VALUE) return;
+      auto wsearch_dir = wstring::ToString(search_dir);
+      WIN32_FIND_DATAW find_data;
+      const FINDEX_INFO_LEVELS info_levels = FindExInfoBasic;
+      const FINDEX_SEARCH_OPS search_ops = FindExSearchNameMatch;
+      const DWORD additional = FIND_FIRST_EX_CASE_SENSITIVE | FIND_FIRST_EX_LARGE_FETCH;
+#if TC_WINDOWS_UWP
+      auto find_file = ::FindFirstFileExFromAppW(wsearch_dir.c_str(), info_levels, &find_data,
+         search_ops, nullptr, additional);
+#else
+      auto find_file = ::FindFirstFileExW(wsearch_dir.c_str(), info_levels, &find_data,
+         search_ops, nullptr, additional);
+#endif
+      if (find_file == INVALID_HANDLE_VALUE)
+      {
+         return;
+      }
 
       do
       {
@@ -494,9 +527,9 @@ namespace tc
          file_info.file_size = file_size.QuadPart;
          file_infos.push_back(file_info);
       }
-      while (::FindNextFileW(findFile, &findData));
+      while (::FindNextFileW(find_file, &findData));
 
-      ::FindClose(findFile);
+      ::FindClose(find_file);
    }
 }
 #endif
