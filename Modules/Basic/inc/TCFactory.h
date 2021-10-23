@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see https://bitbucket.org/the____tiger/tcsystem for details.
-// Copyright (C) 2003 - 2018 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2021 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.

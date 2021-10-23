@@ -10,7 +10,7 @@
 //                        *
 //*******************************************************************************
 // see https://bitbucket.org/the____tiger/tcsystem for details.
-// Copyright (C) 2003 - 2018 Thomas Goessler. All Rights Reserved. 
+// Copyright (C) 2003 - 2021 Thomas Goessler. All Rights Reserved. 
 //*******************************************************************************
 //
 // TCSystem is the legal property of its developers.
@@ -118,7 +118,7 @@
 /** @brief The Homepage of TCSystem */
 #define TCHOMPAGE       "https://bitbucket.org/the____tiger/tcsystem"
 /** @brief The copyright string*/
-#define TCCOPYRIGHT     "Copyright (C) 2003 - 2018 Thomas Goessler. All rights reserved"
+#define TCCOPYRIGHT     "Copyright (C) 2003 - 2021 Thomas Goessler. All rights reserved"
 
 // ---------------------------------------------------------------
 // For DLL´s
