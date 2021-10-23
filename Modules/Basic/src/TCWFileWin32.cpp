@@ -468,7 +468,6 @@ namespace tc::wfile
       const std::wstring & searchDirectory,
       const std::wstring& searchExtension)
    {
-      WIN32_FIND_DATAW findData;
       std::wstring search_dir;
       if (searchExtension.empty())
       {
@@ -497,7 +496,7 @@ namespace tc::wfile
       do
       {
          FileInfo file_info;
-         file_info.name = findData.cFileName;
+         file_info.name = find_data.cFileName;
          if (wfile_name::GetName(file_info.name) == L"." || 
              wfile_name::GetName(file_info.name) == L"..")
          {
@@ -505,17 +504,17 @@ namespace tc::wfile
          }
 
          LARGE_INTEGER last_write_time;
-         last_write_time.LowPart  = findData.ftLastWriteTime.dwLowDateTime;
-         last_write_time.HighPart = findData.ftLastWriteTime.dwHighDateTime;
+         last_write_time.LowPart  = find_data.ftLastWriteTime.dwLowDateTime;
+         last_write_time.HighPart = find_data.ftLastWriteTime.dwHighDateTime;
          file_info.last_modified  = last_write_time.QuadPart;
-         file_info.is_directory   = (findData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) == FILE_ATTRIBUTE_DIRECTORY;
+         file_info.is_directory   = (find_data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) == FILE_ATTRIBUTE_DIRECTORY;
          LARGE_INTEGER file_size;
-         file_size.LowPart   = findData.nFileSizeLow;
-         file_size.HighPart  = findData.nFileSizeHigh;
+         file_size.LowPart   = find_data.nFileSizeLow;
+         file_size.HighPart  = find_data.nFileSizeHigh;
          file_info.file_size = file_size.QuadPart;
          file_infos.push_back(file_info);
       }
-      while (::FindNextFileW(find_file, &findData));
+      while (::FindNextFileW(find_file, &find_data));
 
       ::FindClose(find_file);
    }
