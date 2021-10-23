@@ -176,6 +176,22 @@ namespace tc
 
          return file;
       }
+
+      MemoryMappedFilePtr CreateMemoryMappedFile(const std::wstring& file_name, bool read_only, uint32_t size)
+      {
+#ifdef TCOS_WINDOWS
+         SharedPtr<MemoryMappedFileWin32> file(new MemoryMappedFileWin32);
+#else
+         SharedPtr<MemoryMappedFilePosix> file(new MemoryMappedFilePosix);
+#endif
+         if (!file->MapToMemory(file_name, read_only, size))
+         {
+            return MemoryMappedFilePtr();
+         }
+
+         return file;
+      }
+
    }
 }
 
