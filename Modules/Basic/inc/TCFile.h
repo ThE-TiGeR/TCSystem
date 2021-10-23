@@ -124,9 +124,9 @@ namespace tc
       struct FileInfo
       {
          std::string name;
-         uint64_t last_modified;
-         bool is_directory;
-         uint64_t file_size;
+         uint64_t last_modified{};
+         bool is_directory{};
+         uint64_t file_size{};
       };
       typedef std::vector < FileInfo > FileInfos;
 
