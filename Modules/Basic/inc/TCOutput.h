@@ -182,8 +182,8 @@ namespace tc
         ::tc::StreamPtr _tc_tmp_stream(::tc::factory::CreateStringStream(_tc_tmp_stream_val)); \
         _tc_tmp_stream << STREAM; \
         ::tc::output::Trace(MODULE, LEVEL, _TC_FUNCTION_, __LINE__, "%s", _tc_tmp_stream_val.c_str()); \
-    }
-
+    } \
+    ((void)0)
 #else
 #   define TCTRACES(MODULE, LEVEL, STREAM) ((void)0)
 #endif
@@ -194,7 +194,8 @@ namespace tc
        ::tc::StreamPtr _tc_tmp_stream(::tc::factory::CreateStringStream(_tc_tmp_stream_val)); \
        _tc_tmp_stream << STREAM; \
        ::tc::output::Info(MODULE, _TC_FUNCTION_, __LINE__, "%s", _tc_tmp_stream_val.c_str()); \
-   }
+    } \
+    ((void)0)
 
 #define TCWARNINGS(MODULE, STREAM) \
     { \
@@ -202,7 +203,8 @@ namespace tc
        ::tc::StreamPtr _tc_tmp_stream(::tc::factory::CreateStringStream(_tc_tmp_stream_val)); \
        _tc_tmp_stream << STREAM; \
        ::tc::output::Warning(MODULE, _TC_FUNCTION_, __LINE__, "%s", _tc_tmp_stream_val.c_str()); \
-   }
+    } \
+    ((void)0)
 
 #define TCERRORS(MODULE, STREAM) \
     { \
@@ -210,7 +212,8 @@ namespace tc
        ::tc::StreamPtr _tc_tmp_stream(::tc::factory::CreateStringStream(_tc_tmp_stream_val)); \
        _tc_tmp_stream << STREAM; \
        ::tc::output::Error(MODULE, _TC_FUNCTION_, __LINE__, "%s", _tc_tmp_stream_val.c_str()); \
-   }
+    } \
+    ((void)0)
 
 /**
  * @}
