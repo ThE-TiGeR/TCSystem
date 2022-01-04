@@ -80,7 +80,7 @@ std::string Settings::GetStringEntry(const std::string &section, const std::stri
    // if did not find the section so we have to create a new one
    if (pos != NOT_FOUND)
    {
-      HashTable<std::string, uint32_t> *sHash = m_key_string_hash_table[pos];
+      const HashTable<std::string, uint32_t> *sHash = m_key_string_hash_table[pos];
       // if not found we return the value
       pos = sHash->GetMappedValue(key);
       if (pos != NOT_FOUND) return m_data_of_string[pos];
@@ -142,7 +142,7 @@ HashTable<std::string, uint32_t>* Settings::getSectionHashTable(const std::strin
 
 int32_t Settings::addEntryToSection(HashTable<std::string, uint32_t> *sHash, const std::string &key)
 {
-   uint32_t pos = static_cast<uint32_t>(m_data_of_string.size());
+   const uint32_t pos = static_cast<uint32_t>(m_data_of_string.size());
    sHash->AddKey(key, pos);
 
    m_data_of_string.push_back("");

@@ -316,7 +316,7 @@ namespace tc
            avgListLength = 0;
            for (const auto& elements : m_data)
            {
-               uint32_t thisListLength = elements.size();
+              const uint32_t thisListLength = elements.size();
                if (thisListLength == 0) numEmptyLists++;
                if (maxListLength < thisListLength) maxListLength = thisListLength;
                avgListLength += thisListLength;

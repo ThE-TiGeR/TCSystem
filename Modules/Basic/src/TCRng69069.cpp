@@ -52,7 +52,7 @@ namespace tc
 
       uint32_t Rng69069::GetRandomNumber(uint32_t lower_limit, uint32_t upper_limit)
       {
-         uint64_t diff = 1 + static_cast<uint64_t>(upper_limit - lower_limit);
+         const uint64_t diff = 1 + static_cast<uint64_t>(upper_limit - lower_limit);
          uint64_t aux = diff * CreateRandomNumber();
          aux = aux >> 32;
 
@@ -61,7 +61,7 @@ namespace tc
 
       double Rng69069::GetRandomNumberDouble(double lower_limit, double upper_limit)
       {
-         double val = static_cast<double>(CreateRandomNumber()) / static_cast<double>(0xffffffff);
+         const double val = static_cast<double>(CreateRandomNumber()) / static_cast<double>(0xffffffff);
 
          return lower_limit + val * (upper_limit - lower_limit);
       }

@@ -221,7 +221,7 @@ namespace tc
          uint8_t *buffer = (uint8_t*)&val;
          for (uint32_t i = 0; i<sizeof(val)/2; i++)
          {
-            uint8_t b = buffer[i];
+            const uint8_t b = buffer[i];
 
             buffer[i] = buffer[sizeof(val)/2 - i - 1];
             buffer[sizeof(val)/2 - i - 1] = b;

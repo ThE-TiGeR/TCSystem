@@ -95,7 +95,7 @@ namespace tc
          if (direction == Direction::READ)
          {
 #ifdef TCOS_WINDOWS
-            std::wstring wfileName(wstring::ToString(fileName));
+            const std::wstring wfileName(wstring::ToString(fileName));
             file = _wfopen(wfileName.c_str(), L"rb");
 #else
             file = std::fopen(fileName.c_str(), "rb");
@@ -104,7 +104,7 @@ namespace tc
          else if (direction == Direction::WRITE)
          {
 #ifdef TCOS_WINDOWS
-            std::wstring wfileName(wstring::ToString(fileName));
+            const std::wstring wfileName(wstring::ToString(fileName));
             file = _wfopen(wfileName.c_str(), L"wb");
 #else
             file = std::fopen(fileName.c_str(), "wb");
@@ -113,7 +113,7 @@ namespace tc
          else if (direction == Direction::READ_WRITE)
          {
 #ifdef TCOS_WINDOWS
-            std::wstring wfileName(wstring::ToString(fileName));
+            const std::wstring wfileName(wstring::ToString(fileName));
             file = _wfopen(wfileName.c_str(), L"wb+");
 #else
             file = std::fopen(fileName.c_str(), "wb+");
@@ -149,8 +149,8 @@ namespace tc
          uint64_t read_bytes = 0;
          while(read_bytes < nBytes)
          {
-            std::size_t num = std::fread(static_cast<uint8_t*>(bytes)+read_bytes, 1, 
-               std::size_t(nBytes-read_bytes), m_stream_pointer);
+            const std::size_t num = std::fread(static_cast<uint8_t*>(bytes)+read_bytes, 1, 
+                                               std::size_t(nBytes-read_bytes), m_stream_pointer);
             if (num <= 0)
             {
                if (std::feof(m_stream_pointer))
@@ -192,8 +192,8 @@ namespace tc
          uint64_t wrote_bytes = 0;
          while(wrote_bytes < nBytes)
          {
-            std::size_t num = std::fwrite(static_cast<const uint8_t*>(bytes)+wrote_bytes, 1, 
-               std::size_t(nBytes-wrote_bytes), m_stream_pointer);
+            const std::size_t num = std::fwrite(static_cast<const uint8_t*>(bytes)+wrote_bytes, 1, 
+                                                std::size_t(nBytes-wrote_bytes), m_stream_pointer);
             if (num <= 0)
             {
                 SetStatus(Error::WRITE_TO_STREAM);

@@ -132,7 +132,7 @@ namespace tc
       {
          LARGE_INTEGER ticks;
          ::QueryPerformanceCounter(&ticks);
-         uint64_t mticks = uint64_t(ticks.QuadPart/s_frequence);
+         const uint64_t mticks = uint64_t(ticks.QuadPart/s_frequence);
          time = Time::FromNanoSeconds(mticks);
       }
       else
@@ -152,7 +152,7 @@ namespace tc
 
    Time::Time(uint64_t secs, uint64_t nsecs)
    {
-      Time time = FromSeconds(secs) + FromNanoSeconds(nsecs);
+      const Time time = FromSeconds(secs) + FromNanoSeconds(nsecs);
       m_secs  = time.m_secs;
       m_nsecs = time.m_nsecs;
    }

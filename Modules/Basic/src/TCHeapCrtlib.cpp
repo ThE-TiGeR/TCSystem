@@ -62,7 +62,7 @@ namespace tc
 
    void* HeapCrtlib::Alloc(uint32_t size)
    {
-      uint32_t allocation_size = size + sizeof(Header);
+      const uint32_t allocation_size = size + sizeof(Header);
       Header* p = static_cast<Header*>(std::malloc(allocation_size));
       if (p)
       {
@@ -110,7 +110,7 @@ namespace tc
       Header* header = static_cast<Header*>(memory);
       --header;
 
-      uint32_t mem_size = util::Min(size, header->m_allocation_size - uint32_t(sizeof(Header)));
+      const uint32_t mem_size = util::Min(size, header->m_allocation_size - uint32_t(sizeof(Header)));
       std::memcpy(new_memory, memory, mem_size);
 
       Free(memory);

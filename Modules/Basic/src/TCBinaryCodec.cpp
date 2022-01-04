@@ -166,7 +166,7 @@ namespace tc
          {
             // for char we have to read the len first
             uint32_t nBytes;
-            uint64_t len = Decode(stream, nBytes);
+            const uint64_t len = Decode(stream, nBytes);
 
             char* data = new char[std::size_t(nBytes)+1];
             if (stream.ReadBytes(nBytes, data) != nBytes)
@@ -184,7 +184,7 @@ namespace tc
          uint64_t Decode(Stream& stream, std::wstring& val)
          {
             std::string tmp;
-            uint64_t len = Decode(stream, tmp);
+            const uint64_t len = Decode(stream, tmp);
             val = wstring::ToString(tmp);
 
             return len;
@@ -194,7 +194,7 @@ namespace tc
          {
             // for char we have to read the len first
             uint32_t nBytes;
-            uint64_t len = Decode(stream, nBytes);
+            const uint64_t len = Decode(stream, nBytes);
 
             if (stream.ReadBytes(nBytes, val) != nBytes)
             {
@@ -212,7 +212,7 @@ namespace tc
          uint64_t Decode(Stream& stream, bool &val)
          {
             uint8_t cval;
-            uint64_t len = stream.ReadBytes(1, &cval);
+            const uint64_t len = stream.ReadBytes(1, &cval);
             val = cval == 1;
             return len;
          }
@@ -277,22 +277,22 @@ namespace tc
 
          uint64_t Encode(const std::string& val, Stream& stream)
          {
-            uint32_t nBytes = uint32_t(val.length());
-            uint64_t len = Encode(nBytes, stream);
+            const uint32_t nBytes = uint32_t(val.length());
+            const uint64_t len = Encode(nBytes, stream);
 
             return stream.WriteBytes(nBytes, val.c_str()) + len;
          }
 
          uint64_t Encode(const std::wstring& val, Stream& stream)
          {
-            std::string tmp = wstring::ToString(val);
+            const std::string tmp = wstring::ToString(val);
             return Encode(tmp, stream);
          }
 
          uint64_t Encode(const char *val, Stream& stream)
          {
-            uint32_t nBytes = uint32_t(std::strlen(val));
-            uint64_t len = Encode(nBytes, stream);
+            const uint32_t nBytes = uint32_t(std::strlen(val));
+            const uint64_t len = Encode(nBytes, stream);
 
             return stream.WriteBytes(nBytes, val) + len;
          }
@@ -304,7 +304,7 @@ namespace tc
 
          uint64_t Encode(bool val, Stream& stream)
          {
-            uint8_t cval = val ? 1 : 0;
+            const uint8_t cval = val ? 1 : 0;
             return stream.WriteBytes(1, &cval);
          }
 

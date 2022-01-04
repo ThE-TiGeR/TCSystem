@@ -351,11 +351,11 @@ namespace tc::wfile
 
 #else
       // Get the handle of the file object.
-      HANDLE file_handle = ::CreateFile2(file.c_str(),
-                               FILE_READ_ATTRIBUTES,
-                               FILE_SHARE_READ,
-                               OPEN_EXISTING,
-                               nullptr);
+      const HANDLE file_handle = ::CreateFile2(file.c_str(),
+                                               FILE_READ_ATTRIBUTES,
+                                               FILE_SHARE_READ,
+                                               OPEN_EXISTING,
+                                               nullptr);
 #endif
       // Check GetLastError for CreateFile error code.
       if (file_handle == INVALID_HANDLE_VALUE)
@@ -439,8 +439,8 @@ namespace tc::wfile
       auto find_file = ::FindFirstFileExFromAppW(search_dir.c_str(), info_levels, &find_data,
                                                        search_ops, nullptr, additional);
 #else
-      auto find_file = ::FindFirstFileExW(search_dir.c_str(), info_levels, &find_data,
-         search_ops, nullptr, additional);
+      const auto find_file = ::FindFirstFileExW(search_dir.c_str(), info_levels, &find_data,
+                                                search_ops, nullptr, additional);
 #endif
       if (find_file == INVALID_HANDLE_VALUE)
       {
@@ -485,8 +485,8 @@ namespace tc::wfile
       const auto find_file = ::FindFirstFileExFromAppW(search_dir.c_str(), info_levels, &find_data,
                                                        search_ops, nullptr, additional);
 #else
-      auto find_file = ::FindFirstFileExW(search_dir.c_str(), info_levels, &find_data,
-         search_ops, nullptr, additional);
+      const auto find_file = ::FindFirstFileExW(search_dir.c_str(), info_levels, &find_data,
+                                                search_ops, nullptr, additional);
 #endif
       if (find_file == INVALID_HANDLE_VALUE)
       {

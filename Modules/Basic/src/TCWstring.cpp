@@ -47,7 +47,7 @@ namespace tc
 
    std::wstring wstring::ToString(wchar_t val)
    {
-      wchar_t string[2] = {val, 0};
+      const wchar_t string[2] = {val, 0};
       return string;
    }
 
@@ -301,7 +301,7 @@ namespace tc
 
    std::wstring wstring::DeleteBlanksAndTabs(const std::wstring& text_in)
    {
-      std::wstring text = WStringImp::Replace(text_in, L" ", L"");
+      const std::wstring text = WStringImp::Replace(text_in, L" ", L"");
       return WStringImp::Replace(text, L"\t", L"");
    }
 
@@ -325,7 +325,7 @@ namespace tc
    {
       va_list arguments;
       va_start(arguments, fmt);
-      int32_t len = WStringTraits::VsnPrintf(buf, size_of_buf, fmt, arguments);
+      const int32_t len = WStringTraits::VsnPrintf(buf, size_of_buf, fmt, arguments);
       va_end(arguments);
 
       return len;
@@ -374,12 +374,12 @@ namespace tc
          int32_t wc_buffer_size = ::mbstowcs(0, utf8_string.c_str(), 0);
 #else
          // convert to to wchar string from uft8 multibyte string
-         int32_t wc_buffer_size = ::MultiByteToWideChar(CP_UTF8,
-            0,
-            utf8_string.c_str(),
-            -1,
-            0,
-            0);
+         const int32_t wc_buffer_size = ::MultiByteToWideChar(CP_UTF8,
+                                                              0,
+                                                              utf8_string.c_str(),
+                                                              -1,
+                                                              0,
+                                                              0);
 #endif
 
          if (wc_buffer_size > 0)
@@ -424,7 +424,7 @@ namespace tc
          int32_t c_buffer_size = ::wcstombs(0, string.c_str(), 0);
 #else
          // convert from wchar string to uft8 multibyte string
-         int32_t c_buffer_size = ::WideCharToMultiByte(CP_UTF8, 0, string.c_str(), -1, 0, 0, 0, 0);
+         const int32_t c_buffer_size = ::WideCharToMultiByte(CP_UTF8, 0, string.c_str(), -1, 0, 0, 0, 0);
 #endif
 
          if (c_buffer_size > 0)

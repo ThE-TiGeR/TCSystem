@@ -64,7 +64,7 @@ namespace tc
       {
          return false;
       }
-      auto directory(wstring::ToString(directory_in));
+      const auto directory(wstring::ToString(directory_in));
       return ::SetCurrentDirectoryW(directory.c_str()) == TRUE;
    }
 
@@ -83,7 +83,7 @@ namespace tc
 
    static WIN32_FILE_ATTRIBUTE_DATA GetFileAttributeData(const std::string& file_in)
    {
-      auto file(wstring::ToString(file_in));
+      const auto file(wstring::ToString(file_in));
       const auto levels = GetFileExInfoStandard;
       WIN32_FILE_ATTRIBUTE_DATA attribute_data;
       ZeroMemory(&attribute_data, sizeof(attribute_data));
@@ -151,7 +151,7 @@ namespace tc
    // Change the mode flags for this file
    bool file::SetFileAttr(const std::string &file_in, uint32_t attr)
    {
-      auto file(wstring::ToString(file_in));
+      const auto file(wstring::ToString(file_in));
       attr &= (static_cast<uint32_t>(FileAttributes::READONLY) | 
          static_cast<uint32_t>(FileAttributes::ARCHIVE) | 
          static_cast<uint32_t>(FileAttributes::SYSTEM) |
@@ -170,7 +170,7 @@ namespace tc
          return false;
       }
 
-      auto file(wstring::ToString(file_in));
+      const auto file(wstring::ToString(file_in));
       if (IsDirectory(file_in))
       {
 #if TC_WINDOWS_UWP
@@ -202,7 +202,7 @@ namespace tc
       )
    {
       auto progress(*static_cast<SharedPtr<file::Progress>*>(lpData));
-      auto val = static_cast<double>(TotalFileSize.QuadPart) / TotalBytesTransferred.QuadPart * 100.0;
+      const auto val = static_cast<double>(TotalFileSize.QuadPart) / TotalBytesTransferred.QuadPart * 100.0;
 
       progress->OnCurrentStatus(static_cast<uint32_t>(val));
 
@@ -216,8 +216,8 @@ namespace tc
          return false;
       }
 
-      auto source(wstring::ToString(source_in));
-      auto dest(wstring::ToString(dest_in));
+      const auto source(wstring::ToString(source_in));
+      const auto dest(wstring::ToString(dest_in));
 #if TC_WINDOWS_UWP
       return ::CopyFileFromAppW(source.c_str(), dest.c_str(), FALSE) == TRUE;
 #else
@@ -248,8 +248,8 @@ namespace tc
          return false;
       }
 
-      auto source(wstring::ToString(source_in));
-      auto dest(wstring::ToString(dest_in));
+      const auto source(wstring::ToString(source_in));
+      const auto dest(wstring::ToString(dest_in));
 #if TC_WINDOWS_UWP
       return ::MoveFileFromAppW(source.c_str(), dest.c_str());
 #else
@@ -265,7 +265,7 @@ namespace tc
          return false;
       }
 
-      auto path(wstring::ToString(path_in));
+      const auto path(wstring::ToString(path_in));
 #if TC_WINDOWS_UWP
       return ::CreateDirectoryFromAppW(path.c_str(), nullptr) == TRUE;
 #else
@@ -280,7 +280,7 @@ namespace tc
          return false;
       }
 
-      auto path(wstring::ToString(path_in));
+      const auto path(wstring::ToString(path_in));
 #if TC_WINDOWS_UWP
       return ::RemoveDirectoryFromAppW(path.c_str()) == TRUE;
 #else
@@ -351,7 +351,7 @@ namespace tc
 
    static std::string Win32FileInformation(const std::string &file_in, SECURITY_INFORMATION info_type)
    {
-      auto file(wstring::ToString(file_in));
+      const auto file(wstring::ToString(file_in));
 #if TC_WINDOWS_UWP
       auto hFile = ::CreateFile2FromAppW(file.c_str(),
                                          FILE_READ_ATTRIBUTES,
@@ -361,11 +361,11 @@ namespace tc
 
 #else
       // Get the handle of the file object.
-      HANDLE hFile = ::CreateFile2(file.c_str(),
-                               FILE_READ_ATTRIBUTES,
-                               FILE_SHARE_READ,
-                               OPEN_EXISTING,
-                               nullptr);
+      const HANDLE hFile = ::CreateFile2(file.c_str(),
+                                         FILE_READ_ATTRIBUTES,
+                                         FILE_SHARE_READ,
+                                         OPEN_EXISTING,
+                                         nullptr);
 #endif
       // Check GetLastError for CreateFile error code.
       if (hFile == INVALID_HANDLE_VALUE)
@@ -450,8 +450,8 @@ namespace tc
       auto find_file = ::FindFirstFileExFromAppW(wsearch_dir.c_str(), info_levels, &find_data,
                                                          search_ops, nullptr, additional);
 #else
-      auto find_file = ::FindFirstFileExW(wsearch_dir.c_str(), info_levels, &find_data,
-         search_ops, nullptr, additional);
+      const auto find_file = ::FindFirstFileExW(wsearch_dir.c_str(), info_levels, &find_data,
+                                                search_ops, nullptr, additional);
 #endif
       if (find_file == INVALID_HANDLE_VALUE)
       {
@@ -488,7 +488,7 @@ namespace tc
       {
          search_dir = file_name::AddFileNameAndPath("*." + searchExtension, searchDirectory);
       }
-      auto wsearch_dir = wstring::ToString(search_dir);
+      const auto wsearch_dir = wstring::ToString(search_dir);
       WIN32_FIND_DATAW find_data;
       const FINDEX_INFO_LEVELS info_levels = FindExInfoBasic;
       const FINDEX_SEARCH_OPS search_ops = FindExSearchNameMatch;
@@ -497,8 +497,8 @@ namespace tc
       auto find_file = ::FindFirstFileExFromAppW(wsearch_dir.c_str(), info_levels, &find_data,
          search_ops, nullptr, additional);
 #else
-      auto find_file = ::FindFirstFileExW(wsearch_dir.c_str(), info_levels, &find_data,
-         search_ops, nullptr, additional);
+      const auto find_file = ::FindFirstFileExW(wsearch_dir.c_str(), info_levels, &find_data,
+                                                search_ops, nullptr, additional);
 #endif
       if (find_file == INVALID_HANDLE_VALUE)
       {

@@ -169,7 +169,7 @@ namespace tc
          {
             for (uint32_t i=0; i<COORD_TYPE::NUM_COMPONENTS; i++)
             {
-               bool inside = m_min[i] <= p[i] && p[i] < m_max[i];
+               const bool inside = m_min[i] <= p[i] && p[i] < m_max[i];
                if (!inside)
                {
                   return false;

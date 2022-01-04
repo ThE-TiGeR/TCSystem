@@ -62,11 +62,11 @@ namespace tc
          virtual std::string Print(const char* module, uint32_t level, const char* function, uint32_t line_number)
          {
             std::string s;
-            auto now = std::chrono::system_clock::now();
-            auto seconds = now - std::chrono::time_point_cast<std::chrono::seconds>(now);
-            uint32_t ms = static_cast<uint32_t>(::chrono::duration_cast<std::chrono::milliseconds>(seconds).count());
-            auto tt = std::chrono::system_clock::to_time_t(now);
-            auto ltt = std::localtime(&tt);
+            const auto now = std::chrono::system_clock::now();
+            const auto seconds = now - std::chrono::time_point_cast<std::chrono::seconds>(now);
+            const uint32_t ms = static_cast<uint32_t>(::chrono::duration_cast<std::chrono::milliseconds>(seconds).count());
+            const auto tt = std::chrono::system_clock::to_time_t(now);
+            const auto ltt = std::localtime(&tt);
 
             char date_buff[100];
             ::strftime(date_buff, sizeof(date_buff) - 1, "%d-%b-%Y %H:%M:%S", ltt);

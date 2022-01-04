@@ -63,7 +63,7 @@ namespace tc
       static int VsnPrintf(ElemType* elem, size_t size, const ElemType* format, va_list arguments)
       {
 #ifdef _MSC_VER
-         int len = _vsnwprintf(elem, size, format, arguments);
+         const int len = _vsnwprintf(elem, size, format, arguments);
 #elif defined TCOS_CYGWIN
          int len = vsnwprintf(elem, size, format, arguments);
 #else

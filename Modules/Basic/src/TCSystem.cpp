@@ -332,8 +332,8 @@ namespace tc
    {
       char date[SYS_CHAR_LEN];
 
-      time_t timeNow   = ::time(0);
-      struct tm* tmNow = ::localtime(&timeNow);
+      const time_t timeNow   = ::time(0);
+      const struct tm* tmNow = ::localtime(&timeNow);
 
       ::strftime(date, sizeof(date)-1, "%d-%b-%Y %H:%M:%S", tmNow);
 
@@ -377,7 +377,7 @@ namespace tc
          return;
       }
 
-      uint64_t no_of_max_sleeps = time.ToMilliSeconds() / MAX_SLEEP_MILLI_SECONDS;
+      const uint64_t no_of_max_sleeps = time.ToMilliSeconds() / MAX_SLEEP_MILLI_SECONDS;
       for (uint64_t i = 0; i < no_of_max_sleeps; i++)
       {
          ::Sleep(MAX_SLEEP_MILLI_SECONDS);
@@ -662,10 +662,10 @@ namespace tc
    std::string system::GetTmpFileName()
    {
       static interlocked::Type s_tmp_file_count;
-      interlocked::Type current = interlocked::Increment(s_tmp_file_count);
+      const interlocked::Type current = interlocked::Increment(s_tmp_file_count);
 
-      std::string id = string::Print("%d_%d", GetProcessID(), current);
-      std::string dir = GetTmpDir();
+      const std::string id = string::Print("%d_%d", GetProcessID(), current);
+      const std::string dir = GetTmpDir();
       std::string file_name = file_name::AddFileNameAndPath("tcs_temp_file_" + id, dir);
       file_name = file_name::AddFileNameAndExtension(file_name, "tmp");
 

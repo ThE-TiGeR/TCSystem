@@ -48,7 +48,7 @@ namespace tc::wfile
          return false;
       }
 
-      std::vector<std::wstring> directories(wfile_name::GetDirectoriesOfPath(path));
+      const std::vector<std::wstring> directories(wfile_name::GetDirectoriesOfPath(path));
 
       std::wstring current_dir;
       if (path[0] == wfile_name::GetPathSeparator()[0])

@@ -50,7 +50,7 @@ namespace tc
 
    std::string string::ToString(char val)
    {
-      char string[2] = {val, 0};
+      const char string[2] = {val, 0};
 
       return string;
    }
@@ -304,7 +304,7 @@ namespace tc
 
    std::string string::DeleteBlanksAndTabs(const std::string& text_in)
    {
-      std::string text = Replace(text_in, " ", "");
+      const std::string text = Replace(text_in, " ", "");
       return Replace(text, "\t", "");
    }
 
@@ -323,7 +323,7 @@ namespace tc
    {
       va_list arguments;
       va_start(arguments, fmt);
-      int32_t len = StringTraits::VsnPrintf(buf, size_of_buf, fmt, arguments);
+      const int32_t len = StringTraits::VsnPrintf(buf, size_of_buf, fmt, arguments);
       va_end(arguments);
 
       return len;

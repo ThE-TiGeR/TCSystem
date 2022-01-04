@@ -80,7 +80,7 @@ namespace tc
 
          if (m_memory_position + num_bytes <= m_memory.size())
          {
-            ByteVector::pointer copy_data = static_cast<ByteVector::pointer>(bytes);
+            const ByteVector::pointer copy_data = static_cast<ByteVector::pointer>(bytes);
             std::copy(m_memory.begin()+m_memory_position, 
                       m_memory.begin()+ByteVector::size_type(m_memory_position+num_bytes), copy_data);
             m_memory_position += ByteVector::size_type(num_bytes);
@@ -111,7 +111,7 @@ namespace tc
              return 0;
          }
 
-         ByteVector::const_pointer data_to_write = static_cast<ByteVector::const_pointer>(bytes);
+         const ByteVector::const_pointer data_to_write = static_cast<ByteVector::const_pointer>(bytes);
          if (m_memory.size() == m_memory_position)
          {
             m_memory.insert(m_memory.end(), data_to_write, data_to_write + num_bytes);

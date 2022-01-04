@@ -205,15 +205,15 @@ namespace math
       // on 0 we do nothing
       if (val == (T)0) return (T)0;
 
-      double logRange   = std::log10(Abs(val));
-      int32_t logRangeFloor = (int32_t)std::floor(logRange);
+      const double logRange   = std::log10(Abs(val));
+      const int32_t logRangeFloor = (int32_t)std::floor(logRange);
       double normalized = (int32_t)std::pow(10.0, logRange - logRangeFloor);
 
       int32_t i;
       if (logRangeFloor > 0)
          for (i=0; i<logRangeFloor; i++) normalized *= 10.;
       else {
-         int32_t absLogRangeFloor = Abs(logRangeFloor);
+         const int32_t absLogRangeFloor = Abs(logRangeFloor);
          for (i=0; i<absLogRangeFloor; i++) normalized *= 0.1;
       }
 

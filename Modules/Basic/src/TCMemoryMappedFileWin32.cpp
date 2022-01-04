@@ -119,7 +119,7 @@ namespace tc
       }
 
       LARGE_INTEGER high_size;
-      DWORD low_size = ::GetFileSizeEx(m_file, &high_size);
+       const DWORD low_size = ::GetFileSizeEx(m_file, &high_size);
       if (low_size == INVALID_FILE_SIZE)
       {
           return false;

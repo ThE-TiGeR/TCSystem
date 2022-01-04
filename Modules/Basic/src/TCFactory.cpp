@@ -138,19 +138,19 @@ namespace tc
 
       StreamPtr CreateStringStream(std::string& memory)
       {
-         CodecPtr codec(CreateAsciiCodec());
+         const CodecPtr codec(CreateAsciiCodec());
          return StreamPtr(new imp::StringStream(codec, memory));
       }
 
       StreamPtr CreateStdOutStream()
       {
-         CodecPtr codec(CreateAsciiCodec());
+         const CodecPtr codec(CreateAsciiCodec());
          return CreateFileStream(stdout, Stream::Direction::WRITE, codec);
       }
 
       StreamPtr CreateStdErrorStream()
       {
-         CodecPtr codec(CreateAsciiCodec());
+         const CodecPtr codec(CreateAsciiCodec());
          return CreateFileStream(stderr, Stream::Direction::WRITE, codec);
       }
 

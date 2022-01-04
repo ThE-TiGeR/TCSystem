@@ -144,7 +144,7 @@ namespace tc
       {
          m_mutex.Lock();
 
-         Entry* block = static_cast<Entry*>(entry_in);
+         const Entry* block = static_cast<Entry*>(entry_in);
          if (block->m_prev)
          {
             block->m_prev->m_next = block->m_next;
@@ -201,21 +201,21 @@ namespace tc
 
       static uint32_t IsLargerThan(const Entry* entry1, const Entry* entry2)
       {
-         int32_t str_diff  = std::strcmp(entry1->m_file, entry2->m_file);
+         const int32_t str_diff  = std::strcmp(entry1->m_file, entry2->m_file);
          if (str_diff > 0)
          {
             return 1;
          }
          else if (str_diff == 0)
          {
-            int32_t line_diff = (int32_t)entry1->m_line - (int32_t)entry2->m_line;
+            const int32_t line_diff = (int32_t)entry1->m_line - (int32_t)entry2->m_line;
             if (line_diff > 0)
             {
                return 2;
             }
             else if (line_diff == 0)
             {
-               int32_t thread_diff = (int32_t)entry1->m_thread - (int32_t)entry2->m_thread;
+               const int32_t thread_diff = (int32_t)entry1->m_thread - (int32_t)entry2->m_thread;
                if (thread_diff >= 0)
                {
                   return 3;

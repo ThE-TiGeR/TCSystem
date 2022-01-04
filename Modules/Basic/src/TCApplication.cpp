@@ -137,7 +137,7 @@ namespace tc
 
    void Application::DisplayUsage()
    {
-      StreamPtr stream(factory::CreateStdOutStream());
+      const StreamPtr stream(factory::CreateStdOutStream());
       stream << "Usage: " << GetUsage() << endl;
       stream << "\t\t" << "[-trace number (set the trace number)]" << endl;
    }

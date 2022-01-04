@@ -68,7 +68,7 @@ namespace tc
 
       static uint64_t ReadNextValueString(Stream& stream, std::string& val)
       {
-         std::locale l;
+         const std::locale l;
          uint64_t len = 0;
          char c;
          // skipp spaces and end of line
@@ -102,7 +102,7 @@ namespace tc
       uint64_t AsciiCodec::Decode(Stream& stream, int8_t& val)
       {
          std::string strval;
-         uint64_t len = ReadNextValueString(stream, strval);
+         const uint64_t len = ReadNextValueString(stream, strval);
          val = string::ToSint8(strval);
 
          return len;
@@ -111,7 +111,7 @@ namespace tc
       uint64_t AsciiCodec::Decode(Stream& stream, uint8_t& val)
       {
          std::string strval;
-         uint64_t len = ReadNextValueString(stream, strval);
+         const uint64_t len = ReadNextValueString(stream, strval);
          val = string::ToUint8(strval);
 
          return len;
@@ -120,7 +120,7 @@ namespace tc
       uint64_t AsciiCodec::Decode(Stream& stream, int16_t& val)
       {
          std::string strval;
-         uint64_t len = ReadNextValueString(stream, strval);
+         const uint64_t len = ReadNextValueString(stream, strval);
          val = string::ToSint16(strval);
 
          return len;
@@ -129,7 +129,7 @@ namespace tc
       uint64_t AsciiCodec::Decode(Stream& stream, uint16_t& val)
       {
          std::string strval;
-         uint64_t len = ReadNextValueString(stream, strval);
+         const uint64_t len = ReadNextValueString(stream, strval);
          val = string::ToUint16(strval);
 
          return len;
@@ -138,7 +138,7 @@ namespace tc
       uint64_t AsciiCodec::Decode(Stream& stream, int32_t& val)
       {
          std::string strval;
-         uint64_t len = ReadNextValueString(stream, strval);
+         const uint64_t len = ReadNextValueString(stream, strval);
          val = string::ToSint32(strval);
 
          return len;
@@ -147,7 +147,7 @@ namespace tc
       uint64_t AsciiCodec::Decode(Stream& stream, uint32_t& val)
       {
          std::string strval;
-         uint64_t len = ReadNextValueString(stream, strval);
+         const uint64_t len = ReadNextValueString(stream, strval);
          val = string::ToUint32(strval);
 
          return len;
@@ -156,7 +156,7 @@ namespace tc
       uint64_t AsciiCodec::Decode(Stream& stream, int64_t& val)
       {
          std::string strval;
-         uint64_t len = ReadNextValueString(stream, strval);
+         const uint64_t len = ReadNextValueString(stream, strval);
          val = string::ToSint64(strval);
 
          return len;
@@ -165,7 +165,7 @@ namespace tc
       uint64_t AsciiCodec::Decode(Stream& stream, uint64_t& val)
       {
          std::string strval;
-         uint64_t len = ReadNextValueString(stream, strval);
+         const uint64_t len = ReadNextValueString(stream, strval);
          val = string::ToUint64(strval);
 
          return len;
@@ -174,7 +174,7 @@ namespace tc
       uint64_t AsciiCodec::Decode(Stream& stream, float& val)
       {
          std::string strval;
-         uint64_t len = ReadNextValueString(stream, strval);
+         const uint64_t len = ReadNextValueString(stream, strval);
          val = string::ToFloat(strval);
 
          return len;
@@ -183,7 +183,7 @@ namespace tc
       uint64_t AsciiCodec::Decode(Stream& stream, double& val)
       {
          std::string strval;
-         uint64_t len = ReadNextValueString(stream, strval);
+         const uint64_t len = ReadNextValueString(stream, strval);
          val = string::ToDouble(strval);
 
          return len;
@@ -225,7 +225,7 @@ namespace tc
       uint64_t AsciiCodec::Decode(Stream& stream, std::wstring& val)
       {
          std::string tmp;
-         uint64_t len = Decode(stream, tmp);
+         const uint64_t len = Decode(stream, tmp);
          val = wstring::ToString(tmp);
 
          return len;
@@ -239,7 +239,7 @@ namespace tc
       uint64_t AsciiCodec::Decode(Stream& stream, bool &val)
       {
          std::string strval;
-         uint64_t len = ReadNextValueString(stream, strval);
+         const uint64_t len = ReadNextValueString(stream, strval);
          val = strval == "1";
          return len;
       }
@@ -259,14 +259,14 @@ namespace tc
       uint64_t AsciiCodec::Encode(int16_t val, Stream& stream)
       {
          char buffer[16];
-         uint64_t len = string::Snprintf(buffer, util::ArraySize(buffer), "%hd", val);
+         const uint64_t len = string::Snprintf(buffer, util::ArraySize(buffer), "%hd", val);
 
          return stream.WriteBytes(len, buffer);
       }
       uint64_t AsciiCodec::Encode(uint16_t val, Stream& stream)
       {
          char buffer[16];
-         uint64_t len = string::Snprintf(buffer, util::ArraySize(buffer), "%hu", val);
+         const uint64_t len = string::Snprintf(buffer, util::ArraySize(buffer), "%hu", val);
 
          return stream.WriteBytes(len, buffer);
       }
@@ -274,7 +274,7 @@ namespace tc
       uint64_t AsciiCodec::Encode(int32_t val, Stream& stream)
       {
          char buffer[32];
-         uint64_t len = string::Snprintf(buffer, util::ArraySize(buffer), "%d", val);
+         const uint64_t len = string::Snprintf(buffer, util::ArraySize(buffer), "%d", val);
 
          return stream.WriteBytes(len, buffer);
       }
@@ -282,7 +282,7 @@ namespace tc
       uint64_t AsciiCodec::Encode(uint32_t val, Stream& stream)
       {
          char buffer[32];
-         uint64_t len = string::Snprintf(buffer, util::ArraySize(buffer), "%u", val);
+         const uint64_t len = string::Snprintf(buffer, util::ArraySize(buffer), "%u", val);
 
          return stream.WriteBytes(len, buffer);
       }
@@ -290,14 +290,14 @@ namespace tc
       uint64_t AsciiCodec::Encode(int64_t val, Stream& stream)
       {
          char buffer[64];
-         uint64_t len = string::Snprintf(buffer, util::ArraySize(buffer), "%" TC_SINT64_FORMAT, val);
+         const uint64_t len = string::Snprintf(buffer, util::ArraySize(buffer), "%" TC_SINT64_FORMAT, val);
 
          return stream.WriteBytes(len, buffer);
       }
       uint64_t AsciiCodec::Encode(uint64_t val, Stream& stream)
       {
          char buffer[64];
-         uint64_t len = string::Snprintf(buffer, util::ArraySize(buffer), "%" TC_UINT64_FORMAT, val);
+         const uint64_t len = string::Snprintf(buffer, util::ArraySize(buffer), "%" TC_UINT64_FORMAT, val);
 
          return stream.WriteBytes(len, buffer);
       }
@@ -305,14 +305,14 @@ namespace tc
       uint64_t AsciiCodec::Encode(float val, Stream& stream)
       {
          char buffer[32];
-         uint64_t len = string::Snprintf(buffer, util::ArraySize(buffer), "%g", val);
+         const uint64_t len = string::Snprintf(buffer, util::ArraySize(buffer), "%g", val);
 
          return stream.WriteBytes(len, buffer);
       }
       uint64_t AsciiCodec::Encode(double val, Stream& stream)
       {
          char buffer[64];
-         uint64_t len = string::Snprintf(buffer, util::ArraySize(buffer), "%lg", val);
+         const uint64_t len = string::Snprintf(buffer, util::ArraySize(buffer), "%lg", val);
 
          return stream.WriteBytes(len, buffer);
       }
@@ -324,7 +324,7 @@ namespace tc
 
       uint64_t AsciiCodec::Encode(const std::wstring& val, Stream& stream)
       {
-         std::string tmp = wstring::ToString(val);
+         const std::string tmp = wstring::ToString(val);
          return Encode(tmp, stream);
       }
 

@@ -231,8 +231,8 @@ namespace tc
       inline bool IsPointInCircle(const CoordN<T,2> &Point,
          const CoordN<T,2> &center,
          double radius)
-      {   
-         double distance = sqrt((double)((Point[0]-center[0])*(Point[0]-center[0]) 
+      {
+         const double distance = sqrt((double)((Point[0]-center[0])*(Point[0]-center[0]) 
             + (Point[1]-center[1])*(Point[1]-center[1])));
 
          return distance <= radius;
@@ -255,8 +255,8 @@ namespace tc
                ((point2[1] > 0.0) && (point1[1] <= 0.0))  )
             {
                //edge crosses ray if strictly positive intersection
-               double det = point2[1] - point1[1];
-               double d   = point1[0] * point2[1] -
+               const double det = point2[1] - point1[1];
+               const double d   = point1[0] * point2[1] -
                   point2[0] * point1[1]  ;
 
                if((d / det) > 0.0) crossings++;
